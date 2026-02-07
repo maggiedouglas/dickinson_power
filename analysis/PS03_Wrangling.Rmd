@@ -1,0 +1,89 @@
+---
+title: "Problem Set 3 - Key"
+author: "Maggie Douglas"
+date: "2026-02-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Conversion factors
+
+```{r conv}
+dollars_kwh <- 0.0813
+co2_kg_kwh <- 0.299511787
+```
+
+## Load libraries + data
+
+```{r load}
+library(tidyverse)
+library(DT)
+
+kwh <- read.csv("./data/kwh_by_building.csv", strip.white = TRUE)
+key <- read.csv("./data/building_list_FY25.csv", strip.white = TRUE)
+```
+
+## Check
+
+```{r check}
+str(kwh)
+str(key)
+```
+
+## Join datasets
+
+```{r join}
+# left join is appropriate to achieve the goal of filling in sqft data for all buildings with electricity data; could also be a right join with data frames reversed
+comb <- kwh %>%
+  left_join(key, by = "NAME", relationship = "many-to-one")
+```
+
+## Subset
+
+```{r filter}
+res_hall_S <- filter(comb, type == "Res Hall - S")
+```
+
+## Aggregate
+
+```{r agg}
+# It is okay if they leave 'type' out of the group_by statement
+# kwh should be aggregated by summing, sqft should be aggregated with mean, median, or other function that returns the original value
+agg <- res_hall_S %>%
+  group_by(NAME, type) %>%
+  summarize(kwh_tot = sum(kwh_tot, na.rm = TRUE),
+            sqft = mean(sqft, na.rm = TRUE))
+```
+
+## Transform
+
+```{r transform}
+# They can decide how many digits to round to, but need to implement round() successfully
+trans <- agg %>%
+  mutate(kwh_sqft = round(kwh_tot/sqft,digits = 1),
+         dollars = round(kwh_tot*dollars_kwh, digits = 0),
+         ghg_kgCO2 = round(kwh_tot*co2_kg_kwh, digits = 0)) %>%
+  arrange(-kwh_tot) %>%
+  select(-type)
+```
+
+## Tables
+
+```{r table_electric}
+datatable(trans,
+          filter = 'top',
+          rownames = FALSE)
+```
+
+```{r table_buildings}
+buildings <- filter(key, type == "Res Hall - S") %>%
+  arrange(main_meter, -sqft) %>%
+  select(-type)
+
+datatable(buildings,
+          filter = 'top',
+          rownames = FALSE)
+```

@@ -1,0 +1,64 @@
+---
+title: "PS 2: Project Background"
+author: "900925598"
+date: "2026-01-22"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Project background & motivation
+
+> Student description of the goals and motivations for our project, informed by  learning in Lab 1, Dickinson's Greenhouse Gas Inventory, and Lindsey Lyons. Should reflect a strong understanding of electricity use and its relationship to climate change, the history of climate action at Dickinson, and scope/goals of the project. Written in a scientific style and structured from broad to narrow.
+
+R Markdown formatting:
+
+*bold* 
+
+**italic**
+
+Bullet points 
+
+- One
+- Two
+- Three
+
+[Hyperlink](https://www.dickinson.edu/homepage/1340/carbon_neutrality_faq)
+
+## Set expectations
+
+> Student response identifying and restating (if necessary) their assigned research question, what kind of question it is, what kind of graph would be appropriate to answer it (including variables on X and Y axes), and expectations regarding whether the data are suitable. Strong answers reflect good understanding of question types, relationships between questions, variables, and graphs, and thoughtful expectations in relation to the data.
+
+## Data inspection
+
+### Load data
+
+```{r load}
+ppl <- read.csv("./data/FY25 PPL Electricity Data.csv")
+```
+
+### Check data
+
+```{r check}
+str(ppl)
+head(ppl, 10)
+View(ppl)
+```
+
+### Summarize data
+
+```{r summarize}
+summary(ppl)
+```
+
+### Graph data
+
+```{r graph}
+hist(ppl$ave_temp)
+```
+
+## Revisit expectations
+
+> Student response thoughtfully addressing: (i) Whether the data is suitable to answer the question in its present form, (ii) whether the necessary variables are present in the data, (iii) whether the present variables are encoded correctly (based on output from `str()`), (iv) whether the data is organized appropriately, and (v) whether the student recommends adjusting the data, the question, or both. Response should demonstrate that the student has looked at the relevant dataset and R output carefully and analyzed suitability for the planned analysis.

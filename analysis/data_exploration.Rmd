@@ -1,0 +1,248 @@
+---
+title: "Data exploration"
+author: "Maggie Douglas"
+date: "2026-01-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+
+This script is meant to explore Dickinson's electricity data. It is preliminary to prepare for my upcoming course.
+
+## Libraries
+
+```{r libraries}
+library(tidyverse)
+library(readxl)
+```
+
+## Data
+
+```{r data}
+ppl <- read_excel("../data/FY25 PPL Electricity Data.xlsx", "PPL Data per Building")
+
+ppl <- rename(ppl,
+       acct_num = "Account Number",
+       building = "Meter Origin",
+       building_num = "Meter Number",
+       date = "Date",
+       kwh = "Total Usage kWh",
+       temp_F = "AverageTemperature")
+
+ppl$date <- ymd(ppl$date)
+ppl$month <- month(ppl$date, label = TRUE)
+ppl$day <- wday(ppl$date, label = TRUE)
+
+ppl$meter <- ifelse(ppl$building == "W High St (37 Big Buildings)", "main",
+                    ifelse(ppl$building == "Solar Farm", "solar", "other"))
+
+ppl$cost <- ppl$kwh*0.07277665
+ppl$ghg <- ppl$kwh*0.299511787
+
+ppl_bldg <- ppl %>%
+  group_by(building) %>%
+  summarize(kwh = sum(kwh, na.rm = T),
+            cost = sum(cost, na.rm = T),
+            ghg = sum(ghg, na.rm = T)) %>%
+  arrange(-kwh)
+
+ppl_agg <- ppl %>%
+  group_by(meter, date, month, day) %>%
+  summarize(kwh = sum(kwh, na.rm = T))
+
+ppl_wide <- ppl_agg %>%
+  pivot_wider(names_from = meter,
+              values_from = kwh)
+
+buildings <- as.data.frame(unique(ppl$building))
+colnames(buildings) <- "building"
+```
+
+```{r descriptive}
+str(ppl)
+```
+
+## Graphs
+
+```{r graphs}
+ggplot(ppl, aes(x = date, y = kwh)) +
+  geom_point() +
+  theme_bw()
+```
+
+```{r main}
+ggplot(ppl, aes(x = month, y = kwh, fill = meter)) +
+  geom_bar(stat = "identity", position = "stack") +
+  theme_bw() +
+  labs(x = "") +
+  geom_hline(yintercept = 0)
+
+ggplot(ppl_agg, aes(x = day, y = kwh, fill = day)) +
+  geom_boxplot() +
+  facet_wrap(meter ~ ., scales = "free_y", ncol = 3) +
+  theme_bw()
+
+ggplot(ppl_agg, aes(x = date, y = kwh, color = meter)) +
+  geom_line() +
+  theme_bw() +
+  labs(x = "")
+```
+
+## Single building examples
+
+```{r bldg}
+adams <- ppl %>%
+  filter(building == "100 S College St")
+
+ggplot(adams, aes(x = kwh)) +
+  geom_histogram(fill = "lightblue", bins = 40) +
+  theme_bw()
+
+ggplot(adams, aes(x = kwh)) +
+  geom_histogram(fill = "lightblue", bins = 30) +
+  facet_wrap(. ~ day) +
+  theme_bw()
+
+ggplot(adams, aes(x = date, y = kwh)) +
+  geom_line() +
+  theme_bw() 
+
+ggplot(adams, aes(x = temp_F, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(adams, aes(x = day, y = kwh, fill = day)) +
+  geom_boxplot() +
+  theme_bw()
+
+w_high <- ppl %>%
+  filter(building == "450 W High St, Residence Hall")
+
+ggplot(w_high, aes(x = date, y = kwh)) +
+  geom_line() +
+  theme_bw() 
+
+ggplot(w_high, aes(x = temp_F, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(w_high, aes(x = day, y = kwh, fill = day)) +
+  geom_boxplot() +
+  theme_bw()
+```
+
+## Main meter example
+
+```{r group}
+big_combined <- ppl %>%
+  filter(building == "W High St (37 Big Buildings)")
+
+ggplot(big_combined, aes(x = date, y = kwh)) +
+  geom_line() +
+  theme_bw() 
+
+ggplot(big_combined, aes(x = temp_F, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(big_combined, aes(x = day, y = kwh)) +
+  geom_boxplot(fill = "lightblue") +
+  theme_bw()
+
+ggplot(big_combined, aes(x = month, y = kwh)) +
+  geom_boxplot(fill = "lightblue") +
+  theme_bw()
+
+ggplot(big_combined, aes(x = kwh)) +
+  geom_density(fill = "lightblue") +
+  theme_bw()
+```
+
+```{r meter prediction}
+ggplot(ppl_wide, aes(x = main, y = other, color = month)) +
+  geom_point() +
+  geom_smooth(stat = "smooth", method = "lm", formula = 'y ~ x') +
+  facet_wrap(. ~ month) +
+  theme_bw()
+```
+```{r lm}
+mod1 <- lm(other ~ main*month, data = ppl_wide)
+mod2 <- lm(other ~ main, data = ppl_wide)
+```
+
+
+## Solar field
+
+```{r solar}
+solar <- ppl %>%
+  filter(building == "Solar Farm")
+
+ggplot(solar, aes(x = date, y = kwh)) +
+  geom_line() +
+  theme_bw() 
+
+ggplot(solar, aes(x = temp_F, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(solar, aes(x = day, y = kwh)) +
+  geom_boxplot(fill = "lightblue") +
+  theme_bw()
+
+ggplot(solar, aes(x = month, y = kwh)) +
+  geom_boxplot(fill = "lightblue") +
+  theme_bw()
+
+ggplot(solar, aes(x = kwh)) +
+  geom_density(fill = "lightblue") +
+  theme_bw()
+```
+
+## HDD/CDD
+
+```{r hdd/cdd}
+hdd <- read_excel("../data/FY24 and FY25 HDD and CDD for Carlisle.xlsx", "FY 25 HDD") 
+cdd <- read_excel("../data/FY24 and FY25 HDD and CDD for Carlisle.xlsx", "FY 25 CDD")
+
+deg_day <- merge(cdd, hdd)
+
+deg_day <- rename(deg_day,
+                  date = "Date",
+                  perc_est = "% Estimated",
+                  cdd_65 = "CDD 65",
+                  hdd_65 = "HDD 65")
+
+deg_day$date <- ymd(deg_day$date)
+
+str(deg_day)
+```
+
+```{r join}
+big_comb <- big_combined %>%
+  left_join(deg_day, by = "date") %>%
+  mutate(dd_tot = cdd_65 + hdd_65)
+
+ggplot(big_comb, aes(x = date, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(big_comb, aes(x = temp_F, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(big_comb, aes(x = hdd_65, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(big_comb, aes(x = cdd_65, y = kwh)) +
+  geom_point() +
+  theme_bw()
+
+ggplot(big_comb, aes(x = dd_tot, y = kwh)) +
+  geom_point() +
+  theme_bw()
+```
