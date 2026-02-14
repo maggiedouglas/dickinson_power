@@ -100,9 +100,13 @@ datatable(buildings,
 
 ```{r master}
 agg_tot <- comb %>%
-  group_by(NAME, type) %>%
+  group_by(type, NAME) %>%
   summarize(kwh_tot = sum(kwh_tot, na.rm = TRUE),
-            sqft = mean(sqft, na.rm = TRUE))
+            sqft = mean(sqft, na.rm = TRUE)) %>%
+  mutate(kwh_sqft = kwh_tot/sqft) %>%
+  filter(is.finite(kwh_sqft))
+
+write.csv(agg_tot, "./output/annual_kwh.csv", row.names = F)
 
 trans_tot <- agg_tot %>%
   mutate(kwh_sqft = round(kwh_tot/sqft,digits = 2),
@@ -124,10 +128,13 @@ comb_daily <- kwh_daily %>%
   left_join(comb_key, by = "NAME") %>%
   mutate(kwh_sqft = kwh/sqft,
          dollars = kwh*dollars_kwh,
-         co2_kg = kwh*co2_kg_kwh,
-         date = mdy(date),
-         month = month(date, label = TRUE),
-         day = wday(date, label = TRUE))
+         co2_kg = kwh*co2_kg_kwh)
+
+comb_clean <- comb_daily %>%
+  select(type, NAME, date, ave_temp, kwh, kwh_sqft) %>%
+  filter(is.finite(kwh_sqft))
+
+write.csv(comb_daily, "./output/daily_kwh.csv", row.names = F)
 
 main_meter <- filter(kwh_daily, meter_origin == "W High St (37 Big Buildings)") %>%
   mutate(date = mdy(date),
@@ -135,48 +142,17 @@ main_meter <- filter(kwh_daily, meter_origin == "W High St (37 Big Buildings)") 
          day = wday(date, label = TRUE),
          dollars = total_kwh*dollars_kwh,
          co2_kg = total_kwh*co2_kg_kwh,)
+
+# Check which buildings are and are not represented in the electricity data
+comb_check <- kwh %>%
+  full_join(key, by = "NAME", relationship = "many-to-one") %>%
+  select(NAME, address, type, meter_origin, kwh_tot, sqft, main_meter, rental) %>%
+  arrange(type, main_meter, NAME, -kwh_tot) %>%
+  mutate(diagnosis = ifelse(main_meter == 1, "main meter",
+                            ifelse((is.na(kwh_tot) & main_meter == 0), "missing electric",
+                                   ifelse((kwh_tot > 0 & main_meter == 1), "double", 
+                                          ifelse(is.na(type), "missing building", "")))))
+
+write.csv(comb_check, "./output/building_check.csv", row.names = FALSE)
 ```
 
-## Graph data
-
-```{r stacked_bar, warning = F}
-ggplot(comb_daily, aes(x = month, y = kwh, fill = type)) +
-  geom_col(stat = "identity") +
-  theme_bw() +
-  labs(x = "")
-```
-
-```{r density, warning = F}
-ggplot(main_meter, aes(x = total_kwh, fill = day)) +
-  geom_density(alpha = 0.5) +
-  theme_bw() +
-  labs(x = "")
-```
-
-```{r boxplot, warning = F}
-ggplot(main_meter, aes(x = day, y = total_kwh, fill = day)) +
-  geom_boxplot() +
-  theme_bw() +
-  labs(x = "")
-```
-
-```{r scatter}
-ggplot(main_meter, aes(x = ave_temp, y = total_kwh, col = month)) +
-  geom_point() +
-  theme_bw() +
-  labs(x = "Daily Avereage Temperature (F)", y = "Electricity use (kWh)", 
-       title = "Main Meter electricity use by outdoor temperature")
-```
-
-```{r line}
-ggplot(main_meter, aes(x = date, y = total_kwh)) +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (kWh)") +
-  annotate("rect", xmin = mdy("09/02/24"), xmax = mdy("12/21/24"), 
-                ymin = -Inf, ymax = Inf,
-            fill = "lightblue", alpha = 0.5) +
-    annotate("rect", xmin = mdy("01/20/25"), xmax = mdy("05/13/25"), 
-                ymin = -Inf, ymax = Inf,
-            fill = "lightblue", alpha = 0.5) +
-  geom_line() 
-```

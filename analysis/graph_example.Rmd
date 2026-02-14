@@ -1,0 +1,29 @@
+---
+title: "Graph example"
+author: "Maggie Douglas"
+date: "2026-02-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Load
+
+```{r load}
+library(tidyverse)
+
+life_exp <- read.csv("./data/graph_data_life_exp.csv")
+```
+
+## Graph
+
+```{r graph, fig.height = 2, fig.width = 3.5}
+ggplot(life_exp, aes(x = fct_rev(country), y = life_exp, fill = country)) +
+  geom_col() +
+  theme_bw() +
+  labs(x = "", y = "Life expectancy (years)") +
+  coord_flip() +
+  theme(legend.position = "none")
+```

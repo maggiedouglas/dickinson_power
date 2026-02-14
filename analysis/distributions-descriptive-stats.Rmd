@@ -9,22 +9,293 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r load}
+library(tidyverse)
 ```
 
-## Including Plots
+```{r data}
+# load datasets
+kwh_yr <- read.csv("../data/kwh_by_building.csv", strip.white = TRUE)
+kwh_daily <- read.csv("../data/FY25 PPL Electricity Data.csv", strip.white = TRUE)
+buildings <- read.csv("../data/building_list_FY25.csv", strip.white = TRUE)
 
-You can also embed plots, for example:
+# create key from meters to building names
+meter_key <- select(kwh_yr, meter_origin, NAME)
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+# create key from NAME to building type
+bldg_type <- select(buildings, NAME, type)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r join_agg}
+kwh_yr_agg <- kwh_yr %>%
+  left_join(buildings, by = "NAME") %>%
+  filter(!(NAME %in% c("Main Meter", "Solar Farm",""))) %>%
+  group_by(NAME) %>%
+  summarize(kwh_tot = sum(kwh_tot, na.rm = TRUE),
+            sqft = mean(sqft, na.rm = TRUE),
+            n = n()) %>%
+  mutate(kwh_sqft = kwh_tot/sqft) %>%
+  left_join(bldg_type, by = "NAME") %>%
+  filter(NAME != "Biddle Press Box + Restrooms" & # remove outliers 
+           type != "Res Hall - U") # remove category w/o sqft data
+
+kwh_day_agg <- kwh_daily %>%
+  left_join(meter_key, by = "meter_origin") %>%
+  left_join(buildings, by = "NAME") %>%
+  filter(!(NAME %in% c("Main Meter", "Solar Farm",""))) %>%
+  group_by(NAME, date) %>%
+    summarize(kwh_tot = sum(total_kwh, na.rm = TRUE),
+            sqft = mean(sqft, na.rm = TRUE),
+            ave_temp = mean(ave_temp, na.rm = TRUE),
+            n = n()) %>%
+  mutate(kwh_sqft = kwh_tot/sqft) %>%
+  left_join(bldg_type, by = "NAME") %>%
+  mutate(date = mdy(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE))
+
+kwh_day_main <- kwh_daily %>%
+  left_join(meter_key, by = "meter_origin") %>%
+  left_join(buildings, by = "NAME") %>%
+  filter(NAME == "Main Meter") %>%
+  group_by(NAME, date) %>%
+  summarize(kwh_tot = sum(total_kwh, na.rm = TRUE),
+            ave_temp = mean(ave_temp, na.rm = TRUE),
+            n = n()) %>%
+  mutate(date = mdy(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE))
+
+temps <- kwh_day_agg %>%
+  ungroup() %>%
+  select(date, month, day, ave_temp) %>%
+  unique()
+```
+
+## Temperature example
+
+```{r check}
+str(temps)
+summary(temps)
+head(temps)
+```
+
+```{r temp_distr, fig.width = 3.5, fig.height = 2.5}
+ggplot(temps, aes(x = ave_temp)) +
+  geom_histogram(fill = "purple", bins = 25) +
+  theme_bw() +
+  labs(title = "Daily average temperatures")
+```
+
+```{r temp_with_stats, fig.width = 3.5, fig.height = 2.5}
+ggplot(temps, aes(x = ave_temp)) +
+  geom_histogram(fill = "purple", bins = 25) +
+  theme_bw() +
+  labs(title = "Mean and SD") +
+  geom_vline(aes(xintercept = mean(ave_temp))) +
+  geom_vline(aes(xintercept = mean(ave_temp) + sd(ave_temp)), linetype = "dashed") +
+  geom_vline(aes(xintercept = mean(ave_temp) - sd(ave_temp)), linetype = "dashed") 
+```
+
+```{r temp_with_stats2, fig.width = 3.5, fig.height = 2.5}
+ggplot(temps, aes(x = ave_temp)) +
+  geom_histogram(fill = "purple", bins = 25) +
+  theme_bw() +
+  labs(title = "Median and IQR") +
+  geom_vline(aes(xintercept = median(ave_temp))) +
+  geom_vline(aes(xintercept = quantile(ave_temp, 0.25)), linetype = "dashed") +
+  geom_vline(aes(xintercept = quantile(ave_temp, 0.75)), linetype = "dashed") 
+```
+
+```{r temp_by_month_box, fig.width = 4.5, fig.height = 3.5}
+ggplot(temps, aes(x = month, y = ave_temp, fill = month)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(title = "Temperature by month (boxplot)", x = "", y = "Temperature (F)")
+```
+
+```{r temp_by_month_bar, fig.width = 4.5, fig.height = 3.5}
+temps_agg <- temps %>%
+  group_by(month) %>%
+  summarize(temp = mean(ave_temp, na.rm = TRUE),
+            sd_temp = sd(ave_temp, na.rm = TRUE))
+
+ggplot(temps_agg) +
+  geom_bar(aes(x = month, y = temp, fill = month), stat = "identity") +
+  geom_errorbar(aes(x = month, y = temp, 
+                    ymin = temp - sd_temp, 
+                    ymax = temp + sd_temp), 
+                width = 0.4, color = "black") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(title = "Temperature by month (barplot)", x = "", y = "Temperature (F)")
+```
+
+## Main meter example
+
+```{r main_check}
+str(kwh_day_main)
+summary(kwh_day_main)
+```
+
+```{r main_distr, fig.width = 3.5, fig.height = 2.5}
+ggplot(kwh_day_main, aes(x = kwh_tot)) +
+  geom_histogram(fill = "blue", bins = 25) +
+  theme_bw() +
+  labs(title = "Daily kwh - Main Meter")
+```
+
+```{r main_with_stats, fig.width = 3.5, fig.height = 2.5}
+ggplot(kwh_day_main, aes(x = kwh_tot)) +
+  geom_histogram(fill = "blue", bins = 25) +
+  theme_bw() +
+  labs(title = "Mean and SD") +
+  geom_vline(aes(xintercept = mean(kwh_tot))) +
+  geom_vline(aes(xintercept = mean(kwh_tot) + sd(kwh_tot)), linetype = "dashed") +
+  geom_vline(aes(xintercept = mean(kwh_tot) - sd(kwh_tot)), linetype = "dashed") 
+```
+
+```{r main_with_stats2, fig.width = 3.5, fig.height = 2.5}
+ggplot(kwh_day_main, aes(x = kwh_tot)) +
+  geom_histogram(fill = "blue", bins = 25) +
+  theme_bw() +
+  labs(title = "Median and IQR") +
+  geom_vline(aes(xintercept = median(kwh_tot))) +
+  geom_vline(aes(xintercept = quantile(kwh_tot, 0.25)), linetype = "dashed") +
+  geom_vline(aes(xintercept = quantile(kwh_tot, 0.75)), linetype = "dashed") 
+```
+
+```{r main_by_month_box, fig.width = 4.5, fig.height = 3.5}
+ggplot(kwh_day_main, aes(x = month, y = kwh_tot, fill = month)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(title = "Daily kWh by month (boxplot)", x = "", y = "kWh per day")
+```
+
+```{r main_by_month_bar, fig.width = 4.5, fig.height = 3.5}
+main_agg <- kwh_day_main %>%
+  group_by(month) %>%
+  summarize(kwh = mean(kwh_tot, na.rm = TRUE),
+            sd_kwh = sd(kwh_tot, na.rm = TRUE))
+
+ggplot(main_agg) +
+  geom_bar(aes(x = month, y = kwh, fill = month), stat = "identity") +
+  geom_errorbar(aes(x = month, y = kwh, 
+                    ymin = kwh - sd_kwh, 
+                    ymax = kwh + sd_kwh), 
+                width = 0.4, color = "black") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(title = "Daily kWh by month (barplot)", x = "", y = "kWh per day")
+```
+
+## Building type example
+
+```{r bldg_check}
+str(kwh_yr_agg)
+summary(kwh_yr_agg)
+```
+
+```{r bldg_distr, fig.width = 3.5, fig.height = 2.5, warning = F}
+ggplot(kwh_yr_agg, aes(x = kwh_sqft)) +
+  geom_histogram(fill = "darkorange", bins = 30) +
+  theme_bw() +
+  labs(title = "Annual kWh per sqft by building")
+```
+
+```{r bldg_with_stats, fig.width = 3.5, fig.height = 2.5, warning = F}
+ggplot(kwh_yr_agg, aes(x = kwh_sqft)) +
+  geom_histogram(fill = "darkorange", bins = 30) +
+  theme_bw() +
+  labs(title = "Mean and SD") +
+  geom_vline(aes(xintercept = mean(kwh_sqft, na.rm=T))) +
+  geom_vline(aes(xintercept = mean(kwh_sqft, na.rm = T) + sd(kwh_sqft, na.rm = T)), linetype = "dashed") +
+  geom_vline(aes(xintercept = mean(kwh_sqft, na.rm = T) - sd(kwh_sqft, na.rm = T)), linetype = "dashed") 
+```
+
+```{r bldg_with_stats2, fig.width = 3.5, fig.height = 2.5, warning = F}
+ggplot(kwh_yr_agg, aes(x = kwh_sqft)) +
+  geom_histogram(fill = "darkorange", bins = 30) +
+  theme_bw() +
+  labs(title = "Median and IQR") +
+  geom_vline(aes(xintercept = median(kwh_sqft, na.rm = T))) +
+  geom_vline(aes(xintercept = quantile(kwh_sqft, 0.25, na.rm = T)), linetype = "dashed") +
+  geom_vline(aes(xintercept = quantile(kwh_sqft, 0.75, na.rm = T)), linetype = "dashed") 
+```
+
+```{r bldg_by_type_box, fig.width = 4.5, fig.height = 3.5, warning = F}
+ggplot(kwh_yr_agg, aes(x = type, y = kwh_sqft, fill = type)) +
+  geom_boxplot() +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  labs(title = "Annual kWh/sqft by type (boxplot)", x = "", y = "kWh/sqft per year")
+```
+
+```{r bldg_by_type_bar, fig.width = 4.5, fig.height = 3.5}
+bldg_agg <- kwh_yr_agg %>%
+  group_by(type) %>%
+  summarize(kwh = mean(kwh_sqft, na.rm = TRUE),
+            sd_kwh = sd(kwh_sqft, na.rm = TRUE))
+
+ggplot(bldg_agg) +
+  geom_bar(aes(x = type, y = kwh, fill = type), stat = "identity") +
+  geom_errorbar(aes(x = type, y = kwh, 
+                    ymin = kwh - sd_kwh, 
+                    ymax = kwh + sd_kwh), 
+                width = 0.4, color = "black") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
+  labs(title = "Annual kWh per sqft by type (barplot)", x = "", y = "kWh/sqft per year")
+```
+
+## Electricity data
+
+```{r dist, warning = FALSE, fig.width = 3.5, fig.height = 2.5}
+ggplot(kwh_day_agg, aes(x = kwh_tot)) +
+  geom_histogram(fill = "blue", bins = 200) +
+  theme_bw() +
+  labs(title = "Daily kwh values per building")
+
+ggplot(kwh_day_agg, aes(x = kwh_sqft)) +
+  geom_histogram(fill = "darkorange1", bins = 200) +
+  theme_bw() +
+  labs(title = "Daily kwh/sqft values per building")
+
+ggplot(kwh_yr_agg, aes(x = kwh_tot)) +
+  geom_histogram(fill = "dodgerblue", bins = 50) +
+  theme_bw() +
+  labs(title = "Annual kwh values per building")
+
+ggplot(kwh_yr_agg, aes(x = kwh_sqft)) +
+  geom_histogram(fill = "orange", bins = 50) +
+  theme_bw() +
+  labs(title = "Annual kwh/sqft values per building")
+```
+
+```{r sqft with stats, fig.width = 3.5, fig.height = 2.5}
+kwh_day_finite <- filter(kwh_day_agg, is.finite(kwh_sqft))
+
+ggplot(kwh_day_finite, aes(x = kwh_sqft)) +
+  geom_histogram(fill = "darkorange1", bins = 200) +
+  theme_bw() +
+  labs(title = "Daily kwh/sqft values per building = mean and SD") +
+  geom_vline(aes(xintercept = mean(kwh_sqft))) +
+  geom_vline(aes(xintercept = mean(kwh_sqft) + sd(kwh_sqft)), linetype = "dashed") +
+  geom_vline(aes(xintercept = mean(kwh_sqft) - sd(kwh_sqft)), linetype = "dashed") 
+```
+
+```{r sqft with stats2, fig.width = 3.5, fig.height = 2.5}
+kwh_day_finite <- filter(kwh_day_agg, is.finite(kwh_sqft))
+
+ggplot(kwh_day_finite, aes(x = kwh_sqft)) +
+  geom_histogram(fill = "darkorange1", bins = 200) +
+  theme_bw() +
+  labs(title = "Daily kwh/sqft values per building = median and IQR") +
+  geom_vline(aes(xintercept = median(kwh_sqft))) +
+  geom_vline(aes(xintercept = quantile(kwh_sqft, 0.25)), linetype = "dashed") +
+  geom_vline(aes(xintercept = quantile(kwh_sqft, 0.75)), linetype = "dashed") 
+```

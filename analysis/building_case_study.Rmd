@@ -9,22 +9,131 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Purpose
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This code is fleshing out the tasks for students in Problem Set 4 (data visualization).
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+## Prepare data
 
-```{r cars}
-summary(cars)
+### Load
+
+```{r load}
+library(tidyverse)
+annual <- read.csv("../output/annual_kwh.csv")
+daily <- read.csv("../output/daily_kwh.csv")
 ```
 
-## Including Plots
+### Wrangle
 
-You can also embed plots, for example:
+```{r wrangle}
+annual_RHS <- filter(annual, type == "Res Hall - S")
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+daily_date <- daily %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE))
+
+daily_RHS <- filter(daily_date, type == "Res Hall - S")
+
+daily_N_Col <- daily_date %>%
+    filter(NAME == "135 N. College St.") 
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+### Check
+
+```{r check}
+str(annual_RHS)
+str(daily_N_Col)
+```
+
+
+## Check distribution of square footage
+
+```{r res halls}
+res_halls <- filter(annual, type %in% c("Res Hall - S", "Res Hall - M", "Res Hall - L"))
+
+ggplot(res_halls, aes(x = sqft)) +
+  geom_histogram(bins = 100, fill = "purple") +
+  theme_bw()
+
+ggplot(res_halls, aes(x = sqft)) +
+  geom_density(fill = "purple") +
+  theme_bw() +
+  geom_vline(xintercept = c(2000, 10000), linetype = "dashed")
+
+quantile(res_halls$sqft, c(0.33, 0.66))
+```
+
+## Building type summary
+
+### Total use
+
+```{r total}
+ggplot(daily_RHS, aes(x = month, y = kwh, fill = NAME)) +
+  geom_bar(position = "stack", stat = "identity") +
+  theme_bw() +
+  labs(x = "", fill = "", title = "Small Residence Hall electricity use")
+```
+
+### Monthly pattern
+
+```{r monthly}
+ggplot(daily_date, aes(x = month, y = kwh, fill = type)) +
+  geom_bar(position = "stack", stat = "identity") +
+  theme_bw() +
+  labs(x = "", fill = "")
+
+ggplot(daily_date, aes(x = month, y = kwh, fill = type)) +
+  geom_bar(position = "stack", stat = "identity") +
+  facet_wrap(. ~ type, scales = "free") +
+  theme_bw() +
+  theme(legend.position = "none")
+```
+
+### Building case study
+
+### Distribution
+
+```{r distr}
+ggplot(daily_RHS, aes(x = kwh)) +
+  geom_histogram(bins = 50, fill = "darkorchid1") +
+  theme_bw()
+
+ggplot(daily_N_Col, aes(x = kwh)) +
+  geom_histogram(bins = 50, fill = "darkorchid1") +
+  theme_bw()
+
+summary(daily_RHS$kwh)
+summary(daily_N_Col$kwh)
+```
+
+### Seasonal pattern
+
+```{r seasonal}
+ggplot(daily_N_Col, aes(x = date, y = kwh)) +
+  theme_bw() +
+  geom_line() +
+  labs(x = "", y = "Electricity use (kWh)") +
+  geom_vline(xintercept = ymd("2024-09-02"), color = "darkorchid1", linetype = "dashed") +
+  geom_vline(xintercept = ymd("2024-12-21"), color = "darkorchid1", linetype = "dashed") +
+  geom_vline(xintercept = ymd("2025-01-20"), color = "darkorchid1", linetype = "dashed") +
+  geom_vline(xintercept = ymd("2025-05-13"), color = "darkorchid1", linetype = "dashed") 
+```
+
+### Daily pattern
+
+```{r daily}
+ggplot(daily_N_Col, aes(x = day, y = kwh, fill = day)) +
+  geom_boxplot() +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh)", fill = "") +
+  theme(legend.position = "none")
+```
+
+### Relationship to temperature
+
+```{r temp}
+ggplot(daily_N_Col, aes(x = ave_temp, y = kwh, col = month)) +
+  geom_point() +
+  theme_bw()
+```

@@ -1,0 +1,149 @@
+---
+title: "Main Meter case study"
+author: "Maggie Douglas"
+date: "2026-02-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+
+This code is fleshing out the tasks for students in Problem Set 4 (data visualization). It is also generating examples based on the main meter data that the students will 'reverse engineer' to learn how to use ggplot. 
+
+## Prepare data
+
+### Load
+
+```{r load}
+library(tidyverse)
+
+daily <- read.csv("../output/kwh_daily.csv", strip.white = TRUE)
+
+str(daily)
+```
+
+### Wrangle
+
+```{r wrangle}
+daily_date <- daily %>%
+  mutate(date = mdy(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE)) %>%
+  select(type, NAME, date, month, day, kwh, ave_temp)
+
+daily_main <- filter(daily_date, NAME == "Main Meter", )
+```
+
+### Check
+
+```{r check}
+str(daily_date)
+str(daily_main)
+```
+
+## Building type summary
+
+```{r total_bar}
+ggplot(daily_date, aes(x = fct_reorder(type, -kwh, sum), y = kwh, fill = type)) + # specify data and variables; sort bars by value
+  geom_col(position = "stack") + # specify graph type + data processing
+  theme_bw() + # use a simply black and white theme
+  theme(legend.position = "none", # remove the legend (redundant)
+        axis.text.x = element_text(angle = 90)) +  # rotate the X axis labels
+  labs(x = "", # remove the label on the X axis (unnecessary)
+       y = "Electricity use (kWh)", # label the Y axis with variable and units
+       fill = "", # remove the title of the legend (unnecessary)
+       title = "Electricity use by building type") # set the title for the graph
+```
+
+```{r total_blank}
+ggplot(daily_date, aes(x = month, y = kwh, fill = type)) # specify data and variables
+```
+
+```{r total_geom}
+ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
+  geom_col(position = "stack")  # specify graph type + data processing
+```
+
+```{r total_theme}
+ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
+  geom_col(position = "stack") + # specify graph type + data processing
+  theme_bw()  # use a simply black and white theme
+```
+
+```{r total_labs}
+ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
+  geom_col(position = "stack") + # specify graph type + data processing
+  theme_bw() + # use a simply black and white theme
+  labs(x = "", # remove the label on the X axis (unnecessary)
+       y = "Electricity use (kWh)", # label the Y axis with variable and units
+       fill = "", # remove the title of the legend (unnecessary)
+       title = "Electricity use by building type over the year") # set the title for the graph
+```
+
+```{r total}
+ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
+  geom_col(position = "stack") + # specify graph type + data processing
+  theme_bw() + # use a simply black and white theme
+  labs(x = "", # remove the label on the X axis (unnecessary)
+       y = "Electricity use (kWh)", # label the Y axis with variable and units
+       fill = "", # remove the title of the legend (unnecessary)
+       title = "Electricity use by building type over the year") # set the title for the graph
+```
+
+### Building case study
+
+### Distribution
+
+```{r distr}
+ggplot(daily_main, aes(x = kwh)) +
+  geom_histogram(bins = 50, fill = "darkorchid1") +
+  theme_bw() +
+  labs(x = "Electricity use (kWh per day)", 
+       y = "Count", 
+       title = "Main Meter distribution of daily electricity use")
+
+summary(daily_main$kwh)
+summary(daily_date$kwh)
+```
+
+### Seasonal pattern
+
+```{r seasonal}
+ggplot(daily_main, aes(x = date, y = kwh)) +
+  theme_bw() +
+  geom_line() +
+  labs(x = "", 
+       y = "Electricity use (kWh per day)",
+       title = "Main Meter electricity use - Fiscal Year 2025") +
+  geom_vline(xintercept = ymd("2024-08-28"), color = "darkorchid1", linetype = "dashed") +
+  geom_vline(xintercept = ymd("2024-12-21"), color = "darkorchid1", linetype = "dashed") +
+  geom_vline(xintercept = ymd("2025-01-07"), color = "darkorchid1", linetype = "dashed") +
+  geom_vline(xintercept = ymd("2025-05-18"), color = "darkorchid1", linetype = "dashed") 
+```
+
+### Daily pattern
+
+```{r daily}
+ggplot(daily_main, aes(x = day, y = kwh, fill = day)) +
+  geom_boxplot() +
+  theme_bw() +
+  labs(x = "", 
+       y = "Electricity use (kWh per day)", 
+       fill = "",
+       title = "Main Meter electricity use by day") +
+  theme(legend.position = "none")
+```
+
+### Relationship to temperature
+
+```{r temp}
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() +
+  labs(x = "Temperature (degrees F)", 
+       y = "Electricity use (kWh per day)",
+       title = "Main meter electricity use by temperature")
+```
