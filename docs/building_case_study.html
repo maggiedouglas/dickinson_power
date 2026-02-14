@@ -13,7 +13,7 @@
 
 <meta name="date" content="2026-02-05" />
 
-<title>Main Meter case study</title>
+<title>Building case study</title>
 
 <script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -351,7 +351,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Main Meter case study</h1>
+<h1 class="title toc-ignore">Building case study</h1>
 <h4 class="author">Maggie Douglas</h4>
 <h4 class="date">2026-02-05</h4>
 
@@ -564,9 +564,6 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/building_case_study.Rmd
-    Modified:   analysis/data_exploration.Rmd
-    Modified:   analysis/distributions-descriptive-stats.Rmd
-    Modified:   analysis/main_meter_case_study.Rmd
 
 </code></pre>
 <p>
@@ -584,8 +581,8 @@ have uncommitted changes.
 
 <p>
 These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/main_meter_case_study.Rmd</code>)
-and HTML (<code>docs/main_meter_case_study.html</code>) files. If you’ve
+made to the R Markdown (<code>analysis/building_case_study.Rmd</code>)
+and HTML (<code>docs/building_case_study.html</code>) files. If you’ve
 configured a remote Git repository (see <code>?wflow_git_remote</code>),
 click on the hyperlinks in the table below to view the files as they
 were in that past version.
@@ -617,7 +614,7 @@ Message
 Rmd
 </td>
 <td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/analysis/main_meter_case_study.Rmd" target="_blank">f2835df</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/analysis/building_case_study.Rmd" target="_blank">f2835df</a>
 </td>
 <td>
 maggiedouglas
@@ -631,19 +628,19 @@ adjust gitignore and improve data wrangling and main meter case study
 </tr>
 <tr>
 <td>
-html
+Rmd
 </td>
 <td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/main_meter_case_study.html" target="_blank">f2835df</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/c2d2f6eb0e41c02727131cb3fdee582fa659988a/analysis/building_case_study.Rmd" target="_blank">c2d2f6e</a>
 </td>
 <td>
 maggiedouglas
 </td>
 <td>
-2026-02-14
+2026-02-07
 </td>
 <td>
-adjust gitignore and improve data wrangling and main meter case study
+project set up and preliminary analyses
 </td>
 </tr>
 </tbody>
@@ -656,9 +653,7 @@ adjust gitignore and improve data wrangling and main meter case study
 <div id="purpose" class="section level2">
 <h2>Purpose</h2>
 <p>This code is fleshing out the tasks for students in Problem Set 4
-(data visualization). It is also generating examples based on the main
-meter data that the students will ‘reverse engineer’ to learn how to use
-ggplot.</p>
+(data visualization).</p>
 </div>
 <div id="prepare-data" class="section level2">
 <h2>Prepare data</h2>
@@ -675,511 +670,146 @@ ggplot.</p>
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>daily &lt;- read.csv(&quot;./output/kwh_daily.csv&quot;, strip.white = TRUE)
-
-str(daily)</code></pre>
-<pre><code>&#39;data.frame&#39;:   28293 obs. of  7 variables:
- $ NAME    : chr  &quot;162-164  Dickinson Ave.&quot; &quot;162-164  Dickinson Ave.&quot; &quot;162-164  Dickinson Ave.&quot; &quot;162-164  Dickinson Ave.&quot; ...
- $ date    : chr  &quot;1/1/25&quot; &quot;1/10/25&quot; &quot;1/11/25&quot; &quot;1/12/25&quot; ...
- $ kwh     : num  17.7 23.6 21.3 20.8 21.5 ...
- $ sqft    : int  2500 2500 2500 2500 2500 2500 2500 2500 2500 2500 ...
- $ ave_temp: int  42 27 28 32 33 25 24 22 32 33 ...
- $ kwh_sqft: num  0.00706 0.00945 0.00852 0.00832 0.00861 ...
- $ type    : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...</code></pre>
+<pre class="r"><code>annual &lt;- read.csv(&quot;./output/annual_kwh.csv&quot;)
+daily &lt;- read.csv(&quot;./output/daily_kwh.csv&quot;)</code></pre>
 </div>
 <div id="wrangle" class="section level3">
 <h3>Wrangle</h3>
-<pre class="r"><code>daily_date &lt;- daily %&gt;%
-  mutate(date = mdy(date),
-         month = month(date, label = TRUE),
-         day = wday(date, label = TRUE)) %&gt;%
-  select(type, NAME, date, month, day, kwh, ave_temp)
+<pre class="r"><code>annual_RHS &lt;- filter(annual, type == &quot;Res Hall - S&quot;)
 
-daily_main &lt;- filter(daily_date, NAME == &quot;Main Meter&quot;, )</code></pre>
+daily_date &lt;- daily %&gt;%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE))</code></pre>
+<pre><code>Warning: There was 1 warning in `mutate()`.
+ℹ In argument: `date = ymd(date)`.
+Caused by warning:
+!  16550 failed to parse.</code></pre>
+<pre class="r"><code>daily_RHS &lt;- filter(daily_date, type == &quot;Res Hall - S&quot;)
+
+daily_N_Col &lt;- daily_date %&gt;%
+    filter(NAME == &quot;135 N. College St.&quot;) </code></pre>
 </div>
 <div id="check" class="section level3">
 <h3>Check</h3>
-<pre class="r"><code>str(daily_date)</code></pre>
-<pre><code>&#39;data.frame&#39;:   28293 obs. of  7 variables:
- $ type    : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
- $ NAME    : chr  &quot;162-164  Dickinson Ave.&quot; &quot;162-164  Dickinson Ave.&quot; &quot;162-164  Dickinson Ave.&quot; &quot;162-164  Dickinson Ave.&quot; ...
- $ date    : Date, format: &quot;2025-01-01&quot; &quot;2025-01-10&quot; ...
- $ month   : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 1 1 1 1 1 1 1 1 1 1 ...
- $ day     : Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 4 6 7 1 2 3 4 5 6 7 ...
- $ kwh     : num  17.7 23.6 21.3 20.8 21.5 ...
- $ ave_temp: int  42 27 28 32 33 25 24 22 32 33 ...</code></pre>
-<pre class="r"><code>str(daily_main)</code></pre>
-<pre><code>&#39;data.frame&#39;:   365 obs. of  7 variables:
- $ type    : chr  &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; ...
- $ NAME    : chr  &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; ...
- $ date    : Date, format: &quot;2025-01-01&quot; &quot;2025-01-10&quot; ...
- $ month   : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 1 1 1 1 1 1 1 1 1 1 ...
- $ day     : Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 4 6 7 1 2 3 4 5 6 7 ...
- $ kwh     : num  20407 26299 23861 23534 26302 ...
- $ ave_temp: int  42 27 28 32 33 25 24 22 32 33 ...</code></pre>
+<pre class="r"><code>str(annual_RHS)</code></pre>
+<pre><code>&#39;data.frame&#39;:   17 obs. of  5 variables:
+ $ type    : chr  &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; ...
+ $ NAME    : chr  &quot;135 Cedar St.&quot; &quot;135 N. College St.&quot; &quot;2 Conway St.&quot; &quot;417 W. Louther St.&quot; ...
+ $ kwh_tot : int  13830 18531 5543 8115 7326 15611 8772 8965 7070 7910 ...
+ $ sqft    : int  1900 1476 1729 1462 1318 1500 1492 1492 1532 1532 ...
+ $ kwh_sqft: num  7.28 12.55 3.21 5.55 5.56 ...</code></pre>
+<pre class="r"><code>str(daily_N_Col)</code></pre>
+<pre><code>&#39;data.frame&#39;:   365 obs. of  15 variables:
+ $ NAME       : chr  &quot;135 N. College St.&quot; &quot;135 N. College St.&quot; &quot;135 N. College St.&quot; &quot;135 N. College St.&quot; ...
+ $ date       : Date, format: &quot;2001-01-25&quot; &quot;2001-10-25&quot; ...
+ $ kwh        : num  22.2 29.6 29 28.6 31.2 ...
+ $ ave_temp   : int  42 27 28 32 33 25 24 22 32 33 ...
+ $ type       : chr  &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; ...
+ $ main_meter : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ date_constr: int  1910 1910 1910 1910 1910 1910 1910 1910 1910 1910 ...
+ $ date_acqd  : int  1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 ...
+ $ date_reno  : int  2019 2019 2019 2019 2019 2019 2019 2019 2019 2019 ...
+ $ sqft       : int  1476 1476 1476 1476 1476 1476 1476 1476 1476 1476 ...
+ $ kwh_sqft   : num  0.015 0.0201 0.0196 0.0194 0.0212 ...
+ $ dollars    : num  1.8 2.41 2.36 2.32 2.54 ...
+ $ co2_kg     : num  6.64 8.87 8.68 8.56 9.35 ...
+ $ month      : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 1 10 11 12 NA NA NA NA NA NA ...
+ $ day        : Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 5 5 1 3 NA NA NA NA NA NA ...</code></pre>
 </div>
+</div>
+<div id="check-distribution-of-square-footage" class="section level2">
+<h2>Check distribution of square footage</h2>
+<pre class="r"><code>res_halls &lt;- filter(annual, type %in% c(&quot;Res Hall - S&quot;, &quot;Res Hall - M&quot;, &quot;Res Hall - L&quot;))
+
+ggplot(res_halls, aes(x = sqft)) +
+  geom_histogram(bins = 100, fill = &quot;purple&quot;) +
+  theme_bw()</code></pre>
+<p><img src="figure/building_case_study.Rmd/res%20halls-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(res_halls, aes(x = sqft)) +
+  geom_density(fill = &quot;purple&quot;) +
+  theme_bw() +
+  geom_vline(xintercept = c(2000, 10000), linetype = &quot;dashed&quot;)</code></pre>
+<p><img src="figure/building_case_study.Rmd/res%20halls-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>quantile(res_halls$sqft, c(0.33, 0.66))</code></pre>
+<pre><code>    33%     66% 
+1532.00 5035.44 </code></pre>
 </div>
 <div id="building-type-summary" class="section level2">
 <h2>Building type summary</h2>
-<pre class="r"><code>ggplot(daily_date, aes(x = fct_reorder(type, -kwh, sum), y = kwh, fill = type)) + # specify data and variables; sort bars by value
-  geom_col(position = &quot;stack&quot;) + # specify graph type + data processing
-  theme_bw() + # use a simply black and white theme
-  theme(legend.position = &quot;none&quot;, # remove the legend (redundant)
-        axis.text.x = element_text(angle = 90)) +  # rotate the X axis labels
-  labs(x = &quot;&quot;, # remove the label on the X axis (unnecessary)
-       y = &quot;Electricity use (kWh)&quot;, # label the Y axis with variable and units
-       fill = &quot;&quot;, # remove the title of the legend (unnecessary)
-       title = &quot;Electricity use by building type&quot;) # set the title for the graph</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/total_bar-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-total_bar-1">
-Past versions of total_bar-1.png
-</button>
-</p>
-<div id="fig-total_bar-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_bar-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
+<div id="total-use" class="section level3">
+<h3>Total use</h3>
+<pre class="r"><code>ggplot(daily_RHS, aes(x = month, y = kwh, fill = NAME)) +
+  geom_bar(position = &quot;stack&quot;, stat = &quot;identity&quot;) +
+  theme_bw() +
+  labs(x = &quot;&quot;, fill = &quot;&quot;, title = &quot;Small Residence Hall electricity use&quot;)</code></pre>
+<p><img src="figure/building_case_study.Rmd/total-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
-</div>
-<pre class="r"><code>ggplot(daily_date, aes(x = month, y = kwh, fill = type)) # specify data and variables</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/total_blank-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-total_blank-1">
-Past versions of total_blank-1.png
-</button>
-</p>
-<div id="fig-total_blank-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_blank-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
-  geom_col(position = &quot;stack&quot;)  # specify graph type + data processing</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/total_geom-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-total_geom-1">
-Past versions of total_geom-1.png
-</button>
-</p>
-<div id="fig-total_geom-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_geom-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
-  geom_col(position = &quot;stack&quot;) + # specify graph type + data processing
-  theme_bw()  # use a simply black and white theme</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/total_theme-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-total_theme-1">
-Past versions of total_theme-1.png
-</button>
-</p>
-<div id="fig-total_theme-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_theme-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
-  geom_col(position = &quot;stack&quot;) + # specify graph type + data processing
-  theme_bw() + # use a simply black and white theme
-  labs(x = &quot;&quot;, # remove the label on the X axis (unnecessary)
-       y = &quot;Electricity use (kWh)&quot;, # label the Y axis with variable and units
-       fill = &quot;&quot;, # remove the title of the legend (unnecessary)
-       title = &quot;Electricity use by building type over the year&quot;) # set the title for the graph</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/total_labs-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-total_labs-1">
-Past versions of total_labs-1.png
-</button>
-</p>
-<div id="fig-total_labs-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_labs-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ggplot(daily_date, aes(x = month, y = kwh, fill = type)) + # specify data and variables
-  geom_col(position = &quot;stack&quot;) + # specify graph type + data processing
-  theme_bw() + # use a simply black and white theme
-  labs(x = &quot;&quot;, # remove the label on the X axis (unnecessary)
-       y = &quot;Electricity use (kWh)&quot;, # label the Y axis with variable and units
-       fill = &quot;&quot;, # remove the title of the legend (unnecessary)
-       title = &quot;Electricity use by building type over the year&quot;) # set the title for the graph</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/total-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-total-1">
-Past versions of total-1.png
-</button>
-</p>
-<div id="fig-total-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
+<div id="monthly-pattern" class="section level3">
+<h3>Monthly pattern</h3>
+<pre class="r"><code>ggplot(daily_date, aes(x = month, y = kwh, fill = type)) +
+  geom_bar(position = &quot;stack&quot;, stat = &quot;identity&quot;) +
+  theme_bw() +
+  labs(x = &quot;&quot;, fill = &quot;&quot;)</code></pre>
+<p><img src="figure/building_case_study.Rmd/monthly-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(daily_date, aes(x = month, y = kwh, fill = type)) +
+  geom_bar(position = &quot;stack&quot;, stat = &quot;identity&quot;) +
+  facet_wrap(. ~ type, scales = &quot;free&quot;) +
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/building_case_study.Rmd/monthly-2.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="building-case-study" class="section level3">
 <h3>Building case study</h3>
 </div>
 <div id="distribution" class="section level3">
 <h3>Distribution</h3>
-<pre class="r"><code>ggplot(daily_main, aes(x = kwh)) +
+<pre class="r"><code>ggplot(daily_RHS, aes(x = kwh)) +
   geom_histogram(bins = 50, fill = &quot;darkorchid1&quot;) +
-  theme_bw() +
-  labs(x = &quot;Electricity use (kWh per day)&quot;, 
-       y = &quot;Count&quot;, 
-       title = &quot;Main Meter distribution of daily electricity use&quot;)</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/distr-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-distr-1">
-Past versions of distr-1.png
-</button>
-</p>
-<div id="fig-distr-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/distr-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>summary(daily_main$kwh)</code></pre>
+  theme_bw()</code></pre>
+<p><img src="figure/building_case_study.Rmd/distr-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(daily_N_Col, aes(x = kwh)) +
+  geom_histogram(bins = 50, fill = &quot;darkorchid1&quot;) +
+  theme_bw()</code></pre>
+<p><img src="figure/building_case_study.Rmd/distr-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>summary(daily_RHS$kwh)</code></pre>
 <pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-  19625   28452   31106   31915   34510   50597 </code></pre>
-<pre class="r"><code>summary(daily_date$kwh)</code></pre>
-<pre><code>    Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
-    0.00    17.20    41.39   607.59   149.24 50596.80 </code></pre>
+   1.93   11.31   18.29   23.21   28.74  180.24 </code></pre>
+<pre class="r"><code>summary(daily_N_Col$kwh)</code></pre>
+<pre><code>   Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+  11.83   32.96   42.69   50.77   58.53  180.24 </code></pre>
 </div>
 <div id="seasonal-pattern" class="section level3">
 <h3>Seasonal pattern</h3>
-<pre class="r"><code>ggplot(daily_main, aes(x = date, y = kwh)) +
+<pre class="r"><code>ggplot(daily_N_Col, aes(x = date, y = kwh)) +
   theme_bw() +
   geom_line() +
-  labs(x = &quot;&quot;, 
-       y = &quot;Electricity use (kWh per day)&quot;,
-       title = &quot;Main Meter electricity use - Fiscal Year 2025&quot;) +
-  geom_vline(xintercept = ymd(&quot;2024-08-28&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh)&quot;) +
+  geom_vline(xintercept = ymd(&quot;2024-09-02&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) +
   geom_vline(xintercept = ymd(&quot;2024-12-21&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) +
-  geom_vline(xintercept = ymd(&quot;2025-01-07&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) +
-  geom_vline(xintercept = ymd(&quot;2025-05-18&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) </code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/seasonal-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-seasonal-1">
-Past versions of seasonal-1.png
-</button>
-</p>
-<div id="fig-seasonal-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/seasonal-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+  geom_vline(xintercept = ymd(&quot;2025-01-20&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) +
+  geom_vline(xintercept = ymd(&quot;2025-05-13&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) </code></pre>
+<pre><code>Warning: Removed 221 rows containing missing values or values outside the scale range
+(`geom_line()`).</code></pre>
+<p><img src="figure/building_case_study.Rmd/seasonal-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="daily-pattern" class="section level3">
 <h3>Daily pattern</h3>
-<pre class="r"><code>ggplot(daily_main, aes(x = day, y = kwh, fill = day)) +
+<pre class="r"><code>ggplot(daily_N_Col, aes(x = day, y = kwh, fill = day)) +
   geom_boxplot() +
   theme_bw() +
-  labs(x = &quot;&quot;, 
-       y = &quot;Electricity use (kWh per day)&quot;, 
-       fill = &quot;&quot;,
-       title = &quot;Main Meter electricity use by day&quot;) +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh)&quot;, fill = &quot;&quot;) +
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/daily-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-daily-1">
-Past versions of daily-1.png
-</button>
-</p>
-<div id="fig-daily-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/daily-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<p><img src="figure/building_case_study.Rmd/daily-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="relationship-to-temperature" class="section level3">
 <h3>Relationship to temperature</h3>
-<pre class="r"><code>ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+<pre class="r"><code>ggplot(daily_N_Col, aes(x = ave_temp, y = kwh, col = month)) +
   geom_point() +
-  theme_bw() +
-  labs(x = &quot;Temperature (degrees F)&quot;, 
-       y = &quot;Electricity use (kWh per day)&quot;,
-       title = &quot;Main meter electricity use by temperature&quot;)</code></pre>
-<p><img src="figure/main_meter_case_study.Rmd/temp-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp-1">
-Past versions of temp-1.png
-</button>
-</p>
-<div id="fig-temp-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/temp-1.png" target="_blank">f2835df</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-14
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+  theme_bw()</code></pre>
+<pre><code>Warning: Removed 221 rows containing missing values or values outside the scale range
+(`geom_point()`).</code></pre>
+<p><img src="figure/building_case_study.Rmd/temp-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1209,22 +839,23 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
  [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
- [9] ggplot2_3.5.1   tidyverse_2.0.0
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 workflowr_1.7.1
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
  [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
-[13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
-[17] fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4  
-[21] cli_3.6.2         rlang_1.1.3       munsell_0.5.0     withr_3.0.0      
-[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
-[29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
-[33] lifecycle_1.0.4   git2r_0.33.0      fs_1.6.3          pkgconfig_2.0.3  
-[37] pillar_1.9.0      bslib_0.6.1       later_1.3.2       gtable_0.3.4     
-[41] glue_1.7.0        Rcpp_1.1.0        highr_0.10        xfun_0.41        
-[45] tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45        farver_2.1.1     
-[49] htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2   </code></pre>
+[13] jsonlite_1.8.8    processx_3.8.3    whisker_0.4.1     ps_1.7.5         
+[17] promises_1.2.1    httr_1.4.7        fansi_1.0.6       viridisLite_0.4.2
+[21] scales_1.3.0      jquerylib_0.1.4   cli_3.6.2         rlang_1.1.3      
+[25] munsell_0.5.0     withr_3.0.0       cachem_1.0.8      yaml_2.3.8       
+[29] tools_4.3.2       tzdb_0.4.0        colorspace_2.1-0  httpuv_1.6.13    
+[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0     
+[37] fs_1.6.3          pkgconfig_2.0.3   callr_3.7.3       pillar_1.9.0     
+[41] bslib_0.6.1       later_1.3.2       gtable_0.3.4      glue_1.7.0       
+[45] Rcpp_1.1.0        highr_0.10        xfun_0.41         tidyselect_1.2.0 
+[49] rstudioapi_0.16.0 knitr_1.45        farver_2.1.1      htmltools_0.5.7  
+[53] labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2    getPass_0.2-4    </code></pre>
 </div>
 </div>
 </div>

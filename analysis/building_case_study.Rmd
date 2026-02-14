@@ -19,8 +19,8 @@ This code is fleshing out the tasks for students in Problem Set 4 (data visualiz
 
 ```{r load}
 library(tidyverse)
-annual <- read.csv("../output/annual_kwh.csv")
-daily <- read.csv("../output/daily_kwh.csv")
+annual <- read.csv("./output/annual_kwh.csv")
+daily <- read.csv("./output/daily_kwh.csv")
 ```
 
 ### Wrangle

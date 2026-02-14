@@ -382,7 +382,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-08
+<strong>Last updated:</strong> 2026-02-14
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -516,13 +516,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongc2d2f6e">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef2835df2717c2952288a21c8dc2686a680a3cec3targetblankf2835dfa">
 <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong> c2d2f6e
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/f2835df2717c2952288a21c8dc2686a680a3cec3" target="_blank">f2835df</a>
 </a>
 </p>
 </div>
-<div id="strongRepositoryversionstrongc2d2f6e"
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef2835df2717c2952288a21c8dc2686a680a3cec3targetblankf2835dfa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -531,7 +533,8 @@ and connecting the code version to the results is critical for
 reproducibility.
 </p>
 <p>
-The results in this page were generated with repository version c2d2f6e.
+The results in this page were generated with repository version
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/f2835df2717c2952288a21c8dc2686a680a3cec3" target="_blank">f2835df</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -549,8 +552,19 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
+    Ignored:    data/graph_data_life_exp.csv
+    Ignored:    output/annual_kwh.csv
+    Ignored:    output/building_check.csv
+    Ignored:    output/building_check.xlsx
+    Ignored:    output/daily_kwh.csv
+    Ignored:    output/kwh_annual.csv
+    Ignored:    output/kwh_daily.csv
+    Ignored:    output/~$building_check.xlsx
 
 Unstaged changes:
+    Modified:   analysis/building_case_study.Rmd
+    Modified:   analysis/data_exploration.Rmd
     Modified:   analysis/distributions-descriptive-stats.Rmd
 
 </code></pre>
@@ -603,7 +617,41 @@ Message
 Rmd
 </td>
 <td>
-c2d2f6e
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/analysis/distributions-descriptive-stats.Rmd" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+adjust gitignore and improve data wrangling and main meter case study
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/distributions-descriptive-stats.html" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+adjust gitignore and improve data wrangling and main meter case study
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/c2d2f6eb0e41c02727131cb3fdee582fa659988a/analysis/distributions-descriptive-stats.Rmd" target="_blank">c2d2f6e</a>
 </td>
 <td>
 maggiedouglas
@@ -626,8 +674,8 @@ project set up and preliminary analyses
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.0     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
@@ -720,6 +768,43 @@ kwh_day_agg &lt;- kwh_daily %&gt;%
   theme_bw() +
   labs(title = &quot;Daily average temperatures&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/temp_distr-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp_distr-1">
+Past versions of temp_distr-1.png
+</button>
+</p>
+<div id="fig-temp_distr-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/temp_distr-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(temps, aes(x = ave_temp)) +
   geom_histogram(fill = &quot;purple&quot;, bins = 25) +
   theme_bw() +
@@ -728,6 +813,43 @@ kwh_day_agg &lt;- kwh_daily %&gt;%
   geom_vline(aes(xintercept = mean(ave_temp) + sd(ave_temp)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = mean(ave_temp) - sd(ave_temp)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/temp_with_stats-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp_with_stats-1">
+Past versions of temp_with_stats-1.png
+</button>
+</p>
+<div id="fig-temp_with_stats-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/temp_with_stats-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(temps, aes(x = ave_temp)) +
   geom_histogram(fill = &quot;purple&quot;, bins = 25) +
   theme_bw() +
@@ -736,12 +858,86 @@ kwh_day_agg &lt;- kwh_daily %&gt;%
   geom_vline(aes(xintercept = quantile(ave_temp, 0.25)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = quantile(ave_temp, 0.75)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/temp_with_stats2-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp_with_stats2-1">
+Past versions of temp_with_stats2-1.png
+</button>
+</p>
+<div id="fig-temp_with_stats2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/temp_with_stats2-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(temps, aes(x = month, y = ave_temp, fill = month)) +
   geom_boxplot() +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(title = &quot;Temperature by month (boxplot)&quot;, x = &quot;&quot;, y = &quot;Temperature (F)&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/temp_by_month_box-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp_by_month_box-1">
+Past versions of temp_by_month_box-1.png
+</button>
+</p>
+<div id="fig-temp_by_month_box-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/temp_by_month_box-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>temps_agg &lt;- temps %&gt;%
   group_by(month) %&gt;%
   summarize(temp = mean(ave_temp, na.rm = TRUE),
@@ -757,6 +953,43 @@ ggplot(temps_agg) +
   theme(legend.position = &quot;none&quot;) +
   labs(title = &quot;Temperature by month (barplot)&quot;, x = &quot;&quot;, y = &quot;Temperature (F)&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/temp_by_month_bar-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp_by_month_bar-1">
+Past versions of temp_by_month_bar-1.png
+</button>
+</p>
+<div id="fig-temp_by_month_bar-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/temp_by_month_bar-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="main-meter-example" class="section level2">
 <h2>Main meter example</h2>
@@ -797,6 +1030,43 @@ ggplot(temps_agg) +
   theme_bw() +
   labs(title = &quot;Daily kwh - Main Meter&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/main_distr-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main_distr-1">
+Past versions of main_distr-1.png
+</button>
+</p>
+<div id="fig-main_distr-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/main_distr-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_day_main, aes(x = kwh_tot)) +
   geom_histogram(fill = &quot;blue&quot;, bins = 25) +
   theme_bw() +
@@ -805,6 +1075,43 @@ ggplot(temps_agg) +
   geom_vline(aes(xintercept = mean(kwh_tot) + sd(kwh_tot)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = mean(kwh_tot) - sd(kwh_tot)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/main_with_stats-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main_with_stats-1">
+Past versions of main_with_stats-1.png
+</button>
+</p>
+<div id="fig-main_with_stats-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/main_with_stats-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_day_main, aes(x = kwh_tot)) +
   geom_histogram(fill = &quot;blue&quot;, bins = 25) +
   theme_bw() +
@@ -813,12 +1120,86 @@ ggplot(temps_agg) +
   geom_vline(aes(xintercept = quantile(kwh_tot, 0.25)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = quantile(kwh_tot, 0.75)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/main_with_stats2-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main_with_stats2-1">
+Past versions of main_with_stats2-1.png
+</button>
+</p>
+<div id="fig-main_with_stats2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/main_with_stats2-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_day_main, aes(x = month, y = kwh_tot, fill = month)) +
   geom_boxplot() +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(title = &quot;Daily kWh by month (boxplot)&quot;, x = &quot;&quot;, y = &quot;kWh per day&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/main_by_month_box-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main_by_month_box-1">
+Past versions of main_by_month_box-1.png
+</button>
+</p>
+<div id="fig-main_by_month_box-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/main_by_month_box-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>main_agg &lt;- kwh_day_main %&gt;%
   group_by(month) %&gt;%
   summarize(kwh = mean(kwh_tot, na.rm = TRUE),
@@ -834,6 +1215,43 @@ ggplot(main_agg) +
   theme(legend.position = &quot;none&quot;) +
   labs(title = &quot;Daily kWh by month (barplot)&quot;, x = &quot;&quot;, y = &quot;kWh per day&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/main_by_month_bar-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main_by_month_bar-1">
+Past versions of main_by_month_bar-1.png
+</button>
+</p>
+<div id="fig-main_by_month_bar-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/main_by_month_bar-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="building-type-example" class="section level2">
 <h2>Building type example</h2>
@@ -867,6 +1285,43 @@ ggplot(main_agg) +
   theme_bw() +
   labs(title = &quot;Annual kWh per sqft by building&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/bldg_distr-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg_distr-1">
+Past versions of bldg_distr-1.png
+</button>
+</p>
+<div id="fig-bldg_distr-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/bldg_distr-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_yr_agg, aes(x = kwh_sqft)) +
   geom_histogram(fill = &quot;darkorange&quot;, bins = 30) +
   theme_bw() +
@@ -875,6 +1330,43 @@ ggplot(main_agg) +
   geom_vline(aes(xintercept = mean(kwh_sqft, na.rm = T) + sd(kwh_sqft, na.rm = T)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = mean(kwh_sqft, na.rm = T) - sd(kwh_sqft, na.rm = T)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/bldg_with_stats-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg_with_stats-1">
+Past versions of bldg_with_stats-1.png
+</button>
+</p>
+<div id="fig-bldg_with_stats-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/bldg_with_stats-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_yr_agg, aes(x = kwh_sqft)) +
   geom_histogram(fill = &quot;darkorange&quot;, bins = 30) +
   theme_bw() +
@@ -883,6 +1375,43 @@ ggplot(main_agg) +
   geom_vline(aes(xintercept = quantile(kwh_sqft, 0.25, na.rm = T)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = quantile(kwh_sqft, 0.75, na.rm = T)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/bldg_with_stats2-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg_with_stats2-1">
+Past versions of bldg_with_stats2-1.png
+</button>
+</p>
+<div id="fig-bldg_with_stats2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/bldg_with_stats2-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_yr_agg, aes(x = type, y = kwh_sqft, fill = type)) +
   geom_boxplot() +
   theme_bw() +
@@ -890,6 +1419,43 @@ ggplot(main_agg) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(title = &quot;Annual kWh/sqft by type (boxplot)&quot;, x = &quot;&quot;, y = &quot;kWh/sqft per year&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/bldg_by_type_box-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg_by_type_box-1">
+Past versions of bldg_by_type_box-1.png
+</button>
+</p>
+<div id="fig-bldg_by_type_box-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/bldg_by_type_box-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>bldg_agg &lt;- kwh_yr_agg %&gt;%
   group_by(type) %&gt;%
   summarize(kwh = mean(kwh_sqft, na.rm = TRUE),
@@ -906,6 +1472,43 @@ ggplot(bldg_agg) +
   theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1)) +
   labs(title = &quot;Annual kWh per sqft by type (barplot)&quot;, x = &quot;&quot;, y = &quot;kWh/sqft per year&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/bldg_by_type_bar-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg_by_type_bar-1">
+Past versions of bldg_by_type_bar-1.png
+</button>
+</p>
+<div id="fig-bldg_by_type_bar-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/bldg_by_type_bar-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="electricity-data" class="section level2">
 <h2>Electricity data</h2>
@@ -914,21 +1517,169 @@ ggplot(bldg_agg) +
   theme_bw() +
   labs(title = &quot;Daily kwh values per building&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/dist-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-dist-1">
+Past versions of dist-1.png
+</button>
+</p>
+<div id="fig-dist-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/dist-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_day_agg, aes(x = kwh_sqft)) +
   geom_histogram(fill = &quot;darkorange1&quot;, bins = 200) +
   theme_bw() +
   labs(title = &quot;Daily kwh/sqft values per building&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/dist-2.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-dist-2">
+Past versions of dist-2.png
+</button>
+</p>
+<div id="fig-dist-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/dist-2.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_yr_agg, aes(x = kwh_tot)) +
   geom_histogram(fill = &quot;dodgerblue&quot;, bins = 50) +
   theme_bw() +
   labs(title = &quot;Annual kwh values per building&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/dist-3.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-dist-3">
+Past versions of dist-3.png
+</button>
+</p>
+<div id="fig-dist-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/dist-3.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(kwh_yr_agg, aes(x = kwh_sqft)) +
   geom_histogram(fill = &quot;orange&quot;, bins = 50) +
   theme_bw() +
   labs(title = &quot;Annual kwh/sqft values per building&quot;)</code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/dist-4.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-dist-4">
+Past versions of dist-4.png
+</button>
+</p>
+<div id="fig-dist-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/dist-4.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>kwh_day_finite &lt;- filter(kwh_day_agg, is.finite(kwh_sqft))
 
 ggplot(kwh_day_finite, aes(x = kwh_sqft)) +
@@ -939,6 +1690,43 @@ ggplot(kwh_day_finite, aes(x = kwh_sqft)) +
   geom_vline(aes(xintercept = mean(kwh_sqft) + sd(kwh_sqft)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = mean(kwh_sqft) - sd(kwh_sqft)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/sqft%20with%20stats-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-sqft-with-stats-1">
+Past versions of "sqft with stats-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-sqft-with-stats-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/sqft with stats-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>kwh_day_finite &lt;- filter(kwh_day_agg, is.finite(kwh_sqft))
 
 ggplot(kwh_day_finite, aes(x = kwh_sqft)) +
@@ -949,6 +1737,43 @@ ggplot(kwh_day_finite, aes(x = kwh_sqft)) +
   geom_vline(aes(xintercept = quantile(kwh_sqft, 0.25)), linetype = &quot;dashed&quot;) +
   geom_vline(aes(xintercept = quantile(kwh_sqft, 0.75)), linetype = &quot;dashed&quot;) </code></pre>
 <p><img src="figure/distributions-descriptive-stats.Rmd/sqft%20with%20stats2-1.png" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-sqft-with-stats2-1">
+Past versions of "sqft with stats2-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-sqft-with-stats2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/distributions-descriptive-stats.Rmd/sqft with stats2-1.png" target="_blank">f2835df</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -960,7 +1785,7 @@ Session information
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.3.2 (2023-10-31)
 Platform: x86_64-apple-darwin20 (64-bit)
-Running under: macOS Monterey 12.7.2
+Running under: macOS Ventura 13.7.8
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib 
@@ -977,23 +1802,24 @@ attached base packages:
 
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
- [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.0     tibble_3.2.1   
- [9] ggplot2_3.5.0   tidyverse_2.0.0
+ [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 workflowr_1.7.1
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
- [5] hms_1.1.3         digest_0.6.34     magrittr_2.0.3    timechange_0.3.0 
+ [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
-[13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
-[17] fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4  
-[21] cli_3.6.2         rlang_1.1.3       munsell_0.5.0     withr_3.0.0      
-[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
-[29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
-[33] lifecycle_1.0.4   git2r_0.33.0      fs_1.6.3          pkgconfig_2.0.3  
-[37] pillar_1.9.0      bslib_0.6.1       later_1.3.2       gtable_0.3.4     
-[41] glue_1.7.0        Rcpp_1.0.12       highr_0.10        xfun_0.41        
-[45] tidyselect_1.2.0  rstudioapi_0.15.0 knitr_1.45        farver_2.1.1     
-[49] htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2   </code></pre>
+[13] jsonlite_1.8.8    processx_3.8.3    whisker_0.4.1     ps_1.7.5         
+[17] promises_1.2.1    httr_1.4.7        fansi_1.0.6       viridisLite_0.4.2
+[21] scales_1.3.0      jquerylib_0.1.4   cli_3.6.2         rlang_1.1.3      
+[25] munsell_0.5.0     withr_3.0.0       cachem_1.0.8      yaml_2.3.8       
+[29] tools_4.3.2       tzdb_0.4.0        colorspace_2.1-0  httpuv_1.6.13    
+[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0     
+[37] fs_1.6.3          pkgconfig_2.0.3   callr_3.7.3       pillar_1.9.0     
+[41] bslib_0.6.1       later_1.3.2       gtable_0.3.4      glue_1.7.0       
+[45] Rcpp_1.1.0        highr_0.10        xfun_0.41         tidyselect_1.2.0 
+[49] rstudioapi_0.16.0 knitr_1.45        farver_2.1.1      htmltools_0.5.7  
+[53] labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2    getPass_0.2-4    </code></pre>
 </div>
 </div>
 

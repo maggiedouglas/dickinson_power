@@ -23,7 +23,7 @@ library(readxl)
 ## Data
 
 ```{r data}
-ppl <- read_excel("../data/FY25 PPL Electricity Data.xlsx", "PPL Data per Building")
+ppl <- read_excel("./data/FY25 PPL Electricity Data.xlsx", "PPL Data per Building")
 
 ppl <- rename(ppl,
        acct_num = "Account Number",
@@ -205,8 +205,8 @@ ggplot(solar, aes(x = kwh)) +
 ## HDD/CDD
 
 ```{r hdd/cdd}
-hdd <- read_excel("../data/FY24 and FY25 HDD and CDD for Carlisle.xlsx", "FY 25 HDD") 
-cdd <- read_excel("../data/FY24 and FY25 HDD and CDD for Carlisle.xlsx", "FY 25 CDD")
+hdd <- read_excel("./data/FY24 and FY25 HDD and CDD for Carlisle.xlsx", "FY 25 HDD") 
+cdd <- read_excel("./data/FY24 and FY25 HDD and CDD for Carlisle.xlsx", "FY 25 CDD")
 
 deg_day <- merge(cdd, hdd)
 

@@ -20,7 +20,7 @@ This code is fleshing out the tasks for students in Problem Set 4 (data visualiz
 ```{r load}
 library(tidyverse)
 
-daily <- read.csv("../output/kwh_daily.csv", strip.white = TRUE)
+daily <- read.csv("./output/kwh_daily.csv", strip.white = TRUE)
 
 str(daily)
 ```

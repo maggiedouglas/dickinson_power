@@ -15,9 +15,9 @@ library(tidyverse)
 
 ```{r data}
 # load datasets
-kwh_yr <- read.csv("../data/kwh_by_building.csv", strip.white = TRUE)
-kwh_daily <- read.csv("../data/FY25 PPL Electricity Data.csv", strip.white = TRUE)
-buildings <- read.csv("../data/building_list_FY25.csv", strip.white = TRUE)
+kwh_yr <- read.csv("./data/kwh_by_building.csv", strip.white = TRUE)
+kwh_daily <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = TRUE)
+buildings <- read.csv("./data/building_list_FY25.csv", strip.white = TRUE)
 
 # create key from meters to building names
 meter_key <- select(kwh_yr, meter_origin, NAME)
