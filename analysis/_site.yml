@@ -4,7 +4,7 @@ navbar:
   title: "dickinson_power"
   left:
   - text: Home
-    href: index.html
+    href: about.html
   - text: Data wrangling
     href: data_wrangling_final.html
 output:
