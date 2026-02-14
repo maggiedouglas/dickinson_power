@@ -334,10 +334,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="about.html">About</a>
-</li>
-<li>
-  <a href="license.html">License</a>
+  <a href="data_wrangling_final.html">Data wrangling</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -361,7 +358,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -372,8 +369,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -386,9 +383,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -411,21 +408,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -516,15 +510,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef2835df2717c2952288a21c8dc2686a680a3cec3targetblankf2835dfa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree4e6a88e3c0425cc45e104b7a6afbed8c3026db03targetblank4e6a88ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/f2835df2717c2952288a21c8dc2686a680a3cec3" target="_blank">f2835df</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/4e6a88e3c0425cc45e104b7a6afbed8c3026db03" target="_blank">4e6a88e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef2835df2717c2952288a21c8dc2686a680a3cec3targetblankf2835dfa"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree4e6a88e3c0425cc45e104b7a6afbed8c3026db03targetblank4e6a88ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -534,7 +528,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/f2835df2717c2952288a21c8dc2686a680a3cec3" target="_blank">f2835df</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/4e6a88e3c0425cc45e104b7a6afbed8c3026db03" target="_blank">4e6a88e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -561,12 +555,6 @@ Ignored files:
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/~$building_check.xlsx
-
-Unstaged changes:
-    Modified:   analysis/building_case_study.Rmd
-    Modified:   analysis/data_exploration.Rmd
-    Modified:   analysis/distributions-descriptive-stats.Rmd
-    Modified:   analysis/main_meter_case_study.Rmd
 
 </code></pre>
 <p>
@@ -612,6 +600,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/analysis/main_meter_case_study.Rmd" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+build pages for website
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/ba3286e0f995775932f69129a824088503a249e3/docs/main_meter_case_study.html" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+build pages for website
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -755,6 +777,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/main_meter_case_study.Rmd/total_bar-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_bar-1.png" target="_blank">f2835df</a>
 </td>
 <td>
@@ -792,6 +825,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/main_meter_case_study.Rmd/total_blank-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_blank-1.png" target="_blank">f2835df</a>
@@ -834,6 +878,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/main_meter_case_study.Rmd/total_geom-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_geom-1.png" target="_blank">f2835df</a>
 </td>
 <td>
@@ -873,6 +928,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/main_meter_case_study.Rmd/total_theme-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_theme-1.png" target="_blank">f2835df</a>
@@ -920,6 +986,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/main_meter_case_study.Rmd/total_labs-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total_labs-1.png" target="_blank">f2835df</a>
 </td>
 <td>
@@ -963,6 +1040,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/main_meter_case_study.Rmd/total-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f2835df2717c2952288a21c8dc2686a680a3cec3/docs/figure/main_meter_case_study.Rmd/total-1.png" target="_blank">f2835df</a>
@@ -1209,22 +1297,23 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
  [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
- [9] ggplot2_3.5.1   tidyverse_2.0.0
+ [9] ggplot2_3.5.1   tidyverse_2.0.0 workflowr_1.7.1
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
  [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
-[13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
-[17] fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4  
-[21] cli_3.6.2         rlang_1.1.3       munsell_0.5.0     withr_3.0.0      
-[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
-[29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
-[33] lifecycle_1.0.4   git2r_0.33.0      fs_1.6.3          pkgconfig_2.0.3  
-[37] pillar_1.9.0      bslib_0.6.1       later_1.3.2       gtable_0.3.4     
-[41] glue_1.7.0        Rcpp_1.1.0        highr_0.10        xfun_0.41        
-[45] tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45        farver_2.1.1     
-[49] htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2   </code></pre>
+[13] jsonlite_1.8.8    processx_3.8.3    whisker_0.4.1     ps_1.7.5         
+[17] promises_1.2.1    httr_1.4.7        fansi_1.0.6       viridisLite_0.4.2
+[21] scales_1.3.0      jquerylib_0.1.4   cli_3.6.2         rlang_1.1.3      
+[25] munsell_0.5.0     withr_3.0.0       cachem_1.0.8      yaml_2.3.8       
+[29] tools_4.3.2       tzdb_0.4.0        colorspace_2.1-0  httpuv_1.6.13    
+[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0     
+[37] fs_1.6.3          pkgconfig_2.0.3   callr_3.7.3       pillar_1.9.0     
+[41] bslib_0.6.1       later_1.3.2       gtable_0.3.4      glue_1.7.0       
+[45] Rcpp_1.1.0        highr_0.10        xfun_0.41         tidyselect_1.2.0 
+[49] rstudioapi_0.16.0 knitr_1.45        farver_2.1.1      htmltools_0.5.7  
+[53] labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2    getPass_0.2-4    </code></pre>
 </div>
 </div>
 </div>

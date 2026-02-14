@@ -256,10 +256,7 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="about.html">About</a>
-</li>
-<li>
-  <a href="license.html">License</a>
+  <a href="data_wrangling_final.html">Data wrangling</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -281,7 +278,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -292,8 +289,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -306,9 +303,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 1
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 2
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -331,36 +328,33 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeba3286e0f995775932f69129a824088503a249e3targetblankba3286ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree4e6a88e3c0425cc45e104b7a6afbed8c3026db03targetblank4e6a88ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/ba3286e0f995775932f69129a824088503a249e3" target="_blank">ba3286e</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/4e6a88e3c0425cc45e104b7a6afbed8c3026db03" target="_blank">4e6a88e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeba3286e0f995775932f69129a824088503a249e3targetblankba3286ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree4e6a88e3c0425cc45e104b7a6afbed8c3026db03targetblank4e6a88ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -370,7 +364,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/ba3286e0f995775932f69129a824088503a249e3" target="_blank">ba3286e</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/4e6a88e3c0425cc45e104b7a6afbed8c3026db03" target="_blank">4e6a88e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -397,9 +391,6 @@ Ignored files:
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/~$building_check.xlsx
-
-Unstaged changes:
-    Modified:   analysis/about.Rmd
 
 </code></pre>
 <p>
@@ -444,6 +435,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/621c3b8cda033ed31ce84299da4beded6ba7322a/analysis/about.Rmd" target="_blank">621c3b8</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+start populating About and add wrangling tab to navbar
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/621c3b8cda033ed31ce84299da4beded6ba7322a/docs/about.html" target="_blank">621c3b8</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+start populating About and add wrangling tab to navbar
+</td>
+</tr>
 <tr>
 <td>
 html

@@ -334,10 +334,7 @@ div.tocify {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="about.html">About</a>
-</li>
-<li>
-  <a href="license.html">License</a>
+  <a href="data_wrangling_final.html">Data wrangling</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -361,7 +358,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -372,8 +369,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -386,9 +383,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -411,21 +408,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -516,15 +510,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef2835df2717c2952288a21c8dc2686a680a3cec3targetblankf2835dfa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree4e6a88e3c0425cc45e104b7a6afbed8c3026db03targetblank4e6a88ea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/f2835df2717c2952288a21c8dc2686a680a3cec3" target="_blank">f2835df</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/4e6a88e3c0425cc45e104b7a6afbed8c3026db03" target="_blank">4e6a88e</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef2835df2717c2952288a21c8dc2686a680a3cec3targetblankf2835dfa"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree4e6a88e3c0425cc45e104b7a6afbed8c3026db03targetblank4e6a88ea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -534,7 +528,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/f2835df2717c2952288a21c8dc2686a680a3cec3" target="_blank">f2835df</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/4e6a88e3c0425cc45e104b7a6afbed8c3026db03" target="_blank">4e6a88e</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -561,10 +555,6 @@ Ignored files:
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/~$building_check.xlsx
-
-Unstaged changes:
-    Modified:   analysis/building_case_study.Rmd
-    Modified:   analysis/data_exploration.Rmd
 
 </code></pre>
 <p>
@@ -610,6 +600,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/analysis/data_exploration.Rmd" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+build pages for website
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/ba3286e0f995775932f69129a824088503a249e3/docs/data_exploration.html" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+build pages for website
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -714,22 +738,170 @@ colnames(buildings) &lt;- &quot;building&quot;</code></pre>
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/graphs-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-graphs-1">
+Past versions of graphs-1.png
+</button>
+</p>
+<div id="fig-graphs-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/graphs-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(ppl, aes(x = month, y = kwh, fill = meter)) +
   geom_bar(stat = &quot;identity&quot;, position = &quot;stack&quot;) +
   theme_bw() +
   labs(x = &quot;&quot;) +
   geom_hline(yintercept = 0)</code></pre>
 <p><img src="figure/data_exploration.Rmd/main-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main-1">
+Past versions of main-1.png
+</button>
+</p>
+<div id="fig-main-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/main-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(ppl_agg, aes(x = day, y = kwh, fill = day)) +
   geom_boxplot() +
   facet_wrap(meter ~ ., scales = &quot;free_y&quot;, ncol = 3) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/main-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main-2">
+Past versions of main-2.png
+</button>
+</p>
+<div id="fig-main-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/main-2.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(ppl_agg, aes(x = date, y = kwh, color = meter)) +
   geom_line() +
   theme_bw() +
   labs(x = &quot;&quot;)</code></pre>
 <p><img src="figure/data_exploration.Rmd/main-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-main-3">
+Past versions of main-3.png
+</button>
+</p>
+<div id="fig-main-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/main-3.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="single-building-examples" class="section level2">
 <h2>Single building examples</h2>
@@ -740,23 +912,208 @@ ggplot(adams, aes(x = kwh)) +
   geom_histogram(fill = &quot;lightblue&quot;, bins = 40) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-1">
+Past versions of bldg-1.png
+</button>
+</p>
+<div id="fig-bldg-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(adams, aes(x = kwh)) +
   geom_histogram(fill = &quot;lightblue&quot;, bins = 30) +
   facet_wrap(. ~ day) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-2">
+Past versions of bldg-2.png
+</button>
+</p>
+<div id="fig-bldg-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-2.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(adams, aes(x = date, y = kwh)) +
   geom_line() +
   theme_bw() </code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-3">
+Past versions of bldg-3.png
+</button>
+</p>
+<div id="fig-bldg-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-3.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(adams, aes(x = temp_F, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-4">
+Past versions of bldg-4.png
+</button>
+</p>
+<div id="fig-bldg-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-4.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(adams, aes(x = day, y = kwh, fill = day)) +
   geom_boxplot() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-5">
+Past versions of bldg-5.png
+</button>
+</p>
+<div id="fig-bldg-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-5.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>w_high &lt;- ppl %&gt;%
   filter(building == &quot;450 W High St, Residence Hall&quot;)
 
@@ -764,14 +1121,125 @@ ggplot(w_high, aes(x = date, y = kwh)) +
   geom_line() +
   theme_bw() </code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-6.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-6">
+Past versions of bldg-6.png
+</button>
+</p>
+<div id="fig-bldg-6" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-6.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(w_high, aes(x = temp_F, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-7.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-7">
+Past versions of bldg-7.png
+</button>
+</p>
+<div id="fig-bldg-7" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-7.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(w_high, aes(x = day, y = kwh, fill = day)) +
   geom_boxplot() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/bldg-8.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-bldg-8">
+Past versions of bldg-8.png
+</button>
+</p>
+<div id="fig-bldg-8" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/bldg-8.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="main-meter-example" class="section level2">
 <h2>Main meter example</h2>
@@ -782,28 +1250,250 @@ ggplot(big_combined, aes(x = date, y = kwh)) +
   geom_line() +
   theme_bw() </code></pre>
 <p><img src="figure/data_exploration.Rmd/group-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-group-1">
+Past versions of group-1.png
+</button>
+</p>
+<div id="fig-group-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/group-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_combined, aes(x = temp_F, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/group-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-group-2">
+Past versions of group-2.png
+</button>
+</p>
+<div id="fig-group-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/group-2.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_combined, aes(x = day, y = kwh)) +
   geom_boxplot(fill = &quot;lightblue&quot;) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/group-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-group-3">
+Past versions of group-3.png
+</button>
+</p>
+<div id="fig-group-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/group-3.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_combined, aes(x = month, y = kwh)) +
   geom_boxplot(fill = &quot;lightblue&quot;) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/group-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-group-4">
+Past versions of group-4.png
+</button>
+</p>
+<div id="fig-group-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/group-4.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_combined, aes(x = kwh)) +
   geom_density(fill = &quot;lightblue&quot;) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/group-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-group-5">
+Past versions of group-5.png
+</button>
+</p>
+<div id="fig-group-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/group-5.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(ppl_wide, aes(x = main, y = other, color = month)) +
   geom_point() +
   geom_smooth(stat = &quot;smooth&quot;, method = &quot;lm&quot;, formula = &#39;y ~ x&#39;) +
   facet_wrap(. ~ month) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/meter%20prediction-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-meter-prediction-1">
+Past versions of "meter prediction-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-meter-prediction-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/meter prediction-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>mod1 &lt;- lm(other ~ main*month, data = ppl_wide)
 mod2 &lt;- lm(other ~ main, data = ppl_wide)</code></pre>
 </div>
@@ -816,22 +1506,207 @@ ggplot(solar, aes(x = date, y = kwh)) +
   geom_line() +
   theme_bw() </code></pre>
 <p><img src="figure/data_exploration.Rmd/solar-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-solar-1">
+Past versions of solar-1.png
+</button>
+</p>
+<div id="fig-solar-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/solar-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(solar, aes(x = temp_F, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/solar-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-solar-2">
+Past versions of solar-2.png
+</button>
+</p>
+<div id="fig-solar-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/solar-2.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(solar, aes(x = day, y = kwh)) +
   geom_boxplot(fill = &quot;lightblue&quot;) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/solar-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-solar-3">
+Past versions of solar-3.png
+</button>
+</p>
+<div id="fig-solar-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/solar-3.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(solar, aes(x = month, y = kwh)) +
   geom_boxplot(fill = &quot;lightblue&quot;) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/solar-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-solar-4">
+Past versions of solar-4.png
+</button>
+</p>
+<div id="fig-solar-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/solar-4.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(solar, aes(x = kwh)) +
   geom_density(fill = &quot;lightblue&quot;) +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/solar-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-solar-5">
+Past versions of solar-5.png
+</button>
+</p>
+<div id="fig-solar-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/solar-5.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="hddcdd" class="section level2">
 <h2>HDD/CDD</h2>
@@ -862,22 +1737,207 @@ ggplot(big_comb, aes(x = date, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/join-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-join-1">
+Past versions of join-1.png
+</button>
+</p>
+<div id="fig-join-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/join-1.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_comb, aes(x = temp_F, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/join-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-join-2">
+Past versions of join-2.png
+</button>
+</p>
+<div id="fig-join-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/join-2.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_comb, aes(x = hdd_65, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/join-3.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-join-3">
+Past versions of join-3.png
+</button>
+</p>
+<div id="fig-join-3" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/join-3.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_comb, aes(x = cdd_65, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/join-4.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-join-4">
+Past versions of join-4.png
+</button>
+</p>
+<div id="fig-join-4" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/join-4.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(big_comb, aes(x = dd_tot, y = kwh)) +
   geom_point() +
   theme_bw()</code></pre>
 <p><img src="figure/data_exploration.Rmd/join-5.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-join-5">
+Past versions of join-5.png
+</button>
+</p>
+<div id="fig-join-5" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ba3286e0f995775932f69129a824088503a249e3/docs/figure/data_exploration.Rmd/join-5.png" target="_blank">ba3286e</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
