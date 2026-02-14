@@ -28,15 +28,27 @@ The main steps involved are:
 ```{r load}
 library(tidyverse) # load tidyverse
 library(DT) # library to create tables
+library(scales) # library to format dollars
 
 kwh <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = T) # load PPL data
 buildings <- read.csv("./keys/fy25_building_list.csv", strip.white = T) # load building information
 key <- read.csv("./keys/meter_building_key.csv", strip.white = T) # load key to link meters to buildings
+occupants <- read.csv("./keys/housing_counts.csv", strip.white = T)
 
 # generate electricity totals by meter for the year
 kwh_annual <- kwh %>%
   group_by(meter_origin) %>%
   summarize(kwh = sum(total_kwh, na.rm = T))
+
+# filter to AY24/25 and average across the year
+occu_agg <- occupants %>%
+  mutate(sem_yr = paste(semester, year)) %>%
+  filter(sem_yr %in% c("Fall 2024", "Spring 2025")) %>%
+  group_by(NAME, sem_yr) %>%
+  summarize(occupants = sum(occupants),
+            n = n()) %>%
+  group_by(NAME) %>%
+  summarize(occupants = mean(occupants))
 
 # store conversion factors
 dollars_kwh <- 0.0813
@@ -100,7 +112,9 @@ joined <- kwh_annual %>%
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %>% # take mean to preserve sqft data
   filter(!is.na(type_new)) %>% # filter out those with NA for type
+  left_join(occu_agg, by = "NAME") %>%
   mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
+         kwh_person = kwh/occupants,
          dollars = kwh*dollars_kwh,
          ghg_kgCO2 = kwh*co2_kg_kwh,
          type = type_new) %>% 
@@ -128,17 +142,20 @@ joined_daily <- kwh %>%
 ```{r annual table}
 joined_pretty <- joined %>%
   mutate(kwh = round(kwh, digits = 0),
-         dollars = round(dollars, digits = 0),
+         dollars = paste("$",round(dollars, digits = 0)),
          sqft = round(sqft, digits = 0),
-         kwh_sqft = round(kwh_sqft, digits = 1)) %>%
-  select(type, NAME, date_constr, date_reno, rental, kwh, dollars, sqft, kwh_sqft) %>% 
+         kwh_sqft = round(kwh_sqft, digits = 1),
+         occupants = round(occupants, digits = 0),
+         kwh_person = round(kwh_person, digits = 0)) %>%
+  select(type, NAME, date_constr, date_reno, rental, kwh, dollars, sqft, kwh_sqft, occupants, kwh_person) %>% 
   arrange(desc(sqft))
 
 datatable(joined_pretty,
           filter = 'top',
           rownames = FALSE,
           colnames = c("Building\ntype","Name","Date\nconstructed","Date\nrenovated",
-                       "Rental?","kWh", "Est. cost\n($)", "Square\nfootage","kWh\nper sqft"))
+                       "Rental?","kWh", "Est cost", "Square\nfootage","kWh\nper sqft",
+                       "Acad yr\noccupants", "kWh\nper person"))
 ```
 
 ## Export for downstream analyses
