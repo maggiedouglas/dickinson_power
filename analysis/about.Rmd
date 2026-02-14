@@ -7,4 +7,4 @@ editor_options:
   chunk_output_type: console
 ---
 
-Describe your project.
+This project seeks to explore electricity use at Dickinson College to support environmental and financial sustainability. The students in ENST 325: Environmental Data Analysis in Practice generated this report in spring 2026 to summarize their analysis of electricity data on campus. 

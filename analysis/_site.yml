@@ -5,10 +5,10 @@ navbar:
   left:
   - text: Home
     href: index.html
-  - text: About
-    href: about.html
   - text: License
     href: license.html
+  - text: Data wrangling
+    href: data_wrangling_final.html
 output:
   workflowr::wflow_html:
     toc: yes
