@@ -5,8 +5,6 @@ navbar:
   left:
   - text: Home
     href: index.html
-  - text: License
-    href: license.html
   - text: Data wrangling
     href: data_wrangling_final.html
 output:
