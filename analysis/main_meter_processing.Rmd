@@ -1,0 +1,132 @@
+---
+title: "Main Meter data processing"
+author: "Prof. D"
+date: "2026-02-16"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+
+This code loads and processes the data for individual buildings on the main meter, combines them into a single dataset, and summarizes the completeness of the data.
+
+## Load
+
+```{r load, message = FALSE}
+library(tidyverse)
+library(readxl)
+library(DT)
+```
+
+```{r data}
+# load names of tabs
+sheet <- excel_sheets("./data/FY25 Main Meter Data.xlsx")
+
+# applying sheet names to dataframe names
+data <- lapply(setNames(sheet, sheet), 
+                    function(x) 
+                      read_excel("./data/FY25 Main Meter Data.xlsx", sheet=x))
+
+# attaching all dataframes together
+main_bldgs <- bind_rows(data, .id="Sheet") %>%
+  rename(building = Sheet,
+         date = Date, 
+         kWh1 = 3,
+         kWh2 = 4) %>%
+  mutate(kwh = ifelse(is.na(kWh1), kWh2, kWh1),
+         date = mdy(date)) %>%
+  filter(date < ymd("2025-07-01"),
+         date > ymd("2024-06-30")) %>%
+  select(-kWh1, -kWh2) %>%
+  mutate(month = month(date, label = TRUE),
+         day = wday(date, label = TRUE)) %>%
+  select(building, month, day, date, kwh)
+```
+
+## Check
+
+```{r check}
+str(main_bldgs)
+```
+
+## Summarize
+
+```{r sum}
+# store main meter total kwh from PPL data
+main_tot <- 11648808
+
+annual_non_na <- main_bldgs %>%
+  filter(!is.na(kwh)) %>%
+  group_by(building) %>%
+  summarize(non_na = n())
+
+annual <- main_bldgs %>%
+  group_by(building) %>%
+  summarize(kwh = sum(kwh, na.rm = T),
+            days = n()) %>%
+  left_join(annual_non_na, by = "building") %>%
+  mutate(perc_days = round((non_na/days)*100, digits = 0))
+
+# which are the missing days?
+annual_missing <- main_bldgs %>%
+  filter(is.na(kwh)) %>%
+  group_by(date) %>%
+  summarize(n = n())
+
+# store total for all submetered buildings
+indiv_tot <- sum(annual$kwh)
+
+# What proportion of the total is captured here?
+indiv_tot / main_tot
+```
+
+## Summary graphs
+
+```{r graph, warning = F}
+ggplot(main_bldgs, aes(x = month, y = kwh, fill = building)) +
+  geom_col(position = "stack") +
+  theme_bw() +
+  labs(title = "Buildings with Submeters on the Main Meter",
+       x = "",
+       y = "Electricity use (kWh)")
+
+# store buildings with over 90% days of data
+comp_bldg <- filter(annual, perc_days > 90) 
+
+ggplot(filter(main_bldgs, building %in% comp_bldg$building),
+       aes(x = month, y = kwh, fill = building)) +
+  geom_col(position = "stack") +
+  theme_bw() +
+  labs(title = "Buildings with Submeters on the Main Meter\n
+       (those with electricity data for >90% of days)",
+       x = "",
+       y = "Electricity use (kWh)")
+```
+
+## Tables
+
+**Note:** I'm guessing `CHW` corresponds to central heating (?) This would be the part of Kaufman Hall that is associated with producing energy for the rest of campus.
+
+### Annual summary
+
+```{r tables}
+datatable(annual, filter = 'top', rownames=FALSE,
+          colnames = c("Building","Total kWh","# Days", "Days with data", "Days with data (%)"))
+```
+
+### Daily data
+
+```{r table daily}
+datatable(select(main_bldgs, building, date, kwh),
+          filter = 'top', rownames = FALSE, colnames = c("Building","Date","kWh"))
+```
+
+## Export
+
+```{r export}
+write.csv(annual, "./output/kwh_main_annual.csv", row.names = F)
+write.csv(main_bldgs, "./output/kwh_main_daily.csv", row.names = F)
+```
