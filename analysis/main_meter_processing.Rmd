@@ -30,6 +30,10 @@ data <- lapply(setNames(sheet, sheet),
                     function(x) 
                       read_excel("./data/FY25 Main Meter Data.xlsx", sheet=x))
 
+# load temp data
+temp <- read.csv("./keys/temp_by_date.csv") %>%
+  mutate(date = mdy(date))
+
 # attaching all dataframes together
 main_bldgs <- bind_rows(data, .id="Sheet") %>%
   rename(building = Sheet,
@@ -43,7 +47,8 @@ main_bldgs <- bind_rows(data, .id="Sheet") %>%
   select(-kWh1, -kWh2) %>%
   mutate(month = month(date, label = TRUE),
          day = wday(date, label = TRUE)) %>%
-  select(building, month, day, date, kwh)
+  select(building, month, day, date, kwh) %>%
+  left_join(temp, by = "date")
 ```
 
 ## Check
@@ -120,8 +125,8 @@ datatable(annual, filter = 'top', rownames=FALSE,
 ### Daily data
 
 ```{r table daily}
-datatable(select(main_bldgs, building, date, kwh),
-          filter = 'top', rownames = FALSE, colnames = c("Building","Date","kWh"))
+datatable(select(main_bldgs, building, date, kwh, ave_temp),
+          filter = 'top', rownames = FALSE, colnames = c("Building","Date","kWh", "Temp (F)"))
 ```
 
 ## Export
