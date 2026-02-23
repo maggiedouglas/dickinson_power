@@ -2,7 +2,7 @@
 Academic,Academic,1110,162-164  Dickinson Ave.,DEAL Archeology Labs,162-164 Dickinson Ave.,,1998,2010,2500,0,0,0,0
 Academic,Academic,1540,46 S. West St.,Music office/rehearsal space,46 S. West St.,,1982,,1775,0,0,0,0
 Academic,Academic,1035,57 S. College,Education Dept. Offices,57 S. College St.,,1979,,4576,0,0,0,0
-Academic,Academic,1030,East College,Humanities,50 N. West St. ,1836,,2019,28050,0,0,0,0
+Academic,Academic,1030,East College,Humanities,50 N. West St. ,1836,,2019,28050,0,1,0,0
 Academic,Academic,1040,Goodyear Arts Studio,Fine Arts ,559 W. Louther St.,1891,1979,2000,30000,0,0,0,0
 Academic,Academic,1810,Green Valley Sanctuary,Research Facility,,,1966,,2500,0,0,0,0
 Academic,Academic,1665,Carlisle Theatre,Cubiculo,44 W. High St.,,,1997,4000,1,0,0,0
@@ -132,3 +132,6 @@ Residence Hall,Res Hall - U,1518,152 W. Louther St.,Students,152 W. Louther St.,
 Residence Hall,Res Hall - U,1521,154 W. Louther St. (1),Students,152 W. Louther St.,,,,,1,0,0,0
 Residence Hall,Res Hall - U,1821,19-21 W. High St.,Students,19-23 W. High,,,,,1,0,0,0
 Residence Hall,Res Hall - U,1822,23 W. High St.,Students,19-23 W. High,,,,,1,0,0,0
+Mixed,Mixed,,Solar Farm,,,,,,,,,,
+Mixed,Mixed,,Main Meter,,,,,,,,,,
+Mixed,Mixed,,Weis Meter,,,,,,,,,,
