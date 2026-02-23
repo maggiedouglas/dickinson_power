@@ -29,7 +29,7 @@ daily <- read.csv("./output/daily_kwh.csv")
 annual_RHS <- filter(annual, type == "Res Hall - S")
 
 daily_date <- daily %>%
-  mutate(date = ymd(date),
+  mutate(date = mdy(date),
          month = month(date, label = TRUE),
          day = wday(date, label = TRUE))
 
@@ -37,6 +37,10 @@ daily_RHS <- filter(daily_date, type == "Res Hall - S")
 
 daily_N_Col <- daily_date %>%
     filter(NAME == "135 N. College St.") 
+
+monthly_RHS <- daily_RHS %>%
+  group_by(NAME, month) %>%
+  summarize(kwh_sqft = median(kwh_sqft))
 ```
 
 ### Check
@@ -137,3 +141,33 @@ ggplot(daily_N_Col, aes(x = ave_temp, y = kwh, col = month)) +
   geom_point() +
   theme_bw()
 ```
+
+### Boxplot
+
+```{r box}
+# store reference values from EIA (2022)
+dorm_med <- 13.6/365
+dorm_25 <- 8.2/365
+dorm_75 <- 36.1/365
+
+ggplot(daily_RHS, aes(x = reorder(NAME, kwh_sqft, FUN = median), y = kwh_sqft, fill = NAME)) + 
+  geom_boxplot(show.legend = FALSE) +
+  coord_flip() +
+  theme_light() +
+  labs(y = "Electricity Intensity (kWh per sqft per day)", x = "", fill = "",
+       title = "Small Residence Halls: Daily electricity use by building",
+       subtitle = "Buildings ordered by median value;\nBlue lines show 25th percentile, median, and 75th percentile for dormitories")
+```
+
+### Heatmap by month
+
+```{r heat}
+ggplot(monthly_RHS, aes(month, fct_reorder(NAME, kwh_sqft, .fun = 'sum'), fill= kwh_sqft)) + 
+  geom_tile() +
+  scale_fill_gradient(low="white", high="blue") +
+  theme_bw() +
+  labs(x = "", y = "", fill = "Electricity\nIntensity\n(kWh/sqft/day)",
+       title = "Small Residence Halls: Daily electricity use by building + month",
+       subtitle = "Buildings ordered by median value")
+```
+

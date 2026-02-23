@@ -358,7 +358,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -369,8 +369,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -379,13 +379,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-14
+<strong>Last updated:</strong> 2026-02-23
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -408,18 +408,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -510,15 +513,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree986d78ea369a9a4d86a850c8d978f34a63866b86targetblank986d78ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree182fffebb4d7be99596fca90384b3ba416ab01a2targetblank182fffea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/986d78ea369a9a4d86a850c8d978f34a63866b86" target="_blank">986d78e</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/182fffebb4d7be99596fca90384b3ba416ab01a2" target="_blank">182fffe</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree986d78ea369a9a4d86a850c8d978f34a63866b86targetblank986d78ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree182fffebb4d7be99596fca90384b3ba416ab01a2targetblank182fffea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -528,7 +531,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/986d78ea369a9a4d86a850c8d978f34a63866b86" target="_blank">986d78e</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/182fffebb4d7be99596fca90384b3ba416ab01a2" target="_blank">182fffe</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -547,6 +550,7 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/.DS_Store
+    Ignored:    data/FY25 Main Meter Data.xlsx
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
     Ignored:    output/annual_kwh.csv
@@ -555,6 +559,11 @@ Ignored files:
     Ignored:    output/daily_kwh.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_daily.csv
+    Ignored:    output/kwh_main_annual.csv
+    Ignored:    output/kwh_main_daily.csv
+
+Unstaged changes:
+    Modified:   analysis/building_case_study.Rmd
 
 </code></pre>
 <p>
@@ -600,6 +609,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/661b13b7069c117a21afa64c0d2b61f6bfa2e9bb/docs/building_case_study.html" target="_blank">661b13b</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -720,17 +746,20 @@ daily &lt;- read.csv(&quot;./output/daily_kwh.csv&quot;)</code></pre>
 <pre class="r"><code>annual_RHS &lt;- filter(annual, type == &quot;Res Hall - S&quot;)
 
 daily_date &lt;- daily %&gt;%
-  mutate(date = ymd(date),
+  mutate(date = mdy(date),
          month = month(date, label = TRUE),
-         day = wday(date, label = TRUE))</code></pre>
-<pre><code>Warning: There was 1 warning in `mutate()`.
-ℹ In argument: `date = ymd(date)`.
-Caused by warning:
-!  16550 failed to parse.</code></pre>
-<pre class="r"><code>daily_RHS &lt;- filter(daily_date, type == &quot;Res Hall - S&quot;)
+         day = wday(date, label = TRUE))
+
+daily_RHS &lt;- filter(daily_date, type == &quot;Res Hall - S&quot;)
 
 daily_N_Col &lt;- daily_date %&gt;%
-    filter(NAME == &quot;135 N. College St.&quot;) </code></pre>
+    filter(NAME == &quot;135 N. College St.&quot;) 
+
+monthly_RHS &lt;- daily_RHS %&gt;%
+  group_by(NAME, month) %&gt;%
+  summarize(kwh_sqft = median(kwh_sqft))</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;NAME&#39;. You can override using the
+`.groups` argument.</code></pre>
 </div>
 <div id="check" class="section level3">
 <h3>Check</h3>
@@ -744,7 +773,7 @@ daily_N_Col &lt;- daily_date %&gt;%
 <pre class="r"><code>str(daily_N_Col)</code></pre>
 <pre><code>&#39;data.frame&#39;:   365 obs. of  15 variables:
  $ NAME       : chr  &quot;135 N. College St.&quot; &quot;135 N. College St.&quot; &quot;135 N. College St.&quot; &quot;135 N. College St.&quot; ...
- $ date       : Date, format: &quot;2001-01-25&quot; &quot;2001-10-25&quot; ...
+ $ date       : Date, format: &quot;2025-01-01&quot; &quot;2025-01-10&quot; ...
  $ kwh        : num  22.2 29.6 29 28.6 31.2 ...
  $ ave_temp   : int  42 27 28 32 33 25 24 22 32 33 ...
  $ type       : chr  &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; &quot;Res Hall - S&quot; ...
@@ -756,8 +785,8 @@ daily_N_Col &lt;- daily_date %&gt;%
  $ kwh_sqft   : num  0.015 0.0201 0.0196 0.0194 0.0212 ...
  $ dollars    : num  1.8 2.41 2.36 2.32 2.54 ...
  $ co2_kg     : num  6.64 8.87 8.68 8.56 9.35 ...
- $ month      : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 1 10 11 12 NA NA NA NA NA NA ...
- $ day        : Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 5 5 1 3 NA NA NA NA NA NA ...</code></pre>
+ $ month      : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ day        : Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 4 6 7 1 2 3 4 5 6 7 ...</code></pre>
 </div>
 </div>
 <div id="check-distribution-of-square-footage" class="section level2">
@@ -1090,8 +1119,6 @@ maggiedouglas
   geom_vline(xintercept = ymd(&quot;2024-12-21&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) +
   geom_vline(xintercept = ymd(&quot;2025-01-20&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) +
   geom_vline(xintercept = ymd(&quot;2025-05-13&quot;), color = &quot;darkorchid1&quot;, linetype = &quot;dashed&quot;) </code></pre>
-<pre><code>Warning: Removed 221 rows containing missing values or values outside the scale range
-(`geom_line()`).</code></pre>
 <p><img src="figure/building_case_study.Rmd/seasonal-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-seasonal-1">
@@ -1182,8 +1209,6 @@ maggiedouglas
 <pre class="r"><code>ggplot(daily_N_Col, aes(x = ave_temp, y = kwh, col = month)) +
   geom_point() +
   theme_bw()</code></pre>
-<pre><code>Warning: Removed 221 rows containing missing values or values outside the scale range
-(`geom_point()`).</code></pre>
 <p><img src="figure/building_case_study.Rmd/temp-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp-1">
@@ -1222,6 +1247,36 @@ maggiedouglas
 </table>
 </div>
 </div>
+</div>
+<div id="boxplot" class="section level3">
+<h3>Boxplot</h3>
+<pre class="r"><code># store reference values from EIA (2022)
+dorm_med &lt;- 13.6/365
+dorm_25 &lt;- 8.2/365
+dorm_75 &lt;- 36.1/365
+
+ggplot(daily_RHS, aes(x = reorder(NAME, kwh_sqft, FUN = median), y = kwh_sqft, fill = NAME)) + 
+  geom_boxplot(show.legend = FALSE) +
+  coord_flip() +
+  theme_light() +
+  labs(y = &quot;Electricity Intensity (kWh per sqft per day)&quot;, x = &quot;&quot;, fill = &quot;&quot;,
+       title = &quot;Small Residence Halls: Daily electricity use by building&quot;,
+       subtitle = &quot;Buildings ordered by median value;\nBlue lines show 25th percentile, median, and 75th percentile for dormitories&quot;) +
+  geom_hline(yintercept = dorm_med, linetype = &quot;dashed&quot;, color = &quot;blue&quot;) +
+  geom_hline(yintercept = dorm_25, linetype = &quot;dashed&quot;, color = &quot;blue&quot;) +
+  geom_hline(yintercept = dorm_75, linetype = &quot;dashed&quot;, color = &quot;blue&quot;)</code></pre>
+<p><img src="figure/building_case_study.Rmd/box-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="heatmap-by-month" class="section level3">
+<h3>Heatmap by month</h3>
+<pre class="r"><code>ggplot(monthly_RHS, aes(month, fct_reorder(NAME, kwh_sqft, .fun = &#39;sum&#39;), fill= kwh_sqft)) + 
+  geom_tile() +
+  scale_fill_gradient(low=&quot;white&quot;, high=&quot;blue&quot;) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;&quot;, fill = &quot;Electricity\nIntensity\n(kWh/sqft/day)&quot;,
+       title = &quot;Small Residence Halls: Daily electricity use by building + month&quot;,
+       subtitle = &quot;Buildings ordered by median value&quot;)</code></pre>
+<p><img src="figure/building_case_study.Rmd/heat-1.png" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1251,23 +1306,22 @@ attached base packages:
 other attached packages:
  [1] lubridate_1.9.3 forcats_1.0.0   stringr_1.5.1   dplyr_1.1.4    
  [5] purrr_1.0.2     readr_2.1.5     tidyr_1.3.1     tibble_3.2.1   
- [9] ggplot2_3.5.1   tidyverse_2.0.0 workflowr_1.7.1
+ [9] ggplot2_3.5.1   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
  [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
-[13] jsonlite_1.8.8    processx_3.8.3    whisker_0.4.1     ps_1.7.5         
-[17] promises_1.2.1    httr_1.4.7        fansi_1.0.6       viridisLite_0.4.2
-[21] scales_1.3.0      jquerylib_0.1.4   cli_3.6.2         rlang_1.1.3      
-[25] munsell_0.5.0     withr_3.0.0       cachem_1.0.8      yaml_2.3.8       
-[29] tools_4.3.2       tzdb_0.4.0        colorspace_2.1-0  httpuv_1.6.13    
-[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0     
-[37] fs_1.6.3          pkgconfig_2.0.3   callr_3.7.3       pillar_1.9.0     
-[41] bslib_0.6.1       later_1.3.2       gtable_0.3.4      glue_1.7.0       
-[45] Rcpp_1.1.0        highr_0.10        xfun_0.41         tidyselect_1.2.0 
-[49] rstudioapi_0.16.0 knitr_1.45        farver_2.1.1      htmltools_0.5.7  
-[53] labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2    getPass_0.2-4    </code></pre>
+[13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
+[17] fansi_1.0.6       viridisLite_0.4.2 scales_1.3.0      jquerylib_0.1.4  
+[21] cli_3.6.2         rlang_1.1.3       munsell_0.5.0     withr_3.0.0      
+[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
+[29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
+[33] lifecycle_1.0.4   git2r_0.33.0      fs_1.6.3          pkgconfig_2.0.3  
+[37] pillar_1.9.0      bslib_0.6.1       later_1.3.2       gtable_0.3.4     
+[41] glue_1.7.0        Rcpp_1.1.0        highr_0.10        xfun_0.41        
+[45] tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45        farver_2.1.1     
+[49] htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2   </code></pre>
 </div>
 </div>
 </div>

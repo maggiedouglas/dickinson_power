@@ -31,7 +31,7 @@ library(DT) # library to create tables
 library(scales) # library to format dollars
 
 kwh <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = T) # load PPL data
-buildings <- read.csv("./keys/fy25_building_list.csv", strip.white = T) # load building information
+buildings <- read.csv("./keys/fy25_building_list_updated.csv", strip.white = T) # load building information
 key <- read.csv("./keys/meter_building_key.csv", strip.white = T) # load key to link meters to buildings
 occupants <- read.csv("./keys/housing_counts.csv", strip.white = T)
 
@@ -99,6 +99,13 @@ buildings_clean <- buildings %>%
   filter(main_meter == 0 & weis_meter == 0) %>% # keep only buildings on individual meters
   select(NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %>% # select relevant columns
   rbind(buildings_main, buildings_weis)
+
+# Sstore summary of building meter status
+buildings_sum <- buildings %>%
+    mutate(meter = ifelse(weis_meter == 1, "Weis Meter", 
+                        ifelse(main_meter == 1 & main_disagg == 1, "Main - Disagg.",
+                               ifelse(main_meter == 1 & main_disagg == 0, "Main Meter", "Individual"))))
+  
 ```
 
 ## Wrangle datasets
@@ -156,6 +163,16 @@ datatable(joined_pretty,
           colnames = c("Building\ntype","Name","Date\nconstructed","Date\nrenovated",
                        "Rental?","kWh", "Est cost", "Square\nfootage","kWh\nper sqft",
                        "Acad yr\noccupants", "kWh\nper person"))
+```
+
+## Summary graph by meter status
+
+```{r graph meter, warning = F}
+ggplot(filter(buildings_sum, type_new != "Res Hall - U"),
+       aes(x = reorder(type_new, sqft, FUN = "sum"), y = sqft/1000, fill = meter)) +
+  geom_col(position = "stack") +
+  theme_bw() +
+  labs(x = "", y = "Square footage (1000)", fill = "Meter status")
 ```
 
 ## Export for downstream analyses

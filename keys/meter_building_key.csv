@@ -1,152 +1,205 @@
-﻿meter_origin,NAME
-100 S College St ,Drayer Hall
-100 S West St ,100 S. West St.
-101 S College St ,Landis House
-102 S West St *Apt 1 ,100 S. West St.
-102 S West St *Apt 2 ,100 S. West St.
-102 S West St *Apt 3 ,100 S. West St.
-102 S West St *Apt 4 ,100 S. West St.
-102 S West St *Apt 5 ,100 S. West St.
-102 S West St *Apt 6 ,100 S. West St.
-102 S West St *Apt 7 ,100 S. West St.
-102 S West St *Apt 8 ,100 S. West St.
-102 S West St *Apt 9 ,100 S. West St.
-103 Conway St ,King House
-119 W High St *Unit 1 ,"119 W. High St. (1, 2, 3)"
-119 W High St *Unit 3 ,"119 W. High St. (1, 2, 3)"
-"119 W High St, Apt 2 ","119 W. High St. (1, 2, 3)"
-1250 Ritner Hwy ,Wentzel
-127 Conway St ,President's House (New)
-129 S College St Rr ,Carriage House
-130 Cherry St Hse Mtr ,Cherry Apts
-131 S College St ,Strayer House
-133 N College St ,133 N. College St.
-133 W High St *Apt 2 ,"133 W. High St. (2, 5)"
-133 W High St Apt 5 ,"133 W. High St. (2, 5)"
-135 Cedar St ,135 Cedar St. 
-135 N College St ,135 N. College St.
-141 High St *Unit 3c ,141 W. High St.
-141 W High St *Apt 2b ,141 W. High St.
-141 W High St *Apt 2c ,141 W. High St.
-141 W High St *Apt 3a ,141 W. High St.
-141 W High St *Apt 3b ,141 W. High St.
-141 W High St Hm ,141 W. High St.
-141 W High St Office *Apt 2a ,141 W. High St.
-146 W Louther St 1fl ,146 W. Louther St.
-146 W Louther St 2fl ,146 W. Louther St.
-"146 W Louther St, Common ",146 W. Louther St.
-152 W Louther St *Apt 1 ,152 W. Louther St.
-152 W Louther St *Apt 2 ,152 W. Louther St.
-152 W Louther St *Apt 3 ,152 W. Louther St.
-152 W Louther St *Apt 4 ,152 W. Louther St.
-"152 W Louther St, Hse Mtr ",152 W. Louther St.
-155 W High St 1fl ,"155 W. High St., Ground Floor"
-155 W High St 2fl ,155 W. High St.
-"156 W Louther St, 1fl ",154 W. Louther St. (1)
-159 W High St A6 ,159 W. High St.
-159 W High St Apt 1A ,159 W. High St.
-159 W High St Apt 1B ,159 W. High St.
-159 W High St Apt 2 ,159 W. High St.
-159 W High St Apt 3 ,159 W. High St.
-159 W High St Apt 4 ,159 W. High St.
-159 W High St Apt 5 ,159 W. High St.
-163 W High St ,163 W. High St
-163 W High St *Apt 3 ,163 W. High St
-163 W High St *Apt 6 ,163 W. High St
-163 W High St 1fl Apt 2 ,163 W. High St
-163 W High St 1fl N 1 ,163 W. High St
-163 W High St Apt 4 ,163 W. High St
-163 W High St Apt 5 ,163 W. High St
-164 Dickinson Ave 1fl ,162-164  Dickinson Ave.
-165 W High St ,165 W. High St
-165 W High St *Apt 3 ,165 W. High St
-165 W High St 1fr ,165 W. High St
-165 W High St 2fr ,165 W. High St
-"165 W High St, 1f Rear ",165 W. High St
-"165 W High St, 3fl Rear ",165 W. High St
-"165 W High St, 3fl-front ",165 W. High St
-19 W High St *Apt 2fl ,19-21 W. High St.
-2 Conway St ,2 Conway St.
-"21 W High St, Owners Meter ",19-21 W. High St.
-23 W High St 2fl ,23 W. High St.
-23 W High St 3fl ,23 W. High St.
-230 W North St *Apt 1 ,Factory Apts.
-230 W North St *Apt 10 ,Factory Apts.
-230 W North St *Apt 11 ,Factory Apts.
-230 W North St *Apt 2 ,Factory Apts.
-230 W North St *Apt 3 ,Factory Apts.
-230 W North St *Apt 4 ,Factory Apts.
-230 W North St *Apt 5 ,Factory Apts.
-230 W North St *Apt 6 ,Factory Apts.
-230 W North St *Apt 7 ,Factory Apts.
-230 W North St *Apt 8 ,Factory Apts.
-230 W North St *Apt 9 ,Factory Apts.
-236 W North St *Apt  7 ,Factory Apts.
-236 W North St *Apt 1 ,Factory Apts.
-236 W North St *Apt 2 ,Factory Apts.
-236 W North St *Apt 3 ,Factory Apts.
-236 W North St *Apt 4 ,Factory Apts.
-236 W North St *Apt 5 ,Factory Apts.
-236 W North St *Apt 6 ,Factory Apts.
-236 W North St *Apt 8 ,Factory Apts.
-236 W North St *Apt 9 ,Factory Apts.
-25 W Pomfret St *Apt 15 ,"25 Pomfret St (15, 16)"
-25 W Pomfret St *Apt 16 ,"25 Pomfret St (15, 16)"
-"25-27 W High St, Deitchman Building ",27 W. High St.
-275 W Louther St ,Vincett House 
-31 S West St ,Kade House 
-34 S West St ,Schuman House
-344 W North St ,344 W. North St.
-362 W North St ,362 W. North S.
-368 W North St ,368 W. North
-40 W High St ,Carlisle Theatre
-402 W High St Malcolm Hall ,Malcolm Hall 
-41 Conway St ,41 Conway St.
-417 W Louther St ,417 W. Louther St.
-425 W Louther St ,425 W. Louther St.
-"450 W High St, Residence Hall ",High Street Residence Hall
-46 S West St ,46 S. West St.
-46 S West St *Apt 2 ,46 S. West St.
-46 Wilson St Rr ,Stadium Lights
-49 S College St ,49 S. College St.
-49-1/2 W High St *Apt 3 ,"49 W. High (1, 2, 3)"
-49-1/2 W High St *Apt 4 ,"49 W. High (1, 2, 3)"
-49-1/2 W High St 2fl ,"49 W. High (1, 2, 3)"
-5 Orange St ,5 N. Orange St. - Facilities
-50 Mooreland Ave ,50 Mooreland Ave.
-50 N West St ,East College
-50 Wilson St ,50 Wilson Street
-505 W Louther St ,505 W. Louther St.
-506 Reed St ,Reed Apts.
-507 W Louther St ,507 W. Louther St.
-509 W Louther St ,509 W. Louther St.
-513 W Louther St ,513 W. Louther St.
-515 W Louther St ,515 W. Louther St.
-519 W Louther St ,519 W. Louther St.
-521 W Louther St ,521 W. Louther St.
-527 W Louther St ,527 W. Louther St.
-529 W Louther St ,529 W. Louther St.
-531 W Louther St ,531 W. Louther St.
-534 W Louther St ,Treehouse
-538 W Louther St ,538 W. Louther St.
-"551 W Louther St, College ",Goodyear
-554 W Louther St ,554 W. Louther St.
-556 W Louther St ,556 W. Louther St.
-57 S College St ,57 S. College
-580 W Louther St ,Goodyear Arts Studio
-60 Mooreland Ave ,Matthews House
-600 W Louther *Unit R ,DCCC
-600 W Louther St Rr ,DCCC
-99 Mooreland Ave ,Allison Church
-Belvedere St (Biddle Field) ,"Biddle Press Box, Restrooms, Durden ATC"
-"Belvedere St, * ",Pump system (athletics)
-Green Vly Rd Sanctuary Landisburg PA 17040,Green Valley Sanctuary
-Green Vly Rd Sant Light Landisburg PA 17040,Green Valley Sanctuary
-"High St And Mooreland Ave, Morgan Bldg ",Morgan Hall
-Orange And PA R R ,5 N. Orange St. - CPYB/SHARE
-S College St ,Adams
-Solar Farm,Solar Farm
-W High St (37 Big Buildings) ,Main Meter
-Weiss Arts Complex,Weis Meter
-Wilson St Rr ,Scoreboard
-Witwer Hall ,Witwer Hall
+﻿meter_origin,Sum of Total Usage kWh,NAME
+100 S College St ,269502,Drayer Hall
+100 S West St ,12628,100 S. West St.
+101 S College St ,14429,Landis House
+102 S West St *Apt 1 ,4609,100 S. West St.
+102 S West St *Apt 2 ,4109,100 S. West St.
+102 S West St *Apt 3 ,2070,100 S. West St.
+102 S West St *Apt 4 ,7284,100 S. West St.
+102 S West St *Apt 5 ,5457,100 S. West St.
+102 S West St *Apt 6 ,3365,100 S. West St.
+102 S West St *Apt 7 ,6181,100 S. West St.
+102 S West St *Apt 8 ,5231,100 S. West St.
+102 S West St *Apt 9 ,3948,100 S. West St.
+103 Conway St ,64445,King House
+119 W High St *Unit 1 ,4845,"119 W. High St. (1, 2, 3)"
+119 W High St *Unit 3 ,6430,"119 W. High St. (1, 2, 3)"
+"119 W High St, Apt 2 ",8716,"119 W. High St. (1, 2, 3)"
+1250 Ritner Hwy ,22830,Wentzel
+127 Conway St ,30585,President's House (New)
+129 S College St Rr ,1952,Carriage House
+130 Cherry St Hse Mtr ,19464,Cherry Apts
+131 S College St ,18275,Strayer House
+133 N College St ,17555,133 N. College St.
+133 W High St *Apt 2 ,5886,"133 W. High St. (2, 5)"
+133 W High St Apt 5 ,3587,"133 W. High St. (2, 5)"
+135 Cedar St ,13830,135 Cedar St. 
+135 N College St ,18531,135 N. College St.
+135 N College St ,,139 N. College St.
+141 High St *Unit 3c ,9517,141 W. High St.
+141 W High St *Apt 2b ,8278,141 W. High St.
+141 W High St *Apt 2c ,3490,141 W. High St.
+141 W High St *Apt 3a ,8990,141 W. High St.
+141 W High St *Apt 3b ,17238,141 W. High St.
+141 W High St Hm ,2448,141 W. High St.
+141 W High St Office *Apt 2a ,10874,141 W. High St.
+146 W Louther St 1fl ,8628,146 W. Louther St.
+146 W Louther St 2fl ,8328,146 W. Louther St.
+"146 W Louther St, Common ",1510,146 W. Louther St.
+152 W Louther St *Apt 1 ,15523,152 W. Louther St.
+152 W Louther St *Apt 2 ,8554,152 W. Louther St.
+152 W Louther St *Apt 3 ,13838,152 W. Louther St.
+152 W Louther St *Apt 4 ,12639,152 W. Louther St.
+"152 W Louther St, Hse Mtr ",2576,152 W. Louther St.
+155 W High St 1fl ,1068,"155 W. High St., Ground Floor"
+155 W High St 2fl ,8851,155 W. High St.
+"156 W Louther St, 1fl ",16662,154 W. Louther St. (1)
+159 W High St A6 ,9550,159 W. High St.
+159 W High St Apt 1A ,2102,159 W. High St.
+159 W High St Apt 1B ,2207,159 W. High St.
+159 W High St Apt 2 ,4587,159 W. High St.
+159 W High St Apt 3 ,4255,159 W. High St.
+159 W High St Apt 4 ,3138,159 W. High St.
+159 W High St Apt 5 ,3413,159 W. High St.
+163 W High St ,1835,163 W. High St
+163 W High St *Apt 3 ,4267,163 W. High St
+163 W High St *Apt 6 ,1669,163 W. High St
+163 W High St 1fl Apt 2 ,1146,163 W. High St
+163 W High St 1fl N 1 ,2406,163 W. High St
+163 W High St Apt 4 ,1632,163 W. High St
+163 W High St Apt 5 ,1907,163 W. High St
+164 Dickinson Ave 1fl ,9217,162-164  Dickinson Ave.
+165 W High St ,2567,165 W. High St
+165 W High St *Apt 3 ,1144,165 W. High St
+165 W High St 1fr ,1238,165 W. High St
+165 W High St 2fr ,2187,165 W. High St
+"165 W High St, 1f Rear ",886,165 W. High St
+"165 W High St, 3fl Rear ",2803,165 W. High St
+"165 W High St, 3fl-front ",1865,165 W. High St
+19 W High St *Apt 2fl ,3219,19-21 W. High St.
+2 Conway St ,5543,2 Conway St.
+"21 W High St, Owners Meter ",1995,19-21 W. High St.
+23 W High St 2fl ,7738,23 W. High St.
+23 W High St 3fl ,6528,23 W. High St.
+230 W North St *Apt 1 ,17508,Factory Apts.
+230 W North St *Apt 10 ,5794,Factory Apts.
+230 W North St *Apt 11 ,7906,Factory Apts.
+230 W North St *Apt 2 ,15076,Factory Apts.
+230 W North St *Apt 3 ,10120,Factory Apts.
+230 W North St *Apt 4 ,11102,Factory Apts.
+230 W North St *Apt 5 ,8433,Factory Apts.
+230 W North St *Apt 6 ,6235,Factory Apts.
+230 W North St *Apt 7 ,6361,Factory Apts.
+230 W North St *Apt 8 ,13825,Factory Apts.
+230 W North St *Apt 9 ,12212,Factory Apts.
+236 W North St *Apt  7 ,11326,Factory Apts.
+236 W North St *Apt 1 ,16593,Factory Apts.
+236 W North St *Apt 2 ,7832,Factory Apts.
+236 W North St *Apt 3 ,17223,Factory Apts.
+236 W North St *Apt 4 ,11551,Factory Apts.
+236 W North St *Apt 5 ,6904,Factory Apts.
+236 W North St *Apt 6 ,16295,Factory Apts.
+236 W North St *Apt 8 ,7237,Factory Apts.
+236 W North St *Apt 9 ,12518,Factory Apts.
+25 W Pomfret St *Apt 15 ,15326,"25 Pomfret St (15, 16)"
+25 W Pomfret St *Apt 16 ,27147,"25 Pomfret St (15, 16)"
+"25-27 W High St, Deitchman Building ",220896,27 W. High St.
+275 W Louther St ,14797,Vincett House 
+278 W Louther St ,6686,
+31 S West St ,10487,Kade House 
+34 S West St ,10946,Schuman House
+344 W North St ,12407,344 W. North St.
+362 W North St ,6482,362 W. North S.
+368 W North St ,3151,368 W. North
+40 W High St ,29070,Carlisle Theatre
+402 W High St Malcolm Hall ,158463,Malcolm Hall 
+41 Conway St ,6277,41 Conway St.
+417 W Louther St ,8115,417 W. Louther St.
+425 W Louther St ,7326,425 W. Louther St.
+"450 W High St, Residence Hall ",234938,High Street Residence Hall
+46 S West St ,2733,46 S. West St.
+46 S West St *Apt 2 ,3760,46 S. West St.
+46 Wilson St Rr ,3423,Stadium Lights
+49 S College St ,15611,49 S. College St.
+49 S College St ,,51 S. College St.
+49-1/2 W High St *Apt 3 ,13758,"49 W. High (1, 2, 3)"
+49-1/2 W High St *Apt 4 ,6880,"49 W. High (1, 2, 3)"
+49-1/2 W High St 2fl ,10194,"49 W. High (1, 2, 3)"
+5 Orange St ,567745,5 N. Orange St.
+50 Mooreland Ave ,95137,50 Mooreland Ave.
+50 N West St ,1198,Crosswalk on N. West St.
+50 Wilson St ,8693,50 Wilson Street
+505 W Louther St ,8772,505 W. Louther St.
+506 Reed St ,31914,Reed Apts.
+507 W Louther St ,8965,507 W. Louther St.
+509 W Louther St ,7070,509 W. Louther St.
+513 W Louther St ,7910,513 W. Louther St.
+515 W Louther St ,4352,515 W. Louther St.
+519 W Louther St ,8294,519 W. Louther St.
+521 W Louther St ,5082,521 W. Louther St.
+527 W Louther St ,4998,527 W. Louther St.
+529 W Louther St ,7663,529 W. Louther St.
+531 W Louther St ,7374,531 W. Louther St.
+534 W Louther St ,21775,Treehouse
+538 W Louther St ,4578,538 W. Louther St.
+"551 W Louther St, College ",512614,Goodyear Arts Studio
+554 W Louther St ,8520,554 W. Louther St.
+556 W Louther St ,4986,556 W. Louther St.
+57 S College St ,12221,57 S. College
+"551 W Louther St, College ",45931,Goodyear
+60 Mooreland Ave ,40566,Matthews House
+600 W Louther *Unit R ,33629,DCCC
+600 W Louther St Rr ,6157,DCCC
+99 Mooreland Ave ,77578,Allison Church
+Belvedere St (Biddle Field) ,298475,Biddle Press Box
+Belvedere St (Biddle Field) ,,Biddle Public Restrooms
+Belvedere St (Biddle Field) ,,Durden ATC
+"Belvedere St, * ",88262,Pump system (athletics)
+Green Vly Rd Sanctuary Landisburg PA 17040,15023,Green Valley Sanctuary
+Green Vly Rd Sant Light Landisburg PA 17040,6551,Green Valley Sanctuary
+"High St And Mooreland Ave, Morgan Bldg ",247869,Morgan Hall
+Orange And PA R R ,277590,5 N. Orange St. - CPYB/SHARE
+S College St ,223957,Adams
+Solar Farm,-4274285,Solar Farm
+W High St (37 Big Buildings) ,,Keck Archeology Lab
+W High St (37 Big Buildings) ,,Tome
+W High St (37 Big Buildings) ,,Rand House
+W High St (37 Big Buildings) ,,"Quarry, The "
+W High St (37 Big Buildings) ,,170 W. Louther St.
+W High St (37 Big Buildings) ,,171 W. High St.
+W High St (37 Big Buildings) ,,233 W. Louther St.
+W High St (37 Big Buildings) ,,169 W. High St.
+W High St (37 Big Buildings) ,,Althouse
+W High St (37 Big Buildings) ,,Biddle House
+W High St (37 Big Buildings) ,,Bosler
+W High St (37 Big Buildings) ,,Clarke Center
+W High St (37 Big Buildings) ,,Cook House
+W High St (37 Big Buildings) ,,Denny Hall
+W High St (37 Big Buildings) ,,East College
+W High St (37 Big Buildings) ,,Montgomery House
+W High St (37 Big Buildings) ,,Rector Science Center
+W High St (37 Big Buildings) ,,Stern Center
+W High St (37 Big Buildings) ,,Waidner Spahr Library
+W High St (37 Big Buildings) ,,Kaufman Hall
+W High St (37 Big Buildings) ,,Old West
+W High St (37 Big Buildings) ,,ATS
+W High St (37 Big Buildings) ,,Hartman House
+W High St (37 Big Buildings) ,,Holland Union Bldg.
+W High St (37 Big Buildings) ,,Kline Life Sport Complex
+W High St (37 Big Buildings) ,,Armstrong / Quad 8
+W High St (37 Big Buildings) ,,Atwater / Quad 7
+W High St (37 Big Buildings) ,,Baird McClintock / Quad 4-5
+W High St (37 Big Buildings) ,,Buchanan / Quad 2
+W High St (37 Big Buildings) ,,Conway / Quad 1
+W High St (37 Big Buildings) ,,Davidson Wilson / Quad 9-10
+W High St (37 Big Buildings) ,,Kisner - Woodward
+W High St (37 Big Buildings) ,,Longsdorff / Quad 6
+W High St (37 Big Buildings) ,,McKenney Hall
+W High St (37 Big Buildings) ,,Spradley-Young  / Quad 3
+W High St (37 Big Buildings) ,,Stuart Hall
+W High St (37 Big Buildings) ,,Townhouse - 373 W. Louther St.
+W High St (37 Big Buildings) ,,Townhouse - 377 W. Louther St.
+W High St (37 Big Buildings) ,,Townhouse - 379 W. Louther St.
+W High St (37 Big Buildings) ,,Townhouse - 381 W. Louther St.
+W High St (37 Big Buildings) ,,Townhouse - 383 W. Louther St.
+Weiss Arts Complex,973320,Weiss Center 
+Weiss Arts Complex,,South College Annex
+Weiss Arts Complex,,South College East
+Weiss Arts Complex,,South College West
+Weiss Arts Complex,,Waidner Admissions
+Weiss Arts Complex,,Asbell
+Weiss Arts Complex,,Historic President's House
+Weiss Arts Complex,,Todd House
+Weiss Arts Complex,,Reed House
+Wilson St Rr ,1,Scoreboard
+Witwer Hall ,88635,Witwer Hall

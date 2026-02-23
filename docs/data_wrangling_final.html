@@ -370,7 +370,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -381,8 +381,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -391,13 +391,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-14
+<strong>Last updated:</strong> 2026-02-23
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -420,18 +420,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -522,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree661b13b7069c117a21afa64c0d2b61f6bfa2e9bbtargetblank661b13ba">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree182fffebb4d7be99596fca90384b3ba416ab01a2targetblank182fffea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/661b13b7069c117a21afa64c0d2b61f6bfa2e9bb" target="_blank">661b13b</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/182fffebb4d7be99596fca90384b3ba416ab01a2" target="_blank">182fffe</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree661b13b7069c117a21afa64c0d2b61f6bfa2e9bbtargetblank661b13ba"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree182fffebb4d7be99596fca90384b3ba416ab01a2targetblank182fffea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -540,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/661b13b7069c117a21afa64c0d2b61f6bfa2e9bb" target="_blank">661b13b</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/182fffebb4d7be99596fca90384b3ba416ab01a2" target="_blank">182fffe</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -559,6 +562,7 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    data/.DS_Store
+    Ignored:    data/FY25 Main Meter Data.xlsx
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
     Ignored:    output/annual_kwh.csv
@@ -567,6 +571,17 @@ Ignored files:
     Ignored:    output/daily_kwh.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_daily.csv
+    Ignored:    output/kwh_main_annual.csv
+    Ignored:    output/kwh_main_daily.csv
+
+Untracked files:
+    Untracked:  keys/fy25_building_list_updated.csv
+
+Unstaged changes:
+    Modified:   analysis/building_case_study.Rmd
+    Modified:   analysis/data_wrangling_final.Rmd
+    Modified:   keys/meter_building_key.csv
+    Modified:   keys/temp_by_date.csv
 
 </code></pre>
 <p>
@@ -612,6 +627,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/10507beb192abb1be0c3916a03565a3a55ddb3f4/docs/data_wrangling_final.html" target="_blank">10507be</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-14
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -771,7 +803,7 @@ The following object is masked from &#39;package:readr&#39;:
 
     col_factor</code></pre>
 <pre class="r"><code>kwh &lt;- read.csv(&quot;./data/FY25 PPL Electricity Data.csv&quot;, strip.white = T) # load PPL data
-buildings &lt;- read.csv(&quot;./keys/fy25_building_list.csv&quot;, strip.white = T) # load building information
+buildings &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, strip.white = T) # load building information
 key &lt;- read.csv(&quot;./keys/meter_building_key.csv&quot;, strip.white = T) # load key to link meters to buildings
 occupants &lt;- read.csv(&quot;./keys/housing_counts.csv&quot;, strip.white = T)
 
@@ -806,24 +838,26 @@ co2_kg_kwh &lt;- 0.299511787</code></pre>
  $ total_kwh     : num  28 26.4 26.5 26.3 27.2 ...
  $ ave_temp      : int  78 76 78 81 75 78 80 79 76 76 ...</code></pre>
 <pre class="r"><code>str(buildings)</code></pre>
-<pre><code>&#39;data.frame&#39;:   133 obs. of  13 variables:
- $ banner_code: chr  &quot;1110&quot; &quot;1540&quot; &quot;1035&quot; &quot;1195&quot; ...
- $ NAME       : chr  &quot;162-164  Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;61 N. West St.&quot; ...
+<pre><code>&#39;data.frame&#39;:   133 obs. of  14 variables:
  $ TYPE       : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
  $ type_new   : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
- $ occupant   : chr  &quot;DEAL Archeology Labs&quot; &quot;Music office/rehearsal space&quot; &quot;Education Dept. Offices&quot; &quot;House Divided/Diamond 6&quot; ...
- $ address    : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College St.&quot; &quot;61 N. West St.&quot; ...
- $ date_constr: chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;1895&quot; ...
- $ date_acqd  : int  1998 1982 1979 1993 NA 1946 NA NA 1987 1986 ...
- $ date_reno  : int  2010 NA NA NA 2009 NA 1940 1997 NA NA ...
- $ sqft       : int  2500 1775 4576 3091 29133 12600 33692 4000 6638 3138 ...
- $ rental     : int  0 0 0 0 0 0 0 1 0 0 ...
- $ main_meter : int  0 0 0 1 1 1 1 0 1 1 ...
+ $ banner_code: chr  &quot;1110&quot; &quot;1540&quot; &quot;1035&quot; &quot;1030&quot; ...
+ $ NAME       : chr  &quot;162-164  Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;East College&quot; ...
+ $ occupant   : chr  &quot;DEAL Archeology Labs&quot; &quot;Music office/rehearsal space&quot; &quot;Education Dept. Offices&quot; &quot;Humanities&quot; ...
+ $ address    : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College St.&quot; &quot;50 N. West St.&quot; ...
+ $ date_constr: chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;1836&quot; ...
+ $ date_acqd  : int  1998 1982 1979 NA 1979 1966 NA NA NA 1950 ...
+ $ date_reno  : int  2010 NA NA 2019 2000 NA 1997 2009 1940 2002 ...
+ $ sqft       : int  2500 1775 4576 28050 30000 2500 4000 29133 33692 11039 ...
+ $ rental     : int  0 0 0 0 0 0 1 0 0 0 ...
+ $ main_meter : int  0 0 0 0 0 0 0 1 1 1 ...
+ $ main_disagg: int  0 0 0 0 0 0 0 1 1 1 ...
  $ weis_meter : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 <pre class="r"><code>str(key)</code></pre>
-<pre><code>&#39;data.frame&#39;:   151 obs. of  2 variables:
- $ meter_origin: chr  &quot;100 S College St&quot; &quot;100 S West St&quot; &quot;101 S College St&quot; &quot;102 S West St *Apt 1&quot; ...
- $ NAME        : chr  &quot;Drayer Hall&quot; &quot;100 S. West St.&quot; &quot;Landis House&quot; &quot;100 S. West St.&quot; ...</code></pre>
+<pre><code>&#39;data.frame&#39;:   204 obs. of  3 variables:
+ $ meter_origin          : chr  &quot;100 S College St&quot; &quot;100 S West St&quot; &quot;101 S College St&quot; &quot;102 S West St *Apt 1&quot; ...
+ $ Sum.of.Total.Usage.kWh: int  269502 12628 14429 4609 4109 2070 7284 5457 3365 6181 ...
+ $ NAME                  : chr  &quot;Drayer Hall&quot; &quot;100 S. West St.&quot; &quot;Landis House&quot; &quot;100 S. West St.&quot; ...</code></pre>
 </div>
 <div id="restructure-building-data" class="section level2">
 <h2>Restructure building data</h2>
@@ -862,7 +896,13 @@ buildings_weis &lt;- buildings %&gt;%
 buildings_clean &lt;- buildings %&gt;%
   filter(main_meter == 0 &amp; weis_meter == 0) %&gt;% # keep only buildings on individual meters
   select(NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %&gt;% # select relevant columns
-  rbind(buildings_main, buildings_weis)</code></pre>
+  rbind(buildings_main, buildings_weis)
+
+# Sstore summary of building meter status
+buildings_sum &lt;- buildings %&gt;%
+    mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
+                        ifelse(main_meter == 1 &amp; main_disagg == 1, &quot;Main - Disagg.&quot;,
+                               ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, &quot;Individual&quot;))))</code></pre>
 </div>
 <div id="wrangle-datasets" class="section level2">
 <h2>Wrangle datasets</h2>
@@ -899,6 +939,11 @@ argument.</code></pre>
   ungroup() %&gt;%
   select(-type_new) %&gt;%
   mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA</code></pre>
+<pre><code>Warning in left_join(., key, by = &quot;meter_origin&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 7250 of `x` matches multiple rows in `y`.
+ℹ Row 39 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  &quot;many-to-many&quot;` to silence this warning.</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;. You can override using
 the `.groups` argument.</code></pre>
 </div>
@@ -921,7 +966,16 @@ datatable(joined_pretty,
                        &quot;Rental?&quot;,&quot;kWh&quot;, &quot;Est cost&quot;, &quot;Square\nfootage&quot;,&quot;kWh\nper sqft&quot;,
                        &quot;Acad yr\noccupants&quot;, &quot;kWh\nper person&quot;))</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1997\" data-max=\"2022\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1068\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"500\" data-max=\"1091385\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"23.5\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"162\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"725\" data-max=\"6641\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Main Meter","Weis Meter","Admin","Res Hall - L","Res Hall - L","Res Hall - L","Other","Res Hall - L","Res Hall - L","Community","Academic","Academic","Admin","Other","Other","Res Hall - L","Res Hall - L","Res Hall - U","Res Hall - U","Res Hall - L","Community","Community","Res Hall - U","Res Hall - M","Community","Res Hall - M","Res Hall - U","Res Hall - U","Academic","Res Hall - M","Res Hall - M","Res Hall - M","Res Hall - M","Academic","Res Hall - M","Res Hall - U","Other","Res Hall - U","Other","Res Hall - M","Academic","Academic","Res Hall - M","Other","Admin","Admin","Res Hall - S","Other","Academic","Res Hall - S","Res Hall - S","Other","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Admin","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Other","Other","Res Hall - S","Other","Other","Other","Res Hall - U","Res Hall - U","Res Hall - U","Res Hall - U","Res Hall - U"],["Main Meter","Weis Meter","5 N. Orange St. - Facilities","Goodyear","Drayer Hall","Adams","5 N. Orange St. - CPYB/SHARE","High Street Residence Hall","Morgan Hall","Allison Church","Goodyear Arts Studio","East College","50 Mooreland Ave.","Wentzel","Biddle Press Box, Restrooms, Durden ATC","Malcolm Hall","Witwer Hall","Factory Apts.","27 W. High St.","Matthews House","DCCC","Landis House","100 S. West St.","Strayer House","President's House (New)","Treehouse","141 W. High St.","Reed Apts.","57 S. College","163 W. High St","165 W. High St","159 W. High St.","Schuman House","Carlisle Theatre","155 W. High St.","Cherry Apts","49 W. High (1, 2, 3)","146 W. Louther St.","King House","Vincett House","162-164  Dickinson Ave.","Green Valley Sanctuary","133 N. College St.","119 W. High St. (1, 2, 3)","41 Conway St.","556 W. Louther St.","135 Cedar St.","Kade House","46 S. West St.","2 Conway St.","531 W. Louther St.","344 W. North St.","509 W. Louther St.","513 W. Louther St.","49 S. College St.","505 W. Louther St.","507 W. Louther St.","135 N. College St.","417 W. Louther St.","521 W. Louther St.","554 W. Louther St.","529 W. Louther St.","519 W. Louther St.","425 W. Louther St.","515 W. Louther St.","527 W. Louther St.","538 W. Louther St.","362 W. North S.","368 W. North","Carriage House","155 W. High St., Ground Floor","25 Pomfret St (15, 16)","50 Wilson Street","133 W. High St. (2, 5)","152 W. Louther St.","154 W. Louther St. (1)","19-21 W. High St.","23 W. High St."],[null,null,"","1891","1952","1962","","2018","1955","1958","1891","1836","","1993","","1966","1965","","1905","1926","","1905","","1930","","","","","","","","","","","","","","","1967","","","","1890","","","","","","","","1910","1910","1902","1910","1960","1910","1900","1910","1870","1910","","1910","1910","1874","1875","1910","","1900","1900","1930","","","","","","","",""],[null,null,null,2000,null,null,null,null,2003,null,2000,2019,null,2020,null,null,null,null,null,null,2009,null,null,null,null,2006,null,null,null,null,null,null,null,1997,null,null,null,2022,null,null,2010,null,2019,null,null,2017,null,null,null,2018,2017,null,2017,2017,2017,2017,2017,2019,2019,2017,2017,2017,2017,2019,2017,2017,null,null,null,null,null,null,null,null,null,null,null,null],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1],[11648808,973320,567745,512614,269502,223957,277590,234938,247869,77578,45931,1198,95137,22830,298475,158463,88635,222053,220896,40566,39786,14429,54882,18275,30585,21775,60837,31914,12221,14863,12690,29252,10946,29070,8851,19464,30832,18467,64445,14797,9217,21575,17555,19990,6277,4986,13830,10487,6493,5543,7374,12407,7070,7910,15611,8772,8965,18531,8115,5082,8520,7663,8294,7326,4352,4998,4578,6482,3151,1952,1068,42473,8693,9473,53130,16662,5215,14266],["$ 947048","$ 79131","$ 46158","$ 41675","$ 21911","$ 18208","$ 22568","$ 19100","$ 20152","$ 6307","$ 3734","$ 97","$ 7735","$ 1856","$ 24266","$ 12883","$ 7206","$ 18053","$ 17959","$ 3298","$ 3235","$ 1173","$ 4462","$ 1486","$ 2487","$ 1770","$ 4946","$ 2595","$ 994","$ 1208","$ 1032","$ 2378","$ 890","$ 2363","$ 720","$ 1582","$ 2507","$ 1501","$ 5239","$ 1203","$ 749","$ 1754","$ 1427","$ 1625","$ 510","$ 405","$ 1124","$ 853","$ 528","$ 451","$ 600","$ 1009","$ 575","$ 643","$ 1269","$ 713","$ 729","$ 1507","$ 660","$ 413","$ 693","$ 623","$ 674","$ 596","$ 354","$ 406","$ 372","$ 527","$ 256","$ 159","$ 87","$ 3453","$ 707","$ 770","$ 4319","$ 1355","$ 424","$ 1160"],[1091385,85725,75000,60000,48720,47750,42500,41945,40000,33310,30000,28050,27100,25000,24895,20434,18603,13000,11750,11548,10892,7953,7190,6845,6274,6000,5825,5206,4576,4550,4550,4500,4444,4000,4000,3519,3000,2864,2745,2700,2500,2500,2272,2240,2200,2000,1900,1800,1775,1729,1636,1586,1532,1532,1500,1492,1492,1476,1462,1448,1440,1352,1330,1318,1268,1244,1200,1111,992,725,500,null,null,null,null,null,null,null],[10.7,11.4,7.6,8.5,5.5,4.7,6.5,5.6,6.2,2.3,1.5,0,3.5,0.9,12,7.8,4.8,17.1,18.8,3.5,3.7,1.8,7.6,2.7,4.9,3.6,10.4,6.1,2.7,3.3,2.8,6.5,2.5,7.3,2.2,5.5,10.3,6.4,23.5,5.5,3.7,8.6,7.7,8.9,2.9,2.5,7.3,5.8,3.7,3.2,4.5,7.8,4.6,5.2,10.4,5.9,6,12.6,5.6,3.5,5.9,5.7,6.2,5.6,3.4,4,3.8,5.8,3.2,2.7,2.1,null,null,null,null,null,null,null],[null,null,null,null,160,162,null,119,141,null,null,null,null,null,null,null,76,52,40,24,null,null,19,null,null,null,20,19,null,12,11,18,null,null,6,12,null,7,null,null,null,null,5,null,null,null,4,null,null,4,6,null,5,5,3,5,5,4,5,6,null,5,4,4,6,4,3,null,null,null,null,null,null,4,8,4,2,8],[null,null,null,null,1679,1387,null,1974,1758,null,null,null,null,null,null,null,1166,4270,5454,1726,null,null,2889,null,null,null,3042,1680,null,1239,1154,1625,null,null,1475,1622,null,2638,null,null,null,null,3511,null,null,null,3457,null,null,1386,1229,null,1414,1582,5204,1754,1793,4633,1623,847,null,1533,2074,2093,725,1250,1526,null,null,null,null,null,null,2105,6641,4166,3476,1783]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Name<\/th>\n      <th>Date\nconstructed<\/th>\n      <th>Date\nrenovated<\/th>\n      <th>Rental?<\/th>\n      <th>kWh<\/th>\n      <th>Est cost<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh\nper sqft<\/th>\n      <th>Acad yr\noccupants<\/th>\n      <th>kWh\nper person<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,7,8,9,10]},{"name":"type","targets":0},{"name":"NAME","targets":1},{"name":"date_constr","targets":2},{"name":"date_reno","targets":3},{"name":"rental","targets":4},{"name":"kwh","targets":5},{"name":"dollars","targets":6},{"name":"sqft","targets":7},{"name":"kwh_sqft","targets":8},{"name":"occupants","targets":9},{"name":"kwh_person","targets":10}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1997\" data-max=\"2022\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1068\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"500\" data-max=\"60000\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.9\" data-max=\"415.3\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"162\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"725\" data-max=\"6641\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Res Hall - L","Res Hall - L","Res Hall - L","Other","Res Hall - L","Res Hall - L","Community","Academic","Academic","Admin","Other","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Community","Community","Res Hall - M","Res Hall - M","Community","Res Hall - M","Res Hall - M","Res Hall - M","Academic","Res Hall - M","Res Hall - M","Res Hall - M","Res Hall - M","Academic","Res Hall - M","Res Hall - M","Other","Res Hall - M","Other","Res Hall - M","Academic","Academic","Res Hall - M","Other","Admin","Admin","Res Hall - S","Other","Academic","Res Hall - S","Res Hall - S","Res Hall - S","Other","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Admin","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Other","Other","Res Hall - S","Other","Other","Other","Res Hall - U","Res Hall - U","Res Hall - U","Res Hall - U","Res Hall - U"],["Goodyear","Drayer Hall","Adams","5 N. Orange St. - CPYB/SHARE","High Street Residence Hall","Morgan Hall","Allison Church","Goodyear Arts Studio","East College","50 Mooreland Ave.","Wentzel","Malcolm Hall","Witwer Hall","Factory Apts.","27 W. High St.","Matthews House","DCCC","Landis House","100 S. West St.","Strayer House","President's House (New)","Treehouse","141 W. High St.","Reed Apts.","57 S. College","163 W. High St","165 W. High St","159 W. High St.","Schuman House","Carlisle Theatre","155 W. High St.","Cherry Apts","49 W. High (1, 2, 3)","146 W. Louther St.","King House","Vincett House","162-164  Dickinson Ave.","Green Valley Sanctuary","133 N. College St.","119 W. High St. (1, 2, 3)","41 Conway St.","556 W. Louther St.","135 Cedar St.","Kade House","46 S. West St.","2 Conway St.","139 N. College St.","531 W. Louther St.","344 W. North St.","509 W. Louther St.","513 W. Louther St.","49 S. College St.","51 S. College St.","505 W. Louther St.","507 W. Louther St.","135 N. College St.","417 W. Louther St.","521 W. Louther St.","554 W. Louther St.","529 W. Louther St.","519 W. Louther St.","425 W. Louther St.","515 W. Louther St.","527 W. Louther St.","538 W. Louther St.","362 W. North S.","368 W. North","Carriage House","155 W. High St., Ground Floor","25 Pomfret St (15, 16)","50 Wilson Street","133 W. High St. (2, 5)","152 W. Louther St.","154 W. Louther St. (1)","19-21 W. High St.","23 W. High St."],["1891","1952","1962","","2018","1955","1958","1891","1836","","1993","1966","1965","","1905","1926","","1905","","1930","","","","","","","","","","","","","","","1967","","","","1890","","","","","","","","1910","1910","1910","1902","1910","1960","1960","1910","1900","1910","1870","1910","","1910","1910","1874","1875","1910","","1900","1900","1930","","","","","","","",""],[2000,null,null,null,null,2003,null,2000,2019,null,2020,null,null,null,null,null,2009,null,null,null,null,2006,null,null,null,null,null,null,null,1997,null,null,null,2022,null,null,2010,null,2019,null,null,2017,null,null,null,2018,2019,2017,null,2017,2017,2017,2019,2017,2017,2019,2019,2017,2017,2017,2017,2019,2017,2017,null,null,null,null,null,null,null,null,null,null,null,null],[0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1],[512614,269502,223957,277590,234938,247869,77578,512614,11648808,95137,22830,158463,88635,222053,220896,40566,39786,14429,54882,18275,30585,21775,60837,31914,12221,14863,12690,29252,10946,29070,8851,19464,30832,18467,64445,14797,9217,21575,17555,19990,6277,4986,13830,10487,6493,5543,18531,7374,12407,7070,7910,15611,15611,8772,8965,18531,8115,5082,8520,7663,8294,7326,4352,4998,4578,6482,3151,1952,1068,42473,8693,9473,53130,16662,5215,14266],["$ 41675","$ 21911","$ 18208","$ 22568","$ 19100","$ 20152","$ 6307","$ 41675","$ 947048","$ 7735","$ 1856","$ 12883","$ 7206","$ 18053","$ 17959","$ 3298","$ 3235","$ 1173","$ 4462","$ 1486","$ 2487","$ 1770","$ 4946","$ 2595","$ 994","$ 1208","$ 1032","$ 2378","$ 890","$ 2363","$ 720","$ 1582","$ 2507","$ 1501","$ 5239","$ 1203","$ 749","$ 1754","$ 1427","$ 1625","$ 510","$ 405","$ 1124","$ 853","$ 528","$ 451","$ 1507","$ 600","$ 1009","$ 575","$ 643","$ 1269","$ 1269","$ 713","$ 729","$ 1507","$ 660","$ 413","$ 693","$ 623","$ 674","$ 596","$ 354","$ 406","$ 372","$ 527","$ 256","$ 159","$ 87","$ 3453","$ 707","$ 770","$ 4319","$ 1355","$ 424","$ 1160"],[60000,48720,47750,42500,41945,40000,33310,30000,28050,27100,25000,20434,18603,13000,11750,11548,10892,7953,7190,6845,6274,6000,5825,5206,4576,4550,4550,4500,4444,4000,4000,3519,3000,2864,2745,2700,2500,2500,2272,2240,2200,2000,1900,1800,1775,1729,1728,1636,1586,1532,1532,1500,1500,1492,1492,1476,1462,1448,1440,1352,1330,1318,1268,1244,1200,1111,992,725,500,null,null,null,null,null,null,null],[8.5,5.5,4.7,6.5,5.6,6.2,2.3,17.1,415.3,3.5,0.9,7.8,4.8,17.1,18.8,3.5,3.7,1.8,7.6,2.7,4.9,3.6,10.4,6.1,2.7,3.3,2.8,6.5,2.5,7.3,2.2,5.5,10.3,6.4,23.5,5.5,3.7,8.6,7.7,8.9,2.9,2.5,7.3,5.8,3.7,3.2,10.7,4.5,7.8,4.6,5.2,10.4,10.4,5.9,6,12.6,5.6,3.5,5.9,5.7,6.2,5.6,3.4,4,3.8,5.8,3.2,2.7,2.1,null,null,null,null,null,null,null],[null,160,162,null,119,141,null,null,null,null,null,null,76,52,40,24,null,null,19,null,null,null,20,19,null,12,11,18,null,null,6,12,null,7,null,null,null,null,5,null,null,null,4,null,null,4,4,6,null,5,5,3,3,5,5,4,5,6,null,5,4,4,6,4,3,null,null,null,null,null,null,4,8,4,2,8],[null,1679,1387,null,1974,1758,null,null,null,null,null,null,1166,4270,5454,1726,null,null,2889,null,null,null,3042,1680,null,1239,1154,1625,null,null,1475,1622,null,2638,null,null,null,null,3511,null,null,null,3457,null,null,1386,4633,1229,null,1414,1582,5204,5204,1754,1793,4633,1623,847,null,1533,2074,2093,725,1250,1526,null,null,null,null,null,null,2105,6641,4166,3476,1783]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Name<\/th>\n      <th>Date\nconstructed<\/th>\n      <th>Date\nrenovated<\/th>\n      <th>Rental?<\/th>\n      <th>kWh<\/th>\n      <th>Est cost<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh\nper sqft<\/th>\n      <th>Acad yr\noccupants<\/th>\n      <th>kWh\nper person<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,7,8,9,10]},{"name":"type","targets":0},{"name":"NAME","targets":1},{"name":"date_constr","targets":2},{"name":"date_reno","targets":3},{"name":"rental","targets":4},{"name":"kwh","targets":5},{"name":"dollars","targets":6},{"name":"sqft","targets":7},{"name":"kwh_sqft","targets":8},{"name":"occupants","targets":9},{"name":"kwh_person","targets":10}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+</div>
+<div id="summary-graph-by-meter-status" class="section level2">
+<h2>Summary graph by meter status</h2>
+<pre class="r"><code>ggplot(filter(buildings_sum, type_new != &quot;Res Hall - U&quot;),
+       aes(x = reorder(type_new, sqft, FUN = &quot;sum&quot;), y = sqft/1000, fill = meter)) +
+  geom_col(position = &quot;stack&quot;) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Square footage (1000)&quot;, fill = &quot;Meter status&quot;)</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/graph%20meter-1.png" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="export-for-downstream-analyses" class="section level2">
 <h2>Export for downstream analyses</h2>
@@ -957,23 +1011,22 @@ other attached packages:
  [1] scales_1.3.0    DT_0.33         lubridate_1.9.3 forcats_1.0.0  
  [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.0.2     readr_2.1.5    
  [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
-[13] workflowr_1.7.1
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
  [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
-[13] jsonlite_1.8.8    processx_3.8.3    whisker_0.4.1     ps_1.7.5         
-[17] promises_1.2.1    httr_1.4.7        fansi_1.0.6       crosstalk_1.2.1  
-[21] jquerylib_0.1.4   cli_3.6.2         rlang_1.1.3       ellipsis_0.3.2   
-[25] munsell_0.5.0     withr_3.0.0       cachem_1.0.8      yaml_2.3.8       
-[29] tools_4.3.2       tzdb_0.4.0        colorspace_2.1-0  httpuv_1.6.13    
-[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0     
-[37] htmlwidgets_1.6.4 fs_1.6.3          pkgconfig_2.0.3   callr_3.7.3      
-[41] pillar_1.9.0      bslib_0.6.1       later_1.3.2       gtable_0.3.4     
-[45] glue_1.7.0        Rcpp_1.1.0        xfun_0.41         tidyselect_1.2.0 
-[49] rstudioapi_0.16.0 knitr_1.45        htmltools_0.5.7   rmarkdown_2.25   
-[53] compiler_4.3.2    getPass_0.2-4    </code></pre>
+[13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
+[17] fansi_1.0.6       crosstalk_1.2.1   jquerylib_0.1.4   cli_3.6.2        
+[21] rlang_1.1.3       ellipsis_0.3.2    munsell_0.5.0     withr_3.0.0      
+[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
+[29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
+[33] lifecycle_1.0.4   git2r_0.33.0      htmlwidgets_1.6.4 fs_1.6.3         
+[37] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.6.1       later_1.3.2      
+[41] gtable_0.3.4      glue_1.7.0        Rcpp_1.1.0        highr_0.10       
+[45] xfun_0.41         tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45       
+[49] farver_2.1.1      htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25   
+[53] compiler_4.3.2   </code></pre>
 </div>
 </div>
 
