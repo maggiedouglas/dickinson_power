@@ -391,7 +391,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-23
+<strong>Last updated:</strong> 2026-02-24
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1e465a5912dd503e14b6c6aa9b4256d15424c390targetblank1e465a5a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2791892fbfbb8aa7b2016d98a84effa0bb848813targetblank2791892a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/1e465a5912dd503e14b6c6aa9b4256d15424c390" target="_blank">1e465a5</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/2791892fbfbb8aa7b2016d98a84effa0bb848813" target="_blank">2791892</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1e465a5912dd503e14b6c6aa9b4256d15424c390targetblank1e465a5a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2791892fbfbb8aa7b2016d98a84effa0bb848813targetblank2791892a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/1e465a5912dd503e14b6c6aa9b4256d15424c390" target="_blank">1e465a5</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/2791892fbfbb8aa7b2016d98a84effa0bb848813" target="_blank">2791892</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -565,6 +565,7 @@ Ignored files:
     Ignored:    data/FY25 Main Meter Data.xlsx
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
+    Ignored:    keys/.DS_Store
     Ignored:    output/annual_kwh.csv
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
@@ -623,6 +624,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/a379c87b9ecbf52640ebb4cde8ac0f4112ec0396/analysis/data_wrangling_final.Rmd" target="_blank">a379c87</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-23
+</td>
+<td>
+fixed issue with East College
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/a379c87b9ecbf52640ebb4cde8ac0f4112ec0396/docs/data_wrangling_final.html" target="_blank">a379c87</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-23
+</td>
+<td>
+fixed issue with East College
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -832,15 +867,17 @@ The following object is masked from &#39;package:purrr&#39;:
 The following object is masked from &#39;package:readr&#39;:
 
     col_factor</code></pre>
-<pre class="r"><code>kwh &lt;- read.csv(&quot;./data/FY25 PPL Electricity Data.csv&quot;, strip.white = T) # load PPL data
-buildings &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, strip.white = T) # load building information
-key &lt;- read.csv(&quot;./keys/meter_building_key.csv&quot;, strip.white = T) # load key to link meters to buildings
-occupants &lt;- read.csv(&quot;./keys/housing_counts.csv&quot;, strip.white = T)
+<pre class="r"><code># load electricity data
+kwh &lt;- read.csv(&quot;./data/FY25 PPL Electricity Data.csv&quot;, strip.white = T) # load PPL data
+kwh_sub &lt;- read.csv(&quot;./output/kwh_main_daily.csv&quot;, strip.white = T)
 
-# generate electricity totals by meter for the year
-kwh_annual &lt;- kwh %&gt;%
-  group_by(meter_origin) %&gt;%
-  summarize(kwh = sum(total_kwh, na.rm = T))
+# load building data + occupancy
+buildings &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, strip.white = T) # load building information
+occupants &lt;- read.csv(&quot;./keys/housing_counts.csv&quot;, strip.white = T) # load occupancy info
+
+# load keys to link datasets
+key &lt;- read.csv(&quot;./keys/meter_building_key.csv&quot;, strip.white = T) # load key to link meters to buildings
+sub_key &lt;- read.csv(&quot;./keys/submeter_building_key.csv&quot;, strip.white = T) # key to link submeter names to buildings
 
 # filter to AY24/25 and average across the year
 occu_agg &lt;- occupants %&gt;%
@@ -853,9 +890,22 @@ occu_agg &lt;- occupants %&gt;%
   summarize(occupants = mean(occupants))</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;NAME&#39;. You can override using the
 `.groups` argument.</code></pre>
-<pre class="r"><code># store conversion factors
-dollars_kwh &lt;- 0.0813
-co2_kg_kwh &lt;- 0.299511787</code></pre>
+<pre class="r"><code># store annual totals for kWh
+kwh_annual &lt;- kwh %&gt;%
+  filter(!is.na(total_kwh)) %&gt;%
+  group_by(meter_origin) %&gt;%
+  summarize(kwh = sum(total_kwh, na.rm = T),
+            days_perc = (n()/365)*100)
+
+kwh_sub_annual &lt;- kwh_sub %&gt;%
+  filter(!is.na(kwh)) %&gt;%
+  group_by(building) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = T),
+            days_perc = (n()/365)*100)
+
+# store conversion factors
+dollars_kwh &lt;- 0.08138507
+co2_kg_kwh &lt;- 0.30082405</code></pre>
 </div>
 <div id="check-data" class="section level2">
 <h2>Check data</h2>
@@ -871,23 +921,22 @@ co2_kg_kwh &lt;- 0.299511787</code></pre>
 <pre><code>&#39;data.frame&#39;:   136 obs. of  14 variables:
  $ TYPE       : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
  $ type_new   : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
- $ banner_code: chr  &quot;1110&quot; &quot;1540&quot; &quot;1035&quot; &quot;1030&quot; ...
- $ NAME       : chr  &quot;162-164  Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;East College&quot; ...
- $ occupant   : chr  &quot;DEAL Archeology Labs&quot; &quot;Music office/rehearsal space&quot; &quot;Education Dept. Offices&quot; &quot;Humanities&quot; ...
- $ address    : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College St.&quot; &quot;50 N. West St.&quot; ...
- $ date_constr: chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;1836&quot; ...
- $ date_acqd  : int  1998 1982 1979 NA 1979 1966 NA NA NA 1950 ...
- $ date_reno  : int  2010 NA NA 2019 2000 NA 1997 2009 1940 2002 ...
- $ sqft       : int  2500 1775 4576 28050 30000 2500 4000 29133 33692 11039 ...
- $ rental     : int  0 0 0 0 0 0 1 0 0 0 ...
- $ main_meter : int  0 0 0 1 0 0 0 1 1 1 ...
- $ main_disagg: int  0 0 0 0 0 0 0 1 1 1 ...
+ $ banner_code: chr  &quot;1110&quot; &quot;1540&quot; &quot;1035&quot; &quot;1810&quot; ...
+ $ NAME       : chr  &quot;162-164  Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;Green Valley Sanctuary&quot; ...
+ $ occupant   : chr  &quot;DEAL Archeology Labs&quot; &quot;Music office/rehearsal space&quot; &quot;Education Dept. Offices&quot; &quot;Research Facility&quot; ...
+ $ address    : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College St.&quot; &quot;&quot; ...
+ $ date_constr: chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
+ $ date_acqd  : int  1998 1982 1979 1966 NA NA NA 1950 NA NA ...
+ $ date_reno  : int  2010 NA NA NA 1997 2009 1940 2002 2001 2019 ...
+ $ sqft       : int  2500 1775 4576 2500 4000 29133 33692 11039 22000 28050 ...
+ $ rental     : int  0 0 0 0 1 0 0 0 0 0 ...
+ $ main_meter : int  0 0 0 0 0 1 1 1 1 1 ...
+ $ main_disagg: int  0 0 0 0 0 1 1 1 1 0 ...
  $ weis_meter : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 <pre class="r"><code>str(key)</code></pre>
-<pre><code>&#39;data.frame&#39;:   206 obs. of  3 variables:
- $ meter_origin          : chr  &quot;100 S College St&quot; &quot;100 S West St&quot; &quot;101 S College St&quot; &quot;102 S West St *Apt 1&quot; ...
- $ Sum.of.Total.Usage.kWh: int  269502 12628 14429 4609 4109 2070 7284 5457 3365 6181 ...
- $ NAME                  : chr  &quot;Drayer Hall&quot; &quot;100 S. West St.&quot; &quot;Landis House&quot; &quot;100 S. West St.&quot; ...</code></pre>
+<pre><code>&#39;data.frame&#39;:   202 obs. of  2 variables:
+ $ meter_origin: chr  &quot;100 S College St&quot; &quot;100 S West St&quot; &quot;101 S College St&quot; &quot;102 S West St *Apt 1&quot; ...
+ $ NAME        : chr  &quot;Drayer Hall&quot; &quot;100 S. West St.&quot; &quot;Landis House&quot; &quot;100 S. West St.&quot; ...</code></pre>
 </div>
 <div id="restructure-building-data" class="section level2">
 <h2>Restructure building data</h2>
@@ -901,7 +950,8 @@ back in the Main Meter and Weis aggregated information</li>
 <pre class="r"><code>buildings_main &lt;- buildings %&gt;%
   filter(main_meter == 1) %&gt;% # filter to main meter buildings
   summarize(sqft = sum(sqft, na.rm = T)) %&gt;% # sum sqft for these buildings
-  mutate(NAME = &quot;Main Meter&quot;,
+  mutate(meter = &quot;Main Meter - Total&quot;,
+         NAME = &quot;Main Meter&quot;,
          type_new = &quot;Main Meter&quot;,
          occupant = &quot;Mixed&quot;,
          address = &quot;Many different&quot;,
@@ -913,7 +963,8 @@ back in the Main Meter and Weis aggregated information</li>
 buildings_weis &lt;- buildings %&gt;%
   filter(weis_meter == 1) %&gt;% # filter to weis buildings
   summarize(sqft = sum(sqft, na.rm = T)) %&gt;%
-    mutate(NAME = &quot;Weis Meter&quot;,
+    mutate(meter = &quot;Weis Meter - Total&quot;,
+           NAME = &quot;Weis Meter&quot;,
          type_new = &quot;Weis Meter&quot;,
          occupant = &quot;Mixed&quot;,
          address = &quot;Many different&quot;,
@@ -924,23 +975,27 @@ buildings_weis &lt;- buildings %&gt;%
 
 # Generate clean building lookup table
 buildings_clean &lt;- buildings %&gt;%
-  filter(main_meter == 0 &amp; weis_meter == 0) %&gt;% # keep only buildings on individual meters
-  select(NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %&gt;% # select relevant columns
-  rbind(buildings_main, buildings_weis)
+  filter(main_disagg == 1 | weis_meter == 0) %&gt;% # keep only buildings on individual meters
+  mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
+                               ifelse(main_meter == 1, &quot;Main Meter&quot;, &quot;Individual&quot;))) %&gt;%
+  select(meter, NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %&gt;% # select relevant columns
+  rbind(buildings_main, buildings_weis) %&gt;%
+  select(type_new, NAME, sqft, meter)
 
 # Store summary of building meter status
 buildings_sum &lt;- buildings %&gt;%
     mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
-                        ifelse(main_meter == 1 &amp; main_disagg == 1, &quot;Main - Disagg.&quot;,
-                               ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, &quot;Individual&quot;))))</code></pre>
+                               ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, &quot;Individual&quot;)))</code></pre>
 </div>
 <div id="wrangle-datasets" class="section level2">
 <h2>Wrangle datasets</h2>
+<div id="annual-totals" class="section level3">
+<h3>Annual totals</h3>
 <pre class="r"><code>joined &lt;- kwh_annual %&gt;%
   left_join(key, by = &quot;meter_origin&quot;) %&gt;% # join to key to match meters to building names
   full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
-  filter(!is.na(meter_origin)) %&gt;% # filter out those with NA values for meter
-  group_by(type_new, NAME, occupant, date_constr, date_acqd, date_reno, rental) %&gt;% # group by building
+  filter(!meter %in% c(&quot;Main Meter&quot;, &quot;Weis Meter&quot;)) %&gt;% # filter out those on main or Weis meter (not disagg)
+  group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %&gt;% # take mean to preserve sqft data
   filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
@@ -951,13 +1006,47 @@ buildings_sum &lt;- buildings %&gt;%
          ghg_kgCO2 = kwh*co2_kg_kwh,
          type = type_new) %&gt;% 
   ungroup() %&gt;%
-  mutate_all(~ifelse(is.nan(.), NA, .)) </code></pre>
-<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;occupant&#39;,
-&#39;date_constr&#39;, &#39;date_acqd&#39;, &#39;date_reno&#39;. You can override using the `.groups`
-argument.</code></pre>
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
+  select(type, meter, NAME, days_perc, kwh, kwh_sqft, kwh_person, dollars, ghg_kgCO2)</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;days_perc&#39;. You can
+override using the `.groups` argument.</code></pre>
+<pre class="r"><code>joined_sub &lt;- kwh_sub_annual %&gt;%
+  left_join(sub_key, by = &quot;building&quot;) %&gt;%
+  left_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
+  group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %&gt;% # take mean to preserve sqft data
+  filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
+  left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
+  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
+         kwh_person = kwh/occupants,
+         dollars = kwh*dollars_kwh,
+         ghg_kgCO2 = kwh*co2_kg_kwh,
+         type = type_new) %&gt;% 
+  ungroup() %&gt;%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
+  select(type, meter, NAME, days_perc, kwh, kwh_sqft, kwh_person, dollars, ghg_kgCO2)</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;days_perc&#39;. You can
+override using the `.groups` argument.</code></pre>
+<pre class="r"><code>joined_full &lt;- rbind(joined, joined_sub)
+
+# generate summary by building category
+joined_cat &lt;- joined_full %&gt;%
+  group_by(type) %&gt;%
+  summarize(n = n(),
+            kwh = sum(kwh),
+            dollars = sum(dollars),
+            ghg_kgCO2 = sum(ghg_kgCO2),
+            med_kwh_sqft = median(kwh_sqft, na.rm = T),
+            kwh_sqft_25 = quantile(kwh_sqft, .25, na.rm = T),
+            kwh_sqft_75 = quantile(kwh_sqft, .75, na.rm = T)) %&gt;%
+  arrange(-kwh)</code></pre>
+</div>
+<div id="daily-data" class="section level3">
+<h3>Daily data</h3>
 <pre class="r"><code>joined_daily &lt;- kwh %&gt;%
   left_join(key, by = &quot;meter_origin&quot;) %&gt;% # join to key to match meters to building names
-  full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
+  full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-many&quot;) %&gt;% # join to building info by name
   filter(!is.na(meter_origin)) %&gt;%
   group_by(type_new, NAME, date) %&gt;%
   summarize(kwh = sum(total_kwh, na.rm = T),
@@ -970,37 +1059,52 @@ argument.</code></pre>
   select(-type_new) %&gt;%
   mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA</code></pre>
 <pre><code>Warning in left_join(., key, by = &quot;meter_origin&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
-ℹ Row 7250 of `x` matches multiple rows in `y`.
+ℹ Row 14881 of `x` matches multiple rows in `y`.
 ℹ Row 39 of `y` matches multiple rows in `x`.
 ℹ If a many-to-many relationship is expected, set `relationship =
   &quot;many-to-many&quot;` to silence this warning.</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;. You can override using
 the `.groups` argument.</code></pre>
+<pre class="r"><code>joined_daily_sub &lt;- kwh_sub %&gt;%
+  left_join(sub_key, by = &quot;building&quot;) %&gt;% 
+  full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-many&quot;) %&gt;% # join to building info by name
+  group_by(type_new, NAME, date) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = T),
+            sqft = mean(sqft, na.rm = T),
+            ave_temp = mean(ave_temp, na.rm = T)) %&gt;%
+  filter(!is.na(type_new)) %&gt;%
+  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
+         type = type_new) %&gt;% 
+  ungroup() %&gt;%
+  select(-type_new) %&gt;%
+  mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;. You can override using
+the `.groups` argument.</code></pre>
+<pre class="r"><code>joined_daily_full &lt;- rbind(joined_daily, joined_daily_sub)</code></pre>
+</div>
 </div>
 <div id="summary-table" class="section level2">
 <h2>Summary table</h2>
-<pre class="r"><code>joined_pretty &lt;- joined %&gt;%
+<pre class="r"><code>joined_pretty &lt;- joined_full %&gt;%
   mutate(kwh = round(kwh, digits = 0),
          dollars = paste(&quot;$&quot;,round(dollars, digits = 0)),
-         sqft = round(sqft, digits = 0),
          kwh_sqft = round(kwh_sqft, digits = 1),
-         occupants = round(occupants, digits = 0),
-         kwh_person = round(kwh_person, digits = 0)) %&gt;%
-  select(type, NAME, date_constr, date_reno, rental, kwh, dollars, sqft, kwh_sqft, occupants, kwh_person) %&gt;% 
-  arrange(desc(sqft))
+         kwh_person = round(kwh_person, digits = 0),
+         days_perc = round(days_perc, digits = 0)) %&gt;%
+  select(type, NAME, kwh, dollars, kwh_sqft, kwh_person, days_perc) %&gt;% 
+  arrange(desc(kwh))
 
 datatable(joined_pretty,
           filter = &#39;top&#39;,
           rownames = FALSE,
-          colnames = c(&quot;Building\ntype&quot;,&quot;Name&quot;,&quot;Date\nconstructed&quot;,&quot;Date\nrenovated&quot;,
-                       &quot;Rental?&quot;,&quot;kWh&quot;, &quot;Est cost&quot;, &quot;Square\nfootage&quot;,&quot;kWh\nper sqft&quot;,
-                       &quot;Acad yr\noccupants&quot;, &quot;kWh\nper person&quot;))</code></pre>
+          colnames = c(&quot;Building\ntype&quot;,&quot;Name&quot;,&quot;kWh&quot;, &quot;Est cost&quot;, &quot;kWh\nper sqft&quot;,
+                       &quot;kWh\nper person&quot;,&quot;Days of\ndata (%)&quot;))</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1997\" data-max=\"2022\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1068\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"500\" data-max=\"1119435\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0.9\" data-max=\"23.5\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2\" data-max=\"162\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"725\" data-max=\"6641\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Main Meter","Weis Meter","Res Hall - L","Res Hall - L","Res Hall - L","Other","Res Hall - L","Res Hall - L","Community","Academic","Admin","Other","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Community","Community","Res Hall - M","Res Hall - M","Community","Res Hall - M","Res Hall - M","Res Hall - M","Academic","Res Hall - M","Res Hall - M","Res Hall - M","Res Hall - M","Academic","Res Hall - M","Res Hall - M","Other","Res Hall - M","Other","Res Hall - M","Academic","Academic","Res Hall - M","Other","Admin","Admin","Res Hall - S","Other","Academic","Res Hall - S","Res Hall - S","Res Hall - S","Other","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Admin","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Other","Other","Res Hall - S","Other","Other","Other","Res Hall - U","Res Hall - U","Res Hall - U","Res Hall - U","Res Hall - U"],["Main Meter","Weis Meter","Goodyear","Drayer Hall","Adams","5 N. Orange St. - CPYB/SHARE","High Street Residence Hall","Morgan Hall","Allison Church","Goodyear Arts Studio","50 Mooreland Ave.","Wentzel","Malcolm Hall","Witwer Hall","Factory Apts.","27 W. High St.","Matthews House","DCCC","Landis House","100 S. West St.","Strayer House","President's House (New)","Treehouse","141 W. High St.","Reed Apts.","57 S. College","163 W. High St","165 W. High St","159 W. High St.","Schuman House","Carlisle Theatre","155 W. High St.","Cherry Apts","49 W. High (1, 2, 3)","146 W. Louther St.","King House","Vincett House","162-164  Dickinson Ave.","Green Valley Sanctuary","133 N. College St.","119 W. High St. (1, 2, 3)","41 Conway St.","556 W. Louther St.","135 Cedar St.","Kade House","46 S. West St.","2 Conway St.","139 N. College St.","531 W. Louther St.","344 W. North St.","509 W. Louther St.","513 W. Louther St.","49 S. College St.","51 S. College St.","505 W. Louther St.","507 W. Louther St.","135 N. College St.","417 W. Louther St.","521 W. Louther St.","554 W. Louther St.","529 W. Louther St.","519 W. Louther St.","425 W. Louther St.","515 W. Louther St.","527 W. Louther St.","538 W. Louther St.","362 W. North S.","368 W. North","Carriage House","155 W. High St., Ground Floor","25 Pomfret St (15, 16)","50 Wilson Street","133 W. High St. (2, 5)","152 W. Louther St.","154 W. Louther St. (1)","19-21 W. High St.","23 W. High St."],[null,null,"1891","1952","1962","","2018","1955","1958","1891","","1993","1966","1965","","1905","1926","","1905","","1930","","","","","","","","","","","","","","","1967","","","","1890","","","","","","","","1910","1910","1910","1902","1910","1960","1960","1910","1900","1910","1870","1910","","1910","1910","1874","1875","1910","","1900","1900","1930","","","","","","","",""],[null,null,2000,null,null,null,null,2003,null,2000,null,2020,null,null,null,null,null,2009,null,null,null,null,2006,null,null,null,null,null,null,null,1997,null,null,null,2022,null,null,2010,null,2019,null,null,2017,null,null,null,2018,2019,2017,null,2017,2017,2017,2019,2017,2017,2019,2019,2017,2017,2017,2017,2019,2017,2017,null,null,null,null,null,null,null,null,null,null,null,null],[0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1,0,0,0,1,1,0,0,0,0,0,1,0,1,1,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1],[11648808,973320,512614,269502,223957,277590,234938,247869,77578,512614,95137,22830,158463,88635,222053,220896,40566,39786,14429,54882,18275,30585,21775,60837,31914,12221,14863,12690,29252,10946,29070,8851,19464,30832,18467,64445,14797,9217,21575,17555,19990,6277,4986,13830,10487,6493,5543,18531,7374,12407,7070,7910,15611,15611,8772,8965,18531,8115,5082,8520,7663,8294,7326,4352,4998,4578,6482,3151,1952,1068,42473,8693,9473,53130,16662,5215,14266],["$ 947048","$ 79131","$ 41675","$ 21911","$ 18208","$ 22568","$ 19100","$ 20152","$ 6307","$ 41675","$ 7735","$ 1856","$ 12883","$ 7206","$ 18053","$ 17959","$ 3298","$ 3235","$ 1173","$ 4462","$ 1486","$ 2487","$ 1770","$ 4946","$ 2595","$ 994","$ 1208","$ 1032","$ 2378","$ 890","$ 2363","$ 720","$ 1582","$ 2507","$ 1501","$ 5239","$ 1203","$ 749","$ 1754","$ 1427","$ 1625","$ 510","$ 405","$ 1124","$ 853","$ 528","$ 451","$ 1507","$ 600","$ 1009","$ 575","$ 643","$ 1269","$ 1269","$ 713","$ 729","$ 1507","$ 660","$ 413","$ 693","$ 623","$ 674","$ 596","$ 354","$ 406","$ 372","$ 527","$ 256","$ 159","$ 87","$ 3453","$ 707","$ 770","$ 4319","$ 1355","$ 424","$ 1160"],[1119435,85725,60000,48720,47750,42500,41945,40000,33310,30000,27100,25000,20434,18603,13000,11750,11548,10892,7953,7190,6845,6274,6000,5825,5206,4576,4550,4550,4500,4444,4000,4000,3519,3000,2864,2745,2700,2500,2500,2272,2240,2200,2000,1900,1800,1775,1729,1728,1636,1586,1532,1532,1500,1500,1492,1492,1476,1462,1448,1440,1352,1330,1318,1268,1244,1200,1111,992,725,500,null,null,null,null,null,null,null],[10.4,11.4,8.5,5.5,4.7,6.5,5.6,6.2,2.3,17.1,3.5,0.9,7.8,4.8,17.1,18.8,3.5,3.7,1.8,7.6,2.7,4.9,3.6,10.4,6.1,2.7,3.3,2.8,6.5,2.5,7.3,2.2,5.5,10.3,6.4,23.5,5.5,3.7,8.6,7.7,8.9,2.9,2.5,7.3,5.8,3.7,3.2,10.7,4.5,7.8,4.6,5.2,10.4,10.4,5.9,6,12.6,5.6,3.5,5.9,5.7,6.2,5.6,3.4,4,3.8,5.8,3.2,2.7,2.1,null,null,null,null,null,null,null],[null,null,null,160,162,null,119,141,null,null,null,null,null,76,52,40,24,null,null,19,null,null,null,20,19,null,12,11,18,null,null,6,12,null,7,null,null,null,null,5,null,null,null,4,null,null,4,4,6,null,5,5,3,3,5,5,4,5,6,null,5,4,4,6,4,3,null,null,null,null,null,null,4,8,4,2,8],[null,null,null,1679,1387,null,1974,1758,null,null,null,null,null,1166,4270,5454,1726,null,null,2889,null,null,null,3042,1680,null,1239,1154,1625,null,null,1475,1622,null,2638,null,null,null,null,3511,null,null,null,3457,null,null,1386,4633,1229,null,1414,1582,5204,5204,1754,1793,4633,1623,847,null,1533,2074,2093,725,1250,1526,null,null,null,null,null,null,2105,6641,4166,3476,1783]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Name<\/th>\n      <th>Date\nconstructed<\/th>\n      <th>Date\nrenovated<\/th>\n      <th>Rental?<\/th>\n      <th>kWh<\/th>\n      <th>Est cost<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh\nper sqft<\/th>\n      <th>Acad yr\noccupants<\/th>\n      <th>kWh\nper person<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[3,4,5,7,8,9,10]},{"name":"type","targets":0},{"name":"NAME","targets":1},{"name":"date_constr","targets":2},{"name":"date_reno","targets":3},{"name":"rental","targets":4},{"name":"kwh","targets":5},{"name":"dollars","targets":6},{"name":"sqft","targets":7},{"name":"kwh_sqft","targets":8},{"name":"occupants","targets":9},{"name":"kwh_person","targets":10}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"23.5\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"725\" data-max=\"6641\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"37\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Main Meter","Weis Meter","Academic","Academic","Admin","Mixed","Other","Other","Res Hall - L","Other","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Academic","Res Hall - L","Academic","Academic","Admin","Res Hall - L","Non-building","Community","Community","Admin","Other","Res Hall - M","Res Hall - M","Res Hall - U","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Other","Res Hall - L","Community","Res Hall - L","Academic","Res Hall - M","Other","Community","Res Hall - M","Academic","Other","Res Hall - M","Academic","Other","Res Hall - M","Community","Res Hall - S","Res Hall - S","Res Hall - M","Res Hall - M","Res Hall - M","Res Hall - U","Res Hall - S","Res Hall - M","Res Hall - M","Community","Res Hall - U","Res Hall - S","Res Hall - M","Other","Academic","Res Hall - M","Other","Academic","Res Hall - S","Res Hall - M","Res Hall - S","Other","Admin","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Academic","Other","Admin","Res Hall - U","Res Hall - S","Res Hall - S","Res Hall - S","Admin","Res Hall - S","Res Hall - S","Res Hall - U","Non-building","Res Hall - U","Other","Res Hall - U","Res Hall - S","Non-building","Other","Non-building","Other","Other"],["Main Meter","Weis Meter","Waidner Spahr Library","Rector Science Center","5 N. Orange St. - Facilities","Goodyear + Goodyear Arts Studio","Kline Life Sport Complex","Biddle Press Box, Restrooms, Durden ATC","Kisner - Woodward","5 N. Orange St. - CPYB/SHARE","Drayer Hall","Morgan Hall","High Street Residence Hall","Adams","Factory Apts.","27 W. High St.","McKenney Hall","Malcolm Hall","Baird McClintock / Quad 4-5","Althouse","Davidson Wilson / Quad 9-10","Bosler","Stern Center","50 Mooreland Ave.","Witwer Hall","Pump system (athletics)","Allison Church","Quarry, The ","Old West","King House","141 W. High St.","100 S. West St.","152 W. Louther St.","Armstrong / Quad 8","Atwater / Quad 7","Buchanan / Quad 2","Conway / Quad 1","Longsdorff / Quad 6","25 Pomfret St (15, 16)","Matthews House","DCCC","Spradley-Young  / Quad 3","Montgomery House","Reed Apts.","49 W. High (1, 2, 3)","President's House (New)","159 W. High St.","Carlisle Theatre","Wentzel","Treehouse","Green Valley Sanctuary","119 W. High St. (1, 2, 3)","Cherry Apts","Holland Union Bldg.","135 N. College St.","139 N. College St.","146 W. Louther St.","Strayer House","133 N. College St.","154 W. Louther St. (1)","49 S. College St./51 S. College St.","163 W. High St","Vincett House","Landis House","23 W. High St.","135 Cedar St.","165 W. High St","344 W. North St.","57 S. College","Schuman House","Kade House","162-164  Dickinson Ave.","507 W. Louther St.","155 W. High St.","505 W. Louther St.","50 Wilson Street","554 W. Louther St.","519 W. Louther St.","417 W. Louther St.","513 W. Louther St.","529 W. Louther St.","531 W. Louther St.","425 W. Louther St.","509 W. Louther St.","46 S. West St.","362 W. North S.","41 Conway St.","133 W. High St. (2, 5)","2 Conway St.","521 W. Louther St.","527 W. Louther St.","556 W. Louther St.","538 W. Louther St.","515 W. Louther St.","133 W. High St. (2, 5)","Stadium Lights","19-21 W. High St.","368 W. North","19-21 W. High St.","Carriage House","Crosswalk on N. West St.","155 W. High St., Ground Floor","Scoreboard","Boiling Springs Cottage","Boiling Springs Farm"],[11648808,973320,826621,777550,567745,512614,326088,298475,286667,277590,269502,247869,234938,223957,222053,220896,170470,158463,132958,129570,123812,121996,108235,95137,88635,88262,77578,73472,72757,64445,60837,54882,53130,52679,49681,47808,45533,43677,42473,40566,39786,39471,38225,31914,30832,30585,29252,29070,22830,21775,21575,19990,19464,19219,18531,18531,18467,18275,17555,16662,15611,14863,14797,14429,14266,13830,12690,12407,12221,10946,10487,9217,8965,8851,8772,8693,8520,8294,8115,7910,7663,7374,7326,7070,6493,6482,6277,5886,5543,5082,4998,4986,4578,4352,3587,3423,3219,3151,1995,1952,1198,1068,1,0,0],["$ 948039","$ 79214","$ 67275","$ 63281","$ 46206","$ 41719","$ 26539","$ 24291","$ 23330","$ 22592","$ 21933","$ 20173","$ 19120","$ 18227","$ 18072","$ 17978","$ 13874","$ 12897","$ 10821","$ 10545","$ 10076","$ 9929","$ 8809","$ 7743","$ 7214","$ 7183","$ 6314","$ 5980","$ 5921","$ 5245","$ 4951","$ 4467","$ 4324","$ 4287","$ 4043","$ 3891","$ 3706","$ 3555","$ 3457","$ 3301","$ 3238","$ 3212","$ 3111","$ 2597","$ 2509","$ 2489","$ 2381","$ 2366","$ 1858","$ 1772","$ 1756","$ 1627","$ 1584","$ 1564","$ 1508","$ 1508","$ 1503","$ 1487","$ 1429","$ 1356","$ 1271","$ 1210","$ 1204","$ 1174","$ 1161","$ 1126","$ 1033","$ 1010","$ 995","$ 891","$ 854","$ 750","$ 730","$ 720","$ 714","$ 708","$ 693","$ 675","$ 660","$ 644","$ 624","$ 600","$ 596","$ 575","$ 528","$ 527","$ 511","$ 479","$ 451","$ 414","$ 407","$ 406","$ 373","$ 354","$ 292","$ 279","$ 262","$ 256","$ 162","$ 159","$ 97","$ 87","$ 0","$ 0","$ 0"],[10.4,11.4,6.9,6.9,7.6,5.7,2.6,12,12.5,6.5,5.5,6.2,5.6,4.7,17.1,18.8,9,7.8,5.1,4.4,4,3.6,4.9,3.5,4.8,null,2.3,10.7,2.4,23.5,10.4,7.6,null,4.9,4.6,4.5,4.2,4.1,null,3.5,3.7,3.7,3.5,6.1,10.3,4.9,6.5,7.3,0.9,3.6,8.6,8.9,5.5,0.2,12.6,10.7,6.4,2.7,7.7,null,5.2,3.3,5.5,1.8,null,7.3,2.8,7.8,2.7,2.5,5.8,3.7,6,2.2,5.9,null,5.9,6.2,5.6,5.2,5.7,4.5,5.6,4.6,3.7,5.8,2.9,null,3.2,3.5,4,2.5,3.8,3.4,null,null,null,3.2,null,2.7,null,2.1,null,0,0],[null,null,null,null,null,null,null,null,null,null,1679,1758,1974,1387,4270,5454,null,null,1203,null,1032,null,null,null,1166,null,null,null,null,null,3042,2889,6641,1368,1258,1226,1047,1134,null,1726,null,null,null,1680,null,null,1625,null,null,null,null,null,1622,null,4633,4633,2638,null,3511,4166,null,1239,null,null,1783,3457,1154,null,null,null,null,null,1793,1475,1754,null,null,2074,1623,1582,1533,1229,2093,1414,null,null,null,1308,1386,847,1250,null,1526,725,797,null,2146,null,1330,null,null,null,null,null,null],[100,100,37,37,100,100,37,100,93,100,100,100,100,100,100,100,93,100,93,93,93,93,93,100,100,100,100,93,93,100,100,100,95,93,93,93,93,93,95,100,100,93,93,100,100,100,100,100,100,100,100,100,100,93,100,100,100,100,100,79,100,100,100,100,95,100,100,100,100,100,100,100,100,100,100,95,100,100,100,100,100,100,100,100,100,100,100,95,100,100,100,100,100,100,95,100,95,100,88,100,100,100,100,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Name<\/th>\n      <th>kWh<\/th>\n      <th>Est cost<\/th>\n      <th>kWh\nper sqft<\/th>\n      <th>kWh\nper person<\/th>\n      <th>Days of\ndata (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4,5,6]},{"name":"type","targets":0},{"name":"NAME","targets":1},{"name":"kwh","targets":2},{"name":"dollars","targets":3},{"name":"kwh_sqft","targets":4},{"name":"kwh_person","targets":5},{"name":"days_perc","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="summary-graph-by-meter-status" class="section level2">
 <h2>Summary graph by meter status</h2>
-<pre class="r"><code>ggplot(filter(buildings_sum, ! type_new %in% c(&quot;Res Hall - U&quot;,&quot;Mixed&quot;)),
+<pre class="r"><code>ggplot(filter(buildings_sum, ! type_new %in% c(&quot;Res Hall - U&quot;,&quot;Non-building&quot;,&quot;Production&quot;)),
        aes(x = reorder(type_new, sqft, FUN = &quot;sum&quot;), y = sqft/1000, fill = meter)) +
   geom_col(position = &quot;stack&quot;) +
   theme_bw() +
@@ -1030,6 +1134,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/a379c87b9ecbf52640ebb4cde8ac0f4112ec0396/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">a379c87</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/1e465a5912dd503e14b6c6aa9b4256d15424c390/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">1e465a5</a>
 </td>
 <td>
@@ -1046,8 +1161,8 @@ maggiedouglas
 </div>
 <div id="export-for-downstream-analyses" class="section level2">
 <h2>Export for downstream analyses</h2>
-<pre class="r"><code>write.csv(joined_daily, &quot;./output/kwh_daily.csv&quot;, row.names = F)
-write.csv(joined, &quot;./output/kwh_annual.csv&quot;, row.names = F)</code></pre>
+<pre class="r"><code>write.csv(joined_daily_full, &quot;./output/kwh_daily.csv&quot;, row.names = F)
+write.csv(joined_full, &quot;./output/kwh_annual.csv&quot;, row.names = F)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">

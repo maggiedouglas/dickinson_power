@@ -2,19 +2,17 @@
 Academic,Academic,1110,162-164  Dickinson Ave.,DEAL Archeology Labs,162-164 Dickinson Ave.,,1998,2010,2500,0,0,0,0
 Academic,Academic,1540,46 S. West St.,Music office/rehearsal space,46 S. West St.,,1982,,1775,0,0,0,0
 Academic,Academic,1035,57 S. College,Education Dept. Offices,57 S. College St.,,1979,,4576,0,0,0,0
-Academic,Academic,1030,East College,Humanities,50 N. West St. ,1836,,2019,28050,0,1,0,0
-Academic,Academic,1040,Goodyear Arts Studio,Fine Arts ,559 W. Louther St.,1891,1979,2000,30000,0,0,0,0
 Academic,Academic,1810,Green Valley Sanctuary,Research Facility,,,1966,,2500,0,0,0,0
 Academic,Academic,1665,Carlisle Theatre,Cubiculo,44 W. High St.,,,1997,4000,1,0,0,0
 Academic,Academic,1005,Althouse,"IBM, African Studies",261 W. Louther St.,1957,,2009,29133,0,1,1,0
 Academic,Academic,1010,Bosler,Foreign Languages,201 W. High St.,1884,,1940,33692,0,1,1,0
 Academic,Academic,1060,Montgomery House,Theatre and Dance,324 W. Louther St. ,1837,1950,2002,11039,0,1,1,0
 Academic,Academic,1065,Stern Center,Global Education,208 W. Louther St.,1885,,2001,22000,0,1,1,0
+Academic,Academic,1030,East College,Humanities,50 N. West St. ,1836,,2019,28050,0,1,0,0
 Academic,Academic,1090,Biddle House,"Registrar, Career Center, Advising",8 N. College St.,1827,1946,,12600,0,1,0,0
 Academic,Academic,1015,Clarke Center,Clark Center/CCLA,249-255 W. Louther St.,,1987,,6638,0,1,0,0
 Academic,Academic,1095,Cook House,Center for the Future of Native Peoples,239 W. Louther St.,,1986,,3138,0,1,0,0
 Academic,Academic,1025,Denny Hall,Social Sciences,199 W. High St.,1905,,1984,36512,0,1,0,0
-Academic,Academic,1685,Kaufman Hall,"Geology, EnviSci, ALLARM, CSE, Psychology",400 W. North / 145 Cherry St.,,2004,2007,53539,0,1,0,0
 Academic,Academic,1432,Keck Archeology Lab,Archeology,169 W. High St.,,1998,,1511,0,1,0,0
 Academic,Academic,1045,Rector Science Center,"Biology, Psychology, Chemistry, Neuroscience, Biochemistry, Molecular biology",301 W. Louther St.,2007,,,112800,0,1,0,0
 Academic,Academic,1070,Tome,"Physics, Astronomy, Math, Computer Science",343 W. Louther St.,2000,,,52000,0,1,0,0
@@ -31,8 +29,6 @@ Administration,Admin,1145,South College East,IT,220 W. Church Ave.,1948,,,10566,
 Administration,Admin,1150,South College West,Financial Aid/Cashier's office,222 W. Church Ave.,1948,,,21166,0,0,0,1
 Administration,Admin,1155,Waidner Admissions,Admissions,272 W. High St.,1912,1964,2019,14040,0,0,0,1
 Administration,Admin,1120,Old West,"President's Office, Finance & Administration, Provost, Legal, Disability Services",230 W. Louther St.,1803,,,30208,0,1,1,0
-Administration,Admin,1685,Kaufman Hall,Public Safety,400 W. North / 145 Cherry,,2004,2007,7169,0,1,0,0
-Administration,Admin,1685,Kaufman Hall,Facilities Management Storage,400 W. North St.,,2004,2007,17307,0,1,0,0
 Administration,Admin,1130,Rand House,Human Resources,55 N. West St.,1900,1985,,2540,0,1,0,0
 Community,Community,1210,Allison Church,"Social space, meeting rooms, offices",99 Mooreland Ave.,1958,2013,,33310,0,0,0,0
 Community,Community,1100/1105,DCCC,Daycare,600 Garland Ave.,,1984,2009,10892,0,0,0,0
@@ -44,6 +40,11 @@ Community,Community,1240,Holland Union Bldg.,"Student Life, Dining Services, Stu
 Community,Community,1250,"Quarry, The ",Outside Use/Student Social Space,51 N. College St.,1899,1931,2000,6887,0,1,1,0
 Community,Community,1215,ATS,Multi-functional space,360 W. Louther St.,1971,,,49403,0,1,0,0
 Community,Community,1235,Kline Center Annex,Health and Counseling Centers,42 Cherry St.,1998,,,9300,0,1,0,0
+Production,Production,,Solar Farm,,,,,,,,,,
+Mixed,Mixed,,Main Meter,,,,,,,,,,
+Mixed,Mixed,,Weis Meter,,,,,,,,,,
+Mixed,Mixed,1040/1370,Goodyear + Goodyear Arts Studio,Students + Fine Arts,,1891,1979,2000,90000,0,0,0,0
+Mixed,Mixed,1685,Kaufman Hall,"Geology, EnviSci, ALLARM, CSE, Psychology, Public Safety, Facilities Management",400 W. North St.,,2004,2007,78015,0,1,0,0
 Athletic Bldg.,Other,1161/1162/1164,"Biddle Press Box, Restrooms, Durden ATC","Biddle Press Box, Restrooms, Durden ATC combined",Belvedere St.,,,,24895,0,0,0,0
 Athletic Bldg.,Other,1260,Wentzel,Locker Rooms/Indoor Baseball/DCCC during summer + library storage,1250 Ritner Hwy,1993,2002,2020,25000,0,0,0,0
 Auxiliary,Other,1305,Kade House ,Guest Housing,31 S. West St.,,1997,,1800,0,0,0,0
@@ -63,7 +64,6 @@ Athletic Bldg.,Other,1170,Kline Life Sport Complex,Locker Rooms/Fitness Center/P
 Auxiliary,Other,1230,Hartman House,Guest Housing,243 W. Louther St.,,1983,,2460,0,1,0,0
 Residence Hall,Res Hall - L,1315,Adams,Students,90 S. College St.,1962,,,47750,0,0,0,0
 Residence Hall,Res Hall - L,1360,Drayer Hall,Students,60 S. College St.,1952,,,48720,0,0,0,0
-Residence Hall,Res Hall - L,1370,Goodyear,Students,551-595 W. Louther St.,1891,1979,2000,60000,0,0,0,0
 Residence Hall,Res Hall - L,1317,High Street Residence Hall,Students,450 W. High St.,2018,,,41945,0,0,0,0
 Residence Hall,Res Hall - L,1390,Malcolm Hall ,Students,402 W. High St.,1966,,,20434,0,0,0,0
 Residence Hall,Res Hall - L,1395,Matthews House,Students,60 Moorland Ave.,1926,1957,,11548,0,0,0,0
@@ -111,7 +111,7 @@ Residence Hall,Res Hall - S,1265,135 N. College St.,Students,135 N. College St.,
 Residence Hall,Res Hall - S,1267,2 Conway St.,Students,2 Conway St.,,2012,2018,1729,0,0,0,0
 Residence Hall,Res Hall - S,1515,417 W. Louther St.,Students,417 W. Louther St.,1870,,2019,1462,0,0,0,0
 Residence Hall,Res Hall - S,1525,425 W. Louther St.,Students,425 W. Louther St.,1874,1987,2019,1318,0,0,0,0
-Residence Hall,Res Hall - S,1545,49 S. College St.,Students,49 S. College St.,1960,1984,2017,1500,0,0,0,0
+Residence Hall,Res Hall - S,1545,49 S. College St./51 S. College St.,Students,49 S. College St.,1960,1984,2017,3000,0,0,0,0
 Residence Hall,Res Hall - S,1550,505 W. Louther St.,Students,505 W. Louther St.,1910,1982,2017,1492,0,0,0,0
 Residence Hall,Res Hall - S,1555,507 W. Louther St.,Students,507 W. Louther St.,1900,2005,2017,1492,0,0,0,0
 Residence Hall,Res Hall - S,1740,509 W. Louther St.,Students,509 W. Louther St.,1902,2005,2017,1532,0,0,0,0
@@ -125,13 +125,13 @@ Residence Hall,Res Hall - S,1280,531 W. Louther St.,Students,531 W. Louther St.,
 Residence Hall,Res Hall - S,1295,538 W. Louther St.,Students,538 W. Louther St.,,2006,,1200,0,0,0,0
 Residence Hall,Res Hall - S,1340,Carriage House,Students,129 W. Chapel Ave.,1930,,,725,0,0,0,0
 Residence Hall,Res Hall - S,1490,139 N. College St.,Students,139 N. College St.,1910,1987,2019,1728,0,0,0,0
-Residence Hall,Res Hall - S,1560,51 S. College St.,Students,51 S. College St.,1960,1984,2019,1500,0,0,0,0
 Residence Hall,Res Hall - S,1432,169 W. High St.,Students,169 W. High St.,,1998,,1489,0,1,0,0
 Residence Hall,Res Hall - U,1667,"133 W. High St. (2, 5)",Students,133 W. High St,,,,,1,0,0,0
 Residence Hall,Res Hall - U,1518,152 W. Louther St.,Students,152 W. Louther St.,,,,,1,0,0,0
 Residence Hall,Res Hall - U,1521,154 W. Louther St. (1),Students,152 W. Louther St.,,,,,1,0,0,0
 Residence Hall,Res Hall - U,1821,19-21 W. High St.,Students,19-23 W. High,,,,,1,0,0,0
 Residence Hall,Res Hall - U,1822,23 W. High St.,Students,19-23 W. High,,,,,1,0,0,0
-Mixed,Mixed,,Solar Farm,,,,,,,,,,
-Mixed,Mixed,,Main Meter,,,,,,,,,,
-Mixed,Mixed,,Weis Meter,,,,,,,,,,
+Non-building,Non-building,,Stadium Lights,,,,,,,0,0,0,0
+Non-building,Non-building,,Crosswalk on N. West St.,,,,,,,0,0,0,0
+Non-building,Non-building,,Pump system (athletics),,,,,,,0,0,0,0
+Non-building,Non-building,,Scoreboard,,,,,,,0,0,0,0
