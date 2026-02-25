@@ -115,7 +115,8 @@ buildings_weis <- buildings %>%
 buildings_clean <- buildings %>%
   filter(main_disagg == 1 | weis_meter == 0) %>% # keep only buildings on individual meters
   mutate(meter = ifelse(weis_meter == 1, "Weis Meter", 
-                               ifelse(main_meter == 1, "Main Meter", "Individual"))) %>%
+                        ifelse(main_meter == 1 & main_disagg == 0, "Main Meter", 
+                               ifelse(main_meter == 1 & main_disagg == 1, "Main Meter - Disagg.", "Individual")))) %>%
   select(meter, NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %>% # select relevant columns
   rbind(buildings_main, buildings_weis) %>%
   select(type_new, NAME, sqft, meter)
@@ -123,7 +124,8 @@ buildings_clean <- buildings %>%
 # Store summary of building meter status
 buildings_sum <- buildings %>%
     mutate(meter = ifelse(weis_meter == 1, "Weis Meter", 
-                               ifelse(main_meter == 1 & main_disagg == 0, "Main Meter", "Individual")))
+                        ifelse(main_meter == 1 & main_disagg == 0, "Main Meter", 
+                               ifelse(main_meter == 1 & main_disagg == 1, "Main Meter - Disagg.", "Individual"))))
   
 ```
 
@@ -140,6 +142,7 @@ joined <- kwh_annual %>%
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %>% # take mean to preserve sqft data
   filter(!is.na(type_new)) %>% # filter out those with NA for type
+  filter(meter != "Main Meter - Disagg.") %>% # filter out those with submeter data
   left_join(occu_agg, by = "NAME") %>%
   mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
          kwh_person = kwh/occupants,
@@ -271,7 +274,8 @@ ggplot(filter(buildings_sum, !is.na(meter) & !type_new %in% c("Res Hall - U","No
   labs(x = "", y = "Square footage (1000)", fill = "Meter status")
 ```
 
-```{r stacked bar, include = FALSE, eval = FALSE}
+
+```{r stacked bar}
 daily_graph <- joined_daily %>%
   mutate(date = mdy(date),
          month = month(date, label = TRUE),
@@ -283,10 +287,42 @@ ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN =
   labs(x = "", y = "Electricity use (million kWh)", fill = "")
 ```
 
+```{r stacked bar facet}
+ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = 'sum'))) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ type) +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (million kWh)", fill = "") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+```
+```{r stacked bar facet axis variable}
+ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = 'sum'))) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ type, scales = "free") +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (million kWh)", fill = "") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))
+```
+
+## Summary graph of electricity intensity - TBD
+
+```{r intensity, eval = FALSE}
+joined_sum <- joined_daily %>%
+  group_by(type, NAME) %>%
+  summarize(kwh = sum(kwh, na.rm = T),
+            sqft = median(sqft, na.rm = T)) %>%
+
+ggplot(joined_sum, aes(x = type, y = kwh_sqft, fill = type)) +
+  geom_boxplot() +
+  coord_flip() +
+  theme_bw() +
+  labs(x = "", y = "kWh per sqft", )
+```
+
 ## Export for downstream analyses
 
 ```{r export}
-write.csv(joined_daily_full, "./output/kwh_daily.csv", row.names = F)
-write.csv(joined_full, "./output/kwh_annual.csv", row.names = F)
+write.csv(joined_daily_full, "./output/kwh_daily_20260225.csv", row.names = F)
+write.csv(joined_full, "./output/kwh_annual_20260225.csv", row.names = F)
 ```
 

@@ -391,7 +391,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-24
+<strong>Last updated:</strong> 2026-02-25
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2fef6499ccab67994d59850bfe4a806a58283172targetblank2fef649a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8c6712f07ac3f6cc7e085f0619044397742f4fcftargetblank8c6712fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/2fef6499ccab67994d59850bfe4a806a58283172" target="_blank">2fef649</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/8c6712f07ac3f6cc7e085f0619044397742f4fcf" target="_blank">8c6712f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2fef6499ccab67994d59850bfe4a806a58283172targetblank2fef649a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8c6712f07ac3f6cc7e085f0619044397742f4fcftargetblank8c6712fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/2fef6499ccab67994d59850bfe4a806a58283172" target="_blank">2fef649</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/8c6712f07ac3f6cc7e085f0619044397742f4fcf" target="_blank">8c6712f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -561,20 +561,23 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
+    Ignored:    data/.DS_Store
     Ignored:    data/FY25 Main Meter Data.xlsx
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
-    Ignored:    output/.DS_Store
+    Ignored:    keys/.DS_Store
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
     Ignored:    output/kwh_annual.csv
+    Ignored:    output/kwh_annual_20260225.csv
     Ignored:    output/kwh_daily.csv
+    Ignored:    output/kwh_daily_20260225.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
 Unstaged changes:
     Modified:   analysis/data_wrangling_final.Rmd
-    Modified:   keys/housing_counts.csv
+    Modified:   keys/fy25_building_list_updated.csv
 
 </code></pre>
 <p>
@@ -620,6 +623,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/8c6712f07ac3f6cc7e085f0619044397742f4fcf/analysis/data_wrangling_final.Rmd" target="_blank">8c6712f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-24
+</td>
+<td>
+update script to fix issues
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/8c6712f07ac3f6cc7e085f0619044397742f4fcf/docs/data_wrangling_final.html" target="_blank">8c6712f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-24
+</td>
+<td>
+update script to fix issues
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -878,8 +915,8 @@ associated GHG emissions</li>
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.0     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.0
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.1
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
@@ -948,7 +985,7 @@ co2_kg_kwh &lt;- 0.30082405</code></pre>
  $ total_kwh     : num  28 26.4 26.5 26.3 27.2 ...
  $ ave_temp      : int  78 76 78 81 75 78 80 79 76 76 ...</code></pre>
 <pre class="r"><code>str(buildings)</code></pre>
-<pre><code>&#39;data.frame&#39;:   136 obs. of  14 variables:
+<pre><code>&#39;data.frame&#39;:   136 obs. of  16 variables:
  $ TYPE       : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
  $ type_new   : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
  $ banner_code: chr  &quot;1110&quot; &quot;1540&quot; &quot;1035&quot; &quot;1810&quot; ...
@@ -962,7 +999,9 @@ co2_kg_kwh &lt;- 0.30082405</code></pre>
  $ rental     : int  0 0 0 0 1 0 0 0 0 0 ...
  $ main_meter : int  0 0 0 0 0 1 1 1 1 1 ...
  $ main_disagg: int  0 0 0 0 0 1 1 1 1 0 ...
- $ weis_meter : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
+ $ weis_meter : int  0 0 0 0 0 0 0 0 0 0 ...
+ $ X          : logi  NA NA NA NA NA NA ...
+ $ X.1        : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</code></pre>
 <pre class="r"><code>str(key)</code></pre>
 <pre><code>&#39;data.frame&#39;:   202 obs. of  2 variables:
  $ meter_origin: chr  &quot;100 S College St&quot; &quot;100 S West St&quot; &quot;101 S College St&quot; &quot;102 S West St *Apt 1&quot; ...
@@ -1007,7 +1046,8 @@ buildings_weis &lt;- buildings %&gt;%
 buildings_clean &lt;- buildings %&gt;%
   filter(main_disagg == 1 | weis_meter == 0) %&gt;% # keep only buildings on individual meters
   mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
-                               ifelse(main_meter == 1, &quot;Main Meter&quot;, &quot;Individual&quot;))) %&gt;%
+                        ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, 
+                               ifelse(main_meter == 1 &amp; main_disagg == 1, &quot;Main Meter - Disagg.&quot;, &quot;Individual&quot;)))) %&gt;%
   select(meter, NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %&gt;% # select relevant columns
   rbind(buildings_main, buildings_weis) %&gt;%
   select(type_new, NAME, sqft, meter)
@@ -1015,7 +1055,8 @@ buildings_clean &lt;- buildings %&gt;%
 # Store summary of building meter status
 buildings_sum &lt;- buildings %&gt;%
     mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
-                               ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, &quot;Individual&quot;)))</code></pre>
+                        ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, 
+                               ifelse(main_meter == 1 &amp; main_disagg == 1, &quot;Main Meter - Disagg.&quot;, &quot;Individual&quot;))))</code></pre>
 </div>
 <div id="wrangle-datasets" class="section level2">
 <h2>Wrangle datasets</h2>
@@ -1029,6 +1070,7 @@ buildings_sum &lt;- buildings %&gt;%
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %&gt;% # take mean to preserve sqft data
   filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
+  filter(meter != &quot;Main Meter - Disagg.&quot;) %&gt;% # filter out those with submeter data
   left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
   mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
          kwh_person = kwh/occupants,
@@ -1169,6 +1211,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/8c6712f07ac3f6cc7e085f0619044397742f4fcf/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">8c6712f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-24
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/2fef6499ccab67994d59850bfe4a806a58283172/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">2fef649</a>
 </td>
 <td>
@@ -1204,11 +1257,49 @@ maggiedouglas
 </table>
 </div>
 </div>
+<pre class="r"><code>daily_graph &lt;- joined_daily %&gt;%
+  mutate(date = mdy(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE))
+
+ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+  geom_col(position = &quot;stack&quot;) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;)</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/stacked%20bar-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+  geom_col(position = &quot;stack&quot;) +
+  facet_wrap(. ~ type) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/stacked%20bar%20facet-1.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+  geom_col(position = &quot;stack&quot;) +
+  facet_wrap(. ~ type, scales = &quot;free&quot;) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/stacked%20bar%20facet%20axis%20variable-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="summary-graph-of-electricity-intensity---tbd"
+class="section level2">
+<h2>Summary graph of electricity intensity - TBD</h2>
+<pre class="r"><code>joined_sum &lt;- joined_daily %&gt;%
+  group_by(type, NAME) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = T),
+            sqft = median(sqft, na.rm = T)) %&gt;%
+
+ggplot(joined_sum, aes(x = type, y = kwh_sqft, fill = type)) +
+  geom_boxplot() +
+  coord_flip() +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;kWh per sqft&quot;, )</code></pre>
 </div>
 <div id="export-for-downstream-analyses" class="section level2">
 <h2>Export for downstream analyses</h2>
-<pre class="r"><code>write.csv(joined_daily_full, &quot;./output/kwh_daily.csv&quot;, row.names = F)
-write.csv(joined_full, &quot;./output/kwh_annual.csv&quot;, row.names = F)</code></pre>
+<pre class="r"><code>write.csv(joined_daily_full, &quot;./output/kwh_daily_20260225.csv&quot;, row.names = F)
+write.csv(joined_full, &quot;./output/kwh_annual_20260225.csv&quot;, row.names = F)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1220,7 +1311,7 @@ Session information
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.3.2 (2023-10-31)
 Platform: x86_64-apple-darwin20 (64-bit)
-Running under: macOS Monterey 12.7.2
+Running under: macOS Ventura 13.7.8
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib 
@@ -1238,11 +1329,11 @@ attached base packages:
 other attached packages:
  [1] scales_1.3.0    DT_0.33         lubridate_1.9.3 forcats_1.0.0  
  [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.0.2     readr_2.1.5    
- [9] tidyr_1.3.0     tibble_3.2.1    ggplot2_3.5.0   tidyverse_2.0.0
+ [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
- [5] hms_1.1.3         digest_0.6.34     magrittr_2.0.3    timechange_0.3.0 
+ [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
 [13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
 [17] fansi_1.0.6       crosstalk_1.2.1   jquerylib_0.1.4   cli_3.6.2        
@@ -1251,8 +1342,8 @@ loaded via a namespace (and not attached):
 [29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
 [33] lifecycle_1.0.4   git2r_0.33.0      htmlwidgets_1.6.4 fs_1.6.3         
 [37] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.6.1       later_1.3.2      
-[41] gtable_0.3.4      glue_1.7.0        Rcpp_1.0.12       highr_0.10       
-[45] xfun_0.41         tidyselect_1.2.0  rstudioapi_0.15.0 knitr_1.45       
+[41] gtable_0.3.4      glue_1.7.0        Rcpp_1.1.0        highr_0.10       
+[45] xfun_0.41         tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45       
 [49] farver_2.1.1      htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25   
 [53] compiler_4.3.2   </code></pre>
 </div>
