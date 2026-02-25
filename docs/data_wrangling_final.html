@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2791892fbfbb8aa7b2016d98a84effa0bb848813targetblank2791892a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2fef6499ccab67994d59850bfe4a806a58283172targetblank2fef649a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/2791892fbfbb8aa7b2016d98a84effa0bb848813" target="_blank">2791892</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/2fef6499ccab67994d59850bfe4a806a58283172" target="_blank">2fef649</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2791892fbfbb8aa7b2016d98a84effa0bb848813targetblank2791892a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree2fef6499ccab67994d59850bfe4a806a58283172targetblank2fef649a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/2791892fbfbb8aa7b2016d98a84effa0bb848813" target="_blank">2791892</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/2fef6499ccab67994d59850bfe4a806a58283172" target="_blank">2fef649</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -561,15 +561,12 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    data/.DS_Store
     Ignored:    data/FY25 Main Meter Data.xlsx
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
-    Ignored:    keys/.DS_Store
-    Ignored:    output/annual_kwh.csv
+    Ignored:    output/.DS_Store
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
-    Ignored:    output/daily_kwh.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/kwh_main_annual.csv
@@ -577,8 +574,7 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/data_wrangling_final.Rmd
-    Modified:   keys/fy25_building_list_updated.csv
-    Modified:   keys/meter_building_key.csv
+    Modified:   keys/housing_counts.csv
 
 </code></pre>
 <p>
@@ -624,6 +620,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/2fef6499ccab67994d59850bfe4a806a58283172/analysis/data_wrangling_final.Rmd" target="_blank">2fef649</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-24
+</td>
+<td>
+updated to integrate individual meter data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/2fef6499ccab67994d59850bfe4a806a58283172/docs/data_wrangling_final.html" target="_blank">2fef649</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-24
+</td>
+<td>
+updated to integrate individual meter data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -848,8 +878,8 @@ associated GHG emissions</li>
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.5
 ✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
+✔ ggplot2   3.5.0     ✔ tibble    3.2.1
+✔ lubridate 1.9.3     ✔ tidyr     1.3.0
 ✔ purrr     1.0.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
@@ -884,10 +914,10 @@ occu_agg &lt;- occupants %&gt;%
   mutate(sem_yr = paste(semester, year)) %&gt;%
   filter(sem_yr %in% c(&quot;Fall 2024&quot;, &quot;Spring 2025&quot;)) %&gt;%
   group_by(NAME, sem_yr) %&gt;%
-  summarize(occupants = sum(occupants),
+  summarize(occupants = sum(occupants, na.rm = T),
             n = n()) %&gt;%
   group_by(NAME) %&gt;%
-  summarize(occupants = mean(occupants))</code></pre>
+  summarize(occupants = mean(occupants, na.rm = T))</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;NAME&#39;. You can override using the
 `.groups` argument.</code></pre>
 <pre class="r"><code># store annual totals for kWh
@@ -994,7 +1024,7 @@ buildings_sum &lt;- buildings %&gt;%
 <pre class="r"><code>joined &lt;- kwh_annual %&gt;%
   left_join(key, by = &quot;meter_origin&quot;) %&gt;% # join to key to match meters to building names
   full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
-  filter(!meter %in% c(&quot;Main Meter&quot;, &quot;Weis Meter&quot;)) %&gt;% # filter out those on main or Weis meter (not disagg)
+  filter(!meter %in% c(&quot;Main Meter&quot;, &quot;Weis Meter&quot;)) %&gt;% # filter out those on main or Weis meter (not disagg or total)
   group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %&gt;% # take mean to preserve sqft data
@@ -1007,7 +1037,7 @@ buildings_sum &lt;- buildings %&gt;%
          type = type_new) %&gt;% 
   ungroup() %&gt;%
   mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
-  select(type, meter, NAME, days_perc, kwh, kwh_sqft, kwh_person, dollars, ghg_kgCO2)</code></pre>
+  select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;days_perc&#39;. You can
 override using the `.groups` argument.</code></pre>
 <pre class="r"><code>joined_sub &lt;- kwh_sub_annual %&gt;%
@@ -1025,7 +1055,7 @@ override using the `.groups` argument.</code></pre>
          type = type_new) %&gt;% 
   ungroup() %&gt;%
   mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
-  select(type, meter, NAME, days_perc, kwh, kwh_sqft, kwh_person, dollars, ghg_kgCO2)</code></pre>
+  select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;days_perc&#39;. You can
 override using the `.groups` argument.</code></pre>
 <pre class="r"><code>joined_full &lt;- rbind(joined, joined_sub)
@@ -1037,6 +1067,7 @@ joined_cat &lt;- joined_full %&gt;%
             kwh = sum(kwh),
             dollars = sum(dollars),
             ghg_kgCO2 = sum(ghg_kgCO2),
+            sqft = sum(sqft, na.rm = T),
             med_kwh_sqft = median(kwh_sqft, na.rm = T),
             kwh_sqft_25 = quantile(kwh_sqft, .25, na.rm = T),
             kwh_sqft_75 = quantile(kwh_sqft, .75, na.rm = T)) %&gt;%
@@ -1052,11 +1083,11 @@ joined_cat &lt;- joined_full %&gt;%
   summarize(kwh = sum(total_kwh, na.rm = T),
             sqft = mean(sqft, na.rm = T),
             ave_temp = mean(ave_temp, na.rm = T)) %&gt;%
+  left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
   filter(!is.na(type_new)) %&gt;%
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         type = type_new) %&gt;% 
+  mutate(type = type_new) %&gt;% 
   ungroup() %&gt;%
-  select(-type_new) %&gt;%
+  select(type, NAME, date, ave_temp, kwh, sqft, occupants) %&gt;%
   mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA</code></pre>
 <pre><code>Warning in left_join(., key, by = &quot;meter_origin&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
 ℹ Row 14881 of `x` matches multiple rows in `y`.
@@ -1072,11 +1103,11 @@ the `.groups` argument.</code></pre>
   summarize(kwh = sum(kwh, na.rm = T),
             sqft = mean(sqft, na.rm = T),
             ave_temp = mean(ave_temp, na.rm = T)) %&gt;%
+  left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
   filter(!is.na(type_new)) %&gt;%
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         type = type_new) %&gt;% 
+  mutate(type = type_new) %&gt;% 
   ungroup() %&gt;%
-  select(-type_new) %&gt;%
+  select(type, NAME, date, ave_temp, kwh, sqft, occupants) %&gt;%
   mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;. You can override using
 the `.groups` argument.</code></pre>
@@ -1085,26 +1116,30 @@ the `.groups` argument.</code></pre>
 </div>
 <div id="summary-table" class="section level2">
 <h2>Summary table</h2>
-<pre class="r"><code>joined_pretty &lt;- joined_full %&gt;%
-  mutate(kwh = round(kwh, digits = 0),
+<pre class="r"><code>joined_pretty_cat &lt;- joined_cat %&gt;%
+  mutate(n = ifelse(n == 1, &quot;-&quot;, n),
+         kwh = round(kwh, digits = 0),
          dollars = paste(&quot;$&quot;,round(dollars, digits = 0)),
-         kwh_sqft = round(kwh_sqft, digits = 1),
-         kwh_person = round(kwh_person, digits = 0),
-         days_perc = round(days_perc, digits = 0)) %&gt;%
-  select(type, NAME, kwh, dollars, kwh_sqft, kwh_person, days_perc) %&gt;% 
-  arrange(desc(kwh))
-
-datatable(joined_pretty,
+         ghg_MTCO2 = round(ghg_kgCO2/1000, digits = 0),
+         sqft = round(sqft, digits = 0),
+         med_kwh_sqft = round(med_kwh_sqft, digits = 1),
+         kwh_sqft_25 = ifelse(n == 1, &quot;-&quot;, round(kwh_sqft_25, digits = 1)),
+         kwh_sqft_75 = ifelse(n == 1, &quot;-&quot;, round(kwh_sqft_75, digits = 1))) %&gt;%
+    select(type, n, kwh, dollars, ghg_MTCO2, sqft, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %&gt;% 
+  arrange(desc(kwh))</code></pre>
+<pre class="r"><code>datatable(joined_pretty_cat,
           filter = &#39;top&#39;,
           rownames = FALSE,
-          colnames = c(&quot;Building\ntype&quot;,&quot;Name&quot;,&quot;kWh&quot;, &quot;Est cost&quot;, &quot;kWh\nper sqft&quot;,
-                       &quot;kWh\nper person&quot;,&quot;Days of\ndata (%)&quot;))</code></pre>
+          colnames = c(&quot;Building\ntype&quot;,&quot;Buildings\nwith data&quot;, &quot;kWh&quot;, &quot;Est. cost&quot;, 
+                       &quot;CO2e\n(MT)&quot;, &quot;Square\nfootage&quot;, &quot;Median\nkWh\nper sqft&quot;,
+                       &quot;25th Perc.&quot;, &quot;75th Perc.&quot;),
+          caption = &quot;Table 1. Descriptive statistics for annual electricity use by building type.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"23.5\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"725\" data-max=\"6641\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"37\" data-max=\"100\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Main Meter","Weis Meter","Academic","Academic","Admin","Mixed","Other","Other","Res Hall - L","Other","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Academic","Res Hall - L","Academic","Academic","Admin","Res Hall - L","Non-building","Community","Community","Admin","Other","Res Hall - M","Res Hall - M","Res Hall - U","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Res Hall - L","Other","Res Hall - L","Community","Res Hall - L","Academic","Res Hall - M","Other","Community","Res Hall - M","Academic","Other","Res Hall - M","Academic","Other","Res Hall - M","Community","Res Hall - S","Res Hall - S","Res Hall - M","Res Hall - M","Res Hall - M","Res Hall - U","Res Hall - S","Res Hall - M","Res Hall - M","Community","Res Hall - U","Res Hall - S","Res Hall - M","Other","Academic","Res Hall - M","Other","Academic","Res Hall - S","Res Hall - M","Res Hall - S","Other","Admin","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Res Hall - S","Academic","Other","Admin","Res Hall - U","Res Hall - S","Res Hall - S","Res Hall - S","Admin","Res Hall - S","Res Hall - S","Res Hall - U","Non-building","Res Hall - U","Other","Res Hall - U","Res Hall - S","Non-building","Other","Non-building","Other","Other"],["Main Meter","Weis Meter","Waidner Spahr Library","Rector Science Center","5 N. Orange St. - Facilities","Goodyear + Goodyear Arts Studio","Kline Life Sport Complex","Biddle Press Box, Restrooms, Durden ATC","Kisner - Woodward","5 N. Orange St. - CPYB/SHARE","Drayer Hall","Morgan Hall","High Street Residence Hall","Adams","Factory Apts.","27 W. High St.","McKenney Hall","Malcolm Hall","Baird McClintock / Quad 4-5","Althouse","Davidson Wilson / Quad 9-10","Bosler","Stern Center","50 Mooreland Ave.","Witwer Hall","Pump system (athletics)","Allison Church","Quarry, The ","Old West","King House","141 W. High St.","100 S. West St.","152 W. Louther St.","Armstrong / Quad 8","Atwater / Quad 7","Buchanan / Quad 2","Conway / Quad 1","Longsdorff / Quad 6","25 Pomfret St (15, 16)","Matthews House","DCCC","Spradley-Young  / Quad 3","Montgomery House","Reed Apts.","49 W. High (1, 2, 3)","President's House (New)","159 W. High St.","Carlisle Theatre","Wentzel","Treehouse","Green Valley Sanctuary","119 W. High St. (1, 2, 3)","Cherry Apts","Holland Union Bldg.","135 N. College St.","139 N. College St.","146 W. Louther St.","Strayer House","133 N. College St.","154 W. Louther St. (1)","49 S. College St./51 S. College St.","163 W. High St","Vincett House","Landis House","23 W. High St.","135 Cedar St.","165 W. High St","344 W. North St.","57 S. College","Schuman House","Kade House","162-164  Dickinson Ave.","507 W. Louther St.","155 W. High St.","505 W. Louther St.","50 Wilson Street","554 W. Louther St.","519 W. Louther St.","417 W. Louther St.","513 W. Louther St.","529 W. Louther St.","531 W. Louther St.","425 W. Louther St.","509 W. Louther St.","46 S. West St.","362 W. North S.","41 Conway St.","133 W. High St. (2, 5)","2 Conway St.","521 W. Louther St.","527 W. Louther St.","556 W. Louther St.","538 W. Louther St.","515 W. Louther St.","133 W. High St. (2, 5)","Stadium Lights","19-21 W. High St.","368 W. North","19-21 W. High St.","Carriage House","Crosswalk on N. West St.","155 W. High St., Ground Floor","Scoreboard","Boiling Springs Cottage","Boiling Springs Farm"],[11648808,973320,826621,777550,567745,512614,326088,298475,286667,277590,269502,247869,234938,223957,222053,220896,170470,158463,132958,129570,123812,121996,108235,95137,88635,88262,77578,73472,72757,64445,60837,54882,53130,52679,49681,47808,45533,43677,42473,40566,39786,39471,38225,31914,30832,30585,29252,29070,22830,21775,21575,19990,19464,19219,18531,18531,18467,18275,17555,16662,15611,14863,14797,14429,14266,13830,12690,12407,12221,10946,10487,9217,8965,8851,8772,8693,8520,8294,8115,7910,7663,7374,7326,7070,6493,6482,6277,5886,5543,5082,4998,4986,4578,4352,3587,3423,3219,3151,1995,1952,1198,1068,1,0,0],["$ 948039","$ 79214","$ 67275","$ 63281","$ 46206","$ 41719","$ 26539","$ 24291","$ 23330","$ 22592","$ 21933","$ 20173","$ 19120","$ 18227","$ 18072","$ 17978","$ 13874","$ 12897","$ 10821","$ 10545","$ 10076","$ 9929","$ 8809","$ 7743","$ 7214","$ 7183","$ 6314","$ 5980","$ 5921","$ 5245","$ 4951","$ 4467","$ 4324","$ 4287","$ 4043","$ 3891","$ 3706","$ 3555","$ 3457","$ 3301","$ 3238","$ 3212","$ 3111","$ 2597","$ 2509","$ 2489","$ 2381","$ 2366","$ 1858","$ 1772","$ 1756","$ 1627","$ 1584","$ 1564","$ 1508","$ 1508","$ 1503","$ 1487","$ 1429","$ 1356","$ 1271","$ 1210","$ 1204","$ 1174","$ 1161","$ 1126","$ 1033","$ 1010","$ 995","$ 891","$ 854","$ 750","$ 730","$ 720","$ 714","$ 708","$ 693","$ 675","$ 660","$ 644","$ 624","$ 600","$ 596","$ 575","$ 528","$ 527","$ 511","$ 479","$ 451","$ 414","$ 407","$ 406","$ 373","$ 354","$ 292","$ 279","$ 262","$ 256","$ 162","$ 159","$ 97","$ 87","$ 0","$ 0","$ 0"],[10.4,11.4,6.9,6.9,7.6,5.7,2.6,12,12.5,6.5,5.5,6.2,5.6,4.7,17.1,18.8,9,7.8,5.1,4.4,4,3.6,4.9,3.5,4.8,null,2.3,10.7,2.4,23.5,10.4,7.6,null,4.9,4.6,4.5,4.2,4.1,null,3.5,3.7,3.7,3.5,6.1,10.3,4.9,6.5,7.3,0.9,3.6,8.6,8.9,5.5,0.2,12.6,10.7,6.4,2.7,7.7,null,5.2,3.3,5.5,1.8,null,7.3,2.8,7.8,2.7,2.5,5.8,3.7,6,2.2,5.9,null,5.9,6.2,5.6,5.2,5.7,4.5,5.6,4.6,3.7,5.8,2.9,null,3.2,3.5,4,2.5,3.8,3.4,null,null,null,3.2,null,2.7,null,2.1,null,0,0],[null,null,null,null,null,null,null,null,null,null,1679,1758,1974,1387,4270,5454,null,null,1203,null,1032,null,null,null,1166,null,null,null,null,null,3042,2889,6641,1368,1258,1226,1047,1134,null,1726,null,null,null,1680,null,null,1625,null,null,null,null,null,1622,null,4633,4633,2638,null,3511,4166,null,1239,null,null,1783,3457,1154,null,null,null,null,null,1793,1475,1754,null,null,2074,1623,1582,1533,1229,2093,1414,null,null,null,1308,1386,847,1250,null,1526,725,797,null,2146,null,1330,null,null,null,null,null,null],[100,100,37,37,100,100,37,100,93,100,100,100,100,100,100,100,93,100,93,93,93,93,93,100,100,100,100,93,93,100,100,100,95,93,93,93,93,93,95,100,100,93,93,100,100,100,100,100,100,100,100,100,100,93,100,100,100,100,100,79,100,100,100,100,95,100,100,100,100,100,100,100,100,100,100,95,100,100,100,100,100,100,100,100,100,100,100,95,100,100,100,100,100,100,95,100,95,100,88,100,100,100,100,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Name<\/th>\n      <th>kWh<\/th>\n      <th>Est cost<\/th>\n      <th>kWh\nper sqft<\/th>\n      <th>kWh\nper person<\/th>\n      <th>Days of\ndata (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4,5,6]},{"name":"type","targets":0},{"name":"NAME","targets":1},{"name":"kwh","targets":2},{"name":"dollars","targets":3},{"name":"kwh_sqft","targets":4},{"name":"kwh_person","targets":5},{"name":"days_perc","targets":6}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"92882\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"28\" data-max=\"3504\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1119435\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"3\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1.9\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"4.6\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Table 1. Descriptive statistics for annual electricity use by building type.<\/caption>","data":[["Main Meter","Res Hall - L","Academic","Other","Weis Meter","Admin","Mixed","Res Hall - M","Community","Res Hall - S","Res Hall - U","Non-building"],["-","19","11","16","-","6","-","14","6","19","7","4"],[11648808,2699635,2080772,1125011,973320,755422,512614,334569,255069,164497,98745,92882],["$ 948039","$ 219710","$ 169344","$ 91559","$ 79214","$ 61480","$ 41719","$ 27229","$ 20759","$ 13388","$ 8036","$ 7559"],[3504,812,626,338,293,227,154,101,77,49,30,28],[1119435,417027,344015,247670,85725,137948,90000,64465,183672,28864,0,0],[10.4,4.9,4.4,5.8,11.4,3.2,5.7,5.5,3,5.2,null,null],[10.4,4.4,3.6,2.3,11.4,2.6,5.7,2.9,1.9,3.9,null,null],[10.4,7,6.9,8.6,11.4,5.3,5.7,6.5,4.6,5.9,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Square\nfootage<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"kwh","targets":2},{"name":"dollars","targets":3},{"name":"ghg_MTCO2","targets":4},{"name":"sqft","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="summary-graph-by-meter-status" class="section level2">
 <h2>Summary graph by meter status</h2>
-<pre class="r"><code>ggplot(filter(buildings_sum, ! type_new %in% c(&quot;Res Hall - U&quot;,&quot;Non-building&quot;,&quot;Production&quot;)),
+<pre class="r"><code>ggplot(filter(buildings_sum, !is.na(meter) &amp; !type_new %in% c(&quot;Res Hall - U&quot;,&quot;Non-building&quot;,&quot;Production&quot;)),
        aes(x = reorder(type_new, sqft, FUN = &quot;sum&quot;), y = sqft/1000, fill = meter)) +
   geom_col(position = &quot;stack&quot;) +
   theme_bw() +
@@ -1132,6 +1167,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/2fef6499ccab67994d59850bfe4a806a58283172/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">2fef649</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-24
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/a379c87b9ecbf52640ebb4cde8ac0f4112ec0396/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">a379c87</a>
@@ -1174,7 +1220,7 @@ Session information
 <pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.3.2 (2023-10-31)
 Platform: x86_64-apple-darwin20 (64-bit)
-Running under: macOS Ventura 13.7.8
+Running under: macOS Monterey 12.7.2
 
 Matrix products: default
 BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib 
@@ -1192,11 +1238,11 @@ attached base packages:
 other attached packages:
  [1] scales_1.3.0    DT_0.33         lubridate_1.9.3 forcats_1.0.0  
  [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.0.2     readr_2.1.5    
- [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
+ [9] tidyr_1.3.0     tibble_3.2.1    ggplot2_3.5.0   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
- [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
+ [5] hms_1.1.3         digest_0.6.34     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
 [13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
 [17] fansi_1.0.6       crosstalk_1.2.1   jquerylib_0.1.4   cli_3.6.2        
@@ -1205,8 +1251,8 @@ loaded via a namespace (and not attached):
 [29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
 [33] lifecycle_1.0.4   git2r_0.33.0      htmlwidgets_1.6.4 fs_1.6.3         
 [37] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.6.1       later_1.3.2      
-[41] gtable_0.3.4      glue_1.7.0        Rcpp_1.1.0        highr_0.10       
-[45] xfun_0.41         tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45       
+[41] gtable_0.3.4      glue_1.7.0        Rcpp_1.0.12       highr_0.10       
+[45] xfun_0.41         tidyselect_1.2.0  rstudioapi_0.15.0 knitr_1.45       
 [49] farver_2.1.1      htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25   
 [53] compiler_4.3.2   </code></pre>
 </div>
