@@ -26,7 +26,7 @@
 26,230 W North St,Spring,2025,Factory Apts.
 23,236 W North St,Spring,2025,Factory Apts.
 39,25-27 W High,Spring,2025,27 W. High St.
-8,34 S West St,Spring,2025,Schuman House
+8,34 S West St,Spring,2025,Schuman House 
 8,373 W Louther St,Spring,2025,Townhouse - 373 W. Louther St.
 8,377 W Louther St,Spring,2025,Townhouse - 377 W. Louther St.
 8,379 W Louther St,Spring,2025,Townhouse - 379 W. Louther St.
@@ -52,7 +52,7 @@
 4,527 W Louther St,Spring,2025,527 W. Louther St.
 5,529 W Louther St,Spring,2025,529 W. Louther St.
 6,531 W Louther St,Spring,2025,531 W. Louther St.
-12,532 W Louther St,Spring,2025,Treehouse
+12,532 W Louther St,Spring,2025,Treehouse 
 3,538 W Louther St,Spring,2025,538 W. Louther St.
 161,Adams Hall,Spring,2025,Adams
 38,Armstrong Hall,Spring,2025,Armstrong / Quad 8
@@ -62,20 +62,20 @@
 43,Conway Hall,Spring,2025,Conway / Quad 1
 117,Davidson-Wilson,Spring,2025,Davidson Wilson / Quad 9-10
 159,Drayer Hall,Spring,2025,Drayer Hall
-116,Goodyear,Spring,2025,Goodyear + Goodyear Arts Studio
+116,Goodyear,Spring,2025,Goodyear 
 110,Highstreet Residence,Spring,2025,High Street Residence Hall
 90,Kisner-Woodward Hall,Spring,2025,Kisner - Woodward 
 38,Longsdorff Hall,Spring,2025,Longsdorff / Quad 6
-63,Malcolm Hall,Spring,2025,Malcolm Hall
+63,Malcolm Hall,Spring,2025,Malcolm Hall 
 23,Matthews House,Spring,2025,Matthews House
 94,McKenney Hall - Suites,Spring,2025,McKenney Hall 
 130,Morgan Hall,Spring,2025,Morgan Hall
 23,Reed House,Spring,2025,Reed House 
 41,Spradley-Young Hall,Spring,2025,Spradley-Young  / Quad 3
-12,Strayer House,Spring,2025,Strayer House
+12,Strayer House,Spring,2025,Strayer House 
 20,Stuart Hall,Spring,2025,Stuart Hall
 18,Todd House,Spring,2025,Todd House 
-6,Vincett House,Spring,2025,Vincett House
+6,Vincett House,Spring,2025,Vincett House 
 73,Witwer Hall,Spring,2025,Witwer Hall
 20,100 S West St,Fall,2024,100 S. West St.
 2,128 Cherry St,Fall,2024,Cherry Apts
@@ -104,7 +104,7 @@
 30,230 W North St,Fall,2024,Factory Apts.
 25,236 W North St,Fall,2024,Factory Apts.
 42,25-27 W High,Fall,2024,27 W. High St.
-4,34 S West St,Fall,2024,Schuman House
+4,34 S West St,Fall,2024,Schuman House 
 8,373 W Louther St,Fall,2024,Townhouse - 373 W. Louther St.
 8,377 W Louther St,Fall,2024,Townhouse - 377 W. Louther St.
 8,379 W Louther St,Fall,2024,Townhouse - 379 W. Louther St.
@@ -130,7 +130,7 @@
 4,527 W Louther St,Fall,2024,527 W. Louther St.
 5,529 W Louther St,Fall,2024,529 W. Louther St.
 6,531 W Louther St,Fall,2024,531 W. Louther St.
-14,532 W Louther St,Fall,2024,Treehouse
+14,532 W Louther St,Fall,2024,Treehouse 
 3,538 W Louther St,Fall,2024,538 W. Louther St.
 162,Adams Hall,Fall,2024,Adams
 39,Armstrong Hall,Fall,2024,Armstrong / Quad 8
@@ -140,7 +140,7 @@
 44,Conway Hall,Fall,2024,Conway / Quad 1
 123,Davidson-Wilson,Fall,2024,Davidson Wilson / Quad 9-10
 162,Drayer Hall,Fall,2024,Drayer Hall
-117,Goodyear,Fall,2024,Goodyear + Goodyear Arts Studio
+117,Goodyear,Fall,2024,Goodyear 
 128,Highstreet Residence,Fall,2024,High Street Residence Hall
 96,Kisner-Woodward Hall,Fall,2024,Kisner - Woodward 
 39,Longsdorff Hall,Fall,2024,Longsdorff / Quad 6
@@ -150,10 +150,10 @@
 152,Morgan Hall,Fall,2024,Morgan Hall
 23,Reed House,Fall,2024,Reed House 
 41,Spradley-Young Hall,Fall,2024,Spradley-Young  / Quad 3
-12,Strayer House,Fall,2024,Strayer House
+12,Strayer House,Fall,2024,Strayer House 
 27,Stuart Hall,Fall,2024,Stuart Hall
 22,Todd House,Fall,2024,Todd House 
-9,Vincett House,Fall,2024,Vincett House
+9,Vincett House,Fall,2024,Vincett House 
 79,Witwer Hall,Fall,2024,Witwer Hall
 19,100 S West St,Spring,2024,100 S. West St.
 1,119 W High St,Spring,2024,"119 W. High St. (1, 2, 3)"
@@ -176,7 +176,7 @@
 31,230 W North St,Spring,2024,Factory Apts.
 22,236 W North St,Spring,2024,Factory Apts.
 34,25-27 W High,Spring,2024,27 W. High St.
-7,34 S West St,Spring,2024,Schuman House
+7,34 S West St,Spring,2024,Schuman House 
 8,373 W Louther St,Spring,2024,Townhouse - 373 W. Louther St.
 8,377 W Louther St,Spring,2024,Townhouse - 377 W. Louther St.
 8,379 W Louther St,Spring,2024,Townhouse - 379 W. Louther St.
@@ -202,7 +202,7 @@
 4,527 W Louther St,Spring,2024,527 W. Louther St.
 3,529 W Louther St,Spring,2024,529 W. Louther St.
 4,531 W Louther St,Spring,2024,531 W. Louther St.
-14,532 W Louther St,Spring,2024,Treehouse
+14,532 W Louther St,Spring,2024,Treehouse 
 156,Adams Hall,Spring,2024,Adams
 29,Armstrong Hall,Spring,2024,Armstrong / Quad 8
 31,Atwater Hall,Spring,2024,Atwater / Quad 7
@@ -211,7 +211,7 @@
 37,Conway Hall,Spring,2024,Conway / Quad 1
 111,Davidson-Wilson,Spring,2024,Davidson Wilson / Quad 9-10
 147,Drayer Hall,Spring,2024,Drayer Hall
-113,Goodyear,Spring,2024,Goodyear + Goodyear Arts Studio
+113,Goodyear,Spring,2024,Goodyear 
 109,Highstreet Residence,Spring,2024,High Street Residence Hall
 88,Kisner-Woodward Hall,Spring,2024,Kisner - Woodward 
 29,Longsdorff Hall,Spring,2024,Longsdorff / Quad 6
@@ -221,10 +221,10 @@
 140,Morgan Hall,Spring,2024,Morgan Hall
 18,Reed House,Spring,2024,Reed House 
 31,Spradley-Young Hall,Spring,2024,Spradley-Young  / Quad 3
-11,Strayer House,Spring,2024,Strayer House
+11,Strayer House,Spring,2024,Strayer House 
 20,Stuart Hall,Spring,2024,Stuart Hall
 23,Todd House,Spring,2024,Todd House 
-8,Vincett House,Spring,2024,Vincett House
+8,Vincett House,Spring,2024,Vincett House 
 70,Witwer Hall,Spring,2024,Witwer Hall
 20,100 S West St,Fall,2023,100 S. West St.
 1,119 W High St,Fall,2023,"119 W. High St. (1, 2, 3)"
@@ -247,7 +247,7 @@
 31,230 W North St,Fall,2023,Factory Apts.
 23,236 W North St,Fall,2023,Factory Apts.
 39,25-27 W High,Fall,2023,27 W. High St.
-7,34 S West St,Fall,2023,Schuman House
+7,34 S West St,Fall,2023,Schuman House 
 8,373 W Louther St,Fall,2023,Townhouse - 373 W. Louther St.
 8,377 W Louther St,Fall,2023,Townhouse - 377 W. Louther St.
 8,379 W Louther St,Fall,2023,Townhouse - 379 W. Louther St.
@@ -273,7 +273,7 @@
 4,527 W Louther St,Fall,2023,527 W. Louther St.
 5,529 W Louther St,Fall,2023,529 W. Louther St.
 4,531 W Louther St,Fall,2023,531 W. Louther St.
-13,532 W Louther St,Fall,2023,Treehouse
+13,532 W Louther St,Fall,2023,Treehouse 
 158,Adams Hall,Fall,2023,Adams
 29,Armstrong Hall,Fall,2023,Armstrong / Quad 8
 38,Atwater Hall,Fall,2023,Atwater / Quad 7
@@ -282,18 +282,18 @@
 37,Conway Hall,Fall,2023,Conway / Quad 1
 114,Davidson-Wilson,Fall,2023,Davidson Wilson / Quad 9-10
 148,Drayer Hall,Fall,2023,Drayer Hall
-115,Goodyear,Fall,2023,Goodyear + Goodyear Arts Studio
+115,Goodyear,Fall,2023,Goodyear 
 127,Highstreet Residence,Fall,2023,High Street Residence Hall
 94,Kisner-Woodward Hall,Fall,2023,Kisner - Woodward 
 30,Longsdorff Hall,Fall,2023,Longsdorff / Quad 6
-68,Malcolm Hall,Fall,2023,Malcolm Hall
+68,Malcolm Hall,Fall,2023,Malcolm Hall 
 25,Matthews House,Fall,2023,Matthews House
 97,McKenney Hall - Suites,Fall,2023,McKenney Hall 
 147,Morgan Hall,Fall,2023,Morgan Hall
 20,Reed House,Fall,2023,Reed House 
 33,Spradley-Young Hall,Fall,2023,Spradley-Young  / Quad 3
-10,Strayer House,Fall,2023,Strayer House
+10,Strayer House,Fall,2023,Strayer House 
 26,Stuart Hall,Fall,2023,Stuart Hall
 24,Todd House,Fall,2023,Todd House 
-8,Vincett House,Fall,2023,Vincett House
+8,Vincett House,Fall,2023,Vincett House 
 64,Witwer Hall,Fall,2023,Witwer Hall

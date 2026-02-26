@@ -391,7 +391,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-25
+<strong>Last updated:</strong> 2026-02-26
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8c6712f07ac3f6cc7e085f0619044397742f4fcftargetblank8c6712fa">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree08cd7e1782debf133360a08f3907782419c7e313targetblank08cd7e1a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/8c6712f07ac3f6cc7e085f0619044397742f4fcf" target="_blank">8c6712f</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/08cd7e1782debf133360a08f3907782419c7e313" target="_blank">08cd7e1</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8c6712f07ac3f6cc7e085f0619044397742f4fcftargetblank8c6712fa"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree08cd7e1782debf133360a08f3907782419c7e313targetblank08cd7e1a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/8c6712f07ac3f6cc7e085f0619044397742f4fcf" target="_blank">8c6712f</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/08cd7e1782debf133360a08f3907782419c7e313" target="_blank">08cd7e1</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -570,14 +570,25 @@ Ignored files:
     Ignored:    output/building_check.xlsx
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_annual_20260225.csv
+    Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/kwh_daily_20260225.csv
+    Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
+Untracked files:
+    Untracked:  keys/occupancy_key.csv
+    Untracked:  keys/~$fy25_building_list_updated.xlsx
+
 Unstaged changes:
     Modified:   analysis/data_wrangling_final.Rmd
+    Modified:   analysis/main_meter_processing.Rmd
     Modified:   keys/fy25_building_list_updated.csv
+    Modified:   keys/housing_counts.csv
+    Modified:   keys/meter_building_key.csv
+    Modified:   keys/submeter_building_key.csv
+    Modified:   keys/submeter_building_key.xlsx
 
 </code></pre>
 <p>
@@ -623,6 +634,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/08cd7e1782debf133360a08f3907782419c7e313/analysis/data_wrangling_final.Rmd" target="_blank">08cd7e1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-25
+</td>
+<td>
+update wrangling script
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/08cd7e1782debf133360a08f3907782419c7e313/docs/data_wrangling_final.html" target="_blank">08cd7e1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-25
+</td>
+<td>
+update wrangling script
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -934,30 +979,41 @@ The following object is masked from &#39;package:purrr&#39;:
 The following object is masked from &#39;package:readr&#39;:
 
     col_factor</code></pre>
-<pre class="r"><code># load electricity data
-kwh &lt;- read.csv(&quot;./data/FY25 PPL Electricity Data.csv&quot;, strip.white = T) # load PPL data
-kwh_sub &lt;- read.csv(&quot;./output/kwh_main_daily.csv&quot;, strip.white = T)
+<pre class="r"><code>library(RColorBrewer)
 
-# load building data + occupancy
-buildings &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, strip.white = T) # load building information
-occupants &lt;- read.csv(&quot;./keys/housing_counts.csv&quot;, strip.white = T) # load occupancy info
+# load electricity data + reformat date
+kwh &lt;- read.csv(&quot;./data/FY25 PPL Electricity Data.csv&quot;, strip.white = T, encoding = &quot;UTF-8&quot;) %&gt;%
+  mutate(date = mdy(date))
+  
+kwh_sub &lt;- read.csv(&quot;./output/kwh_main_daily.csv&quot;, strip.white = T, encoding = &quot;UTF-8&quot;) %&gt;%
+  mutate(date = ymd(date))
+  
+# load building data + clean up building names
+buildings &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, 
+                      strip.white = T, encoding = &quot;UTF-8&quot;) %&gt;%
+  mutate(NAME = str_remove_all(NAME, &quot;/&quot;),
+         NAME = str_replace_all(NAME, &quot;  &quot;,&quot; &quot;),
+         NAME = str_replace_all(NAME, &quot;   &quot;,&quot; &quot;))
+
+# load occupancy and clean up building names
+occupants &lt;- read.csv(&quot;./keys/occupancy_key.csv&quot;, 
+                      strip.white = T, encoding = &quot;UTF-8&quot;) %&gt;%
+  mutate(NAME = str_remove_all(NAME, &quot;/&quot;),
+         NAME = str_replace_all(NAME, &quot;  &quot;,&quot; &quot;),
+         NAME = str_replace_all(NAME, &quot;   &quot;,&quot; &quot;))
 
 # load keys to link datasets
-key &lt;- read.csv(&quot;./keys/meter_building_key.csv&quot;, strip.white = T) # load key to link meters to buildings
-sub_key &lt;- read.csv(&quot;./keys/submeter_building_key.csv&quot;, strip.white = T) # key to link submeter names to buildings
+key &lt;- read.csv(&quot;./keys/meter_building_key.csv&quot;, strip.white = T, encoding = &quot;UTF-8&quot;) %&gt;%
+  mutate(NAME = str_remove_all(NAME, &quot;/&quot;),
+         NAME = str_replace_all(NAME, &quot;  &quot;,&quot; &quot;),
+         NAME = str_replace_all(NAME, &quot;   &quot;,&quot; &quot;))
 
-# filter to AY24/25 and average across the year
-occu_agg &lt;- occupants %&gt;%
-  mutate(sem_yr = paste(semester, year)) %&gt;%
-  filter(sem_yr %in% c(&quot;Fall 2024&quot;, &quot;Spring 2025&quot;)) %&gt;%
-  group_by(NAME, sem_yr) %&gt;%
-  summarize(occupants = sum(occupants, na.rm = T),
-            n = n()) %&gt;%
-  group_by(NAME) %&gt;%
-  summarize(occupants = mean(occupants, na.rm = T))</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;NAME&#39;. You can override using the
-`.groups` argument.</code></pre>
-<pre class="r"><code># store annual totals for kWh
+key_sub &lt;- read.csv(&quot;./keys/submeter_building_key.csv&quot;, strip.white = T, encoding = &quot;UTF-8&quot;) %&gt;%
+  mutate(NAME = str_remove_all(NAME, &quot;/&quot;),
+         NAME = str_replace_all(NAME, &quot;  &quot;,&quot; &quot;),
+         NAME = str_replace_all(NAME, &quot;   &quot;,&quot; &quot;)) 
+
+# store annual totals for kWh
 kwh_annual &lt;- kwh %&gt;%
   filter(!is.na(total_kwh)) %&gt;%
   group_by(meter_origin) %&gt;%
@@ -981,29 +1037,27 @@ co2_kg_kwh &lt;- 0.30082405</code></pre>
  $ account_number: num  1e+09 1e+09 1e+09 1e+09 1e+09 ...
  $ meter_origin  : chr  &quot;152 W Louther St *Apt 2&quot; &quot;152 W Louther St *Apt 2&quot; &quot;152 W Louther St *Apt 2&quot; &quot;152 W Louther St *Apt 2&quot; ...
  $ meter_number  : int  300056642 300056642 300056642 300056642 300056642 300056642 300056642 300056642 300056642 300056642 ...
- $ date          : chr  &quot;7/18/24&quot; &quot;7/19/24&quot; &quot;7/20/24&quot; &quot;7/21/24&quot; ...
+ $ date          : Date, format: &quot;2024-07-18&quot; &quot;2024-07-19&quot; ...
  $ total_kwh     : num  28 26.4 26.5 26.3 27.2 ...
  $ ave_temp      : int  78 76 78 81 75 78 80 79 76 76 ...</code></pre>
 <pre class="r"><code>str(buildings)</code></pre>
-<pre><code>&#39;data.frame&#39;:   136 obs. of  16 variables:
+<pre><code>&#39;data.frame&#39;:   135 obs. of  14 variables:
  $ TYPE       : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
  $ type_new   : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
  $ banner_code: chr  &quot;1110&quot; &quot;1540&quot; &quot;1035&quot; &quot;1810&quot; ...
- $ NAME       : chr  &quot;162-164  Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;Green Valley Sanctuary&quot; ...
+ $ NAME       : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;Green Valley Sanctuary&quot; ...
  $ occupant   : chr  &quot;DEAL Archeology Labs&quot; &quot;Music office/rehearsal space&quot; &quot;Education Dept. Offices&quot; &quot;Research Facility&quot; ...
  $ address    : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College St.&quot; &quot;&quot; ...
  $ date_constr: chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...
  $ date_acqd  : int  1998 1982 1979 1966 NA NA NA 1950 NA NA ...
- $ date_reno  : int  2010 NA NA NA 1997 2009 1940 2002 2001 2019 ...
- $ sqft       : int  2500 1775 4576 2500 4000 29133 33692 11039 22000 28050 ...
+ $ date_reno  : int  2010 NA NA NA 1997 2009 1940 2002 2001 NA ...
+ $ sqft       : int  2500 1775 4576 2500 4000 29133 33692 11039 22000 112800 ...
  $ rental     : int  0 0 0 0 1 0 0 0 0 0 ...
  $ main_meter : int  0 0 0 0 0 1 1 1 1 1 ...
- $ main_disagg: int  0 0 0 0 0 1 1 1 1 0 ...
- $ weis_meter : int  0 0 0 0 0 0 0 0 0 0 ...
- $ X          : logi  NA NA NA NA NA NA ...
- $ X.1        : chr  &quot;&quot; &quot;&quot; &quot;&quot; &quot;&quot; ...</code></pre>
+ $ main_disagg: int  0 0 0 0 0 1 1 1 1 1 ...
+ $ weis_meter : int  0 0 0 0 0 0 0 0 0 0 ...</code></pre>
 <pre class="r"><code>str(key)</code></pre>
-<pre><code>&#39;data.frame&#39;:   202 obs. of  2 variables:
+<pre><code>&#39;data.frame&#39;:   201 obs. of  2 variables:
  $ meter_origin: chr  &quot;100 S College St&quot; &quot;100 S West St&quot; &quot;101 S College St&quot; &quot;102 S West St *Apt 1&quot; ...
  $ NAME        : chr  &quot;Drayer Hall&quot; &quot;100 S. West St.&quot; &quot;Landis House&quot; &quot;100 S. West St.&quot; ...</code></pre>
 </div>
@@ -1016,62 +1070,58 @@ fill in values for other variables</li>
 <li>Filter building info to those with individual meters and then add
 back in the Main Meter and Weis aggregated information</li>
 </ul>
-<pre class="r"><code>buildings_main &lt;- buildings %&gt;%
+<pre class="r"><code># Generate lookup table for each meter status
+
+buildings_main &lt;- buildings %&gt;%
   filter(main_meter == 1) %&gt;% # filter to main meter buildings
   summarize(sqft = sum(sqft, na.rm = T)) %&gt;% # sum sqft for these buildings
   mutate(meter = &quot;Main Meter - Total&quot;,
          NAME = &quot;Main Meter&quot;,
-         type_new = &quot;Main Meter&quot;,
-         occupant = &quot;Mixed&quot;,
-         address = &quot;Many different&quot;,
-         date_constr = NA,
-         date_acqd = NA,
-         date_reno = NA,
-         rental = 0)
+         type_new = &quot;Main Meter&quot;) %&gt;%
+    select(type_new, NAME, sqft, meter)
 
 buildings_weis &lt;- buildings %&gt;%
   filter(weis_meter == 1) %&gt;% # filter to weis buildings
   summarize(sqft = sum(sqft, na.rm = T)) %&gt;%
     mutate(meter = &quot;Weis Meter - Total&quot;,
            NAME = &quot;Weis Meter&quot;,
-         type_new = &quot;Weis Meter&quot;,
-         occupant = &quot;Mixed&quot;,
-         address = &quot;Many different&quot;,
-         date_constr = NA,
-         date_acqd = NA,
-         date_reno = NA,
-         rental = 0)
+         type_new = &quot;Weis Meter&quot;) %&gt;%
+    select(type_new, NAME, sqft, meter)
 
-# Generate clean building lookup table
-buildings_clean &lt;- buildings %&gt;%
-  filter(main_disagg == 1 | weis_meter == 0) %&gt;% # keep only buildings on individual meters
-  mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
-                        ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, 
-                               ifelse(main_meter == 1 &amp; main_disagg == 1, &quot;Main Meter - Disagg.&quot;, &quot;Individual&quot;)))) %&gt;%
+buildings_agg &lt;- rbind(buildings_main, buildings_weis)
+
+buildings_individual &lt;- buildings %&gt;%
+  filter(main_meter == 0 &amp; weis_meter == 0) %&gt;% # keep only buildings on individual meters
+  mutate(meter = &quot;Individual&quot;) %&gt;%
   select(meter, NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %&gt;% # select relevant columns
-  rbind(buildings_main, buildings_weis) %&gt;%
+ # rbind(buildings_main, buildings_weis) %&gt;%
+  select(type_new, NAME, sqft, meter) 
+
+buildings_submeter &lt;- buildings %&gt;%
+  filter(main_disagg ==1) %&gt;% # keep only buildings on individual meters
+  mutate(meter = &quot;Submeter&quot;) %&gt;%
+  select(meter, NAME, type_new, occupant, address, date_constr, date_acqd, date_reno, sqft, rental) %&gt;% # select relevant columns
+ # rbind(buildings_main, buildings_weis) %&gt;%
   select(type_new, NAME, sqft, meter)
 
 # Store summary of building meter status
 buildings_sum &lt;- buildings %&gt;%
     mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
                         ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, 
-                               ifelse(main_meter == 1 &amp; main_disagg == 1, &quot;Main Meter - Disagg.&quot;, &quot;Individual&quot;))))</code></pre>
+                               ifelse(main_disagg == 1, &quot;Submeter&quot;, &quot;Individual&quot;))))</code></pre>
 </div>
 <div id="wrangle-datasets" class="section level2">
 <h2>Wrangle datasets</h2>
 <div id="annual-totals" class="section level3">
 <h3>Annual totals</h3>
-<pre class="r"><code>joined &lt;- kwh_annual %&gt;%
+<pre class="r"><code># generate annual summary for individually metered buildings
+joined_individual &lt;- kwh_annual %&gt;%
   left_join(key, by = &quot;meter_origin&quot;) %&gt;% # join to key to match meters to building names
-  full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
-  filter(!meter %in% c(&quot;Main Meter&quot;, &quot;Weis Meter&quot;)) %&gt;% # filter out those on main or Weis meter (not disagg or total)
+  right_join(buildings_individual, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
   group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %&gt;% # take mean to preserve sqft data
-  filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
-  filter(meter != &quot;Main Meter - Disagg.&quot;) %&gt;% # filter out those with submeter data
-  left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
+  left_join(occupants, by = &quot;NAME&quot;) %&gt;%
   mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
          kwh_person = kwh/occupants,
          dollars = kwh*dollars_kwh,
@@ -1082,14 +1132,16 @@ buildings_sum &lt;- buildings %&gt;%
   select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;days_perc&#39;. You can
 override using the `.groups` argument.</code></pre>
-<pre class="r"><code>joined_sub &lt;- kwh_sub_annual %&gt;%
-  left_join(sub_key, by = &quot;building&quot;) %&gt;%
-  left_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
+<pre class="r"><code># generate annual summary for submetered buildings
+joined_sub &lt;- kwh_sub_annual %&gt;%
+  left_join(key_sub, by = &quot;building&quot;) %&gt;%
+  left_join(buildings_submeter, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
+  filter(building != &quot;CHW_Base&quot;) %&gt;% # remove duplicate CHW value - not sure what this is?
   group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
-            sqft = mean(sqft, na.rm = T)) %&gt;% # take mean to preserve sqft data
-  filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
-  left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
+            sqft = mean(sqft, na.rm = T)) %&gt;% # preserve sqft as is
+ # filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
+  left_join(occupants, by = &quot;NAME&quot;) %&gt;%
   mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
          kwh_person = kwh/occupants,
          dollars = kwh*dollars_kwh,
@@ -1100,7 +1152,28 @@ override using the `.groups` argument.</code></pre>
   select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)</code></pre>
 <pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;days_perc&#39;. You can
 override using the `.groups` argument.</code></pre>
-<pre class="r"><code>joined_full &lt;- rbind(joined, joined_sub)
+<pre class="r"><code># generate annual summary for main and weis meters
+joined_agg &lt;- kwh_annual %&gt;%
+  left_join(key, by = &quot;meter_origin&quot;) %&gt;%
+  right_join(buildings_agg, by = &quot;NAME&quot;) %&gt;%
+  group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %&gt;% # preserve sqft as is
+ # filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
+  left_join(occupants, by = &quot;NAME&quot;) %&gt;%
+  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
+         kwh_person = kwh/occupants,
+         dollars = kwh*dollars_kwh,
+         ghg_kgCO2 = kwh*co2_kg_kwh,
+         type = type_new) %&gt;% 
+  ungroup() %&gt;%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
+  select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;days_perc&#39;. You can
+override using the `.groups` argument.</code></pre>
+<pre class="r"><code># combine into one data frame
+joined_full &lt;- rbind(joined_individual, joined_sub, joined_agg) %&gt;%
+  filter(kwh != 0)
 
 # generate summary by building category
 joined_cat &lt;- joined_full %&gt;%
@@ -1117,47 +1190,72 @@ joined_cat &lt;- joined_full %&gt;%
 </div>
 <div id="daily-data" class="section level3">
 <h3>Daily data</h3>
-<pre class="r"><code>joined_daily &lt;- kwh %&gt;%
+<pre class="r"><code># generate daily summary for individually metered buildings
+daily_individual &lt;- kwh %&gt;%
   left_join(key, by = &quot;meter_origin&quot;) %&gt;% # join to key to match meters to building names
-  full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-many&quot;) %&gt;% # join to building info by name
-  filter(!is.na(meter_origin)) %&gt;%
-  group_by(type_new, NAME, date) %&gt;%
-  summarize(kwh = sum(total_kwh, na.rm = T),
+  right_join(buildings_individual, by = &quot;NAME&quot;, relationship = &quot;many-to-many&quot;) %&gt;% # join to building info by name
+  group_by(type_new, NAME, date, meter) %&gt;% # group by building
+  summarize(kwh = sum(total_kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T),
             ave_temp = mean(ave_temp, na.rm = T)) %&gt;%
-  left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
-  filter(!is.na(type_new)) %&gt;%
-  mutate(type = type_new) %&gt;% 
+  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
+         type = type_new) %&gt;% 
   ungroup() %&gt;%
-  select(type, NAME, date, ave_temp, kwh, sqft, occupants) %&gt;%
-  mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA</code></pre>
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;% # convert NaN to NA
+  select(type, meter, date, NAME, kwh, sqft, kwh_sqft, ave_temp)</code></pre>
 <pre><code>Warning in left_join(., key, by = &quot;meter_origin&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
 ℹ Row 14881 of `x` matches multiple rows in `y`.
-ℹ Row 39 of `y` matches multiple rows in `x`.
+ℹ Row 38 of `y` matches multiple rows in `x`.
 ℹ If a many-to-many relationship is expected, set `relationship =
   &quot;many-to-many&quot;` to silence this warning.</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;. You can override using
-the `.groups` argument.</code></pre>
-<pre class="r"><code>joined_daily_sub &lt;- kwh_sub %&gt;%
-  left_join(sub_key, by = &quot;building&quot;) %&gt;% 
-  full_join(buildings_clean, by = &quot;NAME&quot;, relationship = &quot;many-to-many&quot;) %&gt;% # join to building info by name
-  group_by(type_new, NAME, date) %&gt;%
+<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;date&#39;. You can
+override using the `.groups` argument.</code></pre>
+<pre class="r"><code># generate daily summary for submetered buildings
+daily_sub &lt;- kwh_sub %&gt;%
+  left_join(key_sub, by = &quot;building&quot;) %&gt;%
+  left_join(buildings_submeter, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
+  filter(building != &quot;CHW_Base&quot;) %&gt;% # remove duplicate CHW value - not sure what this is?
+  group_by(type_new, NAME, date, meter) %&gt;% # group by building
   summarize(kwh = sum(kwh, na.rm = T),
             sqft = mean(sqft, na.rm = T),
             ave_temp = mean(ave_temp, na.rm = T)) %&gt;%
-  left_join(occu_agg, by = &quot;NAME&quot;) %&gt;%
   filter(!is.na(type_new)) %&gt;%
-  mutate(type = type_new) %&gt;% 
+  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
+         type = type_new) %&gt;% 
   ungroup() %&gt;%
-  select(type, NAME, date, ave_temp, kwh, sqft, occupants) %&gt;%
+  select(type, meter, date, NAME, kwh, sqft, kwh_sqft, ave_temp) %&gt;%
   mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA</code></pre>
-<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;. You can override using
-the `.groups` argument.</code></pre>
-<pre class="r"><code>joined_daily_full &lt;- rbind(joined_daily, joined_daily_sub)</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;date&#39;. You can
+override using the `.groups` argument.</code></pre>
+<pre class="r"><code># generate daily summary for main and weis meters
+daily_agg &lt;- kwh %&gt;%
+  left_join(key, by = &quot;meter_origin&quot;) %&gt;%
+  right_join(buildings_agg, by = &quot;NAME&quot;) %&gt;%
+  group_by(type_new, NAME, date, meter) %&gt;% # group by building
+  summarize(kwh = sum(total_kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T),
+            ave_temp = mean(ave_temp, na.rm = T)) %&gt;% # preserve sqft as is
+ # filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
+  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
+         type = type_new) %&gt;% 
+  ungroup() %&gt;%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
+  select(type, meter, date, NAME, kwh, sqft, kwh_sqft, ave_temp)</code></pre>
+<pre><code>Warning in left_join(., key, by = &quot;meter_origin&quot;): Detected an unexpected many-to-many relationship between `x` and `y`.
+ℹ Row 14881 of `x` matches multiple rows in `y`.
+ℹ Row 38 of `y` matches multiple rows in `x`.
+ℹ If a many-to-many relationship is expected, set `relationship =
+  &quot;many-to-many&quot;` to silence this warning.</code></pre>
+<pre><code>`summarise()` has grouped output by &#39;type_new&#39;, &#39;NAME&#39;, &#39;date&#39;. You can
+override using the `.groups` argument.</code></pre>
+<pre class="r"><code># generate complete daily dataset
+daily_full &lt;- rbind(daily_individual, daily_agg, daily_sub)</code></pre>
 </div>
 </div>
-<div id="summary-table" class="section level2">
-<h2>Summary table</h2>
+<div id="summary" class="section level2">
+<h2>Summary</h2>
+<div id="building-type-summary" class="section level3">
+<h3>Building type summary</h3>
 <pre class="r"><code>joined_pretty_cat &lt;- joined_cat %&gt;%
   mutate(n = ifelse(n == 1, &quot;-&quot;, n),
          kwh = round(kwh, digits = 0),
@@ -1165,10 +1263,10 @@ the `.groups` argument.</code></pre>
          ghg_MTCO2 = round(ghg_kgCO2/1000, digits = 0),
          sqft = round(sqft, digits = 0),
          med_kwh_sqft = round(med_kwh_sqft, digits = 1),
-         kwh_sqft_25 = ifelse(n == 1, &quot;-&quot;, round(kwh_sqft_25, digits = 1)),
-         kwh_sqft_75 = ifelse(n == 1, &quot;-&quot;, round(kwh_sqft_75, digits = 1))) %&gt;%
+         kwh_sqft_25 = round(kwh_sqft_25, digits = 1),
+         kwh_sqft_75 = round(kwh_sqft_75, digits = 1)) %&gt;%
     select(type, n, kwh, dollars, ghg_MTCO2, sqft, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %&gt;% 
-  arrange(desc(kwh))</code></pre>
+  arrange(desc(med_kwh_sqft))</code></pre>
 <pre class="r"><code>datatable(joined_pretty_cat,
           filter = &#39;top&#39;,
           rownames = FALSE,
@@ -1177,15 +1275,26 @@ the `.groups` argument.</code></pre>
                        &quot;25th Perc.&quot;, &quot;75th Perc.&quot;),
           caption = &quot;Table 1. Descriptive statistics for annual electricity use by building type.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"92882\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"28\" data-max=\"3504\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1119435\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"3\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1.9\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"4.6\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Table 1. Descriptive statistics for annual electricity use by building type.<\/caption>","data":[["Main Meter","Res Hall - L","Academic","Other","Weis Meter","Admin","Mixed","Res Hall - M","Community","Res Hall - S","Res Hall - U","Non-building"],["-","19","11","16","-","6","-","14","6","19","7","4"],[11648808,2699635,2080772,1125011,973320,755422,512614,334569,255069,164497,98745,92882],["$ 948039","$ 219710","$ 169344","$ 91559","$ 79214","$ 61480","$ 41719","$ 27229","$ 20759","$ 13388","$ 8036","$ 7559"],[3504,812,626,338,293,227,154,101,77,49,30,28],[1119435,417027,344015,247670,85725,137948,90000,64465,183672,28864,0,0],[10.4,4.9,4.4,5.8,11.4,3.2,5.7,5.5,3,5.2,null,null],[10.4,4.4,3.6,2.3,11.4,2.6,5.7,2.9,1.9,3.9,null,null],[10.4,7,6.9,8.6,11.4,5.3,5.7,6.5,4.6,5.9,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Square\nfootage<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"kwh","targets":2},{"name":"dollars","targets":3},{"name":"ghg_MTCO2","targets":4},{"name":"sqft","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-4274284\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-1286\" data-max=\"3504\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1119435\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"3\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1.9\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"4.6\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Table 1. Descriptive statistics for annual electricity use by building type.<\/caption>","data":[["Weis Meter","Main Meter","Other","Mixed","Res Hall - M","Res Hall - S","Res Hall - L","Academic","Admin","Community","Res Hall - U","Non-building","Production"],["-","-","14","2","14","18","19","11","6","6","7","4","-"],[973320,11648808,1125011,966645,334569,145966,2699635,2080772,755422,255069,98745,92882,-4274284],["$ 79214","$ 948039","$ 91559","$ 78670","$ 27229","$ 11879","$ 219710","$ 169344","$ 61480","$ 20759","$ 8036","$ 7559","$ -347863"],[293,3504,338,291,101,44,812,626,227,77,30,28,-1286],[85725,1119435,230920,168015,64465,28864,417027,344015,137948,183672,0,0,0],[11.4,10.4,6.2,5.8,5.5,5.2,4.9,4.4,3.2,3,null,null,null],[11.4,10.4,3,5.7,2.9,3.9,4.4,3.6,2.6,1.9,null,null,null],[11.4,10.4,9.300000000000001,5.8,6.5,5.8,7,6.9,5.3,4.6,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Square\nfootage<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"kwh","targets":2},{"name":"dollars","targets":3},{"name":"ghg_MTCO2","targets":4},{"name":"sqft","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="summary-graph-by-meter-status" class="section level2">
-<h2>Summary graph by meter status</h2>
-<pre class="r"><code>ggplot(filter(buildings_sum, !is.na(meter) &amp; !type_new %in% c(&quot;Res Hall - U&quot;,&quot;Non-building&quot;,&quot;Production&quot;)),
+<div id="data-availability-by-type" class="section level3">
+<h3>Data availability by type</h3>
+<pre class="r"><code>buildings_sum$meter &lt;- factor(buildings_sum$meter,
+                              levels = c(&quot;Weis Meter&quot;, &quot;Main Meter&quot;,
+                                        &quot;Submeter&quot;, &quot;Individual&quot;))
+
+pal &lt;- c(&quot;grey&quot;,&quot;grey&quot;,&quot;darkorchid1&quot;,&quot;darkorchid4&quot;)
+
+buildings_graph &lt;- buildings_sum %&gt;%
+  filter(!is.na(meter) &amp; !type_new %in% c(&quot;Res Hall - U&quot;,&quot;Non-building&quot;,&quot;Production&quot;,&quot;Mixed&quot;))
+
+ggplot(buildings_graph,
        aes(x = reorder(type_new, sqft, FUN = &quot;sum&quot;), y = sqft/1000, fill = meter)) +
   geom_col(position = &quot;stack&quot;) +
+  scale_fill_manual(values = pal) +
   theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Square footage (1000)&quot;, fill = &quot;Meter status&quot;)</code></pre>
+  labs(x = &quot;&quot;, y = &quot;Square Footage (1000)&quot;, fill = &quot;Meter status&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))</code></pre>
 <p><img src="figure/data_wrangling_final.Rmd/graph%20meter-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-graph-meter-1">
@@ -1209,6 +1318,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/08cd7e1782debf133360a08f3907782419c7e313/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">08cd7e1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/8c6712f07ac3f6cc7e085f0619044397742f4fcf/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">8c6712f</a>
@@ -1257,49 +1377,156 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>daily_graph &lt;- joined_daily %&gt;%
-  mutate(date = mdy(date),
+<pre class="r"><code>ggplot(buildings_graph, 
+       aes(x = reorder(type_new, sqft, FUN = &quot;sum&quot;), fill = meter)) +
+  geom_bar(position = &quot;stack&quot;) +
+  scale_fill_manual(values = pal) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Number of Buildings&quot;, fill = &quot;Meter status&quot;) +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/graph%20meter-2.png" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>daily_graph &lt;- daily_full %&gt;%
+  mutate(date = as_date(date),
          month = month(date, label = TRUE),
-         day = wday(date, label = TRUE))
+         day = wday(date, label = TRUE),
+         type_brief = recode(type,
+                       &#39;Res Hall - U&#39; = &#39;Res Hall&#39;,
+                       &#39;Res Hall - S&#39; = &#39;Res Hall&#39;,
+                       &#39;Res Hall - M&#39; = &#39;Res Hall&#39;,
+                       &#39;Res Hall - L&#39; = &#39;Res Hall&#39;)) 
 
-ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
+       aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
   geom_col(position = &quot;stack&quot;) +
+  scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
   theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;)</code></pre>
+  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
+       title = &quot;Electricity use by building type&quot;)</code></pre>
 <p><img src="figure/data_wrangling_final.Rmd/stacked%20bar-1.png" width="672" style="display: block; margin: auto;" /></p>
-<pre class="r"><code>ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-1">
+Past versions of "stacked bar-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-stacked-bar-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/08cd7e1782debf133360a08f3907782419c7e313/docs/figure/data_wrangling_final.Rmd/stacked bar-1.png" target="_blank">08cd7e1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-25
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Submeter&quot;),
+       aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
   geom_col(position = &quot;stack&quot;) +
-  facet_wrap(. ~ type) +
+  scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
   theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))</code></pre>
-<p><img src="figure/data_wrangling_final.Rmd/stacked%20bar%20facet-1.png" width="672" style="display: block; margin: auto;" /></p>
+  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
+       title = &quot;Electricity data from the submeters&quot;)</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/stacked%20bar-2.png" width="672" style="display: block; margin: auto;" /></p>
 <pre class="r"><code>ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
   geom_col(position = &quot;stack&quot;) +
   facet_wrap(. ~ type, scales = &quot;free&quot;) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5))</code></pre>
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
 <p><img src="figure/data_wrangling_final.Rmd/stacked%20bar%20facet%20axis%20variable-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-facet-axis-variable-1">
+Past versions of "stacked bar facet axis variable-1.png"
+</button>
+</p>
+<div id="fig-no-spaces-stacked-bar-facet-axis-variable-1"
+class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/08cd7e1782debf133360a08f3907782419c7e313/docs/figure/data_wrangling_final.Rmd/stacked bar facet axis variable-1.png" target="_blank">08cd7e1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-25
+</td>
+</tr>
+</tbody>
+</table>
 </div>
-<div id="summary-graph-of-electricity-intensity---tbd"
-class="section level2">
-<h2>Summary graph of electricity intensity - TBD</h2>
-<pre class="r"><code>joined_sum &lt;- joined_daily %&gt;%
-  group_by(type, NAME) %&gt;%
-  summarize(kwh = sum(kwh, na.rm = T),
-            sqft = median(sqft, na.rm = T)) %&gt;%
+</div>
+</div>
+<div id="electricity-intensity-by-type" class="section level3">
+<h3>Electricity intensity by type</h3>
+<pre class="r"><code>to_exclude &lt;- filter(joined_full, days_perc &lt; 90)
 
-ggplot(joined_sum, aes(x = type, y = kwh_sqft, fill = type)) +
+intensity &lt;- joined_full %&gt;%
+  filter(!(type %in% c(&quot;Res Hall - U&quot;,&quot;Production&quot;, &quot;Non-building&quot;)) 
+              &amp; !(NAME %in% to_exclude$NAME))
+
+ggplot(intensity,
+       aes(x = reorder(type, kwh_sqft, FUN = &quot;median&quot;),
+                        y = kwh_sqft, fill = type)) +
+  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
+  geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
   geom_boxplot() +
   coord_flip() +
   theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;kWh per sqft&quot;, )</code></pre>
+  theme(legend.position = &quot;none&quot;) +
+  labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
+       title = &quot;Electricity Intensity by Building Type&quot;,
+       caption = &quot;Includes individual, submeter, and aggregate meter data. Buildings with &lt; 90% of days of electricity data were excluded&quot;)</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/intensity-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
 </div>
 <div id="export-for-downstream-analyses" class="section level2">
 <h2>Export for downstream analyses</h2>
-<pre class="r"><code>write.csv(joined_daily_full, &quot;./output/kwh_daily_20260225.csv&quot;, row.names = F)
-write.csv(joined_full, &quot;./output/kwh_annual_20260225.csv&quot;, row.names = F)</code></pre>
+<pre class="r"><code>joined_exp &lt;- select(joined_full,
+                     type, meter, NAME, kwh, sqft, occupants)
+daily_exp &lt;- select(daily_full,
+                    type, meter, NAME, date, kwh, sqft, ave_temp)
+
+write.csv(daily_exp, &quot;./output/kwh_daily_20260226.csv&quot;, row.names = F)
+write.csv(joined_exp, &quot;./output/kwh_annual_20260226.csv&quot;, row.names = F)</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1327,9 +1554,10 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] scales_1.3.0    DT_0.33         lubridate_1.9.3 forcats_1.0.0  
- [5] stringr_1.5.1   dplyr_1.1.4     purrr_1.0.2     readr_2.1.5    
- [9] tidyr_1.3.1     tibble_3.2.1    ggplot2_3.5.1   tidyverse_2.0.0
+ [1] RColorBrewer_1.1-3 scales_1.3.0       DT_0.33            lubridate_1.9.3   
+ [5] forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4        purrr_1.0.2       
+ [9] readr_2.1.5        tidyr_1.3.1        tibble_3.2.1       ggplot2_3.5.1     
+[13] tidyverse_2.0.0   
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    

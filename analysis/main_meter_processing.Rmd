@@ -23,15 +23,15 @@ library(DT)
 
 ```{r data}
 # load names of tabs
-sheet <- excel_sheets("./data/FY25 Main Meter Data.xlsx")
+sheet <- excel_sheets("../data/FY25 Main Meter Data.xlsx")
 
 # applying sheet names to dataframe names
 data <- lapply(setNames(sheet, sheet), 
                     function(x) 
-                      read_excel("./data/FY25 Main Meter Data.xlsx", sheet=x))
+                      read_excel("../data/FY25 Main Meter Data.xlsx", sheet=x))
 
 # load temp data
-temp <- read.csv("./keys/temp_by_date.csv") %>%
+temp <- read.csv("../keys/temp_by_date.csv") %>%
   mutate(date = mdy(date))
 
 # attaching all dataframes together
@@ -90,23 +90,14 @@ indiv_tot / main_tot
 
 ## Summary graphs
 
-```{r graph, warning = F}
+```{r graph, warning = F, fig.width = 12, fig.height = 10}
 ggplot(main_bldgs, aes(x = month, y = kwh, fill = building)) +
+  facet_wrap(. ~ building, scales = "free") +
   geom_col(position = "stack") +
   theme_bw() +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(title = "Buildings with Submeters on the Main Meter",
-       x = "",
-       y = "Electricity use (kWh)")
-
-# store buildings with over 90% days of data
-comp_bldg <- filter(annual, perc_days > 90) 
-
-ggplot(filter(main_bldgs, building %in% comp_bldg$building),
-       aes(x = month, y = kwh, fill = building)) +
-  geom_col(position = "stack") +
-  theme_bw() +
-  labs(title = "Buildings with Submeters on the Main Meter\n
-       (those with electricity data for >90% of days)",
        x = "",
        y = "Electricity use (kWh)")
 ```
@@ -132,6 +123,6 @@ datatable(select(main_bldgs, building, date, kwh, ave_temp),
 ## Export
 
 ```{r export}
-write.csv(annual, "./output/kwh_main_annual.csv", row.names = F)
-write.csv(main_bldgs, "./output/kwh_main_daily.csv", row.names = F)
+write.csv(annual, "../output/kwh_main_annual.csv", row.names = F)
+write.csv(main_bldgs, "../output/kwh_main_daily.csv", row.names = F)
 ```

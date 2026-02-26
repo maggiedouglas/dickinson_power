@@ -24,8 +24,7 @@
 133 W High St *Apt 2 ,"133 W. High St. (2, 5)"
 133 W High St Apt 5 ,"133 W. High St. (2, 5)"
 135 Cedar St ,135 Cedar St. 
-135 N College St ,135 N. College St.
-135 N College St ,139 N. College St.
+135 N College St ,135 N. College St. / 139 N. College St.
 141 High St *Unit 3c ,141 W. High St.
 141 W High St *Apt 2b ,141 W. High St.
 141 W High St *Apt 2c ,141 W. High St.
@@ -188,6 +187,7 @@ W High St (37 Big Buildings) ,Townhouse - 377 W. Louther St.
 W High St (37 Big Buildings) ,Townhouse - 379 W. Louther St.
 W High St (37 Big Buildings) ,Townhouse - 381 W. Louther St.
 W High St (37 Big Buildings) ,Townhouse - 383 W. Louther St.
+W High St (37 Big Buildings) ,Main Meter
 Weiss Arts Complex,Weiss Center 
 Weiss Arts Complex,South College Annex
 Weiss Arts Complex,South College East
@@ -197,7 +197,6 @@ Weiss Arts Complex,Asbell
 Weiss Arts Complex,Historic President's House
 Weiss Arts Complex,Todd House
 Weiss Arts Complex,Reed House
+Weiss Arts Complex,Weis Meter
 Wilson St Rr ,Scoreboard
 Witwer Hall ,Witwer Hall
-W High St (37 Big Buildings) ,Main Meter
-Weiss Arts Complex,Weis Meter
