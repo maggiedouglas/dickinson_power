@@ -313,12 +313,12 @@ datatable(joined_pretty,
 
 ### Data availability by type
 
-```{r graph meter, warning = F}
+```{r graph meter, warning = F, fig.height = 3, fig.height = 4.5}
 buildings_sum$meter <- factor(buildings_sum$meter,
                               levels = c("Weis Meter", "Main Meter",
                                         "Submeter", "Individual"))
 
-pal <- c("grey","grey","darkorchid1","darkorchid4")
+pal <- c("grey","grey","#CAB2D6","#6A3D9A")
 
 buildings_graph <- buildings_sum %>%
   filter(!is.na(meter) & !type_new %in% c("Res Hall - U","Non-building","Production","Mixed"))
@@ -340,7 +340,7 @@ ggplot(buildings_graph,
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-```{r stacked bar, warning = F}
+```{r stacked bar, warning = F, fig.height = 4, fig.height = 4.5}
 daily_graph <- daily_full %>%
   mutate(date = as_date(date),
          month = month(date, label = TRUE),
@@ -349,7 +349,8 @@ daily_graph <- daily_full %>%
                        'Res Hall - U' = 'Res Hall',
                        'Res Hall - S' = 'Res Hall',
                        'Res Hall - M' = 'Res Hall',
-                       'Res Hall - L' = 'Res Hall')) 
+                       'Res Hall - L' = 'Res Hall')) %>%
+  filter(!is.na(month))
 
 ggplot(filter(daily_graph, meter != "Submeter"),
        aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
@@ -378,14 +379,36 @@ ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN =
   theme(legend.position = "none")
 ```
 
+## Summary statistics
+```{r summary stat}
+summary(joined_full)
+
+## Stats for campus buildings
+stats <- filter(joined_full, meter != "Submeter" & type != "Production")
+ # million square feet
+(sum(joined_agg$sqft, na.rm=T) + sum(joined_individual$sqft, na.rm=T))/10^6
+sum(stats$kwh)/10^6 # million kwh
+sum(stats$dollars)/10^6 # million $
+sum(stats$ghg_kgCO2)/1000 # MT CO2e
+
+## Stats for solar
+solar <- filter(joined_full, type == "Production")
+sum(solar$kwh)/10^6 # million kwh
+sum(solar$dollars)/10^6 # million $
+sum(solar$ghg_kgCO2)/1000 # MT CO2e
+```
+
 ### Electricity intensity by type
 
-```{r intensity, warning = F}
+```{r intensity, warning = F, fig.height = 3.5, fig.width = 4.5}
 to_exclude <- filter(joined_full, days_perc < 90)
 
 intensity <- joined_full %>%
   filter(!(type %in% c("Res Hall - U","Production", "Non-building")) 
               & !(NAME %in% to_exclude$NAME))
+
+# median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
+# https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
 
 ggplot(intensity,
        aes(x = reorder(type, kwh_sqft, FUN = "median"),
@@ -397,8 +420,7 @@ ggplot(intensity,
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "kWh per sqft per year", 
-       title = "Electricity Intensity by Building Type",
-       caption = "Includes individual, submeter, and aggregate meter data. Buildings with < 90% of days of electricity data were excluded")
+       title = "Electricity Intensity by Building Type")
 ```
 
 ## Export for downstream analyses

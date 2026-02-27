@@ -391,7 +391,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-26
+<strong>Last updated:</strong> 2026-02-27
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -525,15 +525,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree08cd7e1782debf133360a08f3907782419c7e313targetblank08cd7e1a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreee752845776846b84cb50739a497b72445ec86207targetblanke752845a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/08cd7e1782debf133360a08f3907782419c7e313" target="_blank">08cd7e1</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/e752845776846b84cb50739a497b72445ec86207" target="_blank">e752845</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree08cd7e1782debf133360a08f3907782419c7e313targetblank08cd7e1a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreee752845776846b84cb50739a497b72445ec86207targetblanke752845a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +543,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/08cd7e1782debf133360a08f3907782419c7e313" target="_blank">08cd7e1</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/e752845776846b84cb50739a497b72445ec86207" target="_blank">e752845</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -577,18 +577,11 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
-Untracked files:
-    Untracked:  keys/occupancy_key.csv
-    Untracked:  keys/~$fy25_building_list_updated.xlsx
-
 Unstaged changes:
     Modified:   analysis/data_wrangling_final.Rmd
-    Modified:   analysis/main_meter_processing.Rmd
-    Modified:   keys/fy25_building_list_updated.csv
-    Modified:   keys/housing_counts.csv
-    Modified:   keys/meter_building_key.csv
-    Modified:   keys/submeter_building_key.csv
-    Modified:   keys/submeter_building_key.xlsx
+
+Staged changes:
+    Deleted:    keys/~$fy25_building_list_updated.xlsx
 
 </code></pre>
 <p>
@@ -634,6 +627,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/analysis/data_wrangling_final.Rmd" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+<td>
+adjust data processing + building summary
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/e752845776846b84cb50739a497b72445ec86207/docs/data_wrangling_final.html" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+<td>
+adjust data processing + building summary
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1283,7 +1310,7 @@ daily_full &lt;- rbind(daily_individual, daily_agg, daily_sub)</code></pre>
                               levels = c(&quot;Weis Meter&quot;, &quot;Main Meter&quot;,
                                         &quot;Submeter&quot;, &quot;Individual&quot;))
 
-pal &lt;- c(&quot;grey&quot;,&quot;grey&quot;,&quot;darkorchid1&quot;,&quot;darkorchid4&quot;)
+pal &lt;- c(&quot;grey&quot;,&quot;grey&quot;,&quot;#CAB2D6&quot;,&quot;#6A3D9A&quot;)
 
 buildings_graph &lt;- buildings_sum %&gt;%
   filter(!is.na(meter) &amp; !type_new %in% c(&quot;Res Hall - U&quot;,&quot;Non-building&quot;,&quot;Production&quot;,&quot;Mixed&quot;))
@@ -1318,6 +1345,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/08cd7e1782debf133360a08f3907782419c7e313/docs/figure/data_wrangling_final.Rmd/graph meter-1.png" target="_blank">08cd7e1</a>
@@ -1385,6 +1423,43 @@ maggiedouglas
   labs(x = &quot;&quot;, y = &quot;Number of Buildings&quot;, fill = &quot;Meter status&quot;) +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))</code></pre>
 <p><img src="figure/data_wrangling_final.Rmd/graph%20meter-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-graph-meter-2">
+Past versions of "graph meter-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-graph-meter-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/docs/figure/data_wrangling_final.Rmd/graph meter-2.png" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>daily_graph &lt;- daily_full %&gt;%
   mutate(date = as_date(date),
          month = month(date, label = TRUE),
@@ -1393,7 +1468,8 @@ maggiedouglas
                        &#39;Res Hall - U&#39; = &#39;Res Hall&#39;,
                        &#39;Res Hall - S&#39; = &#39;Res Hall&#39;,
                        &#39;Res Hall - M&#39; = &#39;Res Hall&#39;,
-                       &#39;Res Hall - L&#39; = &#39;Res Hall&#39;)) 
+                       &#39;Res Hall - L&#39; = &#39;Res Hall&#39;)) %&gt;%
+  filter(!is.na(month))
 
 ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
        aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
@@ -1427,6 +1503,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/docs/figure/data_wrangling_final.Rmd/stacked bar-1.png" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/08cd7e1782debf133360a08f3907782419c7e313/docs/figure/data_wrangling_final.Rmd/stacked bar-1.png" target="_blank">08cd7e1</a>
 </td>
 <td>
@@ -1448,6 +1535,43 @@ maggiedouglas
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
        title = &quot;Electricity data from the submeters&quot;)</code></pre>
 <p><img src="figure/data_wrangling_final.Rmd/stacked%20bar-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-2">
+Past versions of "stacked bar-2.png"
+</button>
+</p>
+<div id="fig-no-spaces-stacked-bar-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/docs/figure/data_wrangling_final.Rmd/stacked bar-2.png" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
   geom_col(position = &quot;stack&quot;) +
   facet_wrap(. ~ type, scales = &quot;free&quot;) +
@@ -1481,6 +1605,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/docs/figure/data_wrangling_final.Rmd/stacked bar facet axis variable-1.png" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/08cd7e1782debf133360a08f3907782419c7e313/docs/figure/data_wrangling_final.Rmd/stacked bar facet axis variable-1.png" target="_blank">08cd7e1</a>
 </td>
 <td>
@@ -1495,6 +1630,53 @@ maggiedouglas
 </div>
 </div>
 </div>
+</div>
+<div id="summary-statistics" class="section level2">
+<h2>Summary statistics</h2>
+<pre class="r"><code>summary(joined_full)</code></pre>
+<pre><code>     type              meter               NAME             days_perc     
+ Length:104         Length:104         Length:104         Min.   : 36.71  
+ Class :character   Class :character   Class :character   1st Qu.: 95.34  
+ Mode  :character   Mode  :character   Mode  :character   Median :100.00  
+                                                          Mean   : 95.72  
+                                                          3rd Qu.:100.00  
+                                                          Max.   :100.00  
+                                                                          
+      kwh                sqft            kwh_sqft         occupants      
+ Min.   :-4274284   Min.   :    500   Min.   : 0.1624   Min.   :  1.000  
+ 1st Qu.:    8249   1st Qu.:   1925   1st Qu.: 3.5399   1st Qu.:  4.375  
+ Median :   20783   Median :   5912   Median : 5.1385   Median :  6.000  
+ Mean   :  162525   Mean   :  30890   Mean   : 5.7640   Mean   : 28.057  
+ 3rd Qu.:   88355   3rd Qu.:  24421   3rd Qu.: 6.5238   3rd Qu.: 33.812  
+ Max.   :11648808   Max.   :1119435   Max.   :23.4772   Max.   :159.250  
+                    NA&#39;s   :14        NA&#39;s   :14        NA&#39;s   :56       
+   kwh_person         dollars            ghg_kgCO2       
+ Min.   :  797.1   Min.   :-347862.9   Min.   :-1285808  
+ 1st Qu.: 1302.1   1st Qu.:    671.4   1st Qu.:    2482  
+ Median : 1647.3   Median :   1691.4   Median :    6252  
+ Mean   : 2706.7   Mean   :  13227.1   Mean   :   48891  
+ 3rd Qu.: 2269.2   3rd Qu.:   7190.8   3rd Qu.:   26579  
+ Max.   :19990.2   Max.   : 948039.1   Max.   : 3504242  
+ NA&#39;s   :56                                              </code></pre>
+<pre class="r"><code>## Stats for campus buildings
+stats &lt;- filter(joined_full, meter != &quot;Submeter&quot; &amp; type != &quot;Production&quot;)
+ # million square feet
+(sum(joined_agg$sqft, na.rm=T) + sum(joined_individual$sqft, na.rm=T))/10^6</code></pre>
+<pre><code>[1] 1.946878</code></pre>
+<pre class="r"><code>sum(stats$kwh)/10^6 # million kwh</code></pre>
+<pre><code>[1] 17.23632</code></pre>
+<pre class="r"><code>sum(stats$dollars)/10^6 # million $</code></pre>
+<pre><code>[1] 1.402779</code></pre>
+<pre class="r"><code>sum(stats$ghg_kgCO2)/1000 # MT CO2e</code></pre>
+<pre><code>[1] 5185.1</code></pre>
+<pre class="r"><code>## Stats for solar
+solar &lt;- filter(joined_full, type == &quot;Production&quot;)
+sum(solar$kwh)/10^6 # million kwh</code></pre>
+<pre><code>[1] -4.274285</code></pre>
+<pre class="r"><code>sum(solar$dollars)/10^6 # million $</code></pre>
+<pre><code>[1] -0.3478629</code></pre>
+<pre class="r"><code>sum(solar$ghg_kgCO2)/1000 # MT CO2e</code></pre>
+<pre><code>[1] -1285.808</code></pre>
 <div id="electricity-intensity-by-type" class="section level3">
 <h3>Electricity intensity by type</h3>
 <pre class="r"><code>to_exclude &lt;- filter(joined_full, days_perc &lt; 90)
@@ -1502,6 +1684,9 @@ maggiedouglas
 intensity &lt;- joined_full %&gt;%
   filter(!(type %in% c(&quot;Res Hall - U&quot;,&quot;Production&quot;, &quot;Non-building&quot;)) 
               &amp; !(NAME %in% to_exclude$NAME))
+
+# median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
+# https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
 
 ggplot(intensity,
        aes(x = reorder(type, kwh_sqft, FUN = &quot;median&quot;),
@@ -1513,9 +1698,45 @@ ggplot(intensity,
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
-       title = &quot;Electricity Intensity by Building Type&quot;,
-       caption = &quot;Includes individual, submeter, and aggregate meter data. Buildings with &lt; 90% of days of electricity data were excluded&quot;)</code></pre>
-<p><img src="figure/data_wrangling_final.Rmd/intensity-1.png" width="672" style="display: block; margin: auto;" /></p>
+       title = &quot;Electricity Intensity by Building Type&quot;)</code></pre>
+<p><img src="figure/data_wrangling_final.Rmd/intensity-1.png" width="432" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity-1">
+Past versions of intensity-1.png
+</button>
+</p>
+<div id="fig-intensity-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/docs/figure/data_wrangling_final.Rmd/intensity-1.png" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <div id="export-for-downstream-analyses" class="section level2">
