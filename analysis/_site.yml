@@ -7,9 +7,6 @@ navbar:
     href: about.html
   - text: Data preparation
     href: data_wrangling_final.html
-    menu:
-      - text: Submeter data
-        href: main_meter_processing.html
   - text: "Electricity summary"
     menu:
       - text: "All buildings"
