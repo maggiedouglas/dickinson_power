@@ -19,8 +19,8 @@ This code is fleshing out the tasks for students in Problem Set 4 (data visualiz
 
 ```{r load}
 library(tidyverse)
-annual <- read.csv("./output/annual_kwh.csv")
-daily <- read.csv("./output/daily_kwh.csv")
+annual <- read.csv("../output/kwh_annual.csv")
+daily <- read.csv("../output/kwh_daily.csv")
 ```
 
 ### Wrangle
@@ -39,6 +39,7 @@ daily_N_Col <- daily_date %>%
     filter(NAME == "135 N. College St.") 
 
 monthly_RHS <- daily_RHS %>%
+  mutate(kwh_sqft = kwh/sqft) %>%
   group_by(NAME, month) %>%
   summarize(kwh_sqft = median(kwh_sqft))
 ```
