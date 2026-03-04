@@ -1,7 +1,7 @@
 ---
 title: "Data wrangling for Class Project"
 author: "Maggie Douglas"
-date: "2026-02-14"
+date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: html_document
 ---
 
@@ -27,41 +27,56 @@ The main steps involved are:
 
 ```{r load}
 library(tidyverse) # load tidyverse
-library(DT) # library to create tables
-library(scales) # library to format dollars
 library(RColorBrewer)
+```
 
+```{r load_data}
 # load electricity data + reformat date
-kwh <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = T, encoding = "UTF-8") %>%
-  mutate(date = mdy(date))
+kwh <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = T) %>%
+  mutate(date = mdy(date)) %>%
+  complete(nesting(account_number, meter_origin, meter_number), date)
   
-kwh_sub <- read.csv("./output/kwh_main_daily.csv", strip.white = T, encoding = "UTF-8") %>%
+kwh_sub <- read.csv("./output/kwh_main_daily.csv", strip.white = T) %>%
   mutate(date = ymd(date))
+
+# store temp data for later
+temp <- select(kwh, date, ave_temp) %>%
+  unique()
   
 # load building data + clean up building names
 buildings <- read.csv("./keys/fy25_building_list_updated.csv", 
-                      strip.white = T, encoding = "UTF-8") %>%
-  mutate(NAME = str_remove_all(NAME, "/"),
-         NAME = str_replace_all(NAME, "  "," "),
-         NAME = str_replace_all(NAME, "   "," "))
-
-# load occupancy and clean up building names
-occupants <- read.csv("./keys/occupancy_key.csv", 
-                      strip.white = T, encoding = "UTF-8") %>%
+                      strip.white = T) %>%
   mutate(NAME = str_remove_all(NAME, "/"),
          NAME = str_replace_all(NAME, "  "," "),
          NAME = str_replace_all(NAME, "   "," "))
 
 # load keys to link datasets
-key <- read.csv("./keys/meter_building_key.csv", strip.white = T, encoding = "UTF-8") %>%
+key <- read.csv("./keys/meter_building_key.csv", strip.white = T) %>%
   mutate(NAME = str_remove_all(NAME, "/"),
          NAME = str_replace_all(NAME, "  "," "),
          NAME = str_replace_all(NAME, "   "," "))
 
-key_sub <- read.csv("./keys/submeter_building_key.csv", strip.white = T, encoding = "UTF-8") %>%
+key_sub <- read.csv("./keys/submeter_building_key.csv", strip.white = T) %>%
   mutate(NAME = str_remove_all(NAME, "/"),
          NAME = str_replace_all(NAME, "  "," "),
          NAME = str_replace_all(NAME, "   "," ")) 
+
+key_occ <- read.csv("./keys/occupancy_key.csv", 
+                      strip.white = T) %>%
+  mutate(NAME = str_remove_all(NAME, "/"),
+         NAME = str_replace_all(NAME, "  "," "),
+         NAME = str_replace_all(NAME, "   "," "))
+
+# load occupancy data + generate mean for AY
+occupants <- read.csv("./data/housing_counts.csv",
+                      strip.white = T) %>%
+  mutate(sem_yr = paste(semester, year)) %>% # create semester column
+  filter(sem_yr %in% c("Fall 2024", "Spring 2025")) %>% # filter to FY25
+  group_by(building_name) %>% 
+  summarize(occupants = mean(occupants, na.rm = T)) %>% # generate mean occupants across semester
+  left_join(key_occ, by = "building_name") %>% # join to building names
+  group_by(NAME) %>%
+  summarize(occupants = sum(occupants, na.rm = T)) # sum across buildings with multiple rows
 
 # store annual totals for kWh
 kwh_annual <- kwh %>%
@@ -75,18 +90,14 @@ kwh_sub_annual <- kwh_sub %>%
   group_by(building) %>%
   summarize(kwh = sum(kwh, na.rm = T),
             days_perc = (n()/365)*100)
-
-# store conversion factors
-dollars_kwh <- 0.08138507
-co2_kg_kwh <- 0.30082405
 ```
 
-## Check data
+## Check key data
 
 ```{r check}
 str(kwh)
 str(buildings)
-str(key)
+str(occupants)
 ```
 
 ## Restructure building data 
@@ -141,7 +152,7 @@ buildings_sum <- buildings %>%
 
 ### Annual totals
 
-```{r annual}
+```{r annual, warning = F}
 # generate annual summary for individually metered buildings
 joined_individual <- kwh_annual %>%
   left_join(key, by = "meter_origin") %>% # join to key to match meters to building names
@@ -149,15 +160,11 @@ joined_individual <- kwh_annual %>%
   group_by(type_new, NAME, days_perc, meter) %>% # group by building
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %>% # take mean to preserve sqft data
+  mutate(type = type_new) %>%
   left_join(occupants, by = "NAME") %>%
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         kwh_person = kwh/occupants,
-         dollars = kwh*dollars_kwh,
-         ghg_kgCO2 = kwh*co2_kg_kwh,
-         type = type_new) %>% 
   ungroup() %>%
   mutate_all(~ifelse(is.nan(.), NA, .)) %>%
-  select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)
 
 # generate annual summary for submetered buildings
 joined_sub <- kwh_sub_annual %>%
@@ -167,16 +174,12 @@ joined_sub <- kwh_sub_annual %>%
   group_by(type_new, NAME, days_perc, meter) %>% # group by building
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %>% # preserve sqft as is
+  mutate(type = type_new) %>%
  # filter(!is.na(type_new)) %>% # filter out those with NA for type
   left_join(occupants, by = "NAME") %>%
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         kwh_person = kwh/occupants,
-         dollars = kwh*dollars_kwh,
-         ghg_kgCO2 = kwh*co2_kg_kwh,
-         type = type_new) %>% 
   ungroup() %>%
   mutate_all(~ifelse(is.nan(.), NA, .)) %>%
-  select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)
 
 # generate annual summary for main and weis meters
 joined_agg <- kwh_annual %>%
@@ -185,51 +188,38 @@ joined_agg <- kwh_annual %>%
   group_by(type_new, NAME, days_perc, meter) %>% # group by building
   summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %>% # preserve sqft as is
+  mutate(type = type_new) %>%
  # filter(!is.na(type_new)) %>% # filter out those with NA for type
   left_join(occupants, by = "NAME") %>%
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         kwh_person = kwh/occupants,
-         dollars = kwh*dollars_kwh,
-         ghg_kgCO2 = kwh*co2_kg_kwh,
-         type = type_new) %>% 
   ungroup() %>%
   mutate_all(~ifelse(is.nan(.), NA, .)) %>%
-  select(type, meter, NAME, days_perc, kwh, sqft, kwh_sqft, occupants, kwh_person, dollars, ghg_kgCO2)
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)
 
 # combine into one data frame
 joined_full <- rbind(joined_individual, joined_sub, joined_agg) %>%
-  filter(kwh != 0)
+  filter(kwh != 0) %>%
+  mutate(kwh_corr = kwh/(days_perc/100)) %>% # estimate kwh for all days in the year
+  arrange(type, meter) %>%
+  select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants)
 
-# generate summary by building category
-joined_cat <- joined_full %>%
-  group_by(type) %>%
-  summarize(n = n(),
-            kwh = sum(kwh),
-            dollars = sum(dollars),
-            ghg_kgCO2 = sum(ghg_kgCO2),
-            sqft = sum(sqft, na.rm = T),
-            med_kwh_sqft = median(kwh_sqft, na.rm = T),
-            kwh_sqft_25 = quantile(kwh_sqft, .25, na.rm = T),
-            kwh_sqft_75 = quantile(kwh_sqft, .75, na.rm = T)) %>%
-  arrange(-kwh)
 ```
 
 ### Daily data
 
-```{r split}
+```{r split, warning = F}
 # generate daily summary for individually metered buildings
 daily_individual <- kwh %>%
   left_join(key, by = "meter_origin") %>% # join to key to match meters to building names
   right_join(buildings_individual, by = "NAME", relationship = "many-to-many") %>% # join to building info by name
   group_by(type_new, NAME, date, meter) %>% # group by building
   summarize(kwh = sum(total_kwh, na.rm = T), # sum kwh by building
-            sqft = mean(sqft, na.rm = T),
-            ave_temp = mean(ave_temp, na.rm = T)) %>%
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         type = type_new) %>% 
+            sqft = mean(sqft, na.rm = T)) %>%
+  mutate(type = type_new) %>%
   ungroup() %>%
   mutate_all(~ifelse(is.nan(.), NA, .)) %>% # convert NaN to NA
-  select(type, meter, date, NAME, kwh, sqft, kwh_sqft, ave_temp)
+  select(type, meter, date, NAME, kwh, sqft) %>%
+  complete(nesting(type, meter, NAME), date) %>% # restore NA values for missing date-building combos
+  filter(!is.na(date)) # remove rows without value for date
 
 # generate daily summary for submetered buildings
 daily_sub <- kwh_sub %>%
@@ -238,14 +228,14 @@ daily_sub <- kwh_sub %>%
   filter(building != "CHW_Base") %>% # remove duplicate CHW value - not sure what this is?
   group_by(type_new, NAME, date, meter) %>% # group by building
   summarize(kwh = sum(kwh, na.rm = T),
-            sqft = mean(sqft, na.rm = T),
-            ave_temp = mean(ave_temp, na.rm = T)) %>%
+            sqft = mean(sqft, na.rm = T)) %>%
+  mutate(type = type_new) %>%
   filter(!is.na(type_new)) %>%
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         type = type_new) %>% 
   ungroup() %>%
-  select(type, meter, date, NAME, kwh, sqft, kwh_sqft, ave_temp) %>%
-  mutate_all(~ifelse(is.nan(.), NA, .)) # convert NaN to NA
+  select(type, meter, date, NAME, kwh, sqft) %>%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>% # convert NaN to NA
+  mutate(kwh = ifelse(kwh == 0, NA, kwh)) %>% # restore NA values for missing date-building combos
+  filter(!is.na(date)) # remove rows without value for date
 
 # generate daily summary for main and weis meters
 daily_agg <- kwh %>%
@@ -253,72 +243,30 @@ daily_agg <- kwh %>%
   right_join(buildings_agg, by = "NAME") %>%
   group_by(type_new, NAME, date, meter) %>% # group by building
   summarize(kwh = sum(total_kwh, na.rm = T), # sum kwh by building
-            sqft = mean(sqft, na.rm = T),
-            ave_temp = mean(ave_temp, na.rm = T)) %>% # preserve sqft as is
- # filter(!is.na(type_new)) %>% # filter out those with NA for type
-  mutate(kwh_sqft = kwh/sqft, # calculate kwh per sqft
-         type = type_new) %>% 
+            sqft = mean(sqft, na.rm = T)) %>% # preserve sqft as is
+  mutate(type = type_new) %>% 
   ungroup() %>%
   mutate_all(~ifelse(is.nan(.), NA, .)) %>%
-  select(type, meter, date, NAME, kwh, sqft, kwh_sqft, ave_temp)
+  select(type, meter, date, NAME, kwh, sqft)
 
 # generate complete daily dataset
-daily_full <- rbind(daily_individual, daily_agg, daily_sub)
+ daily_full <- rbind(daily_individual, daily_agg, daily_sub) %>%
+  mutate(date = as.Date(date)) %>%
+  arrange(type, meter, NAME, date) %>%
+  select(type, meter, NAME, date, kwh, sqft) %>%
+  left_join(occupants, by = "NAME") %>%
+  merge(temp, by = "date") %>% # for some reason the join by date is not fully working... duplicating rows
+  filter(!is.na(ave_temp)) # remove duplicate rows
 ```
 
-## Summary
+## Data availability by type
 
-### Building type summary
-
-```{r cat table}
-joined_pretty_cat <- joined_cat %>%
-  mutate(n = ifelse(n == 1, "-", n),
-         kwh = round(kwh, digits = 0),
-         dollars = paste("$",round(dollars, digits = 0)),
-         ghg_MTCO2 = round(ghg_kgCO2/1000, digits = 0),
-         sqft = round(sqft, digits = 0),
-         med_kwh_sqft = round(med_kwh_sqft, digits = 1),
-         kwh_sqft_25 = round(kwh_sqft_25, digits = 1),
-         kwh_sqft_75 = round(kwh_sqft_75, digits = 1)) %>%
-    select(type, n, kwh, dollars, ghg_MTCO2, sqft, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %>% 
-  arrange(desc(med_kwh_sqft))
-```
-
-```{r annual table cat}
-datatable(joined_pretty_cat,
-          filter = 'top',
-          rownames = FALSE,
-          colnames = c("Building\ntype","Buildings\nwith data", "kWh", "Est. cost", 
-                       "CO2e\n(MT)", "Square\nfootage", "Median\nkWh\nper sqft",
-                       "25th Perc.", "75th Perc."),
-          caption = "Table 1. Descriptive statistics for annual electricity use by building type.")
-```
-
-```{r annual table, eval = FALSE, include = FALSE}
-joined_pretty <- joined_full %>%
-  mutate(kwh = round(kwh, digits = 0),
-         dollars = paste("$",round(dollars, digits = 0)),
-         kwh_sqft = round(kwh_sqft, digits = 1),
-         kwh_person = round(kwh_person, digits = 0),
-         days_perc = round(days_perc, digits = 0)) %>%
-  select(type, NAME, kwh, dollars, kwh_sqft, kwh_person, days_perc) %>% 
-  arrange(desc(kwh))
-
-datatable(joined_pretty,
-          filter = 'top',
-          rownames = FALSE,
-          colnames = c("Building\ntype","Name","kWh", "Est cost", "kWh\nper sqft",
-                       "kWh\nper person","Days of\ndata (%)"))
-```
-
-### Data availability by type
-
-```{r graph meter, warning = F, fig.height = 3, fig.height = 4.5}
+```{r graph meter, warning = F, fig.height = 5, fig.height = 4}
 buildings_sum$meter <- factor(buildings_sum$meter,
                               levels = c("Weis Meter", "Main Meter",
                                         "Submeter", "Individual"))
 
-pal <- c("grey","grey","#CAB2D6","#6A3D9A")
+pal <- c("lightgrey","darkgrey","#CAB2D6","#6A3D9A")
 
 buildings_graph <- buildings_sum %>%
   filter(!is.na(meter) & !type_new %in% c("Res Hall - U","Non-building","Production","Mixed"))
@@ -340,98 +288,13 @@ ggplot(buildings_graph,
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
 ```
 
-```{r stacked bar, warning = F, fig.height = 4, fig.height = 4.5}
-daily_graph <- daily_full %>%
-  mutate(date = as_date(date),
-         month = month(date, label = TRUE),
-         day = wday(date, label = TRUE),
-         type_brief = recode(type,
-                       'Res Hall - U' = 'Res Hall',
-                       'Res Hall - S' = 'Res Hall',
-                       'Res Hall - M' = 'Res Hall',
-                       'Res Hall - L' = 'Res Hall')) %>%
-  filter(!is.na(month))
-
-ggplot(filter(daily_graph, meter != "Submeter"),
-       aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
-  geom_col(position = "stack") +
-  scale_fill_brewer(type = "qual", palette = "Paired") +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (million kWh)", fill = "",
-       title = "Electricity use by building type")
-
-ggplot(filter(daily_graph, meter == "Submeter"),
-       aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
-  geom_col(position = "stack") +
-  scale_fill_brewer(type = "qual", palette = "Paired") +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (million kWh)", fill = "",
-       title = "Electricity data from the submeters")
-```
-
-```{r stacked bar facet axis variable}
-ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = 'sum'))) +
-  geom_col(position = "stack") +
-  facet_wrap(. ~ type, scales = "free") +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (million kWh)", fill = "") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  theme(legend.position = "none")
-```
-
-## Summary statistics
-```{r summary stat}
-summary(joined_full)
-
-## Stats for campus buildings
-stats <- filter(joined_full, meter != "Submeter" & type != "Production")
- # million square feet
-(sum(joined_agg$sqft, na.rm=T) + sum(joined_individual$sqft, na.rm=T))/10^6
-sum(stats$kwh)/10^6 # million kwh
-sum(stats$dollars)/10^6 # million $
-sum(stats$ghg_kgCO2)/1000 # MT CO2e
-
-## Stats for solar
-solar <- filter(joined_full, type == "Production")
-sum(solar$kwh)/10^6 # million kwh
-sum(solar$dollars)/10^6 # million $
-sum(solar$ghg_kgCO2)/1000 # MT CO2e
-```
-
-### Electricity intensity by type
-
-```{r intensity, warning = F, fig.height = 3.5, fig.width = 4.5}
-to_exclude <- filter(joined_full, days_perc < 90)
-
-intensity <- joined_full %>%
-  filter(!(type %in% c("Res Hall - U","Production", "Non-building")) 
-              & !(NAME %in% to_exclude$NAME))
-
-# median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
-# https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
-
-ggplot(intensity,
-       aes(x = reorder(type, kwh_sqft, FUN = "median"),
-                        y = kwh_sqft, fill = type)) +
-  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = "lightgray", alpha = 0.3) +
-  geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
-  geom_boxplot() +
-  coord_flip() +
-  theme_bw() +
-  theme(legend.position = "none") +
-  labs(x = "", y = "kWh per sqft per year", 
-       title = "Electricity Intensity by Building Type")
-```
-
 ## Export for downstream analyses
 
 ```{r export}
-joined_exp <- select(joined_full,
-                     type, meter, NAME, kwh, sqft, occupants)
-daily_exp <- select(daily_full,
-                    type, meter, NAME, date, kwh, sqft, ave_temp)
+today <- today("EST") %>%
+  str_remove(" UTC") 
 
-write.csv(daily_exp, "./output/kwh_daily_20260226.csv", row.names = F)
-write.csv(joined_exp, "./output/kwh_annual_20260226.csv", row.names = F)
+write.csv(daily_full, paste0("./output/kwh_daily_", today, ".csv"), row.names = F)
+write.csv(joined_full, paste0("./output/kwh_annual_", today, ".csv"), row.names = F)
 ```
 

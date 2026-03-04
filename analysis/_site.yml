@@ -3,10 +3,32 @@ output_dir: ../docs
 navbar:
   title: "dickinson_power"
   left:
-  - text: Home
+  - text: About
     href: about.html
-  - text: Data wrangling
+  - text: Data preparation
     href: data_wrangling_final.html
+    menu:
+      - text: Submeter data
+        href: main_meter_processing.html
+  - text: "Electricity summary"
+    menu:
+      - text: "All buildings"
+        href: building_summary.html
+      - text: "Res. Halls < 2K sqft"
+        href: PS05_prelim_results_Res_Hall_S.html
+      - text: "Res. Halls 2-10K sqft"
+        href: PS05_prelim_results_Res_Hall_M.html
+      - text: "Res. Halls > 10K sqft"
+        href: PS05_prelim_results_Res_Hall_L.html
+      - text: "Academic"
+        href: PS05_prelim_results_Academic.html
+      - text: "Administrative"
+        href: PS05_prelim_results_Admin.html
+      - text: "Community"
+        href: PS05_prelim_results_Community.html
+      - text: "Other"
+        href: PS05_prelim_results_Other.html
+
 output:
   workflowr::wflow_html:
     toc: yes
