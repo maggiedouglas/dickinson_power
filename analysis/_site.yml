@@ -13,7 +13,7 @@ navbar:
   - text: "Electricity summary"
     menu:
       - text: "All buildings"
-        href: building_summary.html
+        href: campus_summary.html
       - text: "Res. Halls < 2K sqft"
         href: PS05_prelim_results_Res_Hall_S.html
       - text: "Res. Halls 2-10K sqft"
