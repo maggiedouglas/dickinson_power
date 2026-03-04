@@ -202,6 +202,9 @@ joined_full <- rbind(joined_individual, joined_sub, joined_agg) %>%
   arrange(type, meter) %>%
   select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants)
 
+# store lookup for data coverage
+data_cov <- joined_full %>%
+  select(NAME, days_perc)
 ```
 
 ### Daily data
@@ -255,8 +258,14 @@ daily_agg <- kwh %>%
   arrange(type, meter, NAME, date) %>%
   select(type, meter, NAME, date, kwh, sqft) %>%
   left_join(occupants, by = "NAME") %>%
+  left_join(data_cov, by = "NAME") %>%
   merge(temp, by = "date") %>% # for some reason the join by date is not fully working... duplicating rows
-  filter(!is.na(ave_temp)) # remove duplicate rows
+  filter(!is.na(ave_temp)) %>% # remove duplicate rows
+  mutate(period = ifelse((date > ymd("2024-08-28") & date < ymd("2024-12-21")), "Fall", 
+                         ifelse((date > ymd("2025-01-07") & date < ymd("2025-05-18")), "Spring",
+                                ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter", "Summer")))) %>%
+   select(type, meter, NAME, days_perc, sqft, occupants, period, date, kwh, ave_temp) %>%
+   arrange(NAME)
 ```
 
 ## Data availability by type
@@ -286,6 +295,37 @@ ggplot(buildings_graph,
   theme_bw() +
   labs(x = "", y = "Number of Buildings", fill = "Meter status") +
     theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+
+## Practice boxplot
+
+```{r box_practice}
+daily_test <- daily_full %>%
+  filter(NAME %in% c("Main Meter","Weis Meter")) %>% 
+  mutate(kwh_sqft = (kwh/sqft*365)) # adjust daily values to per year equivalent
+
+ggplot(daily_test,
+       aes(x = type, y = kwh_sqft, fill = type)) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = "lightgray", alpha = 0.3) +
+  geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
+  geom_boxplot() +
+  coord_flip() +
+  facet_grid(period ~ .) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "kWh per sqft per year", 
+       title = "Electricity Intensity by Building Type")
+
+ggplot(daily_test,
+       aes(x = type, y = kwh_sqft, fill = period)) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = "lightgray", alpha = 0.3) +
+  geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
+  geom_boxplot() +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "kWh per sqft per year", 
+       title = "Electricity Intensity by Building Type")
 ```
 
 ## Export for downstream analyses
