@@ -19,8 +19,9 @@ The main steps involved are:
     + Create and store an annual summary of the electricity data by meter
 + Restructure the building data to generate a single row for the Main Meter and Weis Meter buildings
 + Join PPL electricity data (daily and annual) to building information using a key that connects the two by building name
-+ Aggregate electricity and square footage data by building and calculate electricity use per square foot, estimated cost, and estimated associated GHG emissions
++ Aggregate electricity and square footage data by building 
 + Inspect the data using a table
++ Generate a few summary graphs 
 + Export the cleaned and reorganized data for downstream analyses
 
 ## Load libraries + data

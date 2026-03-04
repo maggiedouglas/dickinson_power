@@ -545,15 +545,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree51f6424000dc2633c5c34522d4f7536fbce97d51targetblank51f6424a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree81a318c33fbbad017c697918480cc6fcd9f78b86targetblank81a318ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/51f6424000dc2633c5c34522d4f7536fbce97d51" target="_blank">51f6424</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/81a318c33fbbad017c697918480cc6fcd9f78b86" target="_blank">81a318c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree51f6424000dc2633c5c34522d4f7536fbce97d51targetblank51f6424a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree81a318c33fbbad017c697918480cc6fcd9f78b86targetblank81a318ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -563,7 +563,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/51f6424000dc2633c5c34522d4f7536fbce97d51" target="_blank">51f6424</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/81a318c33fbbad017c697918480cc6fcd9f78b86" target="_blank">81a318c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -650,6 +650,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/81a318c33fbbad017c697918480cc6fcd9f78b86/analysis/data_wrangling_final.Rmd" target="_blank">81a318c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-04
+</td>
+<td>
+update data to add period of the year + example boxplot
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/81a318c33fbbad017c697918480cc6fcd9f78b86/docs/data_wrangling_final.html" target="_blank">81a318c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-04
+</td>
+<td>
+update data to add period of the year + example boxplot
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -1150,10 +1184,9 @@ meter</li>
 Meter and Weis Meter buildings</li>
 <li>Join PPL electricity data (daily and annual) to building information
 using a key that connects the two by building name</li>
-<li>Aggregate electricity and square footage data by building and
-calculate electricity use per square foot, estimated cost, and estimated
-associated GHG emissions</li>
+<li>Aggregate electricity and square footage data by building</li>
 <li>Inspect the data using a table</li>
+<li>Generate a few summary graphs</li>
 <li>Export the cleaned and reorganized data for downstream analyses</li>
 </ul>
 </div>
@@ -1675,6 +1708,43 @@ ggplot(daily_test,
   labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
        title = &quot;Electricity Intensity by Building Type&quot;)</code></pre>
 <p><img src="figure/data_wrangling_final.Rmd/box_practice-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-box_practice-1">
+Past versions of box_practice-1.png
+</button>
+</p>
+<div id="fig-box_practice-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/81a318c33fbbad017c697918480cc6fcd9f78b86/docs/figure/data_wrangling_final.Rmd/box_practice-1.png" target="_blank">81a318c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(daily_test,
        aes(x = type, y = kwh_sqft, fill = period)) +
   annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
@@ -1686,6 +1756,43 @@ ggplot(daily_test,
   labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
        title = &quot;Electricity Intensity by Building Type&quot;)</code></pre>
 <p><img src="figure/data_wrangling_final.Rmd/box_practice-2.png" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-box_practice-2">
+Past versions of box_practice-2.png
+</button>
+</p>
+<div id="fig-box_practice-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/81a318c33fbbad017c697918480cc6fcd9f78b86/docs/figure/data_wrangling_final.Rmd/box_practice-2.png" target="_blank">81a318c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-04
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="export-for-downstream-analyses" class="section level2">
 <h2>Export for downstream analyses</h2>
