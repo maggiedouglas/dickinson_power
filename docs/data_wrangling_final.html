@@ -545,15 +545,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree81a318c33fbbad017c697918480cc6fcd9f78b86targetblank81a318ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree5c8882c71abf79ff224f7e9c8e4642a321c94875targetblank5c8882ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/81a318c33fbbad017c697918480cc6fcd9f78b86" target="_blank">81a318c</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/5c8882c71abf79ff224f7e9c8e4642a321c94875" target="_blank">5c8882c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree81a318c33fbbad017c697918480cc6fcd9f78b86targetblank81a318ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree5c8882c71abf79ff224f7e9c8e4642a321c94875targetblank5c8882ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -563,7 +563,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/81a318c33fbbad017c697918480cc6fcd9f78b86" target="_blank">81a318c</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/5c8882c71abf79ff224f7e9c8e4642a321c94875" target="_blank">5c8882c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -650,6 +650,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/5c8882c71abf79ff224f7e9c8e4642a321c94875/analysis/data_wrangling_final.Rmd" target="_blank">5c8882c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-04
+</td>
+<td>
+try again
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/5c8882c71abf79ff224f7e9c8e4642a321c94875/docs/data_wrangling_final.html" target="_blank">5c8882c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-04
+</td>
+<td>
+try again
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1796,6 +1830,29 @@ maggiedouglas
 </div>
 <div id="export-for-downstream-analyses" class="section level2">
 <h2>Export for downstream analyses</h2>
+<pre class="r"><code># final data check
+str(daily_full)</code></pre>
+<pre><code>&#39;data.frame&#39;:   38690 obs. of  10 variables:
+ $ type     : chr  &quot;Res Hall - M&quot; &quot;Res Hall - M&quot; &quot;Res Hall - M&quot; &quot;Res Hall - M&quot; ...
+ $ meter    : chr  &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; ...
+ $ NAME     : chr  &quot;100 S. West St.&quot; &quot;100 S. West St.&quot; &quot;100 S. West St.&quot; &quot;100 S. West St.&quot; ...
+ $ days_perc: num  100 100 100 100 100 100 100 100 100 100 ...
+ $ sqft     : num  7190 7190 7190 7190 7190 7190 7190 7190 7190 7190 ...
+ $ occupants: num  19 19 19 19 19 19 19 19 19 19 ...
+ $ period   : chr  &quot;Summer&quot; &quot;Summer&quot; &quot;Summer&quot; &quot;Summer&quot; ...
+ $ date     : Date, format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
+ $ kwh      : num  98.5 106.7 122.8 135.9 138 ...
+ $ ave_temp : int  69 73 78 81 84 86 84 84 86 87 ...</code></pre>
+<pre class="r"><code>str(joined_full)</code></pre>
+<pre><code>tibble [104 × 8] (S3: tbl_df/tbl/data.frame)
+ $ type     : chr [1:104] &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
+ $ meter    : chr [1:104] &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; ...
+ $ NAME     : chr [1:104] &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;Carlisle Theatre&quot; ...
+ $ days_perc: num [1:104] 100 100 100 100 100 ...
+ $ kwh      : num [1:104] 9217 6493 12221 29070 21575 ...
+ $ kwh_corr : num [1:104] 9217 6493 12221 29070 21575 ...
+ $ sqft     : num [1:104] 2500 1775 4576 4000 2500 ...
+ $ occupants: num [1:104] NA NA NA NA NA NA NA NA NA NA ...</code></pre>
 <pre class="r"><code>today &lt;- today(&quot;EST&quot;) %&gt;%
   str_remove(&quot; UTC&quot;) 
 
