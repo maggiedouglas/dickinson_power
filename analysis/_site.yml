@@ -5,7 +5,7 @@ navbar:
   left:
   - text: About
     href: about.html
-  - text: Data preparation
+  - text: Data prep
     href: data_wrangling_final.html
   - text: "Electricity summary"
     menu:
