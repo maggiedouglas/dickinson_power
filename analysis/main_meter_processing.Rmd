@@ -23,32 +23,33 @@ library(DT)
 
 ```{r data}
 # load names of tabs
-sheet <- excel_sheets("../data/FY25 Main Meter Data.xlsx")
+sheet <- excel_sheets("./data/FY25 Main Meter Data.xlsx")
 
 # applying sheet names to dataframe names
 data <- lapply(setNames(sheet, sheet), 
                     function(x) 
-                      read_excel("../data/FY25 Main Meter Data.xlsx", sheet=x))
+                      read_excel("./data/FY25 Main Meter Data.xlsx", sheet=x))
 
 # load temp data
-temp <- read.csv("../keys/temp_by_date.csv") %>%
+temp <- read.csv("./keys/temp_by_date.csv") %>%
   mutate(date = mdy(date))
 
-# attaching all dataframes together
+# attaching all dataframes together 
+## (reads in two kWh columns b/c slightly diff names)
 main_bldgs <- bind_rows(data, .id="Sheet") %>%
   rename(building = Sheet,
          date = Date, 
          kWh1 = 3,
          kWh2 = 4) %>%
-  mutate(kwh = ifelse(is.na(kWh1), kWh2, kWh1),
+  mutate(kwh = ifelse(is.na(kWh1), kWh2, kWh1), # reconcile kWh to condense to one column
          date = mdy(date)) %>%
-  filter(date < ymd("2025-07-01"),
+  filter(date < ymd("2025-07-01"),  # filter to fiscal year 25
          date > ymd("2024-06-30")) %>%
-  select(-kWh1, -kWh2) %>%
-  mutate(month = month(date, label = TRUE),
-         day = wday(date, label = TRUE)) %>%
+  select(-kWh1, -kWh2) %>% # remove extra kWh columns
+  mutate(month = month(date, label = TRUE), 
+         day = wday(date, label = TRUE)) %>% # generate month and day
   select(building, month, day, date, kwh) %>%
-  left_join(temp, by = "date")
+  left_join(temp, by = "date") # add back in temperature + DD
 ```
 
 ## Check
@@ -70,7 +71,7 @@ annual_non_na <- main_bldgs %>%
 
 annual <- main_bldgs %>%
   group_by(building) %>%
-  summarize(kwh = sum(kwh, na.rm = T),
+  summarize(kwh = round(sum(kwh, na.rm = T), digits = 0),
             days = n()) %>%
   left_join(annual_non_na, by = "building") %>%
   mutate(perc_days = round((non_na/days)*100, digits = 0))
@@ -84,8 +85,8 @@ annual_missing <- main_bldgs %>%
 # store total for all submetered buildings
 indiv_tot <- sum(annual$kwh)
 
-# What proportion of the total is captured here?
-indiv_tot / main_tot
+# What percentage of the total is captured here?
+(indiv_tot / main_tot)*100
 ```
 
 ## Summary graphs
@@ -123,6 +124,6 @@ datatable(select(main_bldgs, building, date, kwh, ave_temp),
 ## Export
 
 ```{r export}
-write.csv(annual, "../output/kwh_main_annual.csv", row.names = F)
-write.csv(main_bldgs, "../output/kwh_main_daily.csv", row.names = F)
+write.csv(annual, "./output/kwh_main_annual.csv", row.names = F)
+write.csv(main_bldgs, "./output/kwh_main_daily.csv", row.names = F)
 ```

@@ -1,71 +1,80 @@
-﻿NAME,occupants
-100 S. West St.,19.25
-"119 W. High St. (1, 2, 3)",1
-133 N. College St.,5
-"133 W. High St. (2, 5)",4.5
-135 Cedar St.,4
-135 N. College St.,3.75
-139 N. College St.,4
-141 W. High St.,19.75
-146 W. Louther St.,7
-152 W. Louther St.,8
-154 W. Louther St. (1),4
-155 W. High St.,6
-159 W. High St.,17.5
-163 W. High St,12
-165 W. High St,11
-169 W. High St.,12
-170 W. Louther St.,11
-171 W. High St.,13.25
-19-21 W. High St.,1.5
-2 Conway St.,4
-23 W. High St.,8
-27 W. High St.,38.5
-417 W. Louther St.,5
-425 W. Louther St.,3.75
-49 S. College St.,3
-505 W. Louther St.,5
-507 W. Louther St.,5
-509 W. Louther St.,5
-51 S. College St.,3
-513 W. Louther St.,5
-515 W. Louther St.,5
-519 W. Louther St.,4
-521 W. Louther St.,6
-527 W. Louther St.,4
-529 W. Louther St.,4.5
-531 W. Louther St.,5
-538 W. Louther St.,3
-Adams,159.25
-Armstrong / Quad 8,33.75
-Atwater / Quad 7,37
-Baird McClintock / Quad 4-5,107.5
-Buchanan / Quad 2,39.25
-Cherry Apts,2.875
-Conway / Quad 1,40.25
-Davidson Wilson / Quad 9-10,116.25
-Drayer Hall,154
-Factory Apts.,26.375
-Goodyear ,115.25
-High Street Residence Hall,118.5
-Kisner - Woodward ,92
-Longsdorff / Quad 6,34
-Malcolm Hall ,65.25
-Matthews House,23.5
-McKenney Hall ,93.75
-Morgan Hall,142.25
-Reed Apts.,3.25
-Reed House ,21
-Schuman House ,6.5
-Spradley-Young  / Quad 3,36.5
-Strayer House ,11.25
-Stuart Hall,23.25
-Todd House ,21.75
-Townhouse - 373 W. Louther St.,8
-Townhouse - 377 W. Louther St.,8
-Townhouse - 379 W. Louther St.,8
-Townhouse - 381 W. Louther St.,7.5
-Townhouse - 383 W. Louther St.,6.75
-Treehouse ,13.25
-Vincett House ,7.75
-Witwer Hall,71.5
+﻿building_name,NAME
+100 S West St,100 S. West St.
+119 W High St,"119 W. High St. (1, 2, 3)"
+133 N College St,133 N. College St.
+133 W High St,"133 W. High St. (2, 5)"
+135 Cedar St,135 Cedar St.
+135 N College St,135 N. College St. / 139 N. College St.
+139 N College St,135 N. College St. / 139 N. College St.
+141 W High St,141 W. High St.
+146 W Louther St,146 W. Louther St.
+152 W Louther St,152 W. Louther St.
+154-156 W Louther St,154 W. Louther St. (1)
+155 W High,155 W. High St.
+159 W High St,159 W. High St.
+163 W High St,163 W. High St
+165 W High St,165 W. High St
+169 W High St,169 W. High St.
+170 W Louther St,170 W. Louther St.
+171 W High St,171 W. High St.
+19 W High,19-21 W. High St.
+2 Conway St,2 Conway St.
+23 W High,23 W. High St.
+25-27 W High,27 W. High St.
+417 W Louther St,417 W. Louther St.
+425 W Louther St,425 W. Louther St.
+49 S College St,49 S. College St./51 S. College St.
+505 W Louther St,505 W. Louther St.
+507 W Louther St,507 W. Louther St.
+509 W Louther St,509 W. Louther St.
+51 S College St,49 S. College St./51 S. College St.
+513 W Louther St,513 W. Louther St.
+515 W Louther St,515 W. Louther St.
+519 W Louther St,519 W. Louther St.
+521 W Louther St,521 W. Louther St.
+527 W Louther St,527 W. Louther St.
+529 W Louther St,529 W. Louther St.
+531 W Louther St,531 W. Louther St.
+538 W Louther St,538 W. Louther St.
+Adams Hall,Adams
+Armstrong Hall,Armstrong / Quad 8
+Atwater Hall,Atwater / Quad 7
+Baird-McClintock,Baird McClintock / Quad 4-5
+Buchanan Hall,Buchanan / Quad 2
+128 Cherry St,Cherry Apts
+130 Cherry St,Cherry Apts
+136 Cherry St,Cherry Apts
+140 Cherry St,Cherry Apts
+Conway Hall,Conway / Quad 1
+Davidson-Wilson,Davidson Wilson / Quad 9-10
+Drayer Hall,Drayer Hall
+230 W North St,Factory Apts.
+236 W North St,Factory Apts.
+Goodyear,Goodyear + Goodyear Arts Studio
+Highstreet Residence,High Street Residence Hall
+Kisner-Woodward Hall,Kisner - Woodward 
+Longsdorff Hall,Longsdorff / Quad 6
+Malcolm Hall,Malcolm Hall 
+Matthews House,Matthews House
+McKenney Hall - Suites,McKenney Hall 
+Morgan Hall,Morgan Hall
+502 Reed St,Reed Apts.
+504 Reed St,Reed Apts.
+506 Reed St,Reed Apts.
+508 Reed St,Reed Apts.
+510 Reed St,Reed Apts.
+512 Reed St,Reed Apts.
+Reed House,Reed Apts.
+34 S West St,Schuman House
+Spradley-Young Hall,Spradley-Young  / Quad 3
+Strayer House,Strayer House
+Stuart Hall,Stuart Hall
+Todd House,Todd House
+373 W Louther St,Townhouse - 373 W. Louther St.
+377 W Louther St,Townhouse - 377 W. Louther St.
+379 W Louther St,Townhouse - 379 W. Louther St.
+381 W Louther St,Townhouse - 381 W. Louther St.
+383 W Louther St,Townhouse - 383 W. Louther St.
+532 W Louther St,Treehouse
+Vincett House,Vincett House 
+Witwer Hall,Witwer Hall

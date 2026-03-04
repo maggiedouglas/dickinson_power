@@ -345,8 +345,50 @@ div.tocify {
         <li>
   <a href="about.html">Home</a>
 </li>
-<li>
-  <a href="data_wrangling_final.html">Data wrangling</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Data preparation
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="main_meter_processing.html">Submeter data</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity summary
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="building_summary.html">All buildings</a>
+    </li>
+    <li>
+      <a href="PS05_prelim_results_Res_Hall_S.html">Res. Halls &lt; 2K sqft</a>
+    </li>
+    <li>
+      <a href="PS05_prelim_results_Res_Hall_M.html">Res. Halls 2-10K sqft</a>
+    </li>
+    <li>
+      <a href="PS05_prelim_results_Res_Hall_L.html">Res. Halls &gt; 10K sqft</a>
+    </li>
+    <li>
+      <a href="PS05_prelim_results_Academic.html">Academic</a>
+    </li>
+    <li>
+      <a href="PS05_prelim_results_Admin.html">Administrative</a>
+    </li>
+    <li>
+      <a href="PS05_prelim_results_Community.html">Community</a>
+    </li>
+    <li>
+      <a href="PS05_prelim_results_Other.html">Other</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -391,7 +433,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-02-16
+<strong>Last updated:</strong> 2026-03-02
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -525,15 +567,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1e2d7979758f228f684f26f027de0a8a8abfe493targetblank1e2d797a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1ea78ae6ea9286ee277b00198d3393c3157d51b6targetblank1ea78aea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/1e2d7979758f228f684f26f027de0a8a8abfe493" target="_blank">1e2d797</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/1ea78ae6ea9286ee277b00198d3393c3157d51b6" target="_blank">1ea78ae</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1e2d7979758f228f684f26f027de0a8a8abfe493targetblank1e2d797a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1ea78ae6ea9286ee277b00198d3393c3157d51b6targetblank1ea78aea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -543,7 +585,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/1e2d7979758f228f684f26f027de0a8a8abfe493" target="_blank">1e2d797</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/1ea78ae6ea9286ee277b00198d3393c3157d51b6" target="_blank">1ea78ae</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -561,26 +603,27 @@ Ignored files:
     Ignored:    .DS_Store
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
-    Ignored:    analysis/figure/
     Ignored:    data/.DS_Store
     Ignored:    data/FY25 Main Meter Data.xlsx
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
-    Ignored:    output/annual_kwh.csv
+    Ignored:    keys/.DS_Store
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
-    Ignored:    output/daily_kwh.csv
     Ignored:    output/kwh_annual.csv
+    Ignored:    output/kwh_annual_20260225.csv
+    Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
+    Ignored:    output/kwh_daily_20260225.csv
+    Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
-Untracked files:
-    Untracked:  keys/temp_by_date.csv
-
 Unstaged changes:
-    Modified:   analysis/main_meter_case_study.Rmd
+    Modified:   analysis/_site.yml
+    Modified:   analysis/data_wrangling_final.Rmd
     Modified:   analysis/main_meter_processing.Rmd
+    Modified:   keys/occupancy_key.csv
 
 </code></pre>
 <p>
@@ -626,6 +669,57 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e752845776846b84cb50739a497b72445ec86207/analysis/main_meter_processing.Rmd" target="_blank">e752845</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-26
+</td>
+<td>
+adjust data processing + building summary
+</td>
+</tr>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/182fffebb4d7be99596fca90384b3ba416ab01a2/analysis/main_meter_processing.Rmd" target="_blank">182fffe</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-16
+</td>
+<td>
+add temp to main meter building data
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/182fffebb4d7be99596fca90384b3ba416ab01a2/docs/main_meter_processing.html" target="_blank">182fffe</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-02-16
+</td>
+<td>
+add temp to main meter building data
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -690,32 +784,35 @@ data &lt;- lapply(setNames(sheet, sheet),
 temp &lt;- read.csv(&quot;./keys/temp_by_date.csv&quot;) %&gt;%
   mutate(date = mdy(date))
 
-# attaching all dataframes together
+# attaching all dataframes together 
+## (reads in two kWh columns b/c slightly diff names)
 main_bldgs &lt;- bind_rows(data, .id=&quot;Sheet&quot;) %&gt;%
   rename(building = Sheet,
          date = Date, 
          kWh1 = 3,
          kWh2 = 4) %&gt;%
-  mutate(kwh = ifelse(is.na(kWh1), kWh2, kWh1),
+  mutate(kwh = ifelse(is.na(kWh1), kWh2, kWh1), # reconcile kWh to condense to one column
          date = mdy(date)) %&gt;%
-  filter(date &lt; ymd(&quot;2025-07-01&quot;),
+  filter(date &lt; ymd(&quot;2025-07-01&quot;),  # filter to fiscal year 25
          date &gt; ymd(&quot;2024-06-30&quot;)) %&gt;%
-  select(-kWh1, -kWh2) %&gt;%
-  mutate(month = month(date, label = TRUE),
-         day = wday(date, label = TRUE)) %&gt;%
+  select(-kWh1, -kWh2) %&gt;% # remove extra kWh columns
+  mutate(month = month(date, label = TRUE), 
+         day = wday(date, label = TRUE)) %&gt;% # generate month and day
   select(building, month, day, date, kwh) %&gt;%
-  left_join(temp, by = &quot;date&quot;)</code></pre>
+  left_join(temp, by = &quot;date&quot;) # add back in temperature + DD</code></pre>
 </div>
 <div id="check" class="section level2">
 <h2>Check</h2>
 <pre class="r"><code>str(main_bldgs)</code></pre>
-<pre><code>tibble [8,395 × 6] (S3: tbl_df/tbl/data.frame)
+<pre><code>tibble [8,395 × 8] (S3: tbl_df/tbl/data.frame)
  $ building: chr [1:8395] &quot;Althouse&quot; &quot;Althouse&quot; &quot;Althouse&quot; &quot;Althouse&quot; ...
  $ month   : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 7 7 7 7 7 7 7 7 7 7 ...
  $ day     : Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 2 3 4 5 6 7 1 2 3 4 ...
  $ date    : Date[1:8395], format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
  $ kwh     : num [1:8395] 339 346 351 344 336 212 223 362 370 384 ...
- $ ave_temp: int [1:8395] 69 73 78 81 84 86 84 84 86 87 ...</code></pre>
+ $ ave_temp: int [1:8395] 69 73 78 81 84 86 84 84 86 87 ...
+ $ cdd_65  : num [1:8395] 6 9.6 13.5 16.2 20.1 22.2 19 19.7 22.4 22.6 ...
+ $ hdd_65  : num [1:8395] 0 1.3 0 0 0 0 0 0 0 0 ...</code></pre>
 </div>
 <div id="summarize" class="section level2">
 <h2>Summarize</h2>
@@ -729,7 +826,7 @@ annual_non_na &lt;- main_bldgs %&gt;%
 
 annual &lt;- main_bldgs %&gt;%
   group_by(building) %&gt;%
-  summarize(kwh = sum(kwh, na.rm = T),
+  summarize(kwh = round(sum(kwh, na.rm = T), digits = 0),
             days = n()) %&gt;%
   left_join(annual_non_na, by = &quot;building&quot;) %&gt;%
   mutate(perc_days = round((non_na/days)*100, digits = 0))
@@ -743,19 +840,22 @@ annual_missing &lt;- main_bldgs %&gt;%
 # store total for all submetered buildings
 indiv_tot &lt;- sum(annual$kwh)
 
-# What proportion of the total is captured here?
-indiv_tot / main_tot</code></pre>
-<pre><code>[1] 0.3898098</code></pre>
+# What percentage of the total is captured here?
+(indiv_tot / main_tot)*100</code></pre>
+<pre><code>[1] 38.98098</code></pre>
 </div>
 <div id="summary-graphs" class="section level2">
 <h2>Summary graphs</h2>
 <pre class="r"><code>ggplot(main_bldgs, aes(x = month, y = kwh, fill = building)) +
+  facet_wrap(. ~ building, scales = &quot;free&quot;) +
   geom_col(position = &quot;stack&quot;) +
   theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(title = &quot;Buildings with Submeters on the Main Meter&quot;,
        x = &quot;&quot;,
        y = &quot;Electricity use (kWh)&quot;)</code></pre>
-<p><img src="figure/main_meter_processing.Rmd/graph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/main_meter_processing.Rmd/graph-1.png" width="1152" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-graph-1">
 Past versions of graph-1.png
@@ -793,55 +893,6 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code># store buildings with over 90% days of data
-comp_bldg &lt;- filter(annual, perc_days &gt; 90) 
-
-ggplot(filter(main_bldgs, building %in% comp_bldg$building),
-       aes(x = month, y = kwh, fill = building)) +
-  geom_col(position = &quot;stack&quot;) +
-  theme_bw() +
-  labs(title = &quot;Buildings with Submeters on the Main Meter\n
-       (those with electricity data for &gt;90% of days)&quot;,
-       x = &quot;&quot;,
-       y = &quot;Electricity use (kWh)&quot;)</code></pre>
-<p><img src="figure/main_meter_processing.Rmd/graph-2.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-graph-2">
-Past versions of graph-2.png
-</button>
-</p>
-<div id="fig-graph-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/1e2d7979758f228f684f26f027de0a8a8abfe493/docs/figure/main_meter_processing.Rmd/graph-2.png" target="_blank">1e2d797</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-02-15
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
 </div>
 <div id="tables" class="section level2">
 <h2>Tables</h2>
@@ -853,7 +904,7 @@ associated with producing energy for the rest of campus.</p>
 <pre class="r"><code>datatable(annual, filter = &#39;top&#39;, rownames=FALSE,
           colnames = c(&quot;Building&quot;,&quot;Total kWh&quot;,&quot;# Days&quot;, &quot;Days with data&quot;, &quot;Days with data (%)&quot;))</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"19219\" data-max=\"826621\" data-scale=\"2\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"134\" data-max=\"338\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"37\" data-max=\"93\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Althouse","Armstrong","Atwater","Baird","Bosler","Buchanan","CHW_Actual","CHW_Base","Conway","DW","HUB","KW","Kline","Library","Longsdorff","McClintock","McKenny","Montgomery","Old West","Quarry","Rector","Spradley_Cooper","Stern"],[129570,52679,49681,68693,121996,47808,454031.07,600299.03,45533,123812,19219,286667,326088.14,826621,43677,64265,170470,38225,72757,73472,777550,39471,108235],[365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365],[338,338,338,338,338,338,134,134,338,338,338,338,134,134,338,338,338,338,338,338,134,338,338],[93,93,93,93,93,93,37,37,93,93,93,93,37,37,93,93,93,93,93,93,37,93,93]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building<\/th>\n      <th>Total kWh<\/th>\n      <th># Days<\/th>\n      <th>Days with data<\/th>\n      <th>Days with data (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"name":"building","targets":0},{"name":"kwh","targets":1},{"name":"days","targets":2},{"name":"non_na","targets":3},{"name":"perc_days","targets":4}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"19219\" data-max=\"826621\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"integer\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"134\" data-max=\"338\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"37\" data-max=\"93\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["Althouse","Armstrong","Atwater","Baird","Bosler","Buchanan","CHW_Actual","CHW_Base","Conway","DW","HUB","KW","Kline","Library","Longsdorff","McClintock","McKenny","Montgomery","Old West","Quarry","Rector","Spradley_Cooper","Stern"],[129570,52679,49681,68693,121996,47808,454031,600299,45533,123812,19219,286667,326088,826621,43677,64265,170470,38225,72757,73472,777550,39471,108235],[365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365,365],[338,338,338,338,338,338,134,134,338,338,338,338,134,134,338,338,338,338,338,338,134,338,338],[93,93,93,93,93,93,37,37,93,93,93,93,37,37,93,93,93,93,93,93,37,93,93]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building<\/th>\n      <th>Total kWh<\/th>\n      <th># Days<\/th>\n      <th>Days with data<\/th>\n      <th>Days with data (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4]},{"name":"building","targets":0},{"name":"kwh","targets":1},{"name":"days","targets":2},{"name":"non_na","targets":3},{"name":"perc_days","targets":4}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="daily-data" class="section level3">
 <h3>Daily data</h3>
