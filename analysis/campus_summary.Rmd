@@ -1,8 +1,12 @@
 ---
 title: "Campus building summary"
 author: "Maggie Douglas"
-date: "2026-03-04"
-output: html_document
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+workflowr:
+  suppress_report: TRUE
+output: 
+  html_document:
+    code_folding: hide
 ---
 
 ```{r setup, include=FALSE}
@@ -11,11 +15,15 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Load data
 
-```{r load}
+```{r load, message = FALSE, warning = FALSE}
 library(tidyverse)
 library(DT) # library to create tables
 library(scales) # library to format dollars
 library(RColorBrewer)
+
+is_outlier <- function(x) {
+  return(x < quantile(x, 0.25, na.rm = T) - 1.5 * IQR(x, na.rm = T) | x > quantile(x, 0.75, na.rm = T) + 1.5 * IQR(x, na.rm = T))
+}
 ```
 
 ```{r load_data}
@@ -24,14 +32,65 @@ daily_full <- read.csv("./output/kwh_daily_2026-03-04.csv") %>%
 
 joined_full <- read.csv("./output/kwh_annual_2026-03-04.csv") 
 
+total <- joined_full %>%
+  filter(meter != "Submeter" & type != "Res Hall - U" & type != "Production") %>%
+  summarize(kwh = sum(kwh, na.rm = T),
+            kwh_corr = sum(kwh_corr, na.rm = T),
+            sqft = sum(sqft, na.rm = T)) %>%
+  mutate(kwh_sqft = kwh_corr/sqft,
+         meter = "Total")
+
+buildings <- read.csv("./keys/fy25_building_list_updated.csv") %>%
+  mutate(meter = ifelse(weis_meter == 1, "Weis Meter",
+                               ifelse(main_meter == 0 & weis_meter == 0, "Individually Metered", "Main Meter")))
+
 # store conversion factors
 dollars_kwh <- 0.08138507
 co2_kg_kwh <- 0.30082405
 ```
 
 ```{r aggregate}
-# generate summary by building category
+# summarize # buildings by meter status
+bldg_sum <- buildings %>%
+  group_by(meter) %>%
+  summarize(number = n())
+
+bldg_tot <- bldg_sum %>%
+  summarize(number = sum(number)) %>%
+  mutate(meter = "Total")
+
+bldg_comb <- rbind(bldg_sum, bldg_tot)
+
+# generate summary for Main, Weis, and Individual meters
+joined_agg <- joined_full %>%
+  ungroup() %>%
+  filter(meter != "Submeter" & type != "Res Hall - U" & type != "Production") %>%
+  group_by(meter) %>%
+  summarize(kwh = sum(kwh, na.rm = T),
+            kwh_corr = sum(kwh_corr, na.rm = T),
+            sqft = sum(sqft, na.rm = T)) %>%
+  mutate(kwh_sqft = kwh_corr/sqft) %>%
+  rbind(total) %>%
+  mutate(dollars = kwh_corr*dollars_kwh,
+          ghg_MTCO2 = (kwh_corr*co2_kg_kwh)/1000) %>%
+  select(-kwh) %>%
+  arrange(kwh_corr)
+
+joined_agg$meter <- factor(joined_agg$meter,
+                           levels = c("Main Meter - Total",
+                                      "Weis Meter - Total",
+                                      "Individual", "Total"),
+                           labels = c("Main Meter", "Weis Meter",
+                                      "Individually Metered","Total"))
+
+joined_tot <- joined_agg %>%
+  left_join(bldg_comb, by = "meter")
+```
+
+```{r indiv sum}
+# generate summary by building category for individually metered buildings
 joined_cat <- joined_full %>%
+  filter(meter %in% c("Individual","Submeter")) %>%
     mutate(kwh_sqft = kwh_corr/sqft, # calculate kwh per sqft
          kwh_person = kwh_corr/occupants,
          dollars = kwh_corr*dollars_kwh,
@@ -41,44 +100,70 @@ joined_cat <- joined_full %>%
             kwh = sum(kwh_corr),
             dollars = sum(dollars),
             ghg_kgCO2 = sum(ghg_kgCO2),
-            sqft = sum(sqft, na.rm = T),
+            sqft = median(sqft, na.rm = T),
             med_kwh_sqft = median(kwh_sqft, na.rm = T),
             kwh_sqft_25 = quantile(kwh_sqft, .25, na.rm = T),
             kwh_sqft_75 = quantile(kwh_sqft, .75, na.rm = T)) %>%
   arrange(-kwh)
 ```
 
-## Building type summary
-
-### Electricity use summary
+## Electricity use summary
 
 ```{r cat table}
+joined_pretty_tot <- joined_tot %>%
+  mutate(kwh = round(kwh_corr, digits = 0),
+         dollars = paste("$",round(dollars, digits = 0)),
+         ghg_MTCO2 = round(ghg_MTCO2, digits = 0),
+         sqft = round(sqft, digits = 0),
+         kwh_sqft = round(kwh_sqft, digits = 1)) %>%
+  select(meter, number, sqft, kwh, dollars, ghg_MTCO2, kwh_sqft) %>%
+  arrange(kwh)
+
 joined_pretty_cat <- joined_cat %>%
-  mutate(n = ifelse(n == 1, "-", n),
-         kwh = round(kwh, digits = 0),
+  mutate(kwh = round(kwh, digits = 0),
          dollars = paste("$",round(dollars, digits = 0)),
          ghg_MTCO2 = round(ghg_kgCO2/1000, digits = 0),
          sqft = round(sqft, digits = 0),
          med_kwh_sqft = round(med_kwh_sqft, digits = 1),
          kwh_sqft_25 = round(kwh_sqft_25, digits = 1),
          kwh_sqft_75 = round(kwh_sqft_75, digits = 1)) %>%
-    select(type, n, kwh, dollars, ghg_MTCO2, sqft, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %>% 
+    select(type, n, sqft, kwh, dollars, ghg_MTCO2, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %>% 
   arrange(desc(med_kwh_sqft))
 ```
 
-```{r annual table cat}
-datatable(joined_pretty_cat,
-          filter = 'top',
+### Aggregate meters
+
+```{r annual table agg cat}
+datatable(joined_pretty_tot,
           rownames = FALSE,
-          colnames = c("Building\ntype","Buildings\nwith data", "kWh", "Est. cost", 
-                       "CO2e\n(MT)", "Square\nfootage", "Median\nkWh\nper sqft",
-                       "25th Perc.", "75th Perc."),
-          caption = "Table 1. Descriptive statistics for annual electricity use by building type. Annual estimates for each building/meter were generated by multiplying daily mean values by 365 days in the year. Those estimates were then summarized here.")
+          colnames = c("Meter status","Buildings", "Square\nfootage", "kWh", "Est. cost", 
+                       "CO2e\n(MT)",  "kWh per\nsqft"),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 4, autoWidth = TRUE, dom = 't'),
+          caption = "Table 1. Totals for annual electricity use by meter type. Annual estimates for each meter were adjusted to account for missing days of electricity data.")
 ```
 
-### Electricity use over the year
 
-```{r stacked bar, warning = F, fig.height = 4, fig.height = 4.5}
+### Individually metered buildings
+
+```{r annual table indiv cat}
+datatable(joined_pretty_cat,
+          rownames = FALSE,
+          colnames = c("Building\ntype","Buildings\nwith data", "Median\nsquare\nfootage", "kWh", 
+                       "Est. cost", "CO2e\n(MT)", "Median\nkWh\nper sqft",
+                       "25th Perc.", "75th Perc."),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 11, autoWidth = TRUE, dom = 't'),
+          caption = "Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.")
+```
+
+## Electricity use over the year
+
+### Total
+
+```{r stacked bar, warning = F, fig.height = 4.5, fig.height = 4.5}
 daily_graph <- daily_full %>%
   mutate(date = as_date(date),
          month = month(date, label = TRUE),
@@ -96,40 +181,87 @@ ggplot(filter(daily_graph, meter != "Submeter"),
   scale_fill_brewer(type = "qual", palette = "Paired") +
   theme_bw() +
   labs(x = "", y = "Electricity use (million kWh)", fill = "",
-       title = "Electricity use by building type")
+       title = "")
 ```
 
 ### Submeter data
 
-```{r submeter_stacked}
+```{r submeter_stacked, warning = F, fig.height = 4.5, fig.height = 4.5}
 ggplot(filter(daily_graph, meter == "Submeter"),
        aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
   geom_col(position = "stack") +
   scale_fill_brewer(type = "qual", palette = "Paired") +
   theme_bw() +
   labs(x = "", y = "Electricity use (million kWh)", fill = "",
-       title = "Electricity data from the submeters")
+       title = "")
 ```
 
-```{r stacked bar facet axis variable, warning = F, fig.height = 7, fig.width = 8}
-ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = 'sum'))) +
+### Aggregate meters
+
+Here's an example where the Y axis is fixed
+
+```{r stacked bar agg, warning = F, fig.height = 3.5, fig.width = 7}
+daily_graph$meter2 <- factor(daily_graph$meter,
+                            levels = c("Main Meter - Total","Weis Meter - Total",
+                                       "Individual","Submeter"),
+                            labels = c("Aggregate","Aggregate", "Individual","Submeter"))
+
+ggplot(filter(daily_graph, meter2 == "Aggregate"),
+       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = 'sum'))) +
   geom_col(position = "stack") +
-  facet_wrap(. ~ type, scales = "free") +
+  facet_wrap(. ~ type) +
   theme_bw() +
-  labs(x = "", y = "Electricity use (million kWh)", fill = "") +
+  labs(x = "", y = "Electricity use (1000 kWh)", fill = "") +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   theme(legend.position = "none")
 ```
 
-## Electricity intensity by type
+### Individual meters
 
-```{r intensity, warning = F, fig.height = 4, fig.width = 5}
+Here's an example where the Y axis is allowed to vary
+
+```{r stacked bar indiv, warning = F, fig.height = 6, fig.width = 8}
+ggplot(filter(daily_graph, meter == "Individual"),
+       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = 'sum'))) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ type, scales = "free") +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (1000 kWh)", fill = "") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  theme(legend.position = "none")
+```
+
+### Submeters
+
+```{r stacked bar sub, warning = F, fig.height = 4, fig.width = 6}
+ggplot(filter(daily_graph, meter == "Submeter"),
+       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = 'sum'))) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ type, scales = "free") +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (1000 kWh)", fill = "") +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  theme(legend.position = "none")
+```
+
+## Electricity intensity by meter + building type
+
+```{r intensity, warning = F, fig.height = 6, fig.width = 7}
 to_exclude <- filter(joined_full, days_perc < 90)
 
 intensity <- joined_full %>%
   filter(!(type %in% c("Res Hall - U","Production", "Non-building"))) %>%
   mutate(kwh_sqft = kwh_corr/sqft,
-         meter_type = ifelse(type %in% c("Main Meter","Weis Meter"), "Agg.", "Individual"))
+         meter_type = ifelse(type %in% c("Main Meter","Weis Meter"), "Aggregate", "Individual Meter"),
+         outlier = case_when(
+           NAME == "King House" ~ "King House",
+           NAME == "Kisner - Woodward" ~ "K-W",
+           NAME == "Factory Apts." ~ "Factory",
+           NAME == "Rector Science Center" ~ "Rector",
+           NAME == "Quarry, The " ~ "Quarry",
+           NAME == "27 W. High St." ~ "27 W. High"
+         )) 
+
 
 # median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
 # https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
@@ -141,28 +273,11 @@ ggplot(intensity,
   geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
   facet_grid(meter_type ~ ., scales = "free_y", space = "free_y") +
   geom_boxplot() +
+  geom_label(aes(label = outlier), na.rm = TRUE, nudge_x = -0.25, nudge_y = 0.5, 
+             color = "black", fill = "white", size = 2, alpha = 0, label.size = NA) +
   coord_flip() +
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "kWh per sqft per year", 
-       title = "Electricity Intensity by Building Type")
-```
-
-### Summary statistics
-
-```{r summary stat}
-summary(joined_full)
-
-## Stats for campus buildings
-stats <- filter(joined_full, meter != "Submeter" & type != "Production")
- # million square feet
-sum(stats$kwh)/10^6 # million kwh
-sum(stats$dollars)/10^6 # million $
-sum(stats$ghg_kgCO2)/1000 # MT CO2e
-
-## Stats for solar
-solar <- filter(joined_full, type == "Production")
-sum(solar$kwh)/10^6 # million kwh
-sum(solar$dollars)/10^6 # million $
-sum(solar$ghg_kgCO2)/1000 # MT CO2e
+       title = "")
 ```

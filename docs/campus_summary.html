@@ -11,7 +11,7 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-03-04" />
+<meta name="date" content="2026-03-07" />
 
 <title>Campus building summary</title>
 
@@ -35,6 +35,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
@@ -43,10 +44,6 @@
 <link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
-<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
-<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
-<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
 <link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
 <script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
 
@@ -243,6 +240,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -391,417 +391,91 @@ div.tocify {
 
 <div id="header">
 
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
 
 
 <h1 class="title toc-ignore">Campus building summary</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">2026-03-04</h4>
+<h4 class="date">03/07/26</h4>
 
 </div>
 
 
-<p>
-<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span>
-</button>
-</p>
-<div id="workflowr-report" class="collapse">
-<ul class="nav nav-tabs">
-<li class="active">
-<a data-toggle="tab" href="#summary">Summary</a>
-</li>
-<li>
-<a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
-</li>
-<li>
-<a data-toggle="tab" href="#versions">Past versions</a>
-</li>
-</ul>
-<div class="tab-content">
-<div id="summary" class="tab-pane fade in active">
-<p>
-<strong>Last updated:</strong> 2026-03-04
-</p>
-<p>
-<strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
-</p>
-<p>
-<strong>Knit directory:</strong> <code>dickinson_power/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
-title="This is the local directory in which the code in this file was executed.">
-</span>
-</p>
-<p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
-analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.1). The <em>Checks</em> tab describes the reproducibility checks
-that were applied when the results were created. The <em>Past
-versions</em> tab lists the development history.
-</p>
-<hr>
-</div>
-<div id="checks" class="tab-pane fade">
-<div id="workflowr-checks" class="panel-group">
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
-</p>
-</div>
-<div id="strongRMarkdownfilestronguptodate"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
-</p>
-</div>
-<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the
-global environment can affect the analysis in your R Markdown file in
-unknown ways. For reproduciblity it’s best to always run the code in an
-empty environment.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260107code">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20260107)</code> </a>
-</p>
-</div>
-<div id="strongSeedstrongcodesetseed20260107code"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>The command <code>set.seed(20260107)</code> was run prior to running
-the code in the R Markdown file. Setting a seed ensures that any results
-that rely on randomness, e.g. subsampling or permutations, are
-reproducible.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Session information:</strong>
-recorded </a>
-</p>
-</div>
-<div id="strongSessioninformationstrongrecorded"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package
-versions is critical for reproducibility.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Cache:</strong> none </a>
-</p>
-</div>
-<div id="strongCachestrongnone" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be
-confident that you successfully produced the results during this
-run.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
-</p>
-</div>
-<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr
-project makes it easier to run your code on other machines.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree150c5c1e7c09b668c31fb5e9bdffb80c61d42480targetblank150c5c1a">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/150c5c1e7c09b668c31fb5e9bdffb80c61d42480" target="_blank">150c5c1</a>
-</a>
-</p>
-</div>
-<div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree150c5c1e7c09b668c31fb5e9bdffb80c61d42480targetblank150c5c1a"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>
-Great! You are using Git for version control. Tracking code development
-and connecting the code version to the results is critical for
-reproducibility.
-</p>
-<p>
-The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/150c5c1e7c09b668c31fb5e9bdffb80c61d42480" target="_blank">150c5c1</a>.
-See the <em>Past versions</em> tab to see a history of the changes made
-to the R Markdown and HTML files.
-</p>
-<p>
-Note that you need to be careful to ensure that all relevant files for
-the analysis have been committed to Git prior to generating the results
-(you can use <code>wflow_publish</code> or
-<code>wflow_git_commit</code>). workflowr only checks the R Markdown
-file, but you know if there are other scripts or data files that it
-depends on. Below is the status of the Git repository when the results
-were generated:
-</p>
-<pre><code>
-Ignored files:
-    Ignored:    .DS_Store
-    Ignored:    .Rhistory
-    Ignored:    .Rproj.user/
-    Ignored:    analysis/.DS_Store
-    Ignored:    data/.DS_Store
-    Ignored:    data/FY25 Main Meter Data.xlsx
-    Ignored:    data/building_list_FY25_updated.xlsx
-    Ignored:    data/graph_data_life_exp.csv
-    Ignored:    data/housing_counts.csv
-    Ignored:    keys/.DS_Store
-    Ignored:    output/annual_kwh.csv
-    Ignored:    output/building_check.csv
-    Ignored:    output/building_check.xlsx
-    Ignored:    output/daily_kwh.csv
-    Ignored:    output/kwh_annual.csv
-    Ignored:    output/kwh_annual_2026-03-04.csv
-    Ignored:    output/kwh_annual_20260225.csv
-    Ignored:    output/kwh_annual_20260226.csv
-    Ignored:    output/kwh_daily.csv
-    Ignored:    output/kwh_daily_2026-03-04.csv
-    Ignored:    output/kwh_daily_20260225.csv
-    Ignored:    output/kwh_daily_20260226.csv
-    Ignored:    output/kwh_main_annual.csv
-    Ignored:    output/kwh_main_daily.csv
-
-</code></pre>
-<p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not
-included in this status report because it is ok for generated content to
-have uncommitted changes.
-</p>
-</div>
-</div>
-</div>
-</div>
-<hr>
-</div>
-<div id="versions" class="tab-pane fade">
-
-<p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/campus_summary.Rmd</code>) and
-HTML (<code>docs/campus_summary.html</code>) files. If you’ve configured
-a remote Git repository (see <code>?wflow_git_remote</code>), click on
-the hyperlinks in the table below to view the files as they were in that
-past version.
-</p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/e50511f75fe3c1b4736267ad9a05896f38c3e1bc/docs/campus_summary.html" target="_blank">e50511f</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-<td>
-attempt to update website
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/5f7e5dd246ae55e90c8f1c465f4f0ff8574bc9cc/docs/campus_summary.html" target="_blank">5f7e5dd</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/92fcd5c90fb86efbb5003f4d47493ef1b8e1526b/analysis/campus_summary.Rmd" target="_blank">92fcd5c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-<td>
-move campus summary to its own script
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/92fcd5c90fb86efbb5003f4d47493ef1b8e1526b/docs/campus_summary.html" target="_blank">92fcd5c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-<td>
-move campus summary to its own script
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/bfe7b73e8b29bef0d4013574a7baa3178652fb35/analysis/campus_summary.Rmd" target="_blank">bfe7b73</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-<td>
-fix data wrangling!
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/d04b2761767a7e6e1e628a4d5861296ac9e8989e/analysis/campus_summary.Rmd" target="_blank">d04b276</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-<td>
-fix data wrangling!
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
-</div>
-</div>
-</div>
 <div id="load-data" class="section level2">
 <h2>Load data</h2>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.1     ✔ tibble    3.2.1
-✔ lubridate 1.9.3     ✔ tidyr     1.3.1
-✔ purrr     1.0.2     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>library(DT) # library to create tables
-library(scales) # library to format dollars</code></pre>
-<pre><code>
-Attaching package: &#39;scales&#39;
+<pre class="r"><code>library(tidyverse)
+library(DT) # library to create tables
+library(scales) # library to format dollars
+library(RColorBrewer)
 
-The following object is masked from &#39;package:purrr&#39;:
-
-    discard
-
-The following object is masked from &#39;package:readr&#39;:
-
-    col_factor</code></pre>
-<pre class="r"><code>library(RColorBrewer)</code></pre>
+is_outlier &lt;- function(x) {
+  return(x &lt; quantile(x, 0.25, na.rm = T) - 1.5 * IQR(x, na.rm = T) | x &gt; quantile(x, 0.75, na.rm = T) + 1.5 * IQR(x, na.rm = T))
+}</code></pre>
 <pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-04.csv&quot;) %&gt;%
   mutate(date = as_date(date)) # convert back to date
 
 joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-04.csv&quot;) 
 
+total &lt;- joined_full %&gt;%
+  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = T),
+            kwh_corr = sum(kwh_corr, na.rm = T),
+            sqft = sum(sqft, na.rm = T)) %&gt;%
+  mutate(kwh_sqft = kwh_corr/sqft,
+         meter = &quot;Total&quot;)
+
+buildings &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;) %&gt;%
+  mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;,
+                               ifelse(main_meter == 0 &amp; weis_meter == 0, &quot;Individually Metered&quot;, &quot;Main Meter&quot;)))
+
 # store conversion factors
 dollars_kwh &lt;- 0.08138507
 co2_kg_kwh &lt;- 0.30082405</code></pre>
-<pre class="r"><code># generate summary by building category
+<pre class="r"><code># summarize # buildings by meter status
+bldg_sum &lt;- buildings %&gt;%
+  group_by(meter) %&gt;%
+  summarize(number = n())
+
+bldg_tot &lt;- bldg_sum %&gt;%
+  summarize(number = sum(number)) %&gt;%
+  mutate(meter = &quot;Total&quot;)
+
+bldg_comb &lt;- rbind(bldg_sum, bldg_tot)
+
+# generate summary for Main, Weis, and Individual meters
+joined_agg &lt;- joined_full %&gt;%
+  ungroup() %&gt;%
+  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
+  group_by(meter) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = T),
+            kwh_corr = sum(kwh_corr, na.rm = T),
+            sqft = sum(sqft, na.rm = T)) %&gt;%
+  mutate(kwh_sqft = kwh_corr/sqft) %&gt;%
+  rbind(total) %&gt;%
+  mutate(dollars = kwh_corr*dollars_kwh,
+          ghg_MTCO2 = (kwh_corr*co2_kg_kwh)/1000) %&gt;%
+  select(-kwh) %&gt;%
+  arrange(kwh_corr)
+
+joined_agg$meter &lt;- factor(joined_agg$meter,
+                           levels = c(&quot;Main Meter - Total&quot;,
+                                      &quot;Weis Meter - Total&quot;,
+                                      &quot;Individual&quot;, &quot;Total&quot;),
+                           labels = c(&quot;Main Meter&quot;, &quot;Weis Meter&quot;,
+                                      &quot;Individually Metered&quot;,&quot;Total&quot;))
+
+joined_tot &lt;- joined_agg %&gt;%
+  left_join(bldg_comb, by = &quot;meter&quot;)</code></pre>
+<pre class="r"><code># generate summary by building category for individually metered buildings
 joined_cat &lt;- joined_full %&gt;%
+  filter(meter %in% c(&quot;Individual&quot;,&quot;Submeter&quot;)) %&gt;%
     mutate(kwh_sqft = kwh_corr/sqft, # calculate kwh per sqft
          kwh_person = kwh_corr/occupants,
          dollars = kwh_corr*dollars_kwh,
@@ -811,39 +485,65 @@ joined_cat &lt;- joined_full %&gt;%
             kwh = sum(kwh_corr),
             dollars = sum(dollars),
             ghg_kgCO2 = sum(ghg_kgCO2),
-            sqft = sum(sqft, na.rm = T),
+            sqft = median(sqft, na.rm = T),
             med_kwh_sqft = median(kwh_sqft, na.rm = T),
             kwh_sqft_25 = quantile(kwh_sqft, .25, na.rm = T),
             kwh_sqft_75 = quantile(kwh_sqft, .75, na.rm = T)) %&gt;%
   arrange(-kwh)</code></pre>
 </div>
-<div id="building-type-summary" class="section level2">
-<h2>Building type summary</h2>
-<div id="electricity-use-summary" class="section level3">
-<h3>Electricity use summary</h3>
-<pre class="r"><code>joined_pretty_cat &lt;- joined_cat %&gt;%
-  mutate(n = ifelse(n == 1, &quot;-&quot;, n),
-         kwh = round(kwh, digits = 0),
+<div id="electricity-use-summary" class="section level2">
+<h2>Electricity use summary</h2>
+<pre class="r"><code>joined_pretty_tot &lt;- joined_tot %&gt;%
+  mutate(kwh = round(kwh_corr, digits = 0),
+         dollars = paste(&quot;$&quot;,round(dollars, digits = 0)),
+         ghg_MTCO2 = round(ghg_MTCO2, digits = 0),
+         sqft = round(sqft, digits = 0),
+         kwh_sqft = round(kwh_sqft, digits = 1)) %&gt;%
+  select(meter, number, sqft, kwh, dollars, ghg_MTCO2, kwh_sqft) %&gt;%
+  arrange(kwh)
+
+joined_pretty_cat &lt;- joined_cat %&gt;%
+  mutate(kwh = round(kwh, digits = 0),
          dollars = paste(&quot;$&quot;,round(dollars, digits = 0)),
          ghg_MTCO2 = round(ghg_kgCO2/1000, digits = 0),
          sqft = round(sqft, digits = 0),
          med_kwh_sqft = round(med_kwh_sqft, digits = 1),
          kwh_sqft_25 = round(kwh_sqft_25, digits = 1),
          kwh_sqft_75 = round(kwh_sqft_75, digits = 1)) %&gt;%
-    select(type, n, kwh, dollars, ghg_MTCO2, sqft, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %&gt;% 
+    select(type, n, sqft, kwh, dollars, ghg_MTCO2, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %&gt;% 
   arrange(desc(med_kwh_sqft))</code></pre>
-<pre class="r"><code>datatable(joined_pretty_cat,
-          filter = &#39;top&#39;,
+<div id="aggregate-meters" class="section level3">
+<h3>Aggregate meters</h3>
+<pre class="r"><code>datatable(joined_pretty_tot,
           rownames = FALSE,
-          colnames = c(&quot;Building\ntype&quot;,&quot;Buildings\nwith data&quot;, &quot;kWh&quot;, &quot;Est. cost&quot;, 
-                       &quot;CO2e\n(MT)&quot;, &quot;Square\nfootage&quot;, &quot;Median\nkWh\nper sqft&quot;,
-                       &quot;25th Perc.&quot;, &quot;75th Perc.&quot;),
-          caption = &quot;Table 1. Descriptive statistics for annual electricity use by building type. Annual estimates for each building/meter were generated by multiplying daily mean values by 365 days in the year. Those estimates were then summarized here.&quot;)</code></pre>
+          colnames = c(&quot;Meter status&quot;,&quot;Buildings&quot;, &quot;Square\nfootage&quot;, &quot;kWh&quot;, &quot;Est. cost&quot;, 
+                       &quot;CO2e\n(MT)&quot;,  &quot;kWh per\nsqft&quot;),
+          filter = &quot;none&quot;,
+          class = &quot;compact&quot;,
+          options = list(pageLength = 4, autoWidth = TRUE, dom = &#39;t&#39;),
+          caption = &quot;Table 1. Totals for annual electricity use by meter type. Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-4274284\" data-max=\"11648808\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"-1286\" data-max=\"3504\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1119435\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"3\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"1.9\" data-max=\"11.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"4.6\" data-max=\"13.3\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Table 1. Descriptive statistics for annual electricity use by building type. Annual estimates for each building/meter were generated by multiplying daily mean values by 365 days in the year. Those estimates were then summarized here.<\/caption>","data":[["Weis Meter","Mixed","Main Meter","Other","Res Hall - M","Res Hall - L","Res Hall - S","Academic","Admin","Community","Res Hall - U","Non-building","Production"],["-","2","-","14","14","19","18","11","6","6","7","4","-"],[973320,1749340,11648808,1689647,334569,2778938,145966,4877966,761234,262473,107265,92882,-4274284],["$ 79214","$ 142370","$ 948039","$ 137512","$ 27229","$ 226164","$ 11879","$ 396994","$ 61953","$ 21361","$ 8730","$ 7559","$ -347863"],[293,526,3504,508,101,836,44,1467,229,79,32,28,-1286],[85725,168015,1119435,230920,64465,417027,28864,344015,137948,183672,0,0,0],[11.4,10.8,10.4,6.8,5.5,5.3,5.2,4.8,3.2,3,null,null,null],[11.4,8.199999999999999,10.4,5.2,2.9,4.6,3.9,3.7,2.7,1.9,null,null,null],[11.4,13.3,10.4,9.300000000000001,6.5,7,5.8,7.9,5.3,4.6,null,null,null]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Square\nfootage<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[2,4,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"kwh","targets":2},{"name":"dollars","targets":3},{"name":"ghg_MTCO2","targets":4},{"name":"sqft","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Totals for annual electricity use by meter type. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Weis Meter","Individually Metered","Main Meter","Total"],[9,81,45,135],[85725,724968,1119435,1930128],[973320,4517949,11648808,17140077],["$ 79214","$ 367694","$ 948039","$ 1394946"],[293,1359,3504,5156],[11.4,6.2,10.4,8.9]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter status<\/th>\n      <th>Buildings<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>kWh per\nsqft<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":4,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6]},{"name":"meter","targets":0},{"name":"number","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"kwh_sqft","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[4,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
-<div id="electricity-use-over-the-year" class="section level3">
-<h3>Electricity use over the year</h3>
+<div id="individually-metered-buildings" class="section level3">
+<h3>Individually metered buildings</h3>
+<pre class="r"><code>datatable(joined_pretty_cat,
+          rownames = FALSE,
+          colnames = c(&quot;Building\ntype&quot;,&quot;Buildings\nwith data&quot;, &quot;Median\nsquare\nfootage&quot;, &quot;kWh&quot;, 
+                       &quot;Est. cost&quot;, &quot;CO2e\n(MT)&quot;, &quot;Median\nkWh\nper sqft&quot;,
+                       &quot;25th Perc.&quot;, &quot;75th Perc.&quot;),
+          filter = &quot;none&quot;,
+          class = &quot;compact&quot;,
+          options = list(pageLength = 11, autoWidth = TRUE, dom = &#39;t&#39;),
+          caption = &quot;Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Mixed","Other","Res Hall - M","Res Hall - L","Res Hall - S","Academic","Admin","Community","Res Hall - U","Non-building","Production"],[2,14,14,19,18,11,6,6,7,4,1],[84008,2492,4525,18603,1477,11039,14650,9422,null,null,null],[1749340,1689647,334569,2778938,145966,4877966,761234,262473,107265,92882,-4274284],["$ 142370","$ 137512","$ 27229","$ 226164","$ 11879","$ 396994","$ 61953","$ 21361","$ 8730","$ 7559","$ -347863"],[526,508,101,836,44,1467,229,79,32,28,-1286],[10.8,6.8,5.5,5.3,5.2,4.8,3.2,3,null,null,null],[8.199999999999999,5.2,2.9,4.6,3.9,3.7,2.7,1.9,null,null,null],[13.3,9.300000000000001,6.5,7,5.8,7.9,5.3,4.6,null,null,null]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>Median\nsquare\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+</div>
+</div>
+<div id="electricity-use-over-the-year" class="section level2">
+<h2>Electricity use over the year</h2>
+<div id="total" class="section level3">
+<h3>Total</h3>
 <pre class="r"><code>daily_graph &lt;- daily_full %&gt;%
   mutate(date = as_date(date),
          month = month(date, label = TRUE),
@@ -861,7 +561,7 @@ ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
   scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Electricity use by building type&quot;)</code></pre>
+       title = &quot;&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/stacked%20bar-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-1">
@@ -909,9 +609,7 @@ maggiedouglas
   scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Electricity data from the submeters&quot;)</code></pre>
-<pre><code>Warning: Removed 1876 rows containing missing values or values outside the scale range
-(`geom_col()`).</code></pre>
+       title = &quot;&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/submeter_stacked-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-submeter_stacked-1">
@@ -950,62 +648,68 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>ggplot(daily_graph, aes(x = month, y = kwh/10^6, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+</div>
+<div id="aggregate-meters-1" class="section level3">
+<h3>Aggregate meters</h3>
+<p>Here’s an example where the Y axis is fixed</p>
+<pre class="r"><code>daily_graph$meter2 &lt;- factor(daily_graph$meter,
+                            levels = c(&quot;Main Meter - Total&quot;,&quot;Weis Meter - Total&quot;,
+                                       &quot;Individual&quot;,&quot;Submeter&quot;),
+                            labels = c(&quot;Aggregate&quot;,&quot;Aggregate&quot;, &quot;Individual&quot;,&quot;Submeter&quot;))
+
+ggplot(filter(daily_graph, meter2 == &quot;Aggregate&quot;),
+       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+  geom_col(position = &quot;stack&quot;) +
+  facet_wrap(. ~ type) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/campus_summary.Rmd/stacked%20bar%20agg-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="individual-meters" class="section level3">
+<h3>Individual meters</h3>
+<p>Here’s an example where the Y axis is allowed to vary</p>
+<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Individual&quot;),
+       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
   geom_col(position = &quot;stack&quot;) +
   facet_wrap(. ~ type, scales = &quot;free&quot;) +
   theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;) +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/stacked%20bar%20facet%20axis%20variable-1.png" width="768" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-facet-axis-variable-1">
-Past versions of "stacked bar facet axis variable-1.png"
-</button>
-</p>
-<div id="fig-no-spaces-stacked-bar-facet-axis-variable-1"
-class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/92fcd5c90fb86efbb5003f4d47493ef1b8e1526b/docs/figure/campus_summary.Rmd/stacked bar facet axis variable-1.png" target="_blank">92fcd5c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/campus_summary.Rmd/stacked%20bar%20indiv-1.png" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="submeters" class="section level3">
+<h3>Submeters</h3>
+<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Submeter&quot;),
+       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
+  geom_col(position = &quot;stack&quot;) +
+  facet_wrap(. ~ type, scales = &quot;free&quot;) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
+  theme(legend.position = &quot;none&quot;)</code></pre>
+<p><img src="figure/campus_summary.Rmd/stacked%20bar%20sub-1.png" width="576" style="display: block; margin: auto;" /></p>
 </div>
 </div>
-</div>
-</div>
-<div id="electricity-intensity-by-type" class="section level2">
-<h2>Electricity intensity by type</h2>
+<div id="electricity-intensity-by-building-type" class="section level2">
+<h2>Electricity intensity by building type</h2>
 <pre class="r"><code>to_exclude &lt;- filter(joined_full, days_perc &lt; 90)
 
 intensity &lt;- joined_full %&gt;%
   filter(!(type %in% c(&quot;Res Hall - U&quot;,&quot;Production&quot;, &quot;Non-building&quot;))) %&gt;%
   mutate(kwh_sqft = kwh_corr/sqft,
-         meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Agg.&quot;, &quot;Individual&quot;))
+         meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;),
+         outlier = case_when(
+           NAME == &quot;King House&quot; ~ &quot;King House&quot;,
+           NAME == &quot;Kisner - Woodward&quot; ~ &quot;K-W&quot;,
+           NAME == &quot;Factory Apts.&quot; ~ &quot;Factory&quot;,
+           NAME == &quot;Rector Science Center&quot; ~ &quot;Rector&quot;,
+           NAME == &quot;Quarry, The &quot; ~ &quot;Quarry&quot;,
+           NAME == &quot;27 W. High St.&quot; ~ &quot;27 W. High&quot;
+         )) 
+
 
 # median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
 # https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
@@ -1017,12 +721,14 @@ ggplot(intensity,
   geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
   facet_grid(meter_type ~ ., scales = &quot;free_y&quot;, space = &quot;free_y&quot;) +
   geom_boxplot() +
+  geom_label(aes(label = outlier), na.rm = TRUE, nudge_x = -0.25, nudge_y = 0.5, 
+             color = &quot;black&quot;, fill = &quot;white&quot;, size = 2, alpha = 0, label.size = NA) +
   coord_flip() +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
-       title = &quot;Electricity Intensity by Building Type&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/intensity-1.png" width="480" style="display: block; margin: auto;" /></p>
+       title = &quot;&quot;)</code></pre>
+<p><img src="figure/campus_summary.Rmd/intensity-1.png" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity-1">
 Past versions of intensity-1.png
@@ -1060,42 +766,6 @@ maggiedouglas
 </table>
 </div>
 </div>
-<div id="summary-statistics" class="section level3">
-<h3>Summary statistics</h3>
-<pre class="r"><code>summary(joined_full)</code></pre>
-<pre><code>     type              meter               NAME             days_perc     
- Length:104         Length:104         Length:104         Min.   : 36.71  
- Class :character   Class :character   Class :character   1st Qu.: 95.34  
- Mode  :character   Mode  :character   Mode  :character   Median :100.00  
-                                                          Mean   : 95.72  
-                                                          3rd Qu.:100.00  
-                                                          Max.   :100.00  
-                                                                          
-      kwh              kwh_corr             sqft           occupants     
- Min.   :-4274284   Min.   :-4274284   Min.   :    500   Min.   :  1.50  
- 1st Qu.:    8249   1st Qu.:    8249   1st Qu.:   1925   1st Qu.:  5.00  
- Median :   20783   Median :   21273   Median :   5912   Median :  9.50  
- Mean   :  162525   Mean   :  203347   Mean   :  30890   Mean   : 33.14  
- 3rd Qu.:   88355   3rd Qu.:   88355   3rd Qu.:  24421   3rd Qu.: 40.88  
- Max.   :11648808   Max.   :11648808   Max.   :1119435   Max.   :161.50  
-                                       NA&#39;s   :14        NA&#39;s   :46      </code></pre>
-<pre class="r"><code>## Stats for campus buildings
-stats &lt;- filter(joined_full, meter != &quot;Submeter&quot; &amp; type != &quot;Production&quot;)
- # million square feet
-sum(stats$kwh)/10^6 # million kwh</code></pre>
-<pre><code>[1] 17.23632</code></pre>
-<pre class="r"><code>sum(stats$dollars)/10^6 # million $</code></pre>
-<pre><code>[1] 0</code></pre>
-<pre class="r"><code>sum(stats$ghg_kgCO2)/1000 # MT CO2e</code></pre>
-<pre><code>[1] 0</code></pre>
-<pre class="r"><code>## Stats for solar
-solar &lt;- filter(joined_full, type == &quot;Production&quot;)
-sum(solar$kwh)/10^6 # million kwh</code></pre>
-<pre><code>[1] -4.274285</code></pre>
-<pre class="r"><code>sum(solar$dollars)/10^6 # million $</code></pre>
-<pre><code>[1] 0</code></pre>
-<pre class="r"><code>sum(solar$ghg_kgCO2)/1000 # MT CO2e</code></pre>
-<pre><code>[1] 0</code></pre>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1126,25 +796,23 @@ other attached packages:
  [1] RColorBrewer_1.1-3 scales_1.3.0       DT_0.33            lubridate_1.9.3   
  [5] forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4        purrr_1.0.2       
  [9] readr_2.1.5        tidyr_1.3.1        tibble_3.2.1       ggplot2_3.5.1     
-[13] tidyverse_2.0.0    workflowr_1.7.1   
+[13] tidyverse_2.0.0   
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
  [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
  [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
-[13] jsonlite_1.8.8    processx_3.8.3    whisker_0.4.1     ps_1.7.5         
-[17] promises_1.2.1    httr_1.4.7        fansi_1.0.6       crosstalk_1.2.1  
-[21] jquerylib_0.1.4   cli_3.6.2         rlang_1.1.3       ellipsis_0.3.2   
-[25] munsell_0.5.0     withr_3.0.0       cachem_1.0.8      yaml_2.3.8       
-[29] tools_4.3.2       tzdb_0.4.0        colorspace_2.1-0  httpuv_1.6.13    
-[33] vctrs_0.6.5       R6_2.5.1          lifecycle_1.0.4   git2r_0.33.0     
-[37] htmlwidgets_1.6.4 fs_1.6.3          pkgconfig_2.0.3   callr_3.7.3      
-[41] pillar_1.9.0      bslib_0.6.1       later_1.3.2       gtable_0.3.4     
-[45] glue_1.7.0        Rcpp_1.1.0        highr_0.10        xfun_0.41        
-[49] tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45        farver_2.1.1     
-[53] htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25    compiler_4.3.2   
-[57] getPass_0.2-4    </code></pre>
-</div>
+[13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
+[17] fansi_1.0.6       crosstalk_1.2.1   jquerylib_0.1.4   cli_3.6.2        
+[21] rlang_1.1.3       ellipsis_0.3.2    munsell_0.5.0     withr_3.0.0      
+[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
+[29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
+[33] lifecycle_1.0.4   git2r_0.33.0      htmlwidgets_1.6.4 fs_1.6.3         
+[37] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.6.1       later_1.3.2      
+[41] gtable_0.3.4      glue_1.7.0        Rcpp_1.1.0        highr_0.10       
+[45] xfun_0.41         tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45       
+[49] farver_2.1.1      htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25   
+[53] compiler_4.3.2   </code></pre>
 </div>
 </div>
 
@@ -1197,6 +865,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {

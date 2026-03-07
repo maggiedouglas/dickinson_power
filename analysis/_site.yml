@@ -32,3 +32,4 @@ output:
     toc_float: yes
     theme: cosmo
     highlight: textmate
+    code_folding: hide
