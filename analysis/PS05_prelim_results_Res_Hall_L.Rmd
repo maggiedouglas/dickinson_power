@@ -81,6 +81,54 @@ datatable(annual_large_res, filter = "top", rownames = FALSE, caption = "Large R
 
 ### Electricity use over the year
 
+```{r stackedbar, warning = F}
+
+ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
+  geom_col(position = "stack") +
+  theme_bw() +
+  scale_fill_paletteer_d("ggthemes::Tableau_20")+
+  labs(x = "",
+       y = "Electricity use (millions of kWh)",
+       fill = "Building",
+       title = "Electricity Use by Building by Month", 
+       subtitle = "Fiscal Year 2025")
+
+```
+
+```{r stackedbar_alt, warning = F, fig.height = 7, fig.width = 10}
+
+ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ NAME) +
+  scale_fill_paletteer_d("ggthemes::Tableau_20")+
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme(legend.position = "none") + 
+  labs(x = "",
+       y = "Electricity use (millions of kWh)",
+       title = "Electricity Use by Building by Month", 
+       subtitle = "Fiscal Year 2025")
+
+```
+
+```{r stackedbar_alt2, warning = F, fig.height = 7, fig.width = 10}
+
+ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ NAME, scales = "free_y") +
+  scale_fill_paletteer_d("ggthemes::Tableau_20")+
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
+  theme(legend.position = "none") + 
+  labs(x = "",
+       y = "Electricity use (millions of kWh)",
+       title = "Electricity Use by Building by Month", 
+       subtitle = "Fiscal Year 2025")
+
+```
+
+### Electricity intensity
+
 ```{r boxplot, warning = F}
 
 ggplot(daily_large_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
@@ -97,22 +145,6 @@ ggplot(daily_large_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
        y = "Electricity Intensity (kWh/sqft/year)",
        title = "Electricity Intensity by Square Foot (kWh/sqft/year)") +
   coord_flip()
-
-```
-
-### Electricity intensity
-
-```{r stackedbar, warning = F}
-
-ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
-  geom_col(position = "stack") +
-  theme_bw() +
-  scale_fill_paletteer_d("ggthemes::Tableau_20")+
-  labs(x = "",
-       y = "Electricity use (millions of kWh)",
-       fill = "Building",
-       title = "Electricity Use by Building by Month", 
-       subtitle = "Fiscal Year 2025")
 
 ```
 
