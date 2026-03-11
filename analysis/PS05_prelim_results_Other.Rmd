@@ -1,0 +1,94 @@
+---
+title: 'PS05: Preliminary results'
+author: 'Ben & Kyrie'
+date: "2026-02-25"
+output: html_document
+---
+
+## Data preparation
+
+### Libraries
+
+```{r library, results = "hide", message = F}
+library(tidyverse)
+library(DT)
+annual_df <- read.csv("./output/kwh_annual_2026-03-04.csv", strip.white = TRUE)
+daily<-read.csv("./output/kwh_daily_2026-03-04.csv")
+```
+
+```{r check, results = "hide", message = F}
+str(annual_df)
+str(daily)
+```
+
+### Annual electricity data
+
+```{r wrangle_annual, results = "hide", message = F}
+annual_other <- annual_df %>%
+  filter(type == "Other") %>%
+  mutate("kwh per sqft" = round(kwh_corr / sqft, digits = 2),
+    "cost - $" = round(kwh_corr * .08138507, digits = 2),
+         "CO2e - kg" = round(.30082405*kwh_corr/1000, digits = 2),
+         days_perc = round(days_perc, digits = 2),
+         kwh = round(kwh, digits = 2),
+         kwh_corr = round(kwh_corr, digits = 2),
+         "building" = NAME)%>%
+  arrange(desc(kwh_corr)) %>%
+  select(meter, "building", days_perc, kwh, kwh_corr, sqft, "cost - $", "CO2e - kg", "kwh per sqft")
+```
+
+```{r check_wrangle, results = "hide", message = F}
+str(annual_other)
+```
+
+### Daily electricity data
+
+```{r daily elect, results = "hide", message = F}
+other.daily<-daily%>%
+  filter(type=="Other")%>%
+  mutate(date=ymd(date),
+        day=wday(date,label=TRUE),
+        month=month(date,label=TRUE))%>%
+  mutate(kwh=kwh*365,
+    kwh.sqft=kwh/sqft)%>%
+  filter(NAME !="Kline Life Sport Complex")
+```
+
+## Building type summary
+
+### Descriptive table
+
+```{r table}
+datatable(annual_other, caption = "Other buildings summary statistics") 
+```
+
+### Electricity use over the year
+
+```{r yearly, warning=FALSE}
+ggplot(other.daily, aes(x=month, y=kwh/10^6, fill=NAME))+
+  geom_col(stat = "identity", position = "stack")+
+  labs(title="Electricity use over the year",
+  x="",
+  y="Electricity use (Million kWh)",
+  fill="Building")+
+  theme_bw()
+```
+
+### Electricity intensity
+
+```{r intensity, warning = F}
+other.box<-other.daily%>%
+  filter(!is.na(sqft))
+ggplot(other.box,aes(x=reorder(NAME,kwh/sqft,FUN=median),y=kwh.sqft,fill=NAME))+
+  geom_boxplot()+
+  labs(title="Other Electricity Intensity",
+  x="",
+  y="Electricity Intensity (kWh/sqft/year)")+
+  coord_flip()+
+  theme_bw()+
+  theme(legend.position="none")
+```
+
+## Partner contributions
+
+Ben worked on the wrangling for the annual data and did the data table. Kyrie did the wrangling for the daily data and wrote the base code for the graphs. We worked together on formatting the graphs. We worked together to remove Kline from the dataframe and also on the creation of another dataframe that did not include buildings that were missing square footage. We experimented with faceting our boxplot, but decided we preferred the original, as the faceted graph was far too busy. We did not find any strange issues or problems in the data.

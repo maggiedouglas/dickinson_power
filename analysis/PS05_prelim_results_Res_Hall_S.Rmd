@@ -1,0 +1,115 @@
+---
+title: "PS 5: Preliminary results"
+author: "Luke Heller & Valerie Larsen"
+date: "2026-03-05"
+output: html_document
+---
+
+## Data preparation
+
+### Libraries
+```{r library, results = "hide", message = F}
+library(tidyverse)
+library(DT)
+```
+
+### Annual electricity data
+```{r annual, results = "hide", message = F}
+annual_kwh <- read.csv("./output/kwh_annual_2026-03-04.csv")
+
+reshall_s_annual <- annual_kwh  %>%
+  filter(type == "Res Hall - S")
+
+reshall_s_annual$NAME <- replace_values(reshall_s_annual$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.") # update names of meters on N. College St. and S. College St. to be more concise
+
+str(reshall_s_annual)
+
+kwh_dollar <- .08138507
+kwh_ghg <- .30082405
+
+annual_transform <- reshall_s_annual %>%
+  group_by(NAME) %>%
+  summarize(meter, days_perc, kwh_corr, sqft, occupants) %>%
+  mutate(kwh_corr = round(kwh_corr, digits = 0),
+    cost = paste("$", round((kwh_corr*kwh_dollar), digits = 0)),
+    ghg_emis = round((kwh_corr*kwh_ghg/1000), digits = 1), 
+    kwh_sqft_annual = round((kwh_corr/sqft), digits = 1),
+    kwh_occupants_annual = round((kwh_corr/occupants), digits = 0))
+
+annual_order <- annual_transform[, c("meter", "NAME", "days_perc", "kwh_corr", "sqft", "occupants", "kwh_sqft_annual", "kwh_occupants_annual", "cost", "ghg_emis")]
+  
+reshall_s_annual_final <- annual_order %>%
+  arrange(desc(kwh_corr))
+
+str(reshall_s_annual_final)
+```
+
+### Daily electricity data
+```{r daily, results = "hide", message = F}
+daily_kwh <- read.csv("./output/kwh_daily_2026-03-04.csv")
+
+reshall_s_daily <- daily_kwh %>%
+  filter(type == "Res Hall - S") %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE),
+         kwh_sqft_annual = round((kwh/sqft*365), digits = 1), # adjust daily values to per year equivalent
+         kwh_occupants_annual = round((kwh/occupants*365), digits = 0)) # adjust daily values to per year equivalent
+
+reshall_s_daily$NAME <- replace_values(reshall_s_daily$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.") # update names of meters on N. College St. and S. College St. to be more concise
+
+str(reshall_s_daily)
+```
+
+## Building type summary
+
+### Descriptive table
+
+```{r table}
+datatable(reshall_s_annual_final, filter = "top",
+          rownames = FALSE,
+          colnames = c("Meter", "Building", "Days of data (%)", "kWh", "sqft", "Occupants", "kWh per sqft", "kWh per person", "Cost - $", "CO2e - MT"),
+          caption = "Table 1. Descriptive statistics for annual electricity use, estimated financial cost, and estimated greenhouse gas emissions of the small residence halls.")
+```
+
+### Electricity use over the year
+```{r annual_use, warning = F}
+group_small <- reshall_s_daily %>%
+  group_by(NAME, month) %>%
+  summarize(total_kwh = sum(kwh))
+
+ggplot(group_small, aes(x = month, y = reorder(NAME, total_kwh), fill = total_kwh)) +
+geom_tile() +
+scale_fill_gradient(low = "white", high = rgb(255, 64, 192, maxColorValue = 255)) +
+  labs(title = "Total Electricity Use by Month in Fiscal Year 2025") + theme_bw() + labs(x = "", y = "")
+```
+
+### Electricity intensity
+```{r kwh_sqft, warning = F}
+reshall_s_daily_academic_year <- reshall_s_daily %>%
+  filter(period %in% c("Spring", "Fall")) # filter data to only during the academic year when most students are on campus
+
+ggplot(reshall_s_daily_academic_year,
+       aes(x = NAME, y = kwh_sqft_annual)) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 8.2, ymax = 36.1, color = "lightgray", alpha = 0.3) + geom_hline(yintercept = 13.6, linetype = "dashed", color = "white") +
+  geom_boxplot(fill = rgb(255, 64, 192, maxColorValue = 255)) +
+  coord_flip() +
+  theme_bw() +
+  labs(title = "Electricity Intensity by Building", x = "", y = "Electricity Intensity (kWh/sqft/year)")
+```
+
+```{r period_use, warning = F}
+ggplot(reshall_s_daily,
+       aes(x = type, y = kwh_sqft_annual)) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 8.2, ymax = 36.1, color = "lightgray", alpha = 0.3) + geom_hline(yintercept = 13.6, linetype = "dashed", color = "white") +
+  geom_boxplot(fill = rgb(255, 64, 192, maxColorValue = 255)) +
+  coord_flip() +
+  facet_grid(period ~ .) +
+  theme_bw() +
+  labs(title = "Electricity Intensity by Season", x = "", y = "Electricity Intensity (kWh/sqft/year)")
+```
+
+## Partner contributions
+Valerie did most of the work with the annual electricity dataset and created the descriptive table. Luke primarily focused on the daily electricity dataset, created the heat map and the box plots, troubleshooted the final code, and submitted the final problem set.
+
+Other than the unusual name for the buildings located on N. and S. College St., neither of us noticed any major underlying issues in the data. The new data has uncovered new electricity use patterns which we did not notice previously and might be interested in investigating further later in the semester.
