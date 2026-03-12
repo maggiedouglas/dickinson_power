@@ -27,10 +27,10 @@ is_outlier <- function(x) {
 ```
 
 ```{r load_data}
-daily_full <- read.csv("./output/kwh_daily_2026-03-04.csv") %>%
+daily_full <- read.csv("./output/kwh_daily_2026-03-12.csv") %>%
   mutate(date = as_date(date)) # convert back to date
 
-joined_full <- read.csv("./output/kwh_annual_2026-03-04.csv") 
+joined_full <- read.csv("./output/kwh_annual_2026-03-12.csv") 
 
 total <- joined_full %>%
   filter(meter != "Submeter" & type != "Res Hall - U" & type != "Production") %>%
@@ -184,67 +184,7 @@ ggplot(filter(daily_graph, meter != "Submeter"),
        title = "")
 ```
 
-### Submeter data
-
-```{r submeter_stacked, warning = F, fig.height = 4.5, fig.height = 4.5}
-ggplot(filter(daily_graph, meter == "Submeter"),
-       aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
-  geom_col(position = "stack") +
-  scale_fill_brewer(type = "qual", palette = "Paired") +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (million kWh)", fill = "",
-       title = "")
-```
-
-### Aggregate meters
-
-Here's an example where the Y axis is fixed
-
-```{r stacked bar agg, warning = F, fig.height = 3.5, fig.width = 7}
-daily_graph$meter2 <- factor(daily_graph$meter,
-                            levels = c("Main Meter - Total","Weis Meter - Total",
-                                       "Individual","Submeter"),
-                            labels = c("Aggregate","Aggregate", "Individual","Submeter"))
-
-ggplot(filter(daily_graph, meter2 == "Aggregate"),
-       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = 'sum'))) +
-  geom_col(position = "stack") +
-  facet_wrap(. ~ type) +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (1000 kWh)", fill = "") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  theme(legend.position = "none")
-```
-
-### Individual meters
-
-Here's an example where the Y axis is allowed to vary
-
-```{r stacked bar indiv, warning = F, fig.height = 6, fig.width = 8}
-ggplot(filter(daily_graph, meter == "Individual"),
-       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = 'sum'))) +
-  geom_col(position = "stack") +
-  facet_wrap(. ~ type, scales = "free") +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (1000 kWh)", fill = "") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  theme(legend.position = "none")
-```
-
-### Submeters
-
-```{r stacked bar sub, warning = F, fig.height = 4, fig.width = 6}
-ggplot(filter(daily_graph, meter == "Submeter"),
-       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = 'sum'))) +
-  geom_col(position = "stack") +
-  facet_wrap(. ~ type, scales = "free") +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (1000 kWh)", fill = "") +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  theme(legend.position = "none")
-```
-
-## Electricity intensity by meter + building type
+## Electricity intensity
 
 ```{r intensity, warning = F, fig.height = 6, fig.width = 7}
 to_exclude <- filter(joined_full, days_perc < 90)

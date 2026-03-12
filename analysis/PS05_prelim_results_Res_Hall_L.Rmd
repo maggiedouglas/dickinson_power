@@ -25,7 +25,7 @@ is_outlier <- function(x) {
 
 ```{r annual, results = "hide", message = F}
 
-annual <- read.csv("./output/kwh_annual_2026-03-04.csv")
+annual <- read.csv("./output/kwh_annual_2026-03-12.csv")
 
 str(annual)
 
@@ -55,7 +55,7 @@ summary(annual_large_res)
 
 ```{r daily, results = "hide", message = F}
 
-daily <- read.csv("./output/kwh_daily_2026-03-04.csv")
+daily <- read.csv("./output/kwh_daily_2026-03-12.csv")
 
 str(daily)
 
@@ -88,7 +88,7 @@ datatable(annual_large_res, rownames = FALSE,
           filter = "none",
           class = "compact",
           options = list(pageLength = 19, autoWidth = TRUE, dom = 't'),
-          caption = "Table 1. Large Residence Halls summary of electricity use and associated cost and greenhouse gas emissions in fiscal year 2025. Corrected kWh reflects an estimate of annual electricity use including days with missing data.")
+          caption = "Table 1. Large Residence Halls summary of electricity use and associated cost and greenhouse gas emissions in fiscal year 2025. Corrected kWh reflects an estimate of annual electricity use including days with missing data. Occupancy reflects average student occupancy during the academic year.")
 
 ```
 

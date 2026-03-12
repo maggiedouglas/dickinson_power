@@ -11,11 +11,11 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-03-07" />
+<meta name="date" content="2026-03-12" />
 
 <title>Campus building summary</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -38,14 +38,15 @@
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
 <script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
 <link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
-<script src="site_libs/datatables-binding-0.33/datatables.js"></script>
+<script src="site_libs/datatables-binding-0.34.0/datatables.js"></script>
 <link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="site_libs/crosstalk-1.2.1/css/crosstalk.min.css" rel="stylesheet" />
-<script src="site_libs/crosstalk-1.2.1/js/crosstalk.min.js"></script>
+<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 
 <link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
 <!-- Add a small amount of space between sections. -->
@@ -403,7 +404,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Campus building summary</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">03/07/26</h4>
+<h4 class="date">03/12/26</h4>
 
 </div>
 
@@ -418,10 +419,10 @@ library(RColorBrewer)
 is_outlier &lt;- function(x) {
   return(x &lt; quantile(x, 0.25, na.rm = T) - 1.5 * IQR(x, na.rm = T) | x &gt; quantile(x, 0.75, na.rm = T) + 1.5 * IQR(x, na.rm = T))
 }</code></pre>
-<pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-04.csv&quot;) %&gt;%
+<pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-12.csv&quot;) %&gt;%
   mutate(date = as_date(date)) # convert back to date
 
-joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-04.csv&quot;) 
+joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-12.csv&quot;) 
 
 total &lt;- joined_full %&gt;%
   filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
@@ -537,7 +538,7 @@ joined_pretty_cat &lt;- joined_cat %&gt;%
           options = list(pageLength = 11, autoWidth = TRUE, dom = &#39;t&#39;),
           caption = &quot;Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Mixed","Other","Res Hall - M","Res Hall - L","Res Hall - S","Academic","Admin","Community","Res Hall - U","Non-building","Production"],[2,14,14,19,18,11,6,6,7,4,1],[84008,2492,4525,18603,1477,11039,14650,9422,null,null,null],[1749340,1689647,334569,2778938,145966,4877966,761234,262473,107265,92882,-4274284],["$ 142370","$ 137512","$ 27229","$ 226164","$ 11879","$ 396994","$ 61953","$ 21361","$ 8730","$ 7559","$ -347863"],[526,508,101,836,44,1467,229,79,32,28,-1286],[10.8,6.8,5.5,5.3,5.2,4.8,3.2,3,null,null,null],[8.199999999999999,5.2,2.9,4.6,3.9,3.7,2.7,1.9,null,null,null],[13.3,9.300000000000001,6.5,7,5.8,7.9,5.3,4.6,null,null,null]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>Median\nsquare\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Mixed","Other","Res Hall - M","Res Hall - S","Res Hall - L","Academic","Community","Admin","Res Hall - U","Non-building","Production"],[2,14,14,18,19,10,5,6,7,4,1],[84008,2492,4525,1477,18603,7808,7953,14650,null,null,null],[2509256,1689647,334569,145966,2700440,838963,236293,755716,107265,92882,-4274284],["$ 204216","$ 137512","$ 27229","$ 11879","$ 219776","$ 68279","$ 19231","$ 61504","$ 8730","$ 7559","$ -347863"],[755,508,101,44,812,252,71,227,32,28,-1286],[15.6,6.8,5.5,5.2,4.8,3.7,3.7,3.2,null,null,null],[10.7,5.2,2.9,3.9,4.3,3.6,2.3,2.6,null,null,null],[20.6,9.300000000000001,6.5,5.8,7,4.8,4.9,5.3,null,null,null]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>Median\nsquare\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 <div id="electricity-use-over-the-year" class="section level2">
@@ -562,7 +563,7 @@ ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
        title = &quot;&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/stacked%20bar-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/campus_summary.Rmd/stacked%20bar-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-1">
 Past versions of "stacked bar-1.png"
@@ -587,6 +588,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/cd016a63d3b92b2684c3366947bf8a04c7ffe5cc/docs/figure/campus_summary.Rmd/stacked bar-1.png" target="_blank">cd016a6</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/92fcd5c90fb86efbb5003f4d47493ef1b8e1526b/docs/figure/campus_summary.Rmd/stacked bar-1.png" target="_blank">92fcd5c</a>
 </td>
 <td>
@@ -601,100 +613,9 @@ maggiedouglas
 </div>
 </div>
 </div>
-<div id="submeter-data" class="section level3">
-<h3>Submeter data</h3>
-<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Submeter&quot;),
-       aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
-  geom_col(position = &quot;stack&quot;) +
-  scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/submeter_stacked-1.png" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-submeter_stacked-1">
-Past versions of submeter_stacked-1.png
-</button>
-</p>
-<div id="fig-submeter_stacked-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/92fcd5c90fb86efbb5003f4d47493ef1b8e1526b/docs/figure/campus_summary.Rmd/submeter_stacked-1.png" target="_blank">92fcd5c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-04
-</td>
-</tr>
-</tbody>
-</table>
 </div>
-</div>
-</div>
-<div id="aggregate-meters-1" class="section level3">
-<h3>Aggregate meters</h3>
-<p>Here’s an example where the Y axis is fixed</p>
-<pre class="r"><code>daily_graph$meter2 &lt;- factor(daily_graph$meter,
-                            levels = c(&quot;Main Meter - Total&quot;,&quot;Weis Meter - Total&quot;,
-                                       &quot;Individual&quot;,&quot;Submeter&quot;),
-                            labels = c(&quot;Aggregate&quot;,&quot;Aggregate&quot;, &quot;Individual&quot;,&quot;Submeter&quot;))
-
-ggplot(filter(daily_graph, meter2 == &quot;Aggregate&quot;),
-       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
-  geom_col(position = &quot;stack&quot;) +
-  facet_wrap(. ~ type) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/stacked%20bar%20agg-1.png" width="672" style="display: block; margin: auto;" /></p>
-</div>
-<div id="individual-meters" class="section level3">
-<h3>Individual meters</h3>
-<p>Here’s an example where the Y axis is allowed to vary</p>
-<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Individual&quot;),
-       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
-  geom_col(position = &quot;stack&quot;) +
-  facet_wrap(. ~ type, scales = &quot;free&quot;) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/stacked%20bar%20indiv-1.png" width="768" style="display: block; margin: auto;" /></p>
-</div>
-<div id="submeters" class="section level3">
-<h3>Submeters</h3>
-<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Submeter&quot;),
-       aes(x = month, y = kwh/10^3, fill = reorder(type, kwh, FUN = &#39;sum&#39;))) +
-  geom_col(position = &quot;stack&quot;) +
-  facet_wrap(. ~ type, scales = &quot;free&quot;) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;) +
-  theme(axis.text.x = element_text(angle = 90, hjust = 1, vjust = 0.5)) +
-  theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/stacked%20bar%20sub-1.png" width="576" style="display: block; margin: auto;" /></p>
-</div>
-</div>
-<div id="electricity-intensity-by-building-type" class="section level2">
-<h2>Electricity intensity by building type</h2>
+<div id="electricity-intensity" class="section level2">
+<h2>Electricity intensity</h2>
 <pre class="r"><code>to_exclude &lt;- filter(joined_full, days_perc &lt; 90)
 
 intensity &lt;- joined_full %&gt;%
@@ -728,7 +649,7 @@ ggplot(intensity,
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
        title = &quot;&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/intensity-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/campus_summary.Rmd/intensity-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity-1">
 Past versions of intensity-1.png
@@ -753,6 +674,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/cd016a63d3b92b2684c3366947bf8a04c7ffe5cc/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">cd016a6</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-07
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/92fcd5c90fb86efbb5003f4d47493ef1b8e1526b/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">92fcd5c</a>
 </td>
 <td>
@@ -775,13 +707,13 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.3.2 (2023-10-31)
-Platform: x86_64-apple-darwin20 (64-bit)
+<pre><code>R version 4.5.2 (2025-10-31)
+Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -793,26 +725,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] RColorBrewer_1.1-3 scales_1.3.0       DT_0.33            lubridate_1.9.3   
- [5] forcats_1.0.0      stringr_1.5.1      dplyr_1.1.4        purrr_1.0.2       
- [9] readr_2.1.5        tidyr_1.3.1        tibble_3.2.1       ggplot2_3.5.1     
+ [1] RColorBrewer_1.1-3 scales_1.4.0       DT_0.34.0          lubridate_1.9.5   
+ [5] forcats_1.0.1      stringr_1.6.0      dplyr_1.2.0        purrr_1.2.1       
+ [9] readr_2.2.0        tidyr_1.3.2        tibble_3.3.1       ggplot2_4.0.2     
 [13] tidyverse_2.0.0   
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.8        utf8_1.2.4        generics_0.1.3    stringi_1.8.3    
- [5] hms_1.1.3         digest_0.6.37     magrittr_2.0.3    timechange_0.3.0 
- [9] evaluate_0.23     grid_4.3.2        fastmap_1.1.1     rprojroot_2.0.4  
-[13] workflowr_1.7.1   jsonlite_1.8.8    whisker_0.4.1     promises_1.2.1   
-[17] fansi_1.0.6       crosstalk_1.2.1   jquerylib_0.1.4   cli_3.6.2        
-[21] rlang_1.1.3       ellipsis_0.3.2    munsell_0.5.0     withr_3.0.0      
-[25] cachem_1.0.8      yaml_2.3.8        tools_4.3.2       tzdb_0.4.0       
-[29] colorspace_2.1-0  httpuv_1.6.13     vctrs_0.6.5       R6_2.5.1         
-[33] lifecycle_1.0.4   git2r_0.33.0      htmlwidgets_1.6.4 fs_1.6.3         
-[37] pkgconfig_2.0.3   pillar_1.9.0      bslib_0.6.1       later_1.3.2      
-[41] gtable_0.3.4      glue_1.7.0        Rcpp_1.1.0        highr_0.10       
-[45] xfun_0.41         tidyselect_1.2.0  rstudioapi_0.16.0 knitr_1.45       
-[49] farver_2.1.1      htmltools_0.5.7   labeling_0.4.3    rmarkdown_2.25   
-[53] compiler_4.3.2   </code></pre>
+ [1] sass_0.4.10       generics_0.1.4    stringi_1.8.7     hms_1.1.4        
+ [5] digest_0.6.39     magrittr_2.0.4    timechange_0.4.0  evaluate_1.0.5   
+ [9] grid_4.5.2        fastmap_1.2.0     rprojroot_2.1.1   workflowr_1.7.2  
+[13] jsonlite_2.0.0    whisker_0.4.1     promises_1.5.0    crosstalk_1.2.2  
+[17] jquerylib_0.1.4   cli_3.6.5         rlang_1.1.7       withr_3.0.2      
+[21] cachem_1.1.0      yaml_2.3.12       otel_0.2.0        tools_4.5.2      
+[25] tzdb_0.5.0        httpuv_1.6.16     vctrs_0.7.1       R6_2.6.1         
+[29] lifecycle_1.0.5   git2r_0.36.2      htmlwidgets_1.6.4 fs_1.6.7         
+[33] pkgconfig_2.0.3   pillar_1.11.1     bslib_0.10.0      later_1.4.8      
+[37] gtable_0.3.6      glue_1.8.0        Rcpp_1.1.1        xfun_0.56        
+[41] tidyselect_1.2.1  rstudioapi_0.18.0 knitr_1.51        farver_2.1.2     
+[45] htmltools_0.5.9   labeling_0.4.3    rmarkdown_2.30    compiler_4.5.2   
+[49] S7_0.2.1         </code></pre>
 </div>
 </div>
 

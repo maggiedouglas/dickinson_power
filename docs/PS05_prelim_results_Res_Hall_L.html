@@ -567,15 +567,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree0a9f66353e6be5a879422c14148b2586c10f622atargetblank0a9f663a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreed9d03962ec16024049cb532fe7a4ea25e233b508targetblankd9d0396a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/0a9f66353e6be5a879422c14148b2586c10f622a" target="_blank">0a9f663</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/d9d03962ec16024049cb532fe7a4ea25e233b508" target="_blank">d9d0396</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree0a9f66353e6be5a879422c14148b2586c10f622atargetblank0a9f663a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreed9d03962ec16024049cb532fe7a4ea25e233b508targetblankd9d0396a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -585,7 +585,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/0a9f66353e6be5a879422c14148b2586c10f622a" target="_blank">0a9f663</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/d9d03962ec16024049cb532fe7a4ea25e233b508" target="_blank">d9d0396</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -617,22 +617,21 @@ Ignored files:
     Ignored:    output/daily_kwh.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_annual_2026-03-04.csv
+    Ignored:    output/kwh_annual_2026-03-12.csv
     Ignored:    output/kwh_annual_20260225.csv
     Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/kwh_daily_2026-03-04.csv
+    Ignored:    output/kwh_daily_2026-03-12.csv
     Ignored:    output/kwh_daily_20260225.csv
     Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
-Untracked files:
-    Untracked:  analysis/main_meter_case_study.Rmd
-    Untracked:  analysis/main_meter_model.Rmd
-
 Unstaged changes:
     Modified:   analysis/PS05_prelim_results_Res_Hall_L.Rmd
-    Deleted:    analysis_to-fix/main_meter_case_study.Rmd
+    Modified:   analysis/campus_summary.Rmd
+    Modified:   analysis/data_wrangling_final.Rmd
 
 </code></pre>
 <p>
@@ -678,6 +677,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d9d03962ec16024049cb532fe7a4ea25e233b508/analysis/PS05_prelim_results_Res_Hall_L.Rmd" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+<td>
+update scripts to show Lindsey options
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/d9d03962ec16024049cb532fe7a4ea25e233b508/docs/PS05_prelim_results_Res_Hall_L.html" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+<td>
+update scripts to show Lindsey options
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -767,7 +800,7 @@ is_outlier &lt;- function(x) {
 </div>
 <div id="annual-electricity-data" class="section level3">
 <h3>Annual electricity data</h3>
-<pre class="r"><code>annual &lt;- read.csv(&quot;./output/kwh_annual_2026-03-04.csv&quot;)
+<pre class="r"><code>annual &lt;- read.csv(&quot;./output/kwh_annual_2026-03-12.csv&quot;)
 
 str(annual)
 
@@ -793,7 +826,7 @@ summary(annual_large_res)</code></pre>
 </div>
 <div id="daily-electricity-data" class="section level3">
 <h3>Daily electricity data</h3>
-<pre class="r"><code>daily &lt;- read.csv(&quot;./output/kwh_daily_2026-03-04.csv&quot;)
+<pre class="r"><code>daily &lt;- read.csv(&quot;./output/kwh_daily_2026-03-12.csv&quot;)
 
 str(daily)
 
@@ -823,9 +856,9 @@ summary(daily_large_res)</code></pre>
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
           options = list(pageLength = 19, autoWidth = TRUE, dom = &#39;t&#39;),
-          caption = &quot;Table 1. Large Residence Halls summary of electricity use and associated cost and greenhouse gas emissions. Corrected kWh reflects an estimate of annual electricity use after estimating use on missing days.&quot;)</code></pre>
+          caption = &quot;Table 1. Large Residence Halls summary of electricity use and associated cost and greenhouse gas emissions in fiscal year 2025. Corrected kWh reflects an estimate of annual electricity use including days with missing data. Occupancy reflects average student occupancy during the academic year.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Large Residence Halls summary of electricity use and associated cost and greenhouse gas emissions. Corrected kWh reflects an estimate of annual electricity use after estimating use on missing days.<\/caption>","data":[["Submeter","Individual","Individual","Individual","Individual","Individual","Individual","Submeter","Individual","Submeter","Submeter","Individual","Submeter","Submeter","Submeter","Submeter","Submeter","Submeter","Individual"],["Kisner - Woodward","Drayer Hall","Morgan Hall","High Street Residence Hall","Adams","Factory Apts.","27 W. High St.","McKenney Hall","Malcolm Hall","Baird McClintock Quad 4-5","Davidson Wilson Quad 9-10","Witwer Hall","Armstrong Quad 8","Atwater Quad 7","Buchanan Quad 2","Conway Quad 1","Longsdorff Quad 6","Spradley-Young  Quad 3","Matthews House"],[93,100,100,100,100,100,100,93,100,93,93,100,93,93,93,93,93,93,100],[286667,269502,247869,234938,223957,222053,220896,170470,158463,132958,123812,88635,52679,49681,47808,45533,43677,39471,40566],[309566,269502,247869,234938,223957,222053,220896,184087,158463,143579,133702,88635,56887,53650,51627,49170,47166,42624,40566],[23000,48720,40000,41945,47750,13000,11750,18933,20434,26000,31000,18603,10724,10724,10724,10724,10724,10724,11548],[13.5,5.5,6.2,5.6,4.7,17.1,18.8,9.699999999999999,7.8,5.5,4.3,4.8,5.3,5,4.8,4.6,4.4,4,3.5],[3329,1679,1758,1974,1387,4270,5454,1928,2419,1299,1114,1166,1478,1358,1324,1130,1225,1040,1726],[25194,21933,20173,19120,18227,18072,17978,14982,12897,11685,10881,7214,4630,4366,4202,4002,3839,3469,3301],[93,81,75,71,67,67,66,55,48,43,40,27,17,16,16,15,14,13,12]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>kWh<\/th>\n      <th>Corrected kWh<\/th>\n      <th>sqft<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost - $<\/th>\n      <th>CO2e - MT<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":19,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"kWh","targets":3},{"name":"Corrected kWh","targets":4},{"name":"sqft","targets":5},{"name":"kWh per sqft","targets":6},{"name":"kWh per person","targets":7},{"name":"Cost - $","targets":8},{"name":"CO2e - MT","targets":9}],"order":[],"orderClasses":false,"lengthMenu":[10,19,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Large Residence Halls summary of electricity use and associated cost and greenhouse gas emissions in fiscal year 2025. Corrected kWh reflects an estimate of annual electricity use including days with missing data. Occupancy reflects average student occupancy during the academic year.<\/caption>","data":[["Submeter","Individual","Individual","Individual","Individual","Individual","Individual","Submeter","Individual","Submeter","Submeter","Individual","Submeter","Submeter","Submeter","Submeter","Submeter","Individual","Submeter"],["Kisner - Woodward","Drayer Hall","Morgan Hall","High Street Residence Hall","Adams","Factory Apts.","27 W. High St.","McKenney Hall","Malcolm Hall","Baird McClintock Quad 4-5","Davidson Wilson Quad 9-10","Witwer Hall","Armstrong Quad 8","Atwater Quad 7","Buchanan Quad 2","Conway Quad 1","Longsdorff Quad 6","Matthews House","Spradley-Young  Quad 3"],[92,100,100,100,100,100,100,92,100,92,92,100,92,92,92,92,92,100,92],[269770,269502,247869,234938,223957,222053,220896,154833,158463,122937,112641,88635,47637,44832,43959,41519,40098,40566,36395],[293054,269502,247869,234938,223957,222053,220896,168197,158463,133548,122363,88635,51749,48701,47753,45102,43559,40566,39536],[23000,48720,40000,41945,47750,13000,11750,18933,20434,26000,31000,18603,10724,10724,10724,10724,10724,11548,10724],[12.7,5.5,6.2,5.6,4.7,17.1,18.8,8.9,7.8,5.1,3.9,4.8,4.8,4.5,4.5,4.2,4.1,3.5,3.7],[3151,1679,1758,1974,1387,4270,5454,1761,2419,1209,1020,1166,1344,1233,1224,1037,1131,1726,964],[23850,21933,20173,19120,18227,18072,17978,13689,12897,10869,9959,7214,4212,3964,3886,3671,3545,3301,3218],[88,81,75,71,67,67,66,51,48,40,37,27,16,15,14,14,13,12,12]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>kWh<\/th>\n      <th>Corrected kWh<\/th>\n      <th>sqft<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost - $<\/th>\n      <th>CO2e - MT<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":19,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"kWh","targets":3},{"name":"Corrected kWh","targets":4},{"name":"sqft","targets":5},{"name":"kWh per sqft","targets":6},{"name":"kWh per person","targets":7},{"name":"Cost - $","targets":8},{"name":"CO2e - MT","targets":9}],"order":[],"orderClasses":false,"lengthMenu":[10,19,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="electricity-use-over-the-year" class="section level3">
 <h3>Electricity use over the year</h3>
@@ -863,6 +896,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d9d03962ec16024049cb532fe7a4ea25e233b508/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/stackedbar-1.png" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/38132bb5862408fd73d3562dedb800105e3f41d7/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/stackedbar-1.png" target="_blank">38132bb</a>
@@ -917,6 +961,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d9d03962ec16024049cb532fe7a4ea25e233b508/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/stackedbar_alt-1.png" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/0a9f66353e6be5a879422c14148b2586c10f622a/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/stackedbar_alt-1.png" target="_blank">0a9f663</a>
 </td>
 <td>
@@ -967,6 +1022,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d9d03962ec16024049cb532fe7a4ea25e233b508/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/stackedbar_alt2-1.png" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/0a9f66353e6be5a879422c14148b2586c10f622a/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/stackedbar_alt2-1.png" target="_blank">0a9f663</a>
@@ -1027,6 +1093,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d9d03962ec16024049cb532fe7a4ea25e233b508/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/boxplot-1.png" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/38132bb5862408fd73d3562dedb800105e3f41d7/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/boxplot-1.png" target="_blank">38132bb</a>
 </td>
 <td>
@@ -1060,6 +1137,43 @@ ggplot(daily_ay, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
        title = &quot;Electricity Intensity by Square Foot (kWh/sqft/year)&quot;) +
   coord_flip()</code></pre>
 <p><img src="figure/PS05_prelim_results_Res_Hall_L.Rmd/boxplot2-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-boxplot2-1">
+Past versions of boxplot2-1.png
+</button>
+</p>
+<div id="fig-boxplot2-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d9d03962ec16024049cb532fe7a4ea25e233b508/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/boxplot2-1.png" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="option-3---faceted-by-time-of-year" class="section level4">
 <h4>Option 3 - faceted by time of year</h4>
@@ -1084,6 +1198,43 @@ ggplot(daily_large_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
        title = &quot;Electricity Intensity by Square Foot (kWh/sqft/year)&quot;) +
   coord_flip()</code></pre>
 <p><img src="figure/PS05_prelim_results_Res_Hall_L.Rmd/boxplot3-1.png" alt="" width="960" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-boxplot3-1">
+Past versions of boxplot3-1.png
+</button>
+</p>
+<div id="fig-boxplot3-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d9d03962ec16024049cb532fe7a4ea25e233b508/docs/figure/PS05_prelim_results_Res_Hall_L.Rmd/boxplot3-1.png" target="_blank">d9d0396</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 </div>

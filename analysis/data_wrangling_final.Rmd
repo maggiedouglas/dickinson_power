@@ -79,18 +79,32 @@ occupants <- read.csv("./data/housing_counts.csv",
   group_by(NAME) %>%
   summarize(occupants = sum(occupants, na.rm = T)) # sum across buildings with multiple rows
 
-# store annual totals for kWh
+# PPL data
+## store annual totals for kWh
+## checked - buildings with missing days do not have weirdly high values when they come back online
 kwh_annual <- kwh %>%
   filter(!is.na(total_kwh)) %>%
   group_by(meter_origin) %>%
   summarize(kwh = sum(total_kwh, na.rm = T),
             days_perc = (n()/365)*100)
 
-kwh_sub_annual <- kwh_sub %>%
-  filter(!is.na(kwh)) %>%
+## Submeter data
+# buildings with missing days are variable in how they come back online
+# Library has a strange high value on 2/17
+# Kline and CHW don't have obvious jump after missing data
+# all other buildings (93% of days) have strange values 9/02 & 9/06
+kwh_sub_clean <- kwh_sub %>%
+  mutate(kwh = ifelse(kwh == 0, NA, kwh)) %>% # fill in NA for zero values
+  mutate(kwh = ifelse(building == "Library" & date == ymd("2025-02-17"), NA, kwh)) %>% # replace outlier w/ NA
+  mutate(kwh = ifelse(date %in% c(ymd("2024-09-02"),ymd("2024-09-06")), NA, kwh)) %>%
+  filter(! building %in% c("Rector","HUB")) # these two buildings have < 10% of days present
+
+kwh_sub_annual <- kwh_sub_clean %>%
+  filter(!is.na(kwh)) %>%  # filter out NAs
   group_by(building) %>%
   summarize(kwh = sum(kwh, na.rm = T),
-            days_perc = (n()/365)*100)
+            days_perc = (n()/365)*100) %>% # counts percent of days w/ non-zero data
+  filter(! building %in% c("Rector","HUB")) # these two buildings have < 10% of days present
 ```
 
 ## Check key data
@@ -226,7 +240,7 @@ daily_individual <- kwh %>%
   filter(!is.na(date)) # remove rows without value for date
 
 # generate daily summary for submetered buildings
-daily_sub <- kwh_sub %>%
+daily_sub <- kwh_sub_clean %>%
   left_join(key_sub, by = "building") %>%
   left_join(buildings_submeter, by = "NAME", relationship = "many-to-one") %>% # join to building info by name
   filter(building != "CHW_Base") %>% # remove duplicate CHW value - not sure what this is?
@@ -267,6 +281,7 @@ daily_agg <- kwh %>%
                                 ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter", "Summer")))) %>%
    select(type, meter, NAME, days_perc, sqft, occupants, period, date, kwh, ave_temp) %>%
    arrange(NAME)
+   
 ```
 
 ## Data availability by type
@@ -312,17 +327,6 @@ ggplot(daily_test,
   geom_boxplot() +
   coord_flip() +
   facet_grid(period ~ .) +
-  theme_bw() +
-  theme(legend.position = "none") +
-  labs(x = "", y = "kWh per sqft per year", 
-       title = "Electricity Intensity by Building Type")
-
-ggplot(daily_test,
-       aes(x = type, y = kwh_sqft, fill = period)) +
-  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = "lightgray", alpha = 0.3) +
-  geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
-  geom_boxplot() +
-  coord_flip() +
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "kWh per sqft per year", 
