@@ -1,0 +1,148 @@
+---
+title: "Main Meter model"
+author: "Prof. D"
+date: "2026-03-12"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+
+This script is to work up example analyses for the modeling portion of the course, using the Main Meter as an example.
+
+## Load
+
+```{r load}
+library(tidyverse)
+library(segmented) # for segmented regression 
+library(tseries) # for time series, including autocorrelation
+library(visreg)
+library(lmtest) # to test for autocorrelation
+library(car) # for Levene's Test
+
+daily <- read.csv("../output/kwh_daily_2026-03-04.csv", strip.white = TRUE)
+key <- read.csv("../keys/temp_by_date.csv")
+
+str(daily)
+str(key)
+```
+
+## Wrangle
+
+```{r wrangle}
+daily_date <- daily %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE),
+         week = week(date),
+         day_type = ifelse(day %in% c("Sat","Sun"), "Weekend","Weekday")) %>%
+  dplyr::select(type, NAME, period, date, month, week, day, day_type, kwh, ave_temp)
+
+key_date <- key %>%
+  mutate(date = mdy(date))
+
+daily_main <- filter(daily_date, NAME == "Main Meter") %>%
+  left_join(key_date, by = c("ave_temp", "date")) %>%
+  mutate(temp_cat = ifelse(ave_temp > 65, "heating","cooling"),
+         period = ifelse(period %in% c("Spring","Fall"), "Academic", period))
+```
+
+## Check
+
+```{r check}
+str(daily_date)
+str(daily_main)
+```
+
+## Building a model
+
+### ANOVA
+
+#### Day of the week
+
+#### Period of the year
+
+```{r anova}
+mod_day <- lm(kwh ~ day_type, data = daily_main)
+mod_period <- lm(kwh ~ period, data = daily_main)
+
+plot(mod_day)
+boxplot(mod_day$residuals ~ daily_main$day)
+boxplot(mod_day$residuals ~ daily_main$period)
+hist(mod_day$residuals, breaks = 30) 
+leveneTest(mod_day$residuals ~ daily_main$day)
+leveneTest(mod_day$residuals ~ daily_main$period)
+
+kruskal.test(kwh ~ day_type, data = daily_main)
+
+summary(mod_day)
+anova(mod_day)
+visreg(mod_day)
+acf(residuals(mod_day), lag.max = 365)
+```
+
+```{r acf}
+daily_ts <- daily_main %>%
+  dplyr::select(kwh) %>%
+  as.ts(daily_main, start = c(2024,1), frequency = 365) 
+
+acf(daily_ts, lag.max = 365)
+acf(daily_ts, lag.max = 30)
+```
+
+```{r mod}
+daily_main$day <- as.factor(daily_main$day)
+
+mod <- lm(kwh ~ period + day_type + ave_temp, data = daily_main)
+seg.mod <- segmented(mod, seg.Z = ~ ave_temp, psi = 65)
+
+summary(seg.mod)
+anova(seg.mod)
+slope(seg.mod)
+
+plot(seg.mod$residuals)
+
+# plot original data with fit
+plot(seg.mod, col = 'black', res = TRUE, conf.level = .95, shade = T, res.col = adjustcolor("steelblue", alpha.f = 0.3), )
+
+# check for autocorrelation
+## appears to have strong autocorrelation up to a week out
+acf(residuals(seg.mod), lag.max = 365) # values beyond the blue dashed line indicate statistically significant autocorrelation
+acf(residuals(seg.mod), lag.max = 7) 
+dwtest(seg.mod) # statistical test for autocorrelation
+```
+
+```{r mod_weekly}
+weekly_main <- daily_main %>%
+  group_by(period, week) %>%
+  summarize(kwh = mean(kwh),
+            ave_temp = mean(ave_temp),
+            cdd_65 = mean(cdd_65),
+            hdd_65 = mean(hdd_65))
+
+mod_wk <- lm(kwh ~ period + ave_temp, data = weekly_main)
+seg.mod.wk <- segmented(mod_wk, seg.Z = ~ ave_temp, psi = 65)
+
+summary(seg.mod.wk)
+anova(seg.mod.wk)
+slope(seg.mod.wk)
+
+plot(seg.mod.wk$residuals)
+
+# plot original data with fit
+plot(seg.mod.wk, col = 'black', res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor("steelblue", alpha.f = 0.7), ylim = c(20000,50000),
+     xlab = "Temperature (deg F)", ylab = "Electricity use (kWh)")
+
+# can we store fitted values?
+fit_wk <- broken.line(seg.mod.wk, se.fit = TRUE)
+weekly_main$kwh_pred <- fit_wk$fit
+weekly_main$kwh_se <- fit_wk$se.fit
+
+# check for autocorrelation
+## appears to have strong autocorrelation up to a week out
+acf(residuals(seg.mod.wk), lag.max = 50) # values beyond the blue dashed line indicate statistically significant autocorrelation
+```

@@ -15,6 +15,10 @@ library(tidyverse)
 library(DT)
 library(paletteer)
 
+is_outlier <- function(x) {
+  return(x < quantile(x, 0.25, na.rm = T) - 1.5 * IQR(x, na.rm = T) | x > quantile(x, 0.75, na.rm = T) + 1.5 * IQR(x, na.rm = T))
+}
+
 ```
 
 ### Annual electricity data
@@ -30,17 +34,17 @@ ghg_conversion <- 0.30082405 / 1000
 
 annual_large_res <- annual %>%
   filter(type == "Res Hall - L") %>%
-  mutate("Cost - $" = round(kwh_corr * cost_conversion, digits = 2), 
-         "CO2e - MT" = round(kwh_corr * ghg_conversion, digits = 2), 
-         "kWh per sqft" = round(kwh_corr/sqft, digits = 2),
-         "kWh per person" = round(kwh_corr/occupants, digits = 2), 
-         "Days of data (%)" = round(days_perc, digits = 2), 
-         "kWh" = round(kwh, digits = 2),
-         kWh_corr = round(kwh_corr, digits = 2), 
+  mutate("Cost - $" = round(kwh_corr * cost_conversion, digits = 0), 
+         "CO2e - MT" = round(kwh_corr * ghg_conversion, digits = 0), 
+         "kWh per sqft" = round(kwh_corr/sqft, digits = 1),
+         "kWh per person" = round(kwh_corr/occupants, digits = 0), 
+         "Days of data (%)" = round(days_perc, digits = 0), 
+         "kWh" = round(kwh, digits = 0),
+         "Corrected kWh" = round(kwh_corr, digits = 0), 
          "Meter" = meter, 
          "Building" = NAME) %>%
   arrange(desc(kwh_corr)) %>%
-  select("Meter", "Building", "Days of data (%)", "kWh", "kWh_corr", "sqft", "kWh per sqft", "kWh per person", "Cost - $", "CO2e - MT")
+  select("Meter", "Building", "Days of data (%)", "kWh", "Corrected kWh", "sqft", "kWh per sqft", "kWh per person", "Cost - $", "CO2e - MT")
 
 str(annual_large_res)
 summary(annual_large_res)
@@ -62,7 +66,12 @@ daily_large_res <- daily %>%
          day = wday(date, label = TRUE)) %>%
   mutate(kwh_tot_yr = kwh*365,
          kwh_sqft = kwh_tot_yr/sqft,
-         kwh_person = kwh_tot_yr/occupants)
+         kwh_person = kwh_tot_yr/occupants) %>%
+  group_by(NAME) %>%
+  mutate(kwh_out = is_outlier(kwh)) %>%
+  filter(!date %in% c(ymd("2024-09-02"),ymd("2024-09-06")))
+
+outs <- filter(daily_large_res, kwh_out == TRUE)
 
 str(daily_large_res)
 summary(daily_large_res)
@@ -75,29 +84,37 @@ summary(daily_large_res)
 
 ```{r table}
 
-datatable(annual_large_res, filter = "top", rownames = FALSE, caption = "Large Residence Halls Summary")
+datatable(annual_large_res, rownames = FALSE, 
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 19, autoWidth = TRUE, dom = 't'),
+          caption = "Table 1. Large Residence Halls summary of electricity use and associated cost and greenhouse gas emissions in fiscal year 2025. Corrected kWh reflects an estimate of annual electricity use including days with missing data.")
 
 ```
 
 ### Electricity use over the year
 
+#### Option 1 - stacked bar
+
 ```{r stackedbar, warning = F}
 
-ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
+ggplot(daily_large_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
   geom_col(position = "stack") +
   theme_bw() +
   scale_fill_paletteer_d("ggthemes::Tableau_20")+
   labs(x = "",
-       y = "Electricity use (millions of kWh)",
+       y = "Electricity use (1000 kWh)",
        fill = "Building",
        title = "Electricity Use by Building by Month", 
        subtitle = "Fiscal Year 2025")
 
 ```
 
+#### Option 2 - faceted, Y axis constant
+
 ```{r stackedbar_alt, warning = F, fig.height = 7, fig.width = 10}
 
-ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
+ggplot(daily_large_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
   geom_col(position = "stack") +
   facet_wrap(. ~ NAME) +
   scale_fill_paletteer_d("ggthemes::Tableau_20")+
@@ -105,15 +122,17 @@ ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   theme(legend.position = "none") + 
   labs(x = "",
-       y = "Electricity use (millions of kWh)",
+       y = "Electricity use (1000 kWh)",
        title = "Electricity Use by Building by Month", 
        subtitle = "Fiscal Year 2025")
 
 ```
 
+#### Option 3 - faceted, Y axis varies
+
 ```{r stackedbar_alt2, warning = F, fig.height = 7, fig.width = 10}
 
-ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
+ggplot(daily_large_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
   geom_col(position = "stack") +
   facet_wrap(. ~ NAME, scales = "free_y") +
   scale_fill_paletteer_d("ggthemes::Tableau_20")+
@@ -121,13 +140,15 @@ ggplot(daily_large_res, aes(x= month, y= kwh/(10^4), fill = NAME)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1)) +
   theme(legend.position = "none") + 
   labs(x = "",
-       y = "Electricity use (millions of kWh)",
+       y = "Electricity use (1000 kWh)",
        title = "Electricity Use by Building by Month", 
        subtitle = "Fiscal Year 2025")
 
 ```
 
 ### Electricity intensity
+
+#### Option 1 - all days included
 
 ```{r boxplot, warning = F}
 
@@ -137,7 +158,7 @@ ggplot(daily_large_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
            color="lightgrey", alpha= 0.3) +
   geom_hline(yintercept=13.6, linetype="dashed", color="white") +
   geom_boxplot() +
-  ylim(0,50) +
+ # ylim(0,50) +
   theme_bw() +
   theme(legend.position = "none") +
   scale_fill_paletteer_d("ggthemes::Tableau_20") +
@@ -147,6 +168,55 @@ ggplot(daily_large_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
   coord_flip()
 
 ```
+
+#### Option 2 - only Academic Year
+
+```{r boxplot2, warning = F}
+daily_ay <- filter(daily_large_res, period %in% c("Spring","Fall"))
+
+ggplot(daily_ay, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
+                            fill = NAME)) +
+  annotate("rect", xmin=-Inf, xmax=Inf, ymin=8.2, ymax=36.1, 
+           color="lightgrey", alpha= 0.3) +
+  geom_hline(yintercept=13.6, linetype="dashed", color="white") +
+  geom_boxplot() +
+#  ylim(0,50) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  labs(x = "",
+       y = "Electricity Intensity (kWh/sqft/year)",
+       title = "Electricity Intensity by Square Foot (kWh/sqft/year)") +
+  coord_flip()
+
+```
+
+#### Option 3 - faceted by time of year
+
+```{r boxplot3, warning = F, fig.height = 8, fig.width = 10}
+daily_large_res$period <- factor(daily_large_res$period,
+                                 levels = c("Fall","Spring","Winter","Summer"),
+                                 labels = c("Fall Semester","Spring Semester",
+                                            "Winter Break","Summer Break"))
+
+ggplot(daily_large_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
+                            fill = NAME)) +
+  annotate("rect", xmin=-Inf, xmax=Inf, ymin=8.2, ymax=36.1, 
+           color="lightgrey", alpha= 0.3) +
+  geom_hline(yintercept=13.6, linetype="dashed", color="white") +
+  geom_boxplot() +
+  facet_wrap(. ~ period) +
+#  ylim(0,50) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  labs(x = "",
+       y = "Electricity Intensity (kWh/sqft/year)",
+       title = "Electricity Intensity by Square Foot (kWh/sqft/year)") +
+  coord_flip()
+
+```
+
 
 ## Partner contributions
 

@@ -20,21 +20,31 @@ This code is fleshing out the tasks for students in Problem Set 4 (data visualiz
 ```{r load}
 library(tidyverse)
 
-daily <- read.csv("../output/kwh_daily.csv", strip.white = TRUE)
+daily <- read.csv("./output/kwh_daily_2026-03-04.csv", strip.white = TRUE)
+key <- read.csv("./keys/temp_by_date.csv")
 
 str(daily)
+str(key)
 ```
 
 ### Wrangle
 
 ```{r wrangle}
 daily_date <- daily %>%
-  mutate(date = mdy(date),
+  mutate(date = ymd(date),
          month = month(date, label = TRUE),
-         day = wday(date, label = TRUE)) %>%
-  select(type, NAME, date, month, day, kwh, ave_temp)
+         day = wday(date, label = TRUE),
+         week = week(date),
+         day_type = ifelse(day %in% c("Sat","Sun"), "Weekend","Weekday")) %>%
+  dplyr::select(type, NAME, period, date, month, week, day, day_type, kwh, ave_temp)
 
-daily_main <- filter(daily_date, NAME == "Main Meter", )
+key_date <- key %>%
+  mutate(date = mdy(date))
+
+daily_main <- filter(daily_date, NAME == "Main Meter") %>%
+  left_join(key_date, by = c("ave_temp", "date")) %>%
+  mutate(temp_cat = ifelse(ave_temp > 65, "heating","cooling"),
+         period = ifelse(period %in% c("Spring","Fall"), "Academic", period))
 ```
 
 ### Check
@@ -124,7 +134,7 @@ ggplot(daily_main, aes(x = date, y = kwh)) +
   geom_vline(xintercept = ymd("2025-05-18"), color = "darkorchid1", linetype = "dashed") 
 ```
 
-### Daily pattern
+### Daily + yearly pattern
 
 ```{r daily}
 ggplot(daily_main, aes(x = day, y = kwh, fill = day)) +
@@ -134,6 +144,15 @@ ggplot(daily_main, aes(x = day, y = kwh, fill = day)) +
        y = "Electricity use (kWh per day)", 
        fill = "",
        title = "Main Meter electricity use by day") +
+  theme(legend.position = "none")
+
+ggplot(daily_main, aes(x = period, y = kwh, fill = period)) +
+  geom_boxplot() +
+  theme_bw() +
+  labs(x = "", 
+       y = "Electricity use (kWh per day)", 
+       fill = "",
+       title = "Main Meter electricity use by time of year") +
   theme(legend.position = "none")
 ```
 
@@ -147,3 +166,4 @@ ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
        y = "Electricity use (kWh per day)",
        title = "Main meter electricity use by temperature")
 ```
+
