@@ -27,12 +27,22 @@ is_outlier <- function(x) {
 ```
 
 ```{r load_data}
-daily_full <- read.csv("./output/kwh_daily_2026-03-12.csv") %>%
+daily_full <- read.csv("./output/kwh_daily_2026-03-16.csv") %>%
   mutate(date = as_date(date)) # convert back to date
 
-joined_full <- read.csv("./output/kwh_annual_2026-03-12.csv") 
+joined_full <- read.csv("./output/kwh_annual_2026-03-16.csv") 
+
+joined_acad <- read.csv("./output/kwh_academic_2026-03-16.csv") 
 
 total <- joined_full %>%
+  filter(meter != "Submeter" & type != "Res Hall - U" & type != "Production") %>%
+  summarize(kwh = sum(kwh, na.rm = T),
+            kwh_corr = sum(kwh_corr, na.rm = T),
+            sqft = sum(sqft, na.rm = T)) %>%
+  mutate(kwh_sqft = kwh_corr/sqft,
+         meter = "Total")
+
+total_acad <- joined_acad %>%
   filter(meter != "Submeter" & type != "Res Hall - U" & type != "Production") %>%
   summarize(kwh = sum(kwh, na.rm = T),
             kwh_corr = sum(kwh_corr, na.rm = T),
@@ -161,18 +171,16 @@ datatable(joined_pretty_cat,
 
 ## Electricity use over the year
 
-### Total
-
 ```{r stacked bar, warning = F, fig.height = 4.5, fig.height = 4.5}
 daily_graph <- daily_full %>%
   mutate(date = as_date(date),
          month = month(date, label = TRUE),
          day = wday(date, label = TRUE),
          type_brief = recode(type,
-                       'Res Hall - U' = 'Res Hall',
-                       'Res Hall - S' = 'Res Hall',
-                       'Res Hall - M' = 'Res Hall',
-                       'Res Hall - L' = 'Res Hall')) %>%
+                       'Res Hall - U' = 'Residential',
+                       'Res Hall - S' = 'Residential',
+                       'Res Hall - M' = 'Residential',
+                       'Res Hall - L' = 'Residential')) %>%
   filter(!is.na(month))
 
 ggplot(filter(daily_graph, meter != "Submeter"),
@@ -181,14 +189,28 @@ ggplot(filter(daily_graph, meter != "Submeter"),
   scale_fill_brewer(type = "qual", palette = "Paired") +
   theme_bw() +
   labs(x = "", y = "Electricity use (million kWh)", fill = "",
-       title = "")
+       title = "Figure 1. Fiscal Year 2025",
+       subtitle = "Monthly patterns in electricity use")
+```
+
+```{r faceted, warning = F, fig.height = 4.5, fig.height = 5}
+ggplot(filter(daily_graph, meter != "Submeter"),
+       aes(x = month, y = kwh/10^3, fill = reorder(type_brief, kwh, FUN = sum))) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ type_brief, scales = "free") +
+  scale_fill_brewer(type = "qual", palette = "Paired") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(x = "", y = "Electricity use (1000 kWh)", fill = "",
+       title = "Figure 2. Fiscal Year 2025",
+       subtitle = "Monthly patterns in electricity use by category",
+       caption = "Note: Data only includes buildings with individual meters. Most electricity use is accounted for on the Main Meter.")
 ```
 
 ## Electricity intensity
 
 ```{r intensity, warning = F, fig.height = 6, fig.width = 7}
-to_exclude <- filter(joined_full, days_perc < 90)
-
 intensity <- joined_full %>%
   filter(!(type %in% c("Res Hall - U","Production", "Non-building"))) %>%
   mutate(kwh_sqft = kwh_corr/sqft,
@@ -201,7 +223,6 @@ intensity <- joined_full %>%
            NAME == "Quarry, The " ~ "Quarry",
            NAME == "27 W. High St." ~ "27 W. High"
          )) 
-
 
 # median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
 # https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
@@ -219,5 +240,25 @@ ggplot(intensity,
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "kWh per sqft per year", 
-       title = "")
+       title = "Figure 3. Fiscal Year 2025")
+```
+
+```{r intensity_acad, warning = F, fig.height = 6, fig.width = 7}
+intensity_acad <- joined_acad %>%
+  filter(!(type %in% c("Res Hall - U","Production", "Non-building"))) %>%
+    mutate(kwh_sqft = kwh_corr/sqft,
+         meter_type = ifelse(type %in% c("Main Meter","Weis Meter"), "Aggregate", "Individual Meter"))
+
+ggplot(intensity_acad,
+       aes(x = reorder(type, kwh_sqft, FUN = "median"),
+                        y = kwh_sqft, fill = type)) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = "lightgray", alpha = 0.3) +
+  geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
+  facet_grid(meter_type ~ ., scales = "free_y", space = "free_y") +
+  geom_boxplot() +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "kWh per sqft per year", 
+       title = "Figure 4. Academic Year 2024/2025")
 ```

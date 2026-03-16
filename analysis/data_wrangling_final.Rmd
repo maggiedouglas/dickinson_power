@@ -35,10 +35,16 @@ library(RColorBrewer)
 # load electricity data + reformat date
 kwh <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = T) %>%
   mutate(date = mdy(date)) %>%
-  complete(nesting(account_number, meter_origin, meter_number), date)
+  complete(nesting(account_number, meter_origin, meter_number), date) %>%
+  mutate(period = ifelse((date > ymd("2024-08-28") & date < ymd("2024-12-21")), "Fall Semester", 
+                         ifelse((date > ymd("2025-01-07") & date < ymd("2025-05-18")), "Spring Semester",
+                                ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter Break", "Summer Break")))) 
   
 kwh_sub <- read.csv("./output/kwh_main_daily.csv", strip.white = T) %>%
-  mutate(date = ymd(date))
+  mutate(date = ymd(date)) %>%
+  mutate(period = ifelse((date > ymd("2024-08-28") & date < ymd("2024-12-21")), "Fall Semester", 
+                         ifelse((date > ymd("2025-01-07") & date < ymd("2025-05-18")), "Spring Semester",
+                                ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter Break", "Summer Break")))) 
 
 # store temp data for later
 temp <- select(kwh, date, ave_temp) %>%
@@ -88,6 +94,13 @@ kwh_annual <- kwh %>%
   summarize(kwh = sum(total_kwh, na.rm = T),
             days_perc = (n()/365)*100)
 
+kwh_academic <- kwh %>%
+  filter(period %in% c("Spring Semester","Fall Semester")) %>%
+  filter(!is.na(total_kwh)) %>%
+  group_by(meter_origin) %>%
+  summarize(kwh = sum(total_kwh, na.rm = T),
+            days_perc = (n()/244)*100) # days in academic year only
+
 ## Submeter data
 # buildings with missing days are variable in how they come back online
 # Library has a strange high value on 2/17
@@ -104,6 +117,14 @@ kwh_sub_annual <- kwh_sub_clean %>%
   group_by(building) %>%
   summarize(kwh = sum(kwh, na.rm = T),
             days_perc = (n()/365)*100) %>% # counts percent of days w/ non-zero data
+  filter(! building %in% c("Rector","HUB")) # these two buildings have < 10% of days present
+
+kwh_sub_academic <- kwh_sub_clean %>%
+  filter(period %in% c("Spring Semester","Fall Semester")) %>%
+  filter(!is.na(kwh)) %>%  # filter out NAs
+  group_by(building) %>%
+  summarize(kwh = sum(kwh, na.rm = T),
+            days_perc = (n()/244)*100) %>% # counts percent of days w/ non-zero data
   filter(! building %in% c("Rector","HUB")) # these two buildings have < 10% of days present
 ```
 
@@ -222,6 +243,63 @@ data_cov <- joined_full %>%
   select(NAME, days_perc)
 ```
 
+### Academic totals
+
+```{r academic, warning = F}
+# generate annual summary for individually metered buildings
+joined_ind_aca <- kwh_academic %>%
+  left_join(key, by = "meter_origin") %>% # join to key to match meters to building names
+  right_join(buildings_individual, by = "NAME", relationship = "many-to-one") %>% # join to building info by name
+  group_by(type_new, NAME, days_perc, meter) %>% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %>% # take mean to preserve sqft data
+  mutate(type = type_new) %>%
+  left_join(occupants, by = "NAME") %>%
+  ungroup() %>%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>%
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)
+
+# generate annual summary for submetered buildings
+joined_sub_aca <- kwh_sub_academic %>%
+  left_join(key_sub, by = "building") %>%
+  left_join(buildings_submeter, by = "NAME", relationship = "many-to-one") %>% # join to building info by name
+  filter(building != "CHW_Base") %>% # remove duplicate CHW value - not sure what this is?
+  group_by(type_new, NAME, days_perc, meter) %>% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %>% # preserve sqft as is
+  mutate(type = type_new) %>%
+ # filter(!is.na(type_new)) %>% # filter out those with NA for type
+  left_join(occupants, by = "NAME") %>%
+  ungroup() %>%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>%
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)
+
+# generate annual summary for main and weis meters
+joined_agg_aca <- kwh_academic %>%
+  left_join(key, by = "meter_origin") %>%
+  right_join(buildings_agg, by = "NAME") %>%
+  group_by(type_new, NAME, days_perc, meter) %>% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %>% # preserve sqft as is
+  mutate(type = type_new) %>%
+ # filter(!is.na(type_new)) %>% # filter out those with NA for type
+  left_join(occupants, by = "NAME") %>%
+  ungroup() %>%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %>%
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)
+
+# combine into one data frame
+joined_full_aca <- rbind(joined_ind_aca, joined_sub_aca, joined_agg_aca) %>%
+  filter(kwh != 0) %>%
+  mutate(kwh_corr = kwh/(days_perc/100)) %>% # estimate kwh for all days in the year
+  arrange(type, meter) %>%
+  select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants)
+
+# store lookup for data coverage
+data_cov_aca <- joined_full_aca %>%
+  select(NAME, days_perc)
+```
+
 ### Daily data
 
 ```{r split, warning = F}
@@ -276,9 +354,9 @@ daily_agg <- kwh %>%
   left_join(data_cov, by = "NAME") %>%
   merge(temp, by = "date") %>% # for some reason the join by date is not fully working... duplicating rows
   filter(!is.na(ave_temp)) %>% # remove duplicate rows
-  mutate(period = ifelse((date > ymd("2024-08-28") & date < ymd("2024-12-21")), "Fall", 
-                         ifelse((date > ymd("2025-01-07") & date < ymd("2025-05-18")), "Spring",
-                                ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter", "Summer")))) %>%
+  mutate(period = ifelse((date > ymd("2024-08-28") & date < ymd("2024-12-21")), "Fall Semester", 
+                         ifelse((date > ymd("2025-01-07") & date < ymd("2025-05-18")), "Spring Semester",
+                                ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter Break", "Summer Break")))) %>%
    select(type, meter, NAME, days_perc, sqft, occupants, period, date, kwh, ave_temp) %>%
    arrange(NAME)
    
@@ -326,7 +404,7 @@ ggplot(daily_test,
   geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
   geom_boxplot() +
   coord_flip() +
-  facet_grid(period ~ .) +
+  facet_wrap(. ~ period) +
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "kWh per sqft per year", 
@@ -344,6 +422,7 @@ today <- today("EST") %>%
   str_remove(" UTC") 
 
 write.csv(daily_full, paste0("./output/kwh_daily_", today, ".csv"), row.names = F)
+write.csv(joined_full_aca, paste0("./output/kwh_academic_", today, ".csv"), row.names = F)
 write.csv(joined_full, paste0("./output/kwh_annual_", today, ".csv"), row.names = F)
 ```
 

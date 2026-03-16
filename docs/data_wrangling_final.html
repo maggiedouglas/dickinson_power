@@ -394,7 +394,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Data wrangling for Class Project</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">12 March, 2026</h4>
+<h4 class="date">16 March, 2026</h4>
 
 </div>
 
@@ -423,7 +423,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-03-12
+<strong>Last updated:</strong> 2026-03-16
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -557,15 +557,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreed9d03962ec16024049cb532fe7a4ea25e233b508targetblankd9d0396a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreefd298ee73d28462195f82111c8455a8384943b95targetblankfd298eea">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/d9d03962ec16024049cb532fe7a4ea25e233b508" target="_blank">d9d0396</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/fd298ee73d28462195f82111c8455a8384943b95" target="_blank">fd298ee</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreed9d03962ec16024049cb532fe7a4ea25e233b508targetblankd9d0396a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreefd298ee73d28462195f82111c8455a8384943b95targetblankfd298eea"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -575,7 +575,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/d9d03962ec16024049cb532fe7a4ea25e233b508" target="_blank">d9d0396</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/fd298ee73d28462195f82111c8455a8384943b95" target="_blank">fd298ee</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -605,21 +605,23 @@ Ignored files:
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
     Ignored:    output/daily_kwh.csv
+    Ignored:    output/kwh_academic_2026-03-16.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_annual_2026-03-04.csv
     Ignored:    output/kwh_annual_2026-03-12.csv
+    Ignored:    output/kwh_annual_2026-03-16.csv
     Ignored:    output/kwh_annual_20260225.csv
     Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/kwh_daily_2026-03-04.csv
     Ignored:    output/kwh_daily_2026-03-12.csv
+    Ignored:    output/kwh_daily_2026-03-16.csv
     Ignored:    output/kwh_daily_20260225.csv
     Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
 Unstaged changes:
-    Modified:   analysis/PS05_prelim_results_Res_Hall_L.Rmd
     Modified:   analysis/campus_summary.Rmd
     Modified:   analysis/data_wrangling_final.Rmd
 
@@ -666,6 +668,42 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/9145690982134da7687438348571d4954d7adfef/analysis/data_wrangling_final.Rmd" target="_blank">9145690</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+<td>
+cleaned up data to remove outliers in submeters; updated campus summary
+and example (Res Hall L)
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/9145690982134da7687438348571d4954d7adfef/docs/data_wrangling_final.html" target="_blank">9145690</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+<td>
+cleaned up data to remove outliers in submeters; updated campus summary
+and example (Res Hall L)
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1291,10 +1329,16 @@ using a key that connects the two by building name</li>
 <pre class="r"><code># load electricity data + reformat date
 kwh &lt;- read.csv(&quot;./data/FY25 PPL Electricity Data.csv&quot;, strip.white = T) %&gt;%
   mutate(date = mdy(date)) %&gt;%
-  complete(nesting(account_number, meter_origin, meter_number), date)
+  complete(nesting(account_number, meter_origin, meter_number), date) %&gt;%
+  mutate(period = ifelse((date &gt; ymd(&quot;2024-08-28&quot;) &amp; date &lt; ymd(&quot;2024-12-21&quot;)), &quot;Fall Semester&quot;, 
+                         ifelse((date &gt; ymd(&quot;2025-01-07&quot;) &amp; date &lt; ymd(&quot;2025-05-18&quot;)), &quot;Spring Semester&quot;,
+                                ifelse(date &gt; ymd(&quot;2024-12-21&quot;) &amp; date &lt; ymd(&quot;2025-01-07&quot;), &quot;Winter Break&quot;, &quot;Summer Break&quot;)))) 
   
 kwh_sub &lt;- read.csv(&quot;./output/kwh_main_daily.csv&quot;, strip.white = T) %&gt;%
-  mutate(date = ymd(date))
+  mutate(date = ymd(date)) %&gt;%
+  mutate(period = ifelse((date &gt; ymd(&quot;2024-08-28&quot;) &amp; date &lt; ymd(&quot;2024-12-21&quot;)), &quot;Fall Semester&quot;, 
+                         ifelse((date &gt; ymd(&quot;2025-01-07&quot;) &amp; date &lt; ymd(&quot;2025-05-18&quot;)), &quot;Spring Semester&quot;,
+                                ifelse(date &gt; ymd(&quot;2024-12-21&quot;) &amp; date &lt; ymd(&quot;2025-01-07&quot;), &quot;Winter Break&quot;, &quot;Summer Break&quot;)))) 
 
 # store temp data for later
 temp &lt;- select(kwh, date, ave_temp) %&gt;%
@@ -1344,6 +1388,13 @@ kwh_annual &lt;- kwh %&gt;%
   summarize(kwh = sum(total_kwh, na.rm = T),
             days_perc = (n()/365)*100)
 
+kwh_academic &lt;- kwh %&gt;%
+  filter(period %in% c(&quot;Spring Semester&quot;,&quot;Fall Semester&quot;)) %&gt;%
+  filter(!is.na(total_kwh)) %&gt;%
+  group_by(meter_origin) %&gt;%
+  summarize(kwh = sum(total_kwh, na.rm = T),
+            days_perc = (n()/244)*100) # days in academic year only
+
 ## Submeter data
 # buildings with missing days are variable in how they come back online
 # Library has a strange high value on 2/17
@@ -1360,18 +1411,27 @@ kwh_sub_annual &lt;- kwh_sub_clean %&gt;%
   group_by(building) %&gt;%
   summarize(kwh = sum(kwh, na.rm = T),
             days_perc = (n()/365)*100) %&gt;% # counts percent of days w/ non-zero data
+  filter(! building %in% c(&quot;Rector&quot;,&quot;HUB&quot;)) # these two buildings have &lt; 10% of days present
+
+kwh_sub_academic &lt;- kwh_sub_clean %&gt;%
+  filter(period %in% c(&quot;Spring Semester&quot;,&quot;Fall Semester&quot;)) %&gt;%
+  filter(!is.na(kwh)) %&gt;%  # filter out NAs
+  group_by(building) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = T),
+            days_perc = (n()/244)*100) %&gt;% # counts percent of days w/ non-zero data
   filter(! building %in% c(&quot;Rector&quot;,&quot;HUB&quot;)) # these two buildings have &lt; 10% of days present</code></pre>
 </div>
 <div id="check-key-data" class="section level2">
 <h2>Check key data</h2>
 <pre class="r"><code>str(kwh)</code></pre>
-<pre><code>tibble [56,210 × 6] (S3: tbl_df/tbl/data.frame)
+<pre><code>tibble [56,210 × 7] (S3: tbl_df/tbl/data.frame)
  $ account_number: num [1:56210] 2.38e+08 2.38e+08 2.38e+08 2.38e+08 2.38e+08 ...
  $ meter_origin  : chr [1:56210] &quot;131 S College St&quot; &quot;131 S College St&quot; &quot;131 S College St&quot; &quot;131 S College St&quot; ...
  $ meter_number  : int [1:56210] 300087452 300087452 300087452 300087452 300087452 300087452 300087452 300087452 300087452 300087452 ...
  $ date          : Date[1:56210], format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
  $ total_kwh     : num [1:56210] 77 70.6 85.7 100.3 106.6 ...
- $ ave_temp      : int [1:56210] 69 73 78 81 84 86 84 84 86 87 ...</code></pre>
+ $ ave_temp      : int [1:56210] 69 73 78 81 84 86 84 84 86 87 ...
+ $ period        : chr [1:56210] &quot;Summer Break&quot; &quot;Summer Break&quot; &quot;Summer Break&quot; &quot;Summer Break&quot; ...</code></pre>
 <pre class="r"><code>str(buildings)</code></pre>
 <pre><code>&#39;data.frame&#39;:   135 obs. of  14 variables:
  $ TYPE       : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
@@ -1514,6 +1574,76 @@ joined_full &lt;- rbind(joined_individual, joined_sub, joined_agg) %&gt;%
 data_cov &lt;- joined_full %&gt;%
   select(NAME, days_perc)</code></pre>
 </div>
+<div id="academic-totals" class="section level3">
+<h3>Academic totals</h3>
+<pre class="r"><code># generate annual summary for individually metered buildings
+joined_ind_aca &lt;- kwh_academic %&gt;%
+  left_join(key, by = &quot;meter_origin&quot;) %&gt;% # join to key to match meters to building names
+  right_join(buildings_individual, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
+  group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %&gt;% # take mean to preserve sqft data
+  mutate(type = type_new) %&gt;%
+  left_join(occupants, by = &quot;NAME&quot;) %&gt;%
+  ungroup() %&gt;%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type_new, NAME, days_perc, and meter.
+ℹ Output is grouped by type_new, NAME, and days_perc.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(type_new, NAME, days_perc, meter))` for per-operation
+  grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<pre class="r"><code># generate annual summary for submetered buildings
+joined_sub_aca &lt;- kwh_sub_academic %&gt;%
+  left_join(key_sub, by = &quot;building&quot;) %&gt;%
+  left_join(buildings_submeter, by = &quot;NAME&quot;, relationship = &quot;many-to-one&quot;) %&gt;% # join to building info by name
+  filter(building != &quot;CHW_Base&quot;) %&gt;% # remove duplicate CHW value - not sure what this is?
+  group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %&gt;% # preserve sqft as is
+  mutate(type = type_new) %&gt;%
+ # filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
+  left_join(occupants, by = &quot;NAME&quot;) %&gt;%
+  ungroup() %&gt;%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type_new, NAME, days_perc, and meter.
+ℹ Output is grouped by type_new, NAME, and days_perc.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(type_new, NAME, days_perc, meter))` for per-operation
+  grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<pre class="r"><code># generate annual summary for main and weis meters
+joined_agg_aca &lt;- kwh_academic %&gt;%
+  left_join(key, by = &quot;meter_origin&quot;) %&gt;%
+  right_join(buildings_agg, by = &quot;NAME&quot;) %&gt;%
+  group_by(type_new, NAME, days_perc, meter) %&gt;% # group by building
+  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+            sqft = mean(sqft, na.rm = T)) %&gt;% # preserve sqft as is
+  mutate(type = type_new) %&gt;%
+ # filter(!is.na(type_new)) %&gt;% # filter out those with NA for type
+  left_join(occupants, by = &quot;NAME&quot;) %&gt;%
+  ungroup() %&gt;%
+  mutate_all(~ifelse(is.nan(.), NA, .)) %&gt;%
+  select(type, meter, NAME, days_perc, kwh, sqft, occupants)</code></pre>
+<pre><code>`summarise()` has regrouped the output.
+ℹ Summaries were computed grouped by type_new, NAME, days_perc, and meter.
+ℹ Output is grouped by type_new, NAME, and days_perc.
+ℹ Use `summarise(.groups = &quot;drop_last&quot;)` to silence this message.
+ℹ Use `summarise(.by = c(type_new, NAME, days_perc, meter))` for per-operation
+  grouping (`?dplyr::dplyr_by`) instead.</code></pre>
+<pre class="r"><code># combine into one data frame
+joined_full_aca &lt;- rbind(joined_ind_aca, joined_sub_aca, joined_agg_aca) %&gt;%
+  filter(kwh != 0) %&gt;%
+  mutate(kwh_corr = kwh/(days_perc/100)) %&gt;% # estimate kwh for all days in the year
+  arrange(type, meter) %&gt;%
+  select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants)
+
+# store lookup for data coverage
+data_cov_aca &lt;- joined_full_aca %&gt;%
+  select(NAME, days_perc)</code></pre>
+</div>
 <div id="daily-data" class="section level3">
 <h3>Daily data</h3>
 <pre class="r"><code># generate daily summary for individually metered buildings
@@ -1582,9 +1712,9 @@ daily_agg &lt;- kwh %&gt;%
   left_join(data_cov, by = &quot;NAME&quot;) %&gt;%
   merge(temp, by = &quot;date&quot;) %&gt;% # for some reason the join by date is not fully working... duplicating rows
   filter(!is.na(ave_temp)) %&gt;% # remove duplicate rows
-  mutate(period = ifelse((date &gt; ymd(&quot;2024-08-28&quot;) &amp; date &lt; ymd(&quot;2024-12-21&quot;)), &quot;Fall&quot;, 
-                         ifelse((date &gt; ymd(&quot;2025-01-07&quot;) &amp; date &lt; ymd(&quot;2025-05-18&quot;)), &quot;Spring&quot;,
-                                ifelse(date &gt; ymd(&quot;2024-12-21&quot;) &amp; date &lt; ymd(&quot;2025-01-07&quot;), &quot;Winter&quot;, &quot;Summer&quot;)))) %&gt;%
+  mutate(period = ifelse((date &gt; ymd(&quot;2024-08-28&quot;) &amp; date &lt; ymd(&quot;2024-12-21&quot;)), &quot;Fall Semester&quot;, 
+                         ifelse((date &gt; ymd(&quot;2025-01-07&quot;) &amp; date &lt; ymd(&quot;2025-05-18&quot;)), &quot;Spring Semester&quot;,
+                                ifelse(date &gt; ymd(&quot;2024-12-21&quot;) &amp; date &lt; ymd(&quot;2025-01-07&quot;), &quot;Winter Break&quot;, &quot;Summer Break&quot;)))) %&gt;%
    select(type, meter, NAME, days_perc, sqft, occupants, period, date, kwh, ave_temp) %&gt;%
    arrange(NAME)</code></pre>
 </div>
@@ -1824,7 +1954,7 @@ ggplot(daily_test,
   geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
   geom_boxplot() +
   coord_flip() +
-  facet_grid(period ~ .) +
+  facet_wrap(. ~ period) +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
@@ -1879,7 +2009,7 @@ str(daily_full)</code></pre>
  $ days_perc: num  100 100 100 100 100 100 100 100 100 100 ...
  $ sqft     : num  7190 7190 7190 7190 7190 7190 7190 7190 7190 7190 ...
  $ occupants: num  19 19 19 19 19 19 19 19 19 19 ...
- $ period   : chr  &quot;Summer&quot; &quot;Summer&quot; &quot;Summer&quot; &quot;Summer&quot; ...
+ $ period   : chr  &quot;Summer Break&quot; &quot;Summer Break&quot; &quot;Summer Break&quot; &quot;Summer Break&quot; ...
  $ date     : Date, format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
  $ kwh      : num  98.5 106.7 122.8 135.9 138 ...
  $ ave_temp : int  69 73 78 81 84 86 84 84 86 87 ...</code></pre>
@@ -1897,6 +2027,7 @@ str(daily_full)</code></pre>
   str_remove(&quot; UTC&quot;) 
 
 write.csv(daily_full, paste0(&quot;./output/kwh_daily_&quot;, today, &quot;.csv&quot;), row.names = F)
+write.csv(joined_full_aca, paste0(&quot;./output/kwh_academic_&quot;, today, &quot;.csv&quot;), row.names = F)
 write.csv(joined_full, paste0(&quot;./output/kwh_annual_&quot;, today, &quot;.csv&quot;), row.names = F)</code></pre>
 <br>
 <p>

@@ -11,7 +11,7 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-03-12" />
+<meta name="date" content="2026-03-16" />
 
 <title>Campus building summary</title>
 
@@ -404,7 +404,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Campus building summary</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">03/12/26</h4>
+<h4 class="date">03/16/26</h4>
 
 </div>
 
@@ -419,12 +419,22 @@ library(RColorBrewer)
 is_outlier &lt;- function(x) {
   return(x &lt; quantile(x, 0.25, na.rm = T) - 1.5 * IQR(x, na.rm = T) | x &gt; quantile(x, 0.75, na.rm = T) + 1.5 * IQR(x, na.rm = T))
 }</code></pre>
-<pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-12.csv&quot;) %&gt;%
+<pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-16.csv&quot;) %&gt;%
   mutate(date = as_date(date)) # convert back to date
 
-joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-12.csv&quot;) 
+joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-16.csv&quot;) 
+
+joined_acad &lt;- read.csv(&quot;./output/kwh_academic_2026-03-16.csv&quot;) 
 
 total &lt;- joined_full %&gt;%
+  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = T),
+            kwh_corr = sum(kwh_corr, na.rm = T),
+            sqft = sum(sqft, na.rm = T)) %&gt;%
+  mutate(kwh_sqft = kwh_corr/sqft,
+         meter = &quot;Total&quot;)
+
+total_acad &lt;- joined_acad %&gt;%
   filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
   summarize(kwh = sum(kwh, na.rm = T),
             kwh_corr = sum(kwh_corr, na.rm = T),
@@ -543,17 +553,15 @@ joined_pretty_cat &lt;- joined_cat %&gt;%
 </div>
 <div id="electricity-use-over-the-year" class="section level2">
 <h2>Electricity use over the year</h2>
-<div id="total" class="section level3">
-<h3>Total</h3>
 <pre class="r"><code>daily_graph &lt;- daily_full %&gt;%
   mutate(date = as_date(date),
          month = month(date, label = TRUE),
          day = wday(date, label = TRUE),
          type_brief = recode(type,
-                       &#39;Res Hall - U&#39; = &#39;Res Hall&#39;,
-                       &#39;Res Hall - S&#39; = &#39;Res Hall&#39;,
-                       &#39;Res Hall - M&#39; = &#39;Res Hall&#39;,
-                       &#39;Res Hall - L&#39; = &#39;Res Hall&#39;)) %&gt;%
+                       &#39;Res Hall - U&#39; = &#39;Residential&#39;,
+                       &#39;Res Hall - S&#39; = &#39;Residential&#39;,
+                       &#39;Res Hall - M&#39; = &#39;Residential&#39;,
+                       &#39;Res Hall - L&#39; = &#39;Residential&#39;)) %&gt;%
   filter(!is.na(month))
 
 ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
@@ -562,7 +570,8 @@ ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
   scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;&quot;)</code></pre>
+       title = &quot;Figure 1. Fiscal Year 2025&quot;,
+       subtitle = &quot;Monthly patterns in electricity use&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/stacked%20bar-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-1">
@@ -612,13 +621,23 @@ maggiedouglas
 </table>
 </div>
 </div>
-</div>
+<pre class="r"><code>ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
+       aes(x = month, y = kwh/10^3, fill = reorder(type_brief, kwh, FUN = sum))) +
+  geom_col(position = &quot;stack&quot;) +
+  facet_wrap(. ~ type_brief, scales = &quot;free&quot;) +
+  scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;,
+       title = &quot;Figure 2. Fiscal Year 2025&quot;,
+       subtitle = &quot;Monthly patterns in electricity use by category&quot;,
+       caption = &quot;Note: Data only includes buildings with individual meters. Most electricity use is accounted for on the Main Meter.&quot;)</code></pre>
+<p><img src="figure/campus_summary.Rmd/faceted-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="electricity-intensity" class="section level2">
 <h2>Electricity intensity</h2>
-<pre class="r"><code>to_exclude &lt;- filter(joined_full, days_perc &lt; 90)
-
-intensity &lt;- joined_full %&gt;%
+<pre class="r"><code>intensity &lt;- joined_full %&gt;%
   filter(!(type %in% c(&quot;Res Hall - U&quot;,&quot;Production&quot;, &quot;Non-building&quot;))) %&gt;%
   mutate(kwh_sqft = kwh_corr/sqft,
          meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;),
@@ -630,7 +649,6 @@ intensity &lt;- joined_full %&gt;%
            NAME == &quot;Quarry, The &quot; ~ &quot;Quarry&quot;,
            NAME == &quot;27 W. High St.&quot; ~ &quot;27 W. High&quot;
          )) 
-
 
 # median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
 # https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
@@ -648,7 +666,7 @@ ggplot(intensity,
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
-       title = &quot;&quot;)</code></pre>
+       title = &quot;Figure 3. Fiscal Year 2025&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/intensity-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity-1">
@@ -672,6 +690,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/9145690982134da7687438348571d4954d7adfef/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">9145690</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-12
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/cd016a63d3b92b2684c3366947bf8a04c7ffe5cc/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">cd016a6</a>
@@ -698,6 +727,24 @@ maggiedouglas
 </table>
 </div>
 </div>
+<pre class="r"><code>intensity_acad &lt;- joined_acad %&gt;%
+  filter(!(type %in% c(&quot;Res Hall - U&quot;,&quot;Production&quot;, &quot;Non-building&quot;))) %&gt;%
+    mutate(kwh_sqft = kwh_corr/sqft,
+         meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;))
+
+ggplot(intensity_acad,
+       aes(x = reorder(type, kwh_sqft, FUN = &quot;median&quot;),
+                        y = kwh_sqft, fill = type)) +
+  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
+  geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
+  facet_grid(meter_type ~ ., scales = &quot;free_y&quot;, space = &quot;free_y&quot;) +
+  geom_boxplot() +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
+       title = &quot;Figure 4. Academic Year 2024/2025&quot;)</code></pre>
+<p><img src="figure/campus_summary.Rmd/intensity_acad-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
