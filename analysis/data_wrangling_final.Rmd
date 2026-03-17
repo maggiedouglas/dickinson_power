@@ -1,7 +1,7 @@
 ---
 title: "Data wrangling for Class Project"
 author: "Maggie Douglas"
-date: "`r format(Sys.time(), '%d %B, %Y')`"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
 output: html_document
 ---
 
@@ -26,12 +26,12 @@ The main steps involved are:
 
 ## Load libraries + data
 
-```{r load}
+```{r load, message = F}
 library(tidyverse) # load tidyverse
 library(RColorBrewer)
 ```
 
-```{r load_data}
+```{r load_data, message = F, results = 'hide'}
 # load electricity data + reformat date
 kwh <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = T) %>%
   mutate(date = mdy(date)) %>%
@@ -130,7 +130,7 @@ kwh_sub_academic <- kwh_sub_clean %>%
 
 ## Check key data
 
-```{r check}
+```{r check, results = 'hide'}
 str(kwh)
 str(buildings)
 str(occupants)
@@ -188,13 +188,14 @@ buildings_sum <- buildings %>%
 
 ### Annual totals
 
-```{r annual, warning = F}
+```{r annual, warning = F, message = F}
 # generate annual summary for individually metered buildings
 joined_individual <- kwh_annual %>%
   left_join(key, by = "meter_origin") %>% # join to key to match meters to building names
   right_join(buildings_individual, by = "NAME", relationship = "many-to-one") %>% # join to building info by name
-  group_by(type_new, NAME, days_perc, meter) %>% # group by building
-  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+  group_by(type_new, NAME, meter) %>% # group by building
+  summarize(days_perc = min(days_perc, na.rm = T), # take minimum days_perc to reflect coverage of whole data
+            kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %>% # take mean to preserve sqft data
   mutate(type = type_new) %>%
   left_join(occupants, by = "NAME") %>%
@@ -236,7 +237,7 @@ joined_full <- rbind(joined_individual, joined_sub, joined_agg) %>%
   filter(kwh != 0) %>%
   mutate(kwh_corr = kwh/(days_perc/100)) %>% # estimate kwh for all days in the year
   arrange(type, meter) %>%
-  select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants)
+  select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants) 
 
 # store lookup for data coverage
 data_cov <- joined_full %>%
@@ -245,13 +246,14 @@ data_cov <- joined_full %>%
 
 ### Academic totals
 
-```{r academic, warning = F}
+```{r academic, warning = F, message = F}
 # generate annual summary for individually metered buildings
 joined_ind_aca <- kwh_academic %>%
   left_join(key, by = "meter_origin") %>% # join to key to match meters to building names
   right_join(buildings_individual, by = "NAME", relationship = "many-to-one") %>% # join to building info by name
-  group_by(type_new, NAME, days_perc, meter) %>% # group by building
-  summarize(kwh = sum(kwh, na.rm = T), # sum kwh by building
+  group_by(type_new, NAME, meter) %>% # group by building
+  summarize(days_perc = min(days_perc, na.rm = T), # take minimum days_perc to reflect coverage of whole data
+            kwh = sum(kwh, na.rm = T), # sum kwh by building
             sqft = mean(sqft, na.rm = T)) %>% # take mean to preserve sqft data
   mutate(type = type_new) %>%
   left_join(occupants, by = "NAME") %>%
@@ -293,7 +295,7 @@ joined_full_aca <- rbind(joined_ind_aca, joined_sub_aca, joined_agg_aca) %>%
   filter(kwh != 0) %>%
   mutate(kwh_corr = kwh/(days_perc/100)) %>% # estimate kwh for all days in the year
   arrange(type, meter) %>%
-  select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants)
+  select(type, meter, NAME, days_perc, kwh, kwh_corr, sqft, occupants) 
 
 # store lookup for data coverage
 data_cov_aca <- joined_full_aca %>%
@@ -302,7 +304,7 @@ data_cov_aca <- joined_full_aca %>%
 
 ### Daily data
 
-```{r split, warning = F}
+```{r split, warning = F, message = F}
 # generate daily summary for individually metered buildings
 daily_individual <- kwh %>%
   left_join(key, by = "meter_origin") %>% # join to key to match meters to building names
@@ -393,6 +395,8 @@ ggplot(buildings_graph,
 
 ## Practice boxplot
 
+Here's an example of how to make a faceted boxplot
+
 ```{r box_practice}
 daily_test <- daily_full %>%
   filter(NAME %in% c("Main Meter","Weis Meter")) %>% 
@@ -407,15 +411,16 @@ ggplot(daily_test,
   facet_wrap(. ~ period) +
   theme_bw() +
   theme(legend.position = "none") +
-  labs(x = "", y = "kWh per sqft per year", 
-       title = "Electricity Intensity by Building Type")
+  labs(x = "", y = "Electricity Intensity (kWh/sqft)", 
+       title = "")
 ```
 
 ## Export for downstream analyses
 
-```{r export}
+```{r export, results = 'hide'}
 # final data check
 str(daily_full)
+str(joined_full_aca)
 str(joined_full)
 
 today <- today("EST") %>%

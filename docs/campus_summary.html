@@ -11,7 +11,7 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-03-16" />
+<meta name="date" content="2026-03-17" />
 
 <title>Campus building summary</title>
 
@@ -404,7 +404,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Campus building summary</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">03/16/26</h4>
+<h4 class="date">03/17/26</h4>
 
 </div>
 
@@ -415,19 +415,20 @@ div.tocify {
 library(DT) # library to create tables
 library(scales) # library to format dollars
 library(RColorBrewer)
+library(paletteer)
 
 is_outlier &lt;- function(x) {
   return(x &lt; quantile(x, 0.25, na.rm = T) - 1.5 * IQR(x, na.rm = T) | x &gt; quantile(x, 0.75, na.rm = T) + 1.5 * IQR(x, na.rm = T))
 }</code></pre>
-<pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-16.csv&quot;) %&gt;%
+<pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-17.csv&quot;) %&gt;%
   mutate(date = as_date(date)) # convert back to date
 
-joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-16.csv&quot;) 
+joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-17.csv&quot;) 
 
-joined_acad &lt;- read.csv(&quot;./output/kwh_academic_2026-03-16.csv&quot;) 
+joined_acad &lt;- read.csv(&quot;./output/kwh_academic_2026-03-17.csv&quot;) 
 
 total &lt;- joined_full %&gt;%
-  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
+  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Solar&quot;) %&gt;%
   summarize(kwh = sum(kwh, na.rm = T),
             kwh_corr = sum(kwh_corr, na.rm = T),
             sqft = sum(sqft, na.rm = T)) %&gt;%
@@ -435,7 +436,7 @@ total &lt;- joined_full %&gt;%
          meter = &quot;Total&quot;)
 
 total_acad &lt;- joined_acad %&gt;%
-  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
+  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Solar&quot;) %&gt;%
   summarize(kwh = sum(kwh, na.rm = T),
             kwh_corr = sum(kwh_corr, na.rm = T),
             sqft = sum(sqft, na.rm = T)) %&gt;%
@@ -451,6 +452,7 @@ dollars_kwh &lt;- 0.08138507
 co2_kg_kwh &lt;- 0.30082405</code></pre>
 <pre class="r"><code># summarize # buildings by meter status
 bldg_sum &lt;- buildings %&gt;%
+  filter(NAME != &quot;Main Meter&quot;) %&gt;%
   group_by(meter) %&gt;%
   summarize(number = n())
 
@@ -463,7 +465,7 @@ bldg_comb &lt;- rbind(bldg_sum, bldg_tot)
 # generate summary for Main, Weis, and Individual meters
 joined_agg &lt;- joined_full %&gt;%
   ungroup() %&gt;%
-  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Production&quot;) %&gt;%
+  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Solar&quot;) %&gt;%
   group_by(meter) %&gt;%
   summarize(kwh = sum(kwh, na.rm = T),
             kwh_corr = sum(kwh_corr, na.rm = T),
@@ -521,10 +523,9 @@ joined_pretty_cat &lt;- joined_cat %&gt;%
          med_kwh_sqft = round(med_kwh_sqft, digits = 1),
          kwh_sqft_25 = round(kwh_sqft_25, digits = 1),
          kwh_sqft_75 = round(kwh_sqft_75, digits = 1)) %&gt;%
-    select(type, n, sqft, kwh, dollars, ghg_MTCO2, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %&gt;% 
-  arrange(desc(med_kwh_sqft))</code></pre>
-<div id="aggregate-meters" class="section level3">
-<h3>Aggregate meters</h3>
+    select(type, n, sqft, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %&gt;% 
+  arrange(desc(med_kwh_sqft)) %&gt;%
+  filter(!is.na(med_kwh_sqft))</code></pre>
 <pre class="r"><code>datatable(joined_pretty_tot,
           rownames = FALSE,
           colnames = c(&quot;Meter status&quot;,&quot;Buildings&quot;, &quot;Square\nfootage&quot;, &quot;kWh&quot;, &quot;Est. cost&quot;, 
@@ -532,24 +533,19 @@ joined_pretty_cat &lt;- joined_cat %&gt;%
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
           options = list(pageLength = 4, autoWidth = TRUE, dom = &#39;t&#39;),
-          caption = &quot;Table 1. Totals for annual electricity use by meter type. Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
+          caption = &quot;Table 1. Building and electricity summary by meter status in Fiscal Year 2025. Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Totals for annual electricity use by meter type. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Weis Meter","Individually Metered","Main Meter","Total"],[9,81,45,135],[85725,724968,1119435,1930128],[973320,4517949,11648808,17140077],["$ 79214","$ 367694","$ 948039","$ 1394946"],[293,1359,3504,5156],[11.4,6.2,10.4,8.9]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter status<\/th>\n      <th>Buildings<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>kWh per\nsqft<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":4,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6]},{"name":"meter","targets":0},{"name":"number","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"kwh_sqft","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[4,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-</div>
-<div id="individually-metered-buildings" class="section level3">
-<h3>Individually metered buildings</h3>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Building and electricity summary by meter status in Fiscal Year 2025. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Weis Meter","Individually Metered","Main Meter","Total"],[9,81,44,134],[85725,691658,1119435,1896818],[973320,4547942,11648808,17170070],["$ 79214","$ 370135","$ 948039","$ 1397387"],[293,1368,3504,5165],[11.4,6.6,10.4,9.1]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter status<\/th>\n      <th>Buildings<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>kWh per\nsqft<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":4,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6]},{"name":"meter","targets":0},{"name":"number","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"kwh_sqft","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[4,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>datatable(joined_pretty_cat,
           rownames = FALSE,
-          colnames = c(&quot;Building\ntype&quot;,&quot;Buildings\nwith data&quot;, &quot;Median\nsquare\nfootage&quot;, &quot;kWh&quot;, 
-                       &quot;Est. cost&quot;, &quot;CO2e\n(MT)&quot;, &quot;Median\nkWh\nper sqft&quot;,
+          colnames = c(&quot;Building\ntype&quot;,&quot;Buildings\nwith data&quot;, &quot;Median\nsquare\nfootage&quot;, &quot;Median\nkWh\nper sqft&quot;,
                        &quot;25th Perc.&quot;, &quot;75th Perc.&quot;),
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
           options = list(pageLength = 11, autoWidth = TRUE, dom = &#39;t&#39;),
-          caption = &quot;Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
+          caption = &quot;Table 2. Descriptive statistics for annual electricity use by building type for those buildings with individual electricity use data (n = 81 buildings). Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Descriptive statistics for annual electricity use by building type for buildings with individual electricity use data. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Mixed","Other","Res Hall - M","Res Hall - S","Res Hall - L","Academic","Community","Admin","Res Hall - U","Non-building","Production"],[2,14,14,18,19,10,5,6,7,4,1],[84008,2492,4525,1477,18603,7808,7953,14650,null,null,null],[2509256,1689647,334569,145966,2700440,838963,236293,755716,107265,92882,-4274284],["$ 204216","$ 137512","$ 27229","$ 11879","$ 219776","$ 68279","$ 19231","$ 61504","$ 8730","$ 7559","$ -347863"],[755,508,101,44,812,252,71,227,32,28,-1286],[15.6,6.8,5.5,5.2,4.8,3.7,3.7,3.2,null,null,null],[10.7,5.2,2.9,3.9,4.3,3.6,2.3,2.6,null,null,null],[20.6,9.300000000000001,6.5,5.8,7,4.8,4.9,5.3,null,null,null]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>Median\nsquare\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6,7,8]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"med_kwh_sqft","targets":6},{"name":"kwh_sqft_25","targets":7},{"name":"kwh_sqft_75","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-</div>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Descriptive statistics for annual electricity use by building type for those buildings with individual electricity use data (n = 81 buildings). Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Mixed","Other","Residential - M","Residential - S","Residential - L","Community","Academic","Admin"],[2,14,14,18,19,4,10,6],[84008,2492,4525,1477,18603,7420,7808,14650],[15.6,6.8,5.5,5.2,4.8,4.3,3.7,3.2],[10.7,5.2,2.9,3.9,4.3,3.2,3.6,2.6],[20.6,9.300000000000001,6.5,5.8,7,6.3,4.8,5.3]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>Median\nsquare\nfootage<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"sqft","targets":2},{"name":"med_kwh_sqft","targets":3},{"name":"kwh_sqft_25","targets":4},{"name":"kwh_sqft_75","targets":5}],"order":[],"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="electricity-use-over-the-year" class="section level2">
 <h2>Electricity use over the year</h2>
@@ -567,7 +563,8 @@ joined_pretty_cat &lt;- joined_cat %&gt;%
 ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
        aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
   geom_col(position = &quot;stack&quot;) +
-  scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
+  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
+  #scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
        title = &quot;Figure 1. Fiscal Year 2025&quot;,
@@ -597,6 +594,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/stacked bar-1.png" target="_blank">012f9a1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-16
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/cd016a63d3b92b2684c3366947bf8a04c7ffe5cc/docs/figure/campus_summary.Rmd/stacked bar-1.png" target="_blank">cd016a6</a>
 </td>
 <td>
@@ -621,24 +629,74 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
-       aes(x = month, y = kwh/10^3, fill = reorder(type_brief, kwh, FUN = sum))) +
+<pre class="r"><code>ggplot(filter(daily_graph, meter %in% c(&quot;Main Meter - Total&quot;, &quot;Weis Meter - Total&quot;)),
+       aes(x = month, y = kwh/10^3, fill = type_brief)) +
   geom_col(position = &quot;stack&quot;) +
-  facet_wrap(. ~ type_brief, scales = &quot;free&quot;) +
-  scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
+  facet_wrap(. ~ type_brief) +
+  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;,
        title = &quot;Figure 2. Fiscal Year 2025&quot;,
-       subtitle = &quot;Monthly patterns in electricity use by category&quot;,
+       subtitle = &quot;Monthly patterns in electricity use for aggregate meters&quot;,
+       )</code></pre>
+<p><img src="figure/campus_summary.Rmd/faceted_agg-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Individual&quot; &amp; type != &quot;Solar&quot;),
+       aes(x = month, y = kwh/10^3, fill = type_brief)) +
+  geom_col(position = &quot;stack&quot;) +
+  facet_wrap(. ~ type_brief) +
+  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
+  theme_bw() +
+  theme(legend.position = &quot;none&quot;) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;,
+       title = &quot;Figure 3. Fiscal Year 2025&quot;,
+       subtitle = &quot;Monthly patterns in electricity use by category for buildings with individual meters&quot;,
        caption = &quot;Note: Data only includes buildings with individual meters. Most electricity use is accounted for on the Main Meter.&quot;)</code></pre>
-<p><img src="figure/campus_summary.Rmd/faceted-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/campus_summary.Rmd/faceted-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-faceted-1">
+Past versions of faceted-1.png
+</button>
+</p>
+<div id="fig-faceted-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/faceted-1.png" target="_blank">012f9a1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="electricity-intensity" class="section level2">
 <h2>Electricity intensity</h2>
 <pre class="r"><code>intensity &lt;- joined_full %&gt;%
-  filter(!(type %in% c(&quot;Res Hall - U&quot;,&quot;Production&quot;, &quot;Non-building&quot;))) %&gt;%
+  filter(!(type %in% c(&quot;Residential - U&quot;,&quot;Solar&quot;, &quot;Non-building&quot;))) %&gt;%
   mutate(kwh_sqft = kwh_corr/sqft,
          meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;),
          outlier = case_when(
@@ -662,11 +720,14 @@ ggplot(intensity,
   geom_boxplot() +
   geom_label(aes(label = outlier), na.rm = TRUE, nudge_x = -0.25, nudge_y = 0.5, 
              color = &quot;black&quot;, fill = &quot;white&quot;, size = 2, alpha = 0, label.size = NA) +
+    scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
   coord_flip() +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
-  labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
-       title = &quot;Figure 3. Fiscal Year 2025&quot;)</code></pre>
+  labs(x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;, 
+       title = &quot;Figure 4. Fiscal Year 2025&quot;,
+       subtitle = &quot;Electricity intensity by meter/building category&quot;,
+       caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/intensity-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity-1">
@@ -690,6 +751,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">012f9a1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-16
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/9145690982134da7687438348571d4954d7adfef/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">9145690</a>
@@ -728,7 +800,7 @@ maggiedouglas
 </div>
 </div>
 <pre class="r"><code>intensity_acad &lt;- joined_acad %&gt;%
-  filter(!(type %in% c(&quot;Res Hall - U&quot;,&quot;Production&quot;, &quot;Non-building&quot;))) %&gt;%
+  filter(!(type %in% c(&quot;Residential - U&quot;,&quot;Solar&quot;, &quot;Non-building&quot;))) %&gt;%
     mutate(kwh_sqft = kwh_corr/sqft,
          meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;))
 
@@ -738,13 +810,62 @@ ggplot(intensity_acad,
   annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
   geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
   facet_grid(meter_type ~ ., scales = &quot;free_y&quot;, space = &quot;free_y&quot;) +
+    scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
   geom_boxplot() +
   coord_flip() +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
-  labs(x = &quot;&quot;, y = &quot;kWh per sqft per year&quot;, 
-       title = &quot;Figure 4. Academic Year 2024/2025&quot;)</code></pre>
+  labs(x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;, 
+       title = &quot;Figure 5. Academic Year 2024/2025&quot;,
+       subtitle = &quot;Electricity intensity by meter/building category&quot;, 
+       caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/intensity_acad-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity_acad-1">
+Past versions of intensity_acad-1.png
+</button>
+</p>
+<div id="fig-intensity_acad-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/intensity_acad-1.png" target="_blank">012f9a1</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-16
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div id="sources" class="section level2">
+<h2>Sources</h2>
+<p>Energy Information Administration (EIA). (2022). <em>2018 Commercial
+Buildings Energy Consumption Survey (CBECS).</em> <a
+href="https://www.eia.gov/consumption/commercial/"
+class="uri">https://www.eia.gov/consumption/commercial/</a></p>
+<p>Leary, N. (2025). <em>Dickinson College Greenhouse Gas Inventory
+2008-2023.</em> Center for Sustainability Education.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -772,25 +893,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] RColorBrewer_1.1-3 scales_1.4.0       DT_0.34.0          lubridate_1.9.5   
- [5] forcats_1.0.1      stringr_1.6.0      dplyr_1.2.0        purrr_1.2.1       
- [9] readr_2.2.0        tidyr_1.3.2        tibble_3.3.1       ggplot2_4.0.2     
-[13] tidyverse_2.0.0   
+ [1] paletteer_1.7.0    RColorBrewer_1.1-3 scales_1.4.0       DT_0.34.0         
+ [5] lubridate_1.9.5    forcats_1.0.1      stringr_1.6.0      dplyr_1.2.0       
+ [9] purrr_1.2.1        readr_2.2.0        tidyr_1.3.2        tibble_3.3.1      
+[13] ggplot2_4.0.2      tidyverse_2.0.0   
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.10       generics_0.1.4    stringi_1.8.7     hms_1.1.4        
- [5] digest_0.6.39     magrittr_2.0.4    timechange_0.4.0  evaluate_1.0.5   
- [9] grid_4.5.2        fastmap_1.2.0     rprojroot_2.1.1   workflowr_1.7.2  
-[13] jsonlite_2.0.0    whisker_0.4.1     promises_1.5.0    crosstalk_1.2.2  
-[17] jquerylib_0.1.4   cli_3.6.5         rlang_1.1.7       withr_3.0.2      
-[21] cachem_1.1.0      yaml_2.3.12       otel_0.2.0        tools_4.5.2      
-[25] tzdb_0.5.0        httpuv_1.6.16     vctrs_0.7.1       R6_2.6.1         
-[29] lifecycle_1.0.5   git2r_0.36.2      htmlwidgets_1.6.4 fs_1.6.7         
-[33] pkgconfig_2.0.3   pillar_1.11.1     bslib_0.10.0      later_1.4.8      
-[37] gtable_0.3.6      glue_1.8.0        Rcpp_1.1.1        xfun_0.56        
-[41] tidyselect_1.2.1  rstudioapi_0.18.0 knitr_1.51        farver_2.1.2     
-[45] htmltools_0.5.9   labeling_0.4.3    rmarkdown_2.30    compiler_4.5.2   
-[49] S7_0.2.1         </code></pre>
+ [1] sass_0.4.10       generics_0.1.4    prismatic_1.1.2   stringi_1.8.7    
+ [5] hms_1.1.4         digest_0.6.39     magrittr_2.0.4    timechange_0.4.0 
+ [9] evaluate_1.0.5    grid_4.5.2        fastmap_1.2.0     rprojroot_2.1.1  
+[13] workflowr_1.7.2   jsonlite_2.0.0    whisker_0.4.1     rematch2_2.1.2   
+[17] promises_1.5.0    crosstalk_1.2.2   jquerylib_0.1.4   cli_3.6.5        
+[21] rlang_1.1.7       withr_3.0.2       cachem_1.1.0      yaml_2.3.12      
+[25] otel_0.2.0        tools_4.5.2       tzdb_0.5.0        httpuv_1.6.16    
+[29] vctrs_0.7.1       R6_2.6.1          lifecycle_1.0.5   git2r_0.36.2     
+[33] htmlwidgets_1.6.4 fs_1.6.7          pkgconfig_2.0.3   pillar_1.11.1    
+[37] bslib_0.10.0      later_1.4.8       gtable_0.3.6      glue_1.8.0       
+[41] Rcpp_1.1.1        xfun_0.56         tidyselect_1.2.1  rstudioapi_0.18.0
+[45] knitr_1.51        farver_2.1.2      htmltools_0.5.9   labeling_0.4.3   
+[49] rmarkdown_2.30    compiler_4.5.2    S7_0.2.1         </code></pre>
 </div>
 </div>
 
