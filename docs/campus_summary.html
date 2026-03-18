@@ -11,7 +11,7 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-03-17" />
+<meta name="date" content="2026-03-18" />
 
 <title>Campus building summary</title>
 
@@ -404,7 +404,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Campus building summary</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">03/17/26</h4>
+<h4 class="date">03/18/26</h4>
 
 </div>
 
@@ -504,8 +504,50 @@ joined_cat &lt;- joined_full %&gt;%
             kwh_sqft_75 = quantile(kwh_sqft, .75, na.rm = T)) %&gt;%
   arrange(-kwh)</code></pre>
 </div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>This analysis examines electricity use on Dickinson’s campus as a
+whole in fiscal year 2025, to provide context for the category-specific
+analyses that follow. Buildings on Dickinson’s campus vary in how they
+are metered for electricity usage. Some buildings (and even individual
+apartments within buildings) have their own electricity meters, while
+others share a combined meter. There are two combined (or aggregate)
+meters - the “main meter” (associated with buildings in the central part
+of campus) and “Weis meter” (associated with buildings in a block around
+Weis Arts Complex). Some buildings on the main meter additionally have a
+“submeter” to track their individual electricity use.</p>
+<p>The electricity data analyzed here were derived from a combination of
+daily electricity use reported by the college electricity provider
+(PP&amp;L), daily electricity use recorded on submeters, provided by the
+Center for Sustainability Education. Electricity use information was
+joined with information on building characteristics shared by facilities
+management. Once the data were joined, we summarized electricity use by
+building and calculated electricity use indicators including estimated
+financial cost, associated greenhouse gas emissions in metric tons of
+CO2-equivalents, and electricity use normalized by square footage and
+student occupancy (for residence halls only). Financial cost is a rough
+estimate based on per kWh supply and delivery charges in June 2025 for
+the main meter, a value that will underestimate cost for smaller
+buildings due to variable costs.</p>
+</div>
 <div id="electricity-use-summary" class="section level2">
 <h2>Electricity use summary</h2>
+<p>The analysis includes 134 distinct buildings, accounting for almost 2
+million square feet of building space (Table 1). The majority (59%) of
+square footage was accounted for by buildings connected to the main
+meter. We identified 44 distinct buildings on the main meter, a value
+that differs slightly from internal campus estimate of 37 buildings due
+to differences in how buildings are delineated in the two datasets
+(e.g. Rector Science Center and Tome are listed together in the
+electricity data but separately in the building data). Our final dataset
+also includes 81 individually metered buildings that together account
+for 36% of campus square footage.</p>
+<p>We estimate that Dickinson used roughly 17 million kWh of electricity
+in fiscal year 2025, corresponding to a cost of roughly $1.4 million and
+over 5000 MT CO2-equivalents (Table 1). Most (68%) of this use was
+associated with buildings on the main meter. Another 6% was associated
+for nine buildings on the Weis meter, and the remaining 26% was
+associated with individually metered buildings.</p>
 <pre class="r"><code>joined_pretty_tot &lt;- joined_tot %&gt;%
   mutate(kwh = round(kwh_corr, digits = 0),
          dollars = paste(&quot;$&quot;,round(dollars, digits = 0)),
@@ -549,6 +591,14 @@ joined_pretty_cat &lt;- joined_cat %&gt;%
 </div>
 <div id="electricity-use-over-the-year" class="section level2">
 <h2>Electricity use over the year</h2>
+<p>Electricity use peaked in July and was lowest in May and November
+(Figure 1). At all times of year, buildings on the main meter accounted
+for most of the electricity use, and the main meter buildings appeared
+to drive the seasonal pattern (Figure 2). Of the individually metered
+buildings, large residence halls accounted for the largest share of
+electricity use and peaked in winter (Figure 3). Interestingly,
+electricity production through the solar field peaked in July and was
+lowest in December and January (Figure 1).</p>
 <pre class="r"><code>daily_graph &lt;- daily_full %&gt;%
   mutate(date = as_date(date),
          month = month(date, label = TRUE),
@@ -567,8 +617,7 @@ ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
   #scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Figure 1. Fiscal Year 2025&quot;,
-       subtitle = &quot;Monthly patterns in electricity use&quot;)</code></pre>
+       title = &quot;Figure 1. Monthly patterns in electricity use in FY25&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/stacked%20bar-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-1">
@@ -592,6 +641,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/bd65297524933e7448377a79a4cd9915ca5c1aa4/docs/figure/campus_summary.Rmd/stacked bar-1.png" target="_blank">bd65297</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/stacked bar-1.png" target="_blank">012f9a1</a>
@@ -638,10 +698,46 @@ maggiedouglas
   theme(legend.position = &quot;none&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Figure 2. Fiscal Year 2025&quot;,
-       subtitle = &quot;Monthly patterns in electricity use for aggregate meters&quot;,
+       title = &quot;Figure 2. Monthly patterns in electricity use for aggregate meters in FY2025&quot;,
        )</code></pre>
 <p><img src="figure/campus_summary.Rmd/faceted_agg-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-faceted_agg-1">
+Past versions of faceted_agg-1.png
+</button>
+</p>
+<div id="fig-faceted_agg-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/bd65297524933e7448377a79a4cd9915ca5c1aa4/docs/figure/campus_summary.Rmd/faceted_agg-1.png" target="_blank">bd65297</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-17
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 <pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Individual&quot; &amp; type != &quot;Solar&quot;),
        aes(x = month, y = kwh/10^3, fill = type_brief)) +
   geom_col(position = &quot;stack&quot;) +
@@ -651,8 +747,7 @@ maggiedouglas
   theme(legend.position = &quot;none&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Figure 3. Fiscal Year 2025&quot;,
-       subtitle = &quot;Monthly patterns in electricity use by category for buildings with individual meters&quot;,
+       title = &quot;Figure 3. Monthly patterns in electricity use by category in FY2025&quot;,
        caption = &quot;Note: Data only includes buildings with individual meters. Most electricity use is accounted for on the Main Meter.&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/faceted-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
 <p>
@@ -679,6 +774,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/bd65297524933e7448377a79a4cd9915ca5c1aa4/docs/figure/campus_summary.Rmd/faceted-1.png" target="_blank">bd65297</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-17
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/faceted-1.png" target="_blank">012f9a1</a>
 </td>
 <td>
@@ -695,6 +801,25 @@ maggiedouglas
 </div>
 <div id="electricity-intensity" class="section level2">
 <h2>Electricity intensity</h2>
+<p>Looking at the entire fiscal year, electricity intensity (use per
+square foot of space) varied across building categories for individually
+metered buildings (Table 2, Figure 4). Administrative buildings had the
+lowest electricity intensity with a median of 3.2 kWh/sqft
+(interquartile range 2.6-5.3 kWh/sqft), while the ‘Mixed’ category of
+buildings had the highest value at 15.6 kWh/sqft (interquartile range
+10.7-20.6 kWh/sqft). Importantly, the ‘Mixed’ category includes Kaufman
+Hall, which houses the campus central energy plant and supplies heat and
+cooling to other buildings on campus. That said, electricity intensity
+for most individually metered buildings as substantially below typical
+values for U.S. Colleges and Universities as reported by the U.S. Energy
+Information Administration (EIA 2022).</p>
+<p>Interestingly, the two aggregate meters that account for most
+electricity use on campus had a slightly higher electricity intensity
+than most individually metered buildings, at 11.4 kWh/sqft for buildings
+on the Weis meter and 10.4 kWh/sqft for buildings on the main meter
+(Table 1, Figure 4). These values are very close to the median value of
+10.3 kWh/sqft (interquartile range 7.4-14.3 kWh/sqft) reported for U.S.
+Colelges and Universities (EIA 2022).</p>
 <pre class="r"><code>intensity &lt;- joined_full %&gt;%
   filter(!(type %in% c(&quot;Residential - U&quot;,&quot;Solar&quot;, &quot;Non-building&quot;))) %&gt;%
   mutate(kwh_sqft = kwh_corr/sqft,
@@ -725,8 +850,7 @@ ggplot(intensity,
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;, 
-       title = &quot;Figure 4. Fiscal Year 2025&quot;,
-       subtitle = &quot;Electricity intensity by meter/building category&quot;,
+       title = &quot;Figure 4. Electricity intensity by meter/building category in FY25&quot;,
        caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/intensity-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -751,6 +875,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/bd65297524933e7448377a79a4cd9915ca5c1aa4/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">bd65297</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">012f9a1</a>
@@ -816,8 +951,7 @@ ggplot(intensity_acad,
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;, 
-       title = &quot;Figure 5. Academic Year 2024/2025&quot;,
-       subtitle = &quot;Electricity intensity by meter/building category&quot;, 
+       title = &quot;Figure 5. Electricity intensity by meter/building category in AY24/25&quot;, 
        caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/intensity_acad-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -842,6 +976,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/bd65297524933e7448377a79a4cd9915ca5c1aa4/docs/figure/campus_summary.Rmd/intensity_acad-1.png" target="_blank">bd65297</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-17
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/012f9a199bf668fdb338eabe99a4c6d63ade705d/docs/figure/campus_summary.Rmd/intensity_acad-1.png" target="_blank">012f9a1</a>
