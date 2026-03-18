@@ -227,7 +227,7 @@ ggplot(filter(daily_graph, meter == "Individual" & type != "Solar"),
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(x = "", y = "Electricity use (1000 kWh)", fill = "",
        title = "Figure 3. Monthly patterns in electricity use by category in FY2025",
-       caption = "Note: Data only includes buildings with individual meters. Most electricity use is accounted for on the Main Meter.")
+       subtitle = "Only includes buildings with individual meters. Most electricity use is on the Main Meter.")
 ```
 
 ## Electricity intensity

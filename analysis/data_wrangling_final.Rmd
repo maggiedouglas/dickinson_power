@@ -412,7 +412,7 @@ ggplot(daily_test,
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "Electricity Intensity (kWh/sqft)", 
-       title = "")
+       title = "Figure 2. Electricity intensity by aggregate meter in FY25. ")
 ```
 
 ## Export for downstream analyses
