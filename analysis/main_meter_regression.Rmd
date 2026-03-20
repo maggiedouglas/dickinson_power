@@ -1,0 +1,150 @@
+---
+title: "Main Meter - Simple linear regression"
+author: "Maggie Douglas"
+date: "2026-03-20"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Question
+
+What is the relationship between electricity use and outdoor temperature for buildings on the main meter?
+
+## Load
+
+```{r load}
+library(tidyverse)
+library(segmented) # for segmented regression 
+library(tseries) # for time series, including autocorrelation
+
+daily <- read.csv("./output/kwh_daily_2026-03-04.csv", strip.white = TRUE)
+key <- read.csv("./keys/temp_by_date.csv")
+
+str(daily)
+str(key)
+```
+
+## Wrangle
+
+```{r wrangle}
+daily_main <- daily %>%
+  filter(NAME == "Main Meter") %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE),
+         day_type = ifelse(day %in% c("Sat","Sun"), "Weekend","Weekday")) 
+```
+
+## Visualize the relationship
+
+```{r vis}
+# basic relationship
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() 
+
+# what happens if we try to model this relationship with a straight line?
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() +
+  geom_smooth(method = "lm", formula = 'y ~ x')
+
+# where is the break point?
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() +
+  geom_vline(xintercept = 58, col = "blue", linetype = "dashed")
+```
+
+## Fit a bad model (you wouldn't do this, but just to see what happens...)
+
+```{r mod_bad}
+mod_bad <- lm(kwh ~ ave_temp, data = daily_main)
+```
+
+### Check the fit
+
+```{r check_bad}
+par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_bad$residuals) # Histogram of residuals
+plot(mod_bad, which = 2) # Quantile plot
+plot(mod_bad, which = 1) # Residuals vs. fits
+```
+
+### Examine results
+
+```{r results_bad}
+summary(mod_bad) # Examine model terms + outcomes
+```
+
+## Fit a reasonable model
+
+Let's focus here on temperatures over 58 degrees, where the relationship appears linear.
+
+```{r mod}
+# subset data > 58 degrees
+daily_cool <- filter(daily_main, ave_temp > 58)
+
+# fit the model for temps above 58
+mod_cool <- lm(kwh ~ ave_temp, data = daily_cool)
+```
+
+### Check the fit
+
+```{r check}
+par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_cool$residuals) # Histogram of residuals
+plot(mod_cool, which = 2) # Quantile plot
+plot(mod_cool, which = 1) # Residuals vs. fits
+```
+
+### Examine results
+
+```{r results}
+summary(mod_cool) # Examine model terms + outcomes
+```
+
+### Plot results
+
+```{r plot}
+ggplot(daily_cool, aes(x = ave_temp, y = kwh)) +
+  geom_point(alpha = 0.6) +
+  geom_smooth(method = 'lm', formula = 'y ~ x') +
+  theme_bw() +
+  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh)")
+```
+
+## What about a segmented regression?
+
+This is a technique that essentially allows us to fit two linear models to our data, with a break point identified by the analysis. 
+
+```{r mod_seg}
+mod_full <- lm(kwh ~ ave_temp, data = daily_main)
+mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 58)
+```
+
+### Check the fit
+
+```{r check_seg}
+par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_seg$residuals) # Histogram of residuals
+plot(mod_seg$residuals) # Residuals vs. fits
+```
+
+### Examine results
+
+```{r results_seg}
+summary(mod_seg) # Examine model terms + outcomes
+```
+
+### Plot results
+
+```{r plot_seg}
+# plot original data with fit
+plot(mod_seg, col = 'black', res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor("steelblue", alpha.f = 0.7),
+     xlab = "Temperature (deg F)", ylab = "Electricity use (kWh)")
+```
