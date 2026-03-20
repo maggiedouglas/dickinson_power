@@ -51,9 +51,12 @@ total_acad <- joined_acad %>%
   mutate(kwh_sqft = kwh_corr/sqft,
          meter = "Total")
 
-buildings <- read.csv("./keys/fy25_building_list_updated.csv") %>%
+buildings <- read.csv("./keys/fy25_building_list_updated.csv", strip.white = T) %>%
   mutate(meter = ifelse(weis_meter == 1, "Weis Meter",
-                               ifelse(main_meter == 0 & weis_meter == 0, "Individually Metered", "Main Meter")))
+                               ifelse(main_meter == 0 & weis_meter == 0, "Individually Metered", "Main Meter")),
+         NAME = str_remove_all(NAME, "/"),
+         NAME = str_replace_all(NAME, "  "," "),
+         NAME = str_replace_all(NAME, "   "," "))
 
 # store conversion factors
 dollars_kwh <- 0.08138507
@@ -72,6 +75,17 @@ bldg_tot <- bldg_sum %>%
   mutate(meter = "Total")
 
 bldg_comb <- rbind(bldg_sum, bldg_tot)
+
+# summarize slightly differently for graphing
+buildings_graph <- read.csv("./keys/fy25_building_list_updated.csv", strip.white = T) %>%
+    mutate(meter = ifelse(weis_meter == 1, "Weis Meter", 
+                        ifelse(main_meter == 1 & main_disagg == 0, "Main Meter", 
+                               ifelse(main_disagg == 1, "Submeter", "Individual")))) %>%
+  filter(!is.na(meter) & !type_new %in% c("Residential - U","Non-building","Solar"))
+
+buildings_graph$meter <- factor(buildings_graph$meter,
+                              levels = c("Weis Meter", "Main Meter",
+                                        "Submeter", "Individual"))
 
 # generate summary for Main, Weis, and Individual meters
 joined_agg <- joined_full %>%
@@ -121,13 +135,39 @@ joined_cat <- joined_full %>%
 
 ## Background
 
-This analysis examines electricity use on Dickinson's campus as a whole in fiscal year 2025, to provide context for the category-specific analyses that follow. Buildings on Dickinson's campus vary in how they are metered for electricity usage. Some buildings (and even individual apartments within buildings) have their own electricity meters, while others share a combined meter. There are two combined (or aggregate) meters - the "main meter" (associated with buildings in the central part of campus) and "Weis meter" (associated with buildings in a block around Weis Arts Complex). Some buildings on the main meter additionally have a "submeter" to track their individual electricity use. 
+This analysis examines electricity use on Dickinson's campus as a whole in fiscal year 2025, to provide context for the category-specific analyses that follow. Buildings on Dickinson's campus vary in how they are metered for electricity usage. Some buildings (and even individual apartments within buildings) have their own electricity meters, while others share a combined meter. There are two combined (or aggregate) meters - the "main meter" (associated with buildings in the central part of campus) and "Weis meter" (associated with buildings in a block around Weis Arts Complex). Some buildings on the main meter additionally have a "submeter" to track their individual electricity usage. 
 
-The electricity data analyzed here were derived from a combination of daily electricity use reported by the college electricity provider (PP&L), daily electricity use recorded on submeters, provided by the Center for Sustainability Education. Electricity use information was joined with information on building characteristics shared by facilities management. Once the data were joined, we summarized electricity use by building and calculated electricity use indicators including estimated financial cost, associated greenhouse gas emissions in metric tons of CO2-equivalents, and electricity use normalized by square footage and student occupancy (for residence halls only). Financial cost is a rough estimate based on per kWh supply and delivery charges in June 2025 for the main meter, a value that will underestimate cost for smaller buildings due to variable costs.
+The electricity data analyzed here were derived from a combination of daily electricity use reported by the college electricity provider (PP&L) and daily electricity use recorded on submeters, both provided by the Center for Sustainability Education. Electricity data were fairly complete for the two aggregate meters and for buildings with individual meters (90-100% of days with data). Data for submetered buildings was more variable, with some buildings having >90% of days with usable data and other buildings having little to no usable data (see specific building categories for details). 
+
+Electricity use information was joined with information on building characteristics shared by Facilities. Electricity data for individual buildings is most available for residential buildings and 'Other' buildings (Figure 1 and 2), a category including assorted athletics buildings, faculty/staff residences, and auxillary buildings. Aggregate meters are prevalent for Academic, Administrative, and Community buildings (Figure 1 and 2). Once the data were joined, we summarized electricity use by building and calculated electricity use indicators including estimated financial cost, associated greenhouse gas emissions in metric tons of CO2-equivalents, and electricity use normalized by square footage and student occupancy (for residence halls only). Financial cost is a rough estimate based on per kWh supply and delivery charges in June 2025 for the main meter, a value that will underestimate cost for smaller buildings due to variable electricity costs. Greenhouse gas emissions are estimated using standard conversion factors based on a regional fuel blend for electricity (Leary 2025). 
+
+```{r graph meter, warning = F, fig.height = 5, fig.height = 4}
+
+pal <- c("lightgrey","darkgrey","#CAB2D6","#6A3D9A")
+
+ggplot(buildings_graph, 
+       aes(x = reorder(type_new, sqft, FUN = "sum"), fill = meter)) +
+  geom_bar(position = "stack") +
+  scale_fill_manual(values = pal) +
+  theme_bw() +
+  labs(x = "", y = "Number of buildings", fill = "Meter status",
+       title = "Figure 1. Buildings by type and meter status") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+ggplot(buildings_graph,
+       aes(x = reorder(type_new, sqft, FUN = "sum"), y = sqft/1000, fill = meter)) +
+  geom_col(position = "stack") +
+  scale_fill_manual(values = pal) +
+  theme_bw() +
+  labs(x = "", y = "Square Footage (1000)", fill = "Meter status",
+       title = "Figure 2. Building square footage by type and meter status") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+
+```
 
 ## Electricity use summary
 
-The analysis includes 134 distinct buildings, accounting for almost 2 million square feet of building space (Table 1). The majority (59%) of square footage was accounted for by buildings connected to the main meter. We identified 44 distinct buildings on the main meter, a value that differs slightly from internal campus estimate of 37 buildings due to differences in how buildings are delineated in the two datasets (e.g. Rector Science Center and Tome are listed together in the electricity data but separately in the building data). Our final dataset also includes 81 individually metered buildings that together account for 36% of campus square footage. 
+The analysis includes 134 distinct buildings, accounting for almost 2 million square feet of building space (Table 1, Figure 1). The majority (59%) of square footage was accounted for by buildings connected to the main meter (Table 1). We identified 44 distinct buildings on the main meter, a value that differs slightly from internal campus estimate of 37 buildings due to differences in how buildings are delineated in the two datasets (e.g. Rector Science Center and Tome are listed together in the electricity data but separately in the building data). Our final dataset also includes 81 individually metered buildings that together account for 36% of campus square footage. 
 
 We estimate that Dickinson used roughly 17 million kWh of electricity in fiscal year 2025, corresponding to a cost of roughly $1.4 million and over 5000 MT CO2-equivalents (Table 1). Most (68%) of this use was associated with buildings on the main meter. Another 6% was associated for nine buildings on the Weis meter, and the remaining 26% was associated with individually metered buildings.
 
@@ -178,7 +218,7 @@ datatable(joined_pretty_cat,
 
 ## Electricity use over the year
 
-Electricity use peaked in July and was lowest in May and November (Figure 1). At all times of year, buildings on the main meter accounted for most of the electricity use, and the main meter buildings appeared to drive the seasonal pattern (Figure 2). Of the individually metered buildings, large residence halls accounted for the largest share of electricity use and peaked in winter (Figure 3). Interestingly, electricity production through the solar field peaked in July and was lowest in December and January (Figure 1).
+Electricity use peaked in July and was lowest in May and November (Figure 3). At all times of year, buildings on the main meter accounted for most of the electricity use, and the main meter buildings appeared to drive the seasonal pattern (Figure 4). Of the individually metered buildings, large residence halls accounted for the largest share of electricity use and peaked in winter (Figure 5). Interestingly, electricity production through the solar field peaked in July and was lowest in December and January (Figure 3).
 
 ```{r stacked bar, warning = F, fig.height = 4.5, fig.height = 4.5}
 daily_graph <- daily_full %>%
@@ -199,7 +239,7 @@ ggplot(filter(daily_graph, meter != "Submeter"),
   #scale_fill_brewer(type = "qual", palette = "Paired") +
   theme_bw() +
   labs(x = "", y = "Electricity use (million kWh)", fill = "",
-       title = "Figure 1. Monthly patterns in electricity use in FY25")
+       title = "Figure 3. Monthly patterns in electricity use in FY25")
 ```
 
 ```{r faceted_agg, warning = F, fig.height = 3.5, fig.width = 7}
@@ -212,7 +252,7 @@ ggplot(filter(daily_graph, meter %in% c("Main Meter - Total", "Weis Meter - Tota
   theme(legend.position = "none") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(x = "", y = "Electricity use (1000 kWh)", fill = "",
-       title = "Figure 2. Monthly patterns in electricity use for aggregate meters in FY2025",
+       title = "Figure 4. Monthly patterns in electricity use for aggregate meters in FY2025",
        )
 ```
 
@@ -226,17 +266,21 @@ ggplot(filter(daily_graph, meter == "Individual" & type != "Solar"),
   theme(legend.position = "none") +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(x = "", y = "Electricity use (1000 kWh)", fill = "",
-       title = "Figure 3. Monthly patterns in electricity use by category in FY2025",
+       title = "Figure 5. Monthly patterns in electricity use by category in FY2025",
        subtitle = "Only includes buildings with individual meters. Most electricity use is on the Main Meter.")
 ```
 
 ## Electricity intensity
 
-Looking at the entire fiscal year, electricity intensity (use per square foot of space) varied across building categories for individually metered buildings (Table 2, Figure 4). Administrative buildings had the lowest electricity intensity with a median of 3.2 kWh/sqft (interquartile range 2.6-5.3 kWh/sqft), while the 'Mixed' category of buildings had the highest value at 15.6 kWh/sqft (interquartile range 10.7-20.6 kWh/sqft). Importantly, the 'Mixed' category includes Kaufman Hall, which houses the campus central energy plant and supplies heat and cooling to other buildings on campus. That said, electricity intensity for most individually metered buildings as substantially below typical values for U.S. Colleges and Universities as reported by the U.S. Energy Information Administration (EIA 2022).  
+Looking at the entire fiscal year, electricity intensity (use per square foot of space) varied across building categories for individually metered buildings (Table 2, Figure 5). Administrative buildings had the lowest electricity intensity with a median of 3.2 kWh/sqft (interquartile range 2.6-5.3 kWh/sqft), while the 'Mixed' category of buildings had the highest value at 15.6 kWh/sqft (interquartile range 10.7-20.6 kWh/sqft). Importantly, the 'Mixed' category includes Kaufman Hall, which houses the campus central energy plant and supplies heat and cooling to other buildings on campus. That said, electricity intensity for most individually metered buildings was substantially below typical values for U.S. Colleges and Universities as reported by the U.S. Energy Information Administration (EIA 2022).  
 
-Interestingly, the two aggregate meters that account for most electricity use on campus had a slightly higher electricity intensity than most individually metered buildings, at 11.4 kWh/sqft for buildings on the Weis meter and 10.4 kWh/sqft for buildings on the main meter (Table 1, Figure 4). These values are very close to the median value of 10.3 kWh/sqft (interquartile range 7.4-14.3 kWh/sqft) reported for U.S. Colelges and Universities (EIA 2022). 
+Interestingly, the two aggregate meters that account for most electricity use on campus had a slightly higher electricity intensity than most individually metered buildings, at 11.4 kWh/sqft for buildings on the Weis meter and 10.4 kWh/sqft for buildings on the main meter (Table 1, Figure 5). These values are very close to the median value of 10.3 kWh/sqft (interquartile range 7.4-14.3 kWh/sqft) reported for U.S. Colleges and Universities (EIA 2022). 
 
-```{r intensity, warning = F, fig.height = 6, fig.width = 7}
+Values for the academic year only showed a more pronounced trend of falling below the values for typical U.S. College and University buildings, for both the aggregate meters and the buildings on individual meters (Figure 7). 
+
+It is also worth noting that values for the 
+
+```{r intensity, warning = F, fig.height = 5.5, fig.width = 6.75}
 
 
 intensity <- joined_full %>%
@@ -265,15 +309,16 @@ ggplot(intensity,
   geom_label(aes(label = outlier), na.rm = TRUE, nudge_x = -0.25, nudge_y = 0.5, 
              color = "black", fill = "white", size = 2, alpha = 0, label.size = NA) +
     scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  ylim(0, 25) +
   coord_flip() +
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "Electricity Intensity (kWh/sqft/year)", 
-       title = "Figure 4. Electricity intensity by meter/building category in FY25",
+       title = "Figure 6. Electricity intensity by meter/building category in FY25",
        caption = "White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)")
 ```
 
-```{r intensity_acad, warning = F, fig.height = 6, fig.width = 7}
+```{r intensity_acad, warning = F, fig.height = 5.5, fig.width = 6.75}
 intensity_acad <- joined_acad %>%
   filter(!(type %in% c("Residential - U","Solar", "Non-building"))) %>%
     mutate(kwh_sqft = kwh_corr/sqft,
@@ -286,14 +331,19 @@ ggplot(intensity_acad,
   geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
   facet_grid(meter_type ~ ., scales = "free_y", space = "free_y") +
     scale_fill_paletteer_d("ggthemes::Tableau_20") +
+    ylim(0, 25) +
   geom_boxplot() +
   coord_flip() +
   theme_bw() +
   theme(legend.position = "none") +
   labs(x = "", y = "Electricity Intensity (kWh/sqft/year)", 
-       title = "Figure 5. Electricity intensity by meter/building category in AY24/25", 
+       title = "Figure 7. Electricity intensity by meter/building category in AY24/25", 
        caption = "White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)")
 ```
+
+## Recommendations
+
+TBD!
 
 ## Sources
 
