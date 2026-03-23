@@ -561,15 +561,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree593611e04ffccb859da53524862fdaed4325cf74targetblank593611ea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree0e3911f91315b5036481ec447c9e462014729ad2targetblank0e3911fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/593611e04ffccb859da53524862fdaed4325cf74" target="_blank">593611e</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/0e3911f91315b5036481ec447c9e462014729ad2" target="_blank">0e3911f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree593611e04ffccb859da53524862fdaed4325cf74targetblank593611ea"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree0e3911f91315b5036481ec447c9e462014729ad2targetblank0e3911fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -579,7 +579,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/593611e04ffccb859da53524862fdaed4325cf74" target="_blank">593611e</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/0e3911f91315b5036481ec447c9e462014729ad2" target="_blank">0e3911f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -638,11 +638,7 @@ Ignored files:
     Ignored:    output/kwh_main_daily.csv
 
 Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/data_wrangling_final.Rmd
-    Modified:   analysis/main_meter_model.Rmd
     Modified:   analysis/main_meter_regression.Rmd
-    Modified:   keys/meter_building_key.csv
 
 </code></pre>
 <p>
@@ -687,6 +683,42 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/analysis/main_meter_regression.Rmd" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+<td>
+update data wrangling and add model tab and main meter regression
+example
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/0e3911f91315b5036481ec447c9e462014729ad2/docs/main_meter_regression.html" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+<td>
+update data wrangling and add model tab and main meter regression
+example
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -737,38 +769,11 @@ regression to shed light on this question.</p>
 </div>
 <div id="prepare-data" class="section level2">
 <h2>Prepare data</h2>
-<pre class="r"><code>library(tidyverse)</code></pre>
-<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.0     ✔ readr     2.2.0
-✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.2     ✔ tibble    3.3.1
-✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.1     
-── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
-✖ dplyr::filter() masks stats::filter()
-✖ dplyr::lag()    masks stats::lag()
-ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
-<pre class="r"><code>library(segmented) # for segmented regression </code></pre>
-<pre><code>Loading required package: MASS
+<pre class="r"><code>library(tidyverse)
+library(segmented) # for segmented regression 
+library(tseries) # for time series, including autocorrelation
 
-Attaching package: &#39;MASS&#39;
-
-The following object is masked from &#39;package:dplyr&#39;:
-
-    select
-
-Loading required package: nlme
-
-Attaching package: &#39;nlme&#39;
-
-The following object is masked from &#39;package:dplyr&#39;:
-
-    collapse</code></pre>
-<pre class="r"><code>library(tseries) # for time series, including autocorrelation</code></pre>
-<pre><code>Registered S3 method overwritten by &#39;quantmod&#39;:
-  method            from
-  as.zoo.data.frame zoo </code></pre>
-<pre class="r"><code>daily &lt;- read.csv(&quot;./output/kwh_daily_2026-03-23.csv&quot;, strip.white = TRUE)
+daily &lt;- read.csv(&quot;./output/kwh_daily_2026-03-23.csv&quot;, strip.white = TRUE)
 
 daily_main &lt;- daily %&gt;%
   filter(NAME == &quot;Main Meter&quot;) 
@@ -828,6 +833,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/vis-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/vis-1.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -871,6 +887,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/vis-2.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/vis-2.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -900,6 +927,43 @@ ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
   theme_bw() +
   geom_smooth(method = &#39;lm&#39;, formula = &#39;y ~ x&#39;, se = FALSE) # add a regression line</code></pre>
 <p><img src="figure/main_meter_regression.Rmd/vis_bad-1.png" alt="" width="336" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-vis_bad-1">
+Past versions of vis_bad-1.png
+</button>
+</p>
+<div id="fig-vis_bad-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/vis_bad-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="fit-the-model" class="section level3">
 <h3>Fit the model</h3>
@@ -950,6 +1014,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/check_bad-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/check_bad-1.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -990,6 +1065,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/check_bad-2.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/check_bad-2.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -1013,6 +1099,43 @@ ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
   geom_smooth(method = &#39;lm&#39;, formula = &#39;y ~ x&#39;, se = FALSE) + # add a regression line
   labs(color = &quot;Residual&quot;)</code></pre>
 <p><img src="figure/main_meter_regression.Rmd/vis_bad_resid-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-vis_bad_resid-1">
+Past versions of vis_bad_resid-1.png
+</button>
+</p>
+<div id="fig-vis_bad_resid-1" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/vis_bad_resid-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="examine-results" class="section level3">
 <h3>Examine results</h3>
@@ -1056,8 +1179,8 @@ mod_cool &lt;- lm(kwh ~ ave_temp, data = daily_cool)</code></pre>
 <div id="check-the-fit-1" class="section level3">
 <h3>Check the fit</h3>
 <ul>
-<li>Similar to above, the residuals appear <em>roughly</em> normally
-distributed</li>
+<li>Similar to above, the residuals appear roughly normally distributed
+(histogram + QQ plot)</li>
 <li>The Residuals vs. Fitted graph now shows a more ‘cloud-like’
 pattern. This is good news as it suggests our model likely meets the
 linearity and equality of variance assumptions.</li>
@@ -1095,6 +1218,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/check-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/check-1.png" target="_blank">593611e</a>
@@ -1137,6 +1271,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/check-2.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/check-2.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -1156,10 +1301,10 @@ maggiedouglas
 <p>For temperatures above 60 degrees F, electricity use on the main
 meter increased linearly with outdoor temperature (Figure 1, <em>P</em>
 &lt; 0.0001). The relationship was relatively strong, with temperature
-explaining about two thirds of variation in electricity use
+explaining about two thirds of the variation in electricity use
 (<em>R<sup>2</sup></em> = 0.67). The fitted regression line was:
 <code>kWh = -7067 + 602*Temp(F)</code>, suggesting that electricity use
-increases by 602 kWh for each degree increase in temperature over this
+increased by 602 kWh for each degree increase in temperature over this
 range.</p>
 <pre class="r"><code>summary(mod_cool) # Examine model terms + outcomes</code></pre>
 <pre><code>
@@ -1211,6 +1356,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/plot-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/plot-1.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -1235,8 +1391,18 @@ data, with a break point identified by the analysis. The function to do
 this is included in the <code>segmented</code> package.</p>
 <div id="fit-the-model-1" class="section level3">
 <h3>Fit the model</h3>
+<ul>
+<li>First we fit the initial linear model as we did originally with
+<code>lm()</code>. Notice I’m using the full data again.</li>
+<li>Next we update the initial linear model with the
+<code>segmented()</code> function. This fits a ‘broken line’ regression.
+The argument <code>seg.Z</code> identified the variable over which we
+want to break the regression. The argument <code>psi</code> sets our
+initial guess for where the break point should be. The model will adjust
+this break point to find the one that best fits the data.</li>
+</ul>
 <pre class="r"><code>mod_full &lt;- lm(kwh ~ ave_temp, data = daily_main)
-mod_seg &lt;- segmented(mod_full, seg.Z = ~ ave_temp, psi = 58)</code></pre>
+mod_seg &lt;- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)</code></pre>
 </div>
 <div id="check-the-fit-2" class="section level3">
 <h3>Check the fit</h3>
@@ -1248,11 +1414,12 @@ assumptions and drop the Q-Q plot.</li>
 <li>The histogram of the residuals looks slightly left-skewed now. It is
 still probably sufficient to meet the normality assumption, given that
 linear regression is not too sensitive to this assumption.</li>
-<li>The Residuals vs. Fitted values plot does not show a strong pattern,
-suggesting that we are meeting the equal variance and linearity
-assumptions.</li>
+<li>The Residuals vs. Fitted values plot does not show a strong pattern
+(‘cloud like’), suggesting that we are meeting the equal variance and
+linearity assumptions.</li>
 <li>The temporal autocorrelation plot suggests this model still has an
-issue with dependence among observations close in time.</li>
+issue with dependence among observations close in time, in fact moreso
+than the model fit to only warm temperatures.</li>
 </ul>
 <pre class="r"><code>par(mfrow = c(1, 2)) # This code put two plots in the same window
 hist(mod_seg$residuals) # Histogram of residuals
@@ -1282,6 +1449,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/check_seg-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/check_seg-1.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -1297,6 +1475,43 @@ maggiedouglas
 </div>
 <pre class="r"><code>acf(mod_seg$residuals) # Assess dependence between successive observations</code></pre>
 <p><img src="figure/main_meter_regression.Rmd/check_seg-2.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<p>
+<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-check_seg-2">
+Past versions of check_seg-2.png
+</button>
+</p>
+<div id="fig-check_seg-2" class="collapse">
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/check_seg-2.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 <div id="examine-results-2" class="section level3">
 <h3>Examine results</h3>
@@ -1304,19 +1519,21 @@ maggiedouglas
 <ul>
 <li>Run on a segmented regression model, this is similar to output from
 <code>lm()</code>, but with a few additional pieces of information.</li>
-<li>We no longer have an overall P-value, but the P-values for each
-model term are highly significant.</li>
-<li>The adjusted <em>R<sup>2</sup></em> = 0.68, suggesting that two
-thirds of the variation in electricity use can be explained by
-temperature with the segmented model.</li>
+<li>We no longer have an overall P-value, but the P-value for
+temperature is highly significant (<em>P</em> = 0.001), suggesting that
+there is a significant linear relationship between temperature and
+electricity use.</li>
+<li>The adjusted <em>R<sup>2</sup></em> = 0.68, suggests that two thirds
+of the variation in electricity use can be explained by temperature with
+the segmented model.</li>
 </ul>
 <p>Additional information (using <code>confint()</code>,
 <code>intercept()</code>, and <code>slope()</code> functions)</p>
 <ul>
-<li>The model estimated the break point as 57.3 degrees F (55.5 - 59.2)
+<li>The model estimates the break point at 57.3 degrees F (55.5 - 59.2)
 - this is where the slope changes from negative to positive.</li>
 <li>The equation below 57.3 degrees is:
-<code>kWh = 31451 - 73.3*Temp(F))</code>
+<code>kWh = 31451 - 73.3*Temp(F)</code>
 <ul>
 <li>The negative slope reflects the negative relationship between
 temperature and electricity use at lower temperatures</li>
@@ -1328,12 +1545,14 @@ temperature and electricity use at lower temperatures</li>
 temperature and electricity use at higher temperatures</li>
 <li>The larger magnitude of the slope reflects the stronger increase in
 electricity use in cooling vs. heating conditions</li>
+<li>Notice that this slope is not too different from the model fit on
+only the warm temperatures.</li>
 </ul></li>
 </ul>
 <p>Figure 2 shows the relationship with the fitted segmented regression
 line.</p>
 <ul>
-<li>Because of how model objects from <code>segmented</code> interaction
+<li>Because of how model objects from <code>segmented</code> interact
 with plotting functions, we need to use a different approach to
 visualization, using the <code>plot()</code> function.</li>
 </ul>
@@ -1342,7 +1561,7 @@ visualization, using the <code>plot()</code> function.</li>
     ***Regression Model with Segmented Relationship(s)***
 
 Call: 
-segmented.lm(obj = mod_full, seg.Z = ~ave_temp, psi = 58)
+segmented.lm(obj = mod_full, seg.Z = ~ave_temp, psi = 60)
 
 Estimated Break-Point(s):
                  Est. St.Err
@@ -1377,10 +1596,10 @@ slope1 -73.275  22.021 -3.3276   -116.58    -29.97
 slope2 614.140  30.399 20.2030    554.36    673.93</code></pre>
 <pre class="r"><code># plot original data with fit
 plot(mod_seg, col = &#39;black&#39;, res = TRUE, conf.level = .95, shade = T, 
-     res.col = adjustcolor(&quot;steelblue&quot;, alpha.f = 0.7),
-     xlab = &quot;Temperature (deg F)&quot;, ylab = &quot;Electricity use (kWh)&quot;,
-     main = &quot;Figure 2&quot;)</code></pre>
-<p><img src="figure/main_meter_regression.Rmd/plot_seg-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
+     res.col = adjustcolor(&quot;steelblue&quot;, alpha.f = 0.7), # set color of data + transparency
+     xlab = &quot;Temperature (deg F)&quot;, ylab = &quot;Electricity use (kWh)&quot;) # label axes
+title(&quot;Figure 2&quot;, adj = 0) # how to set the title in base R plotting function</code></pre>
+<p><img src="figure/main_meter_regression.Rmd/plot_seg-1.png" alt="" width="624" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot_seg-1">
 Past versions of plot_seg-1.png
@@ -1405,6 +1624,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/0e3911f91315b5036481ec447c9e462014729ad2/docs/figure/main_meter_regression.Rmd/plot_seg-1.png" target="_blank">0e3911f</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-23
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/593611e04ffccb859da53524862fdaed4325cf74/docs/figure/main_meter_regression.Rmd/plot_seg-1.png" target="_blank">593611e</a>
 </td>
 <td>
@@ -1418,23 +1648,24 @@ maggiedouglas
 </table>
 </div>
 </div>
+<pre class="r"><code> #    main = &quot;Figure 2&quot;, adj = 0) </code></pre>
 </div>
 </div>
 <div id="revisit-expectations" class="section level2">
 <h2>Revisit expectations</h2>
-<p>Both the model fit on temperatures &gt; 60 degrees F and the
-segmented regression appeared to fit the data fairly well. Both models
-were highly significant and explained significant variation in
+<p>The model fit on temperatures &gt; 60 degrees F and the segmented
+regression both appeared to fit the data fairly well. Both models were
+highly significant and explained about two thirds of the variation in
 electricity use, suggesting that these models have value to understand
 electricity use patterns. For those two models, the fit to assumptions
 of normality and equal variance appeared to be reasonably met. A
 straight line also appeared to capture the pattern in the data
 reasonably well. One issue we will want to revisit is that it does
 appear that the independence assumption may be violated, because the
-temporal autocorrelation plot shows correlation between observation near
-each other in time. Overall, this appears to provide a reasonable start
-for our model of the main meter, but can probably be improved by
-integrating additional explanatory variables.</p>
+temporal autocorrelation plot shows correlation between observations
+near each other in time. Overall, the segmented model appears to provide
+a reasonable start for our model of the main meter, but can probably be
+improved by integrating additional explanatory variables.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
