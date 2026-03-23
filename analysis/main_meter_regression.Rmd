@@ -1,7 +1,7 @@
 ---
 title: "Main Meter - Simple linear regression"
 author: "Maggie Douglas"
-date: "2026-03-20"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
 output: html_document
 ---
 
@@ -9,117 +9,152 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Question
+## Guiding question
 
 What is the relationship between electricity use and outdoor temperature for buildings on the main meter?
 
-## Load
+The below analysis provides an example of how to use linear regression to shed light on this question.
+
+## Prepare data
 
 ```{r load}
 library(tidyverse)
 library(segmented) # for segmented regression 
 library(tseries) # for time series, including autocorrelation
 
-daily <- read.csv("./output/kwh_daily_2026-03-04.csv", strip.white = TRUE)
-key <- read.csv("./keys/temp_by_date.csv")
+daily <- read.csv("./output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
 
-str(daily)
-str(key)
-```
-
-## Wrangle
-
-```{r wrangle}
 daily_main <- daily %>%
-  filter(NAME == "Main Meter") %>%
-  mutate(date = ymd(date),
-         month = month(date, label = TRUE),
-         day = wday(date, label = TRUE),
-         day_type = ifelse(day %in% c("Sat","Sun"), "Weekend","Weekday")) 
+  filter(NAME == "Main Meter") 
+
+str(daily_main)
 ```
 
-## Visualize the relationship
+## Set expectations
 
-```{r vis}
-# basic relationship
-ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
-  geom_point() +
-  theme_bw() 
+Let's start by looking at our data. For now we will do some quick-and-dirty graphs using ggplot. 
 
-# what happens if we try to model this relationship with a straight line?
-ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
-  geom_point() +
-  theme_bw() +
-  geom_smooth(method = "lm", formula = 'y ~ x')
+The graph shows that the relationship is definitely not linear! Instead it appears V-shaped. Electricity use decreases from cold temperatures until around 60 degrees F, and then increases with temperature beyond that point. The increase in electricity use above 60 degrees F is more pronounced than the decrease with temperature at temperatures below 60 degrees F. 
 
+If we examine the relationship only at temperatures of 60 degrees F and above, it appears that the relationship is roughly linear.
+
+```{r vis, fig.height = 3, fig.width = 3.5}
 # where is the break point?
 ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
   geom_point() +
   theme_bw() +
-  geom_vline(xintercept = 58, col = "blue", linetype = "dashed")
+  geom_vline(xintercept = 60, col = "blue", linetype = "dashed")
+
+# let's look at only cooling temps
+ggplot(filter(daily_main, ave_temp > 60),
+       aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() 
 ```
 
-## Fit a bad model (you wouldn't do this, but just to see what happens...)
+## Bad model
+
+We've already established that a linear model is probably not a good fit to our full dataset. As a cautionary tale, let's see what happens if we go ahead and fit a linear model to the full data anyway. The outcomes will help us develop an intution for what to look for in our diagnostic plots to tell that a model is not a good fit.
+
+### Preview the model fit
+
+```{r vis_bad, fig.height = 3, fig.width = 3.5}
+# where is the break point?
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() +
+  geom_smooth(method = 'lm', formula = 'y ~ x', se = FALSE) # add a regression line
+```
+
+### Fit the model
 
 ```{r mod_bad}
-mod_bad <- lm(kwh ~ ave_temp, data = daily_main)
+mod_bad <- lm(formula = kwh ~ ave_temp, 
+              data = daily_main)
 ```
 
 ### Check the fit
 
-```{r check_bad}
-par(mfrow = c(1, 2)) # This code put two plots in the same window
++ The histogram and QQ-plot show that despite the poor fit, the residuals appear normally distributed
++ The Residuals vs. Fitted values graph gives us the strongest clue that the linear model is NOT a good fit for our data. We see a strong V-shape in the residuals, showing that the residual error is consistently negative in the middle of electricity use (~30,000) and positive at the ends (<25,000 and >35,000). This patterns suggests a non-linear pattern, which fits our initial plot.
++ The temporal autocorrelation plot similarly suggests that there may be some dependence in our data. The residuals for daily observations are correlated with each other at least out to ~ two weeks. (ACF values above the blue dotted line)
+
+```{r check_bad, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2)) # This code puts two plots in the same window
 hist(mod_bad$residuals) # Histogram of residuals
 plot(mod_bad, which = 2) # Quantile plot
 plot(mod_bad, which = 1) # Residuals vs. fits
+acf(mod_bad$residuals) # Assess dependence between successive observations
+```
+
+```{r vis_bad_resid, fig.height = 3, fig.width = 5}
+daily_main$resid <- mod_bad$residuals # store residuals in original dataset
+daily_main$resid_sign <- ifelse(mod_bad$residuals < 0, "Negative","Positive")
+
+# where is the break point?
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point(aes(color = resid_sign)) +
+  theme_bw() +
+  geom_smooth(method = 'lm', formula = 'y ~ x', se = FALSE) + # add a regression line
+  labs(color = "Residual")
 ```
 
 ### Examine results
+
+For the sake of example, let's look at the fitted model for our 'bad' model. Notice that there is no obvious warning message or other clue that this model is bad! It shows a significant positive relationship that explains ~39% of the variation in electricity use. This illustrates the importance of looking at our data and thinking critically about what we're doing when we write R code.
 
 ```{r results_bad}
 summary(mod_bad) # Examine model terms + outcomes
 ```
 
-## Fit a reasonable model
+## Better model
 
-Let's focus here on temperatures over 58 degrees, where the relationship appears linear.
+Okay, now let's try and fit a more reasonable model. We will focus here on temperatures over 60 degrees, where the relationship appears linear.
 
 ```{r mod}
-# subset data > 58 degrees
-daily_cool <- filter(daily_main, ave_temp > 58)
+# subset data > 60 degrees
+daily_cool <- filter(daily_main, ave_temp > 60)
 
-# fit the model for temps above 58
+# fit the model for temps above 60
 mod_cool <- lm(kwh ~ ave_temp, data = daily_cool)
 ```
 
 ### Check the fit
 
-```{r check}
++ Similar to above, the residuals appear *roughly* normally distributed
++ The Residuals vs. Fitted graph now shows a more 'cloud-like' pattern. This is good news as it suggests our model likely meets the linearity and equality of variance assumptions.
++ The temporal autocorrelation plot looks improved, but still suggests some dependency in our data. Lags 2 and 3 are over the blue dotted line, suggesting that electricity use is correlated with successive days in a way not currently captured in our model. Interestingly, it also appears there is a signal at 7 days, which could suggest a weekly pattern to electricity use that could be captured by adding a term for day-of-week to our model. 
+
+```{r check, fig.height = 4, fig.width = 8}
 par(mfrow = c(1, 2)) # This code put two plots in the same window
 hist(mod_cool$residuals) # Histogram of residuals
 plot(mod_cool, which = 2) # Quantile plot
 plot(mod_cool, which = 1) # Residuals vs. fits
+acf(mod_cool$residuals)  # Assess dependence between successive observations
 ```
 
 ### Examine results
+
+For temperatures above 60 degrees F, electricity use on the main meter increased linearly with outdoor temperature (Figure 1, *P* < 0.0001). The relationship was relatively strong, with temperature explaining about two thirds of variation in electricity use (*R^2^* = 0.67). The fitted regression line was: `kWh = -7067 + 602*Temp(F)`, suggesting that electricity use increases by 602 kWh for each degree increase in temperature over this range.
 
 ```{r results}
 summary(mod_cool) # Examine model terms + outcomes
 ```
 
-### Plot results
-
-```{r plot}
+```{r plot, fig.height = 3, fig.width = 4}
 ggplot(daily_cool, aes(x = ave_temp, y = kwh)) +
   geom_point(alpha = 0.6) +
-  geom_smooth(method = 'lm', formula = 'y ~ x') +
+  geom_smooth(method = 'lm', formula = 'y ~ x', se = TRUE) + # add regression line
   theme_bw() +
-  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh)")
+  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh)",
+       title = "Figure 1")
 ```
 
-## What about a segmented regression?
+## Segmented regression
 
-This is a technique that essentially allows us to fit two linear models to our data, with a break point identified by the analysis. 
+If we want to fit a single model that works across the entire range of temperatures, we can consider a segmented regression. This is a technique that essentially allows us to fit two linear models to our data, with a break point identified by the analysis. The function to do this is included in the `segmented` package. 
+
+### Fit the model
 
 ```{r mod_seg}
 mod_full <- lm(kwh ~ ave_temp, data = daily_main)
@@ -128,23 +163,68 @@ mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 58)
 
 ### Check the fit
 
-```{r check_seg}
++ Fitted model objects returned by the `segmented()` function work a bit differently than model objected created by `lm()`, so we will slightly adjust our approach to checking assumptions and drop the Q-Q plot.
++ The histogram of the residuals looks slightly left-skewed now. It is still probably sufficient to meet the normality assumption, given that linear regression is not too sensitive to this assumption.
++ The Residuals vs. Fitted values plot does not show a strong pattern, suggesting that we are meeting the equal variance and linearity assumptions. 
++ The temporal autocorrelation plot suggests this model still has an issue with dependence among observations close in time.
+
+```{r check_seg, fig.height = 4, fig.width = 8}
 par(mfrow = c(1, 2)) # This code put two plots in the same window
 hist(mod_seg$residuals) # Histogram of residuals
 plot(mod_seg$residuals) # Residuals vs. fits
+acf(mod_seg$residuals) # Assess dependence between successive observations
 ```
 
 ### Examine results
 
+Output from `summary()` 
+
++ Run on a segmented regression model, this is similar to output from `lm()`, but with a few additional pieces of information.
++ We no longer have an overall P-value, but the P-values for each model term are highly significant.
++ The adjusted *R^2^* = 0.68, suggesting that two thirds of the variation in electricity use can be explained by temperature with the segmented model.
+
+Additional information (using `confint()`, `intercept()`, and `slope()` functions)
+
++ The model estimated the break point as 57.3 degrees F (55.5 - 59.2) - this is where the slope changes from negative to positive.
++ The equation below 57.3 degrees is: `kWh = 31451 - 73.3*Temp(F))` 
+    + The negative slope reflects the negative relationship between temperature and electricity use at lower temperatures
++ The equation above 57.3 degrees is: `kWh = -7994 + 614*Temp(F)`
+    + The positive slope reflects the positive relationship between temperature and electricity use at higher temperatures
+    + The larger magnitude of the slope reflects the stronger increase in electricity use in cooling vs. heating conditions
+    
+Figure 2 shows the relationship with the fitted segmented regression line.
+
++ Because of how model objects from `segmented` interaction with plotting functions, we need to use a different approach to visualization, using the `plot()` function.
+
 ```{r results_seg}
-summary(mod_seg) # Examine model terms + outcomes
+summary(mod_seg, var.diff = TRUE) # Examine model terms + outcomes
+confint(mod_seg) # Get confidence interval for break point
+intercept(mod_seg) # Extract the intercept for each equation
+slope(mod_seg) # Extract the slopes for each equation
 ```
 
-### Plot results
-
-```{r plot_seg}
+```{r plot_seg, fig.height = 4, fig.width = 5}
 # plot original data with fit
 plot(mod_seg, col = 'black', res = TRUE, conf.level = .95, shade = T, 
      res.col = adjustcolor("steelblue", alpha.f = 0.7),
-     xlab = "Temperature (deg F)", ylab = "Electricity use (kWh)")
+     xlab = "Temperature (deg F)", ylab = "Electricity use (kWh)",
+     main = "Figure 2")
 ```
+
+```{r focal, include = FALSE}
+daily_focal <- daily %>%
+  filter(NAME %in% c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+                     "Allison Hall","Biddle Press Box, Restrooms, Durden ATC"))
+```
+
+```{r plots, warning = F, fig.height = 8, fig.width = 9.5, include = FALSE}
+ggplot(daily_focal, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() +
+  facet_wrap(. ~ NAME, scales = "free_y") +
+  labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+```
+
+## Revisit expectations
+
+Both the model fit on temperatures > 60 degrees F and the segmented regression appeared to fit the data fairly well. Both models were highly significant and explained significant variation in electricity use, suggesting that these models have value to understand electricity use patterns. For those two models, the fit to assumptions of normality and equal variance appeared to be reasonably met. A straight line also appeared to capture the pattern in the data reasonably well. One issue we will want to revisit is that it does appear that the independence assumption may be violated, because the temporal autocorrelation plot shows correlation between observation near each other in time. Overall, this appears to provide a reasonable start for our model of the main meter, but can probably be improved by integrating additional explanatory variables.

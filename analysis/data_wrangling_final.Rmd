@@ -28,54 +28,53 @@ The main steps involved are:
 
 ```{r load, message = F}
 library(tidyverse) # load tidyverse
-library(RColorBrewer)
 ```
 
 ```{r load_data, message = F, results = 'hide'}
 # load electricity data + reformat date
-kwh <- read.csv("./data/FY25 PPL Electricity Data.csv", strip.white = T) %>%
+kwh <- read.csv("../data/FY25 PPL Electricity Data.csv", strip.white = T) %>%
   mutate(date = mdy(date)) %>%
   complete(nesting(account_number, meter_origin, meter_number), date) %>%
   mutate(period = ifelse((date > ymd("2024-08-28") & date < ymd("2024-12-21")), "Fall Semester", 
                          ifelse((date > ymd("2025-01-07") & date < ymd("2025-05-18")), "Spring Semester",
                                 ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter Break", "Summer Break")))) 
   
-kwh_sub <- read.csv("./output/kwh_main_daily.csv", strip.white = T) %>%
+kwh_sub <- read.csv("../output/kwh_main_daily.csv", strip.white = T) %>%
   mutate(date = ymd(date)) %>%
   mutate(period = ifelse((date > ymd("2024-08-28") & date < ymd("2024-12-21")), "Fall Semester", 
                          ifelse((date > ymd("2025-01-07") & date < ymd("2025-05-18")), "Spring Semester",
                                 ifelse(date > ymd("2024-12-21") & date < ymd("2025-01-07"), "Winter Break", "Summer Break")))) 
 
 # store temp data for later
-temp <- select(kwh, date, ave_temp) %>%
+temp <- dplyr::select(kwh, date, ave_temp) %>%
   unique()
   
 # load building data + clean up building names
-buildings <- read.csv("./keys/fy25_building_list_updated.csv", 
+buildings <- read.csv("../keys/fy25_building_list_updated.csv", 
                       strip.white = T) %>%
   mutate(NAME = str_remove_all(NAME, "/"),
          NAME = str_replace_all(NAME, "  "," "),
          NAME = str_replace_all(NAME, "   "," "))
 
 # load keys to link datasets
-key <- read.csv("./keys/meter_building_key.csv", strip.white = T) %>%
+key <- read.csv("../keys/meter_building_key.csv", strip.white = T) %>%
   mutate(NAME = str_remove_all(NAME, "/"),
          NAME = str_replace_all(NAME, "  "," "),
          NAME = str_replace_all(NAME, "   "," "))
 
-key_sub <- read.csv("./keys/submeter_building_key.csv", strip.white = T) %>%
+key_sub <- read.csv("../keys/submeter_building_key.csv", strip.white = T) %>%
   mutate(NAME = str_remove_all(NAME, "/"),
          NAME = str_replace_all(NAME, "  "," "),
          NAME = str_replace_all(NAME, "   "," ")) 
 
-key_occ <- read.csv("./keys/occupancy_key.csv", 
+key_occ <- read.csv("../keys/occupancy_key.csv", 
                       strip.white = T) %>%
   mutate(NAME = str_remove_all(NAME, "/"),
          NAME = str_replace_all(NAME, "  "," "),
          NAME = str_replace_all(NAME, "   "," "))
 
 # load occupancy data + generate mean for AY
-occupants <- read.csv("./data/housing_counts.csv",
+occupants <- read.csv("../data/housing_counts.csv",
                       strip.white = T) %>%
   mutate(sem_yr = paste(semester, year)) %>% # create semester column
   filter(sem_yr %in% c("Fall 2024", "Spring 2025")) %>% # filter to FY25
@@ -151,7 +150,7 @@ buildings_main <- buildings %>%
   mutate(meter = "Main Meter - Total",
          NAME = "Main Meter",
          type_new = "Main Meter") %>%
-    select(type_new, NAME, sqft, meter)
+  select(type_new, NAME, sqft, meter)
 
 buildings_weis <- buildings %>%
   filter(weis_meter == 1) %>% # filter to weis buildings
@@ -426,8 +425,8 @@ str(joined_full)
 today <- today("EST") %>%
   str_remove(" UTC") 
 
-write.csv(daily_full, paste0("./output/kwh_daily_", today, ".csv"), row.names = F)
-write.csv(joined_full_aca, paste0("./output/kwh_academic_", today, ".csv"), row.names = F)
-write.csv(joined_full, paste0("./output/kwh_annual_", today, ".csv"), row.names = F)
+write.csv(daily_full, paste0("../output/kwh_daily_", today, ".csv"), row.names = F)
+write.csv(joined_full_aca, paste0("../output/kwh_academic_", today, ".csv"), row.names = F)
+write.csv(joined_full, paste0("../output/kwh_annual_", today, ".csv"), row.names = F)
 ```
 
