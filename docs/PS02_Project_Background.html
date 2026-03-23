@@ -15,7 +15,7 @@
 
 <title>PS 2: Project Background</title>
 
-<script src="site_libs/header-attrs-2.25/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -35,6 +35,7 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -231,6 +232,9 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
 
 
 
@@ -369,6 +373,9 @@ div.tocify {
     </li>
   </ul>
 </li>
+<li>
+  <a href="main_meter_regression.html">Electricity use models</a>
+</li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -378,6 +385,14 @@ div.tocify {
 </div><!--/.navbar -->
 
 <div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
 
 
 
@@ -412,7 +427,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-03-04
+<strong>Last updated:</strong> 2026-03-23
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -430,7 +445,7 @@ title="This is the local directory in which the code in this file was executed."
 This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
 analysis was created with <a
   href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.1). The <em>Checks</em> tab describes the reproducibility checks
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
 that were applied when the results were created. The <em>Past
 versions</em> tab lists the development history.
 </p>
@@ -543,15 +558,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree150c5c1e7c09b668c31fb5e9bdffb80c61d42480targetblank150c5c1a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1a80058c5ba5dc75f98f035ce3ad04ee16e11353targetblank1a80058a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/150c5c1e7c09b668c31fb5e9bdffb80c61d42480" target="_blank">150c5c1</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/1a80058c5ba5dc75f98f035ce3ad04ee16e11353" target="_blank">1a80058</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree150c5c1e7c09b668c31fb5e9bdffb80c61d42480targetblank150c5c1a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree1a80058c5ba5dc75f98f035ce3ad04ee16e11353targetblank1a80058a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -561,7 +576,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/150c5c1e7c09b668c31fb5e9bdffb80c61d42480" target="_blank">150c5c1</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/1a80058c5ba5dc75f98f035ce3ad04ee16e11353" target="_blank">1a80058</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -580,6 +595,7 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/.DS_Store
+    Ignored:    analysis_to-fix/.DS_Store
     Ignored:    data/.DS_Store
     Ignored:    data/FY25 Main Meter Data.xlsx
     Ignored:    data/building_list_FY25_updated.xlsx
@@ -590,16 +606,39 @@ Ignored files:
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
     Ignored:    output/daily_kwh.csv
+    Ignored:    output/kwh_academic_2026-03-16.csv
+    Ignored:    output/kwh_academic_2026-03-17.csv
+    Ignored:    output/kwh_academic_2026-03-18.csv
+    Ignored:    output/kwh_academic_2026-03-22.csv
+    Ignored:    output/kwh_academic_2026-03-23.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_annual_2026-03-04.csv
+    Ignored:    output/kwh_annual_2026-03-12.csv
+    Ignored:    output/kwh_annual_2026-03-16.csv
+    Ignored:    output/kwh_annual_2026-03-17.csv
+    Ignored:    output/kwh_annual_2026-03-18.csv
+    Ignored:    output/kwh_annual_2026-03-22.csv
+    Ignored:    output/kwh_annual_2026-03-23.csv
     Ignored:    output/kwh_annual_20260225.csv
     Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
     Ignored:    output/kwh_daily_2026-03-04.csv
+    Ignored:    output/kwh_daily_2026-03-12.csv
+    Ignored:    output/kwh_daily_2026-03-16.csv
+    Ignored:    output/kwh_daily_2026-03-17.csv
+    Ignored:    output/kwh_daily_2026-03-18.csv
+    Ignored:    output/kwh_daily_2026-03-22.csv
+    Ignored:    output/kwh_daily_2026-03-23.csv
     Ignored:    output/kwh_daily_20260225.csv
     Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
+
+Unstaged changes:
+    Modified:   analysis/data_wrangling_final.Rmd
+    Modified:   analysis/main_meter_model.Rmd
+    Modified:   analysis/main_meter_regression.Rmd
+    Modified:   keys/meter_building_key.csv
 
 </code></pre>
 <p>
@@ -614,7 +653,6 @@ have uncommitted changes.
 <hr>
 </div>
 <div id="versions" class="tab-pane fade">
-
 <p>
 These are the previous versions of the repository in which changes were
 made to the R Markdown
@@ -646,6 +684,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/2a8688357d15145a47408dc60648c4722e7e209a/docs/PS02_Project_Background.html" target="_blank">2a86883</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-04
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -840,18 +895,18 @@ relation to the data.</p>
  Mean   :5.785e+09                      Mean   :300149644                     
  3rd Qu.:7.999e+09                      3rd Qu.:300137912                     
  Max.   :9.385e+09                      Max.   :301574958                     
-   total_kwh            ave_temp    
- Min.   :-24387.30   Min.   : 5.00  
- 1st Qu.:     7.72   1st Qu.:41.00  
- Median :    19.33   Median :58.00  
- Mean   :   236.04   Mean   :54.97  
- 3rd Qu.:    45.80   3rd Qu.:70.00  
- Max.   : 50596.80   Max.   :87.00  </code></pre>
+   total_kwh             ave_temp    
+ Min.   :-24387.300   Min.   : 5.00  
+ 1st Qu.:     7.719   1st Qu.:41.00  
+ Median :    19.334   Median :58.00  
+ Mean   :   236.038   Mean   :54.97  
+ 3rd Qu.:    45.799   3rd Qu.:70.00  
+ Max.   : 50596.800   Max.   :87.00  </code></pre>
 </div>
 <div id="graph-data" class="section level3">
 <h3>Graph data</h3>
 <pre class="r"><code>hist(ppl$ave_temp)</code></pre>
-<p><img src="figure/PS02_Project_Background.Rmd/graph-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p><img src="figure/PS02_Project_Background.Rmd/graph-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-graph-1">
 Past versions of graph-1.png
@@ -913,13 +968,13 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.3.2 (2023-10-31)
-Platform: x86_64-apple-darwin20 (64-bit)
+<pre><code>R version 4.5.2 (2025-10-31)
+Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.3-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.11.0
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -931,20 +986,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
-[1] workflowr_1.7.1
+[1] workflowr_1.7.2
 
 loaded via a namespace (and not attached):
- [1] jsonlite_1.8.8    compiler_4.3.2    highr_0.10        promises_1.2.1   
- [5] Rcpp_1.1.0        stringr_1.5.1     git2r_0.33.0      callr_3.7.3      
- [9] later_1.3.2       jquerylib_0.1.4   yaml_2.3.8        fastmap_1.1.1    
-[13] R6_2.5.1          knitr_1.45        tibble_3.2.1      rprojroot_2.0.4  
-[17] bslib_0.6.1       pillar_1.9.0      rlang_1.1.3       utf8_1.2.4       
-[21] cachem_1.0.8      stringi_1.8.3     httpuv_1.6.13     xfun_0.41        
-[25] getPass_0.2-4     fs_1.6.3          sass_0.4.8        cli_3.6.2        
-[29] magrittr_2.0.3    ps_1.7.5          digest_0.6.37     processx_3.8.3   
-[33] rstudioapi_0.16.0 lifecycle_1.0.4   vctrs_0.6.5       evaluate_0.23    
-[37] glue_1.7.0        whisker_0.4.1     fansi_1.0.6       rmarkdown_2.25   
-[41] httr_1.4.7        tools_4.3.2       pkgconfig_2.0.3   htmltools_0.5.7  </code></pre>
+ [1] vctrs_0.7.1       httr_1.4.8        cli_3.6.5         knitr_1.51       
+ [5] rlang_1.1.7       xfun_0.56         stringi_1.8.7     otel_0.2.0       
+ [9] processx_3.8.6    promises_1.5.0    jsonlite_2.0.0    glue_1.8.0       
+[13] rprojroot_2.1.1   git2r_0.36.2      htmltools_0.5.9   httpuv_1.6.16    
+[17] ps_1.9.1          sass_0.4.10       rmarkdown_2.30    jquerylib_0.1.4  
+[21] tibble_3.3.1      evaluate_1.0.5    fastmap_1.2.0     yaml_2.3.12      
+[25] lifecycle_1.0.5   whisker_0.4.1     stringr_1.6.0     compiler_4.5.2   
+[29] fs_1.6.7          pkgconfig_2.0.3   Rcpp_1.1.1        rstudioapi_0.18.0
+[33] later_1.4.8       digest_0.6.39     R6_2.6.1          pillar_1.11.1    
+[37] callr_3.7.6       magrittr_2.0.4    bslib_0.10.0      tools_4.5.2      
+[41] cachem_1.1.0      getPass_0.2-4    </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </div>
 
@@ -997,6 +1057,11 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
 
 <script>
 $(document).ready(function ()  {
