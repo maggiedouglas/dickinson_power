@@ -21,6 +21,7 @@ The below analysis provides an example of how to use linear regression to shed l
 library(tidyverse)
 library(segmented) # for segmented regression 
 library(tseries) # for time series, including autocorrelation
+library(moderndive)
 
 daily <- read.csv("./output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
 
@@ -77,7 +78,7 @@ mod_bad <- lm(formula = kwh ~ ave_temp,
 
 + The histogram and QQ-plot show that despite the poor fit, the residuals appear normally distributed
 + The Residuals vs. Fitted values graph gives us the strongest clue that the linear model is NOT a good fit for our data. We see a strong V-shape in the residuals, showing that the residual error is consistently negative in the middle of electricity use (~30,000) and positive at the ends (<25,000 and >35,000). This patterns suggests a non-linear pattern, which fits our initial plot.
-+ The temporal autocorrelation plot similarly suggests that there may be some dependence in our data. The residuals for daily observations are correlated with each other at least out to ~ two weeks. (ACF values above the blue dotted line)
++ The temporal autocorrelation plot similarly suggests that there is some dependence in our data. The residuals for daily observations are correlated with each other at least out to ~ two weeks. (ACF values above the blue dotted line)
 
 ```{r check_bad, fig.height = 4, fig.width = 8}
 par(mfrow = c(1, 2)) # This code puts two plots in the same window
@@ -117,6 +118,14 @@ daily_cool <- filter(daily_main, ave_temp > 60)
 
 # fit the model for temps above 60
 mod_cool <- lm(kwh ~ ave_temp, data = daily_cool)
+
+# let's look at the residuals and fitted values
+mod_cool_out <- get_regression_points(mod_cool)
+head(mod_cool_out)
+
+# we can also extract the residuals from the model object
+str(mod_cool)
+head(mod_cool$residuals)
 ```
 
 ### Check the fit
@@ -157,7 +166,7 @@ If we want to fit a single model that works across the entire range of temperatu
 ### Fit the model
 
 + First we fit the initial linear model as we did originally with `lm()`. Notice I'm using the full data again.
-+ Next we update the initial linear model with the `segmented()` function. This fits a 'broken line' regression. The argument `seg.Z` identified the variable over which we want to break the regression. The argument `psi` sets our initial guess for where the break point should be. The model will adjust this break point to find the one that best fits the data.
++ Next we update the initial linear model with the `segmented()` function. This fits a 'broken line' regression. The argument `seg.Z` identifies the variable over which we want to break the regression. The argument `psi` sets our initial guess for where the break point should be. The model will adjust this break point to find the one that best fits the data.
 
 ```{r mod_seg}
 mod_full <- lm(kwh ~ ave_temp, data = daily_main)
@@ -166,10 +175,10 @@ mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
 
 ### Check the fit
 
-+ Fitted model objects returned by the `segmented()` function work a bit differently than model objected created by `lm()`, so we will slightly adjust our approach to checking assumptions and drop the Q-Q plot.
-+ The histogram of the residuals looks slightly left-skewed now. It is still probably sufficient to meet the normality assumption, given that linear regression is not too sensitive to this assumption.
++ Fitted model objects returned by the `segmented()` function work a bit differently than model objects created by `lm()`, so we will slightly adjust our approach to checking assumptions and drop the Q-Q plot.
++ The histogram of the residuals looks slightly left-skewed now. It is still probably not a huge problem, given that linear regression is not too sensitive to this assumption. Still, this is a clue that perhaps there is some variable that is not captured in our current model. 
 + The Residuals vs. Fitted values plot does not show a strong pattern ('cloud like'), suggesting that we are meeting the equal variance and linearity assumptions. 
-+ The temporal autocorrelation plot suggests this model still has an issue with dependence among observations close in time, in fact moreso than the model fit to only warm temperatures. 
++ The temporal autocorrelation plot suggests this model still has an issue with dependence among observations close in time, in fact moreso than the model fit to only warm temperatures. Here again we see a signal at 7 and 14 days suggesting there may be a weekly pattern. 
 
 ```{r check_seg, fig.height = 4, fig.width = 8}
 par(mfrow = c(1, 2)) # This code put two plots in the same window
@@ -188,7 +197,7 @@ Output from `summary()`
 
 Additional information (using `confint()`, `intercept()`, and `slope()` functions)
 
-+ The model estimates the break point at 57.3 degrees F (55.5 - 59.2) - this is where the slope changes from negative to positive.
++ The model estimates the break point at 57.3 degrees F (95% CI: 55.5 - 59.2) - this is where the slope changes from negative to positive.
 + The equation below 57.3 degrees is: `kWh = 31451 - 73.3*Temp(F)` 
     + The negative slope reflects the negative relationship between temperature and electricity use at lower temperatures
 + The equation above 57.3 degrees is: `kWh = -7994 + 614*Temp(F)`
@@ -232,4 +241,4 @@ ggplot(daily_focal, aes(x = ave_temp, y = kwh)) +
 
 ## Revisit expectations
 
-The model fit on temperatures > 60 degrees F and the segmented regression both appeared to fit the data fairly well. Both models were highly significant and explained about two thirds of the variation in electricity use, suggesting that these models have value to understand electricity use patterns. For those two models, the fit to assumptions of normality and equal variance appeared to be reasonably met. A straight line also appeared to capture the pattern in the data reasonably well. One issue we will want to revisit is that it does appear that the independence assumption may be violated, because the temporal autocorrelation plot shows correlation between observations near each other in time. Overall, the segmented model appears to provide a reasonable start for our model of the main meter, but can probably be improved by integrating additional explanatory variables.
+The model fit on temperatures >60 degrees F and the segmented regression both appeared to fit the data fairly well. For the model >60 degrees F, the fit to assumptions of normality and equal variance appeared to be reasonably met. A straight line captured the pattern in the data reasonably well. The residuals from the segmented regression appeared slightly skewed in distribution. One issue we will want to revisit is that it appears that the independence assumption is violated in both models, because the temporal autocorrelation plot shows correlation between observations near each other in time. Both models were highly significant and explained about two thirds of the variation in electricity use, suggesting that these models have value to understand electricity use patterns. Overall, the segmented model appears to provide a reasonable start for our model of the main meter, but can probably be improved by integrating additional explanatory variables. 
