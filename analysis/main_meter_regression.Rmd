@@ -123,7 +123,7 @@ mod_cool <- lm(kwh ~ ave_temp, data = daily_cool)
 mod_cool_out <- get_regression_points(mod_cool)
 head(mod_cool_out)
 
-# we can also extract the residuals from the model object
+# we can also extract the residuals from the model object, as follows:
 str(mod_cool)
 head(mod_cool$residuals)
 ```
