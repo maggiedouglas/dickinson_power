@@ -1,0 +1,161 @@
+---
+title: "Report_Section_1_Admin"
+author: "Amiya Marbles & Eva Hanlin"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output: html_document
+---
+## Background
+
+###### There are 11 total administrative buildings listed in this campus category, accounting for a combined 188,060 square feet of space. However, since the electricity dataset only covers 6 of these buildings 5 with individual meters and Old West on a submeter, we are actively analyzing 137,948 square feet, which is about 73% of the total administrative footprint. These administration buildings are mainly used on a typical 9-5pm schedule year round and cover a highly diverse range of campus operations, including executive leadership in Old West, essential student facing buildings, campus backbone departments like Facilities Management and IT, and specialized ROTC offices. There is a massive spread in the physical size of these buildings, which will heavily impact electricity usage. The Facilities Management building at 5 N. Orange St. is by far the largest at 75,000 sq. ft., followed by Old West at 30,208 sq. ft., while the smallest spaces are converted residential style structures like the 1,440 sq. ft. ROTC office and the 1,800 sq. ft. IT Storage Annex. Additionally, the architecture spans over two centuries, meaning energy efficiency and insulation likely vary wildly, ranging from the historic 1803 anchor of Old West to mid century buildingd and recently renovated spaces like Waidner Admissions and the ROTC offices.
+
+## Data Preparation
+``` {r data_prep}
+library(dplyr)
+library(readr)
+library(RColorBrewer)
+library(tidyverse)
+library(DT)
+library(paletteer)
+library(lubridate) 
+library(rmarkdown)
+
+kwh_annual_df <- read_csv("./output/kwh_annual_2026-03-17.csv")
+kwh_daily <- read_csv("./output/kwh_daily_2026-03-17.csv")
+
+Kwh_annual_df <- kwh_annual_df %>%
+  mutate(across(where(is.character), as.factor))
+
+kwh_annual_admin_df <- kwh_annual_df %>%
+filter(type == "Admin")
+
+kwh_annual_admin_df <- kwh_annual_admin_df %>%
+  mutate(
+    cost_usd = kwh_corr * 0.08138507, 
+    ghg_mt_co2e = kwh_corr * 0.30082405, 
+    kwh_per_sqft = kwh_corr / sqft
+  ) %>%
+  arrange(desc(kwh_corr)) %>%
+  select(-type) 
+head(kwh_annual_admin_df)
+str(kwh_annual_admin_df)
+```
+``` {r Academic_Year_Data}
+kwh_academic <- read_csv("./output/kwh_academic_2026-03-17.csv")
+kwh_academic <- kwh_academic %>%
+  mutate(across(where(is.character), as.factor))
+academic_admin <- filter(kwh_academic, type == "Admin")
+ghg_kg <- 0.30082405
+cost_multiplier <- 0.08138507 
+final_academic_admin <- academic_admin %>%
+  mutate(
+  
+    GHG.MT = round(kwh_corr * ghg_kg) / 1000,
+    cost = round(kwh_corr * cost_multiplier),
+    kwh_sqft = round(kwh_corr / sqft) 
+  ) %>%
+  arrange(desc(kwh_corr)) %>%
+  select(-type)
+final_academic_admin
+str(final_academic_admin)
+```
+``` {r Daily_data}
+admin_daily_df <- kwh_daily %>%
+  mutate(across(where(is.character), as.factor)) %>%
+  filter(type == "Admin") %>%
+  mutate(
+    date = ymd(date), 
+    month = month(date, label = TRUE, abbr = FALSE), 
+    day_of_week = wday(date, label = TRUE, abbr = TRUE), 
+    kwh_sqft_yr = (kwh * 365) / sqft 
+  )
+str(admin_daily_df)
+head(admin_daily_df)
+```
+## Electricity Use Summary
+
+###### Determining a ‘typical’ administrative building on campus is difficult given the large fluctuation in square footage, which generally has a positive correlation to total electricity use. However, based on averaged data from Mooreland Avenue and 554 West Louther Street, a typical administrative building of about 14,270 square feet uses approximately 51,828.59 kWh per year, operating at an intensity of 5 kWh/sqft. This typical usage translates to an estimated financial cost of $4,218 and greenhouse gas emissions of 15.591 metric tons of CO2e annually. We see a wide range of variability in both total electricity use and intensity across these buildings. 5 North Orange Street is the largest building and the largest consumer overall, using 567,745.2 kWh/year and charting the highest intensity at 8 kWh/sqft. Conversely, 556 West Louther Street has the smallest total electricity use per fiscal year at 4,985.55 kWh, and ties with Old West for the lowest electricity intensity at just 2 kWh/sqft. Furthermore, total electricity use is not always the best indicator of efficiency; for instance, 554 West Louther Street is the smallest building but has the second-highest electricity use per square foot. When comparing Dickinson's electricity intensity to similar buildings at other colleges and universities, the campus performs well. The EIA notes that average administrative buildings at other institutions use 227,000 kWh per year at an average of 13.5 kWh/sqft, with a median of 9.7 kWh/sqft. Even Dickinson's most intensive building, 5 North Orange Street (8 kWh/sqft), falls below the EIA median and average, indicating effective electricity management despite being almost five times the size of the EIA average building footprint of 16,800 square feet.
+
+``` {r Table_1}
+datatable(kwh_annual_admin_df,
+          rownames = FALSE,
+          colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh per year", "kWh (corrected)", "kWh per sqft", "Cost ($)", "CO2e (MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 6, autoWidth = TRUE, dom ='t'), caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.")
+
+###### Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal 2025. 	It’s hard to determine a ‘typical’ administrative building on Dickinson College campus given the large fluctuation in square footage that, based on the data, has a positive correlation to electricity use. Generally the larger the square footage, the larger the total electricity use. However, when we come to electricity use per square foot, we can see that total electricity use isn’t the best indicator of electricity efficiency. 5 North Orange Street is the largest building with the largest total electricity use and largest electricity use per square foot but 554 West Louther Street is the smallest building with the third smallest total electricity use but the second highest electricity use per square foot. Using a scale of 2-8 kWh/sqft (2 being the smallest kWh/sqft recorded, and 8 being the largest) the average kWh/sqft is between Mooreland Avenue and 554 West Louther Street, at about 5 kWh/sqft. Based on Mooreland Avenue and 554 West Louther Street’s averaged data for kWh/year, cost in USD, and CO2e measured in metric tons, the ‘typical’ administrative building may follow the following characteristics: - Square footage: 14,270 - kWh/year: 51/828.5925 kWh/yr - kWh/sqft: 5 kWh/sqft - Cost ($): $4,218 -CO2e (MT): 15.591 MT. 5 North Orange Street is by far the largest consumer of total electricity use per fiscal year and per square foot, at 567,745.2 kWh/year and 8 kWh/sqft respectively, while 556 West Louther Street and Old West are tied for smallest electricity use per square foot, both at 2 kWh/sqft, and 556 West Louther Street has the smallest total electricity use per fiscal year at 4,985.555 kWh/sqft. We see a wide range of variability in electricity use across administrative buildings on campus and the associated costs and greenhouse gas emissions, which will be discussed in the recommendations section of our paper. The EIA categorizes administrative or professional office buildings at other Colleges and Universities as using an average of 227,000 kWh per building per year, at an average of 13.5 kWh/sqft. The median of electricity use per square foot falls at 9.7 kWh/sqft while the low end measurement falls at 6.1 kWh/sq ft and the high end measurement falls at 15.5 kWh/sq ft. It’s important to note that the average square footage per building is 16,800 sqft which is much larger than our three smallest buildings and much smaller than our three largest buildings, making it not an ideal comparison for our building set. 5 North Orange Street at a square footage of 75,000 is almost five times the size of the average administrative building on other college campuses and uses about twice as much electricity per year which indicates that for its size, 5 North Orange Street does seem to be managing electricity use well for its size. Its kWh/sqft even falls below the median and average of electricity use per square foot. As 5 North Orange Street is our largest electricity user in all categories for the fiscal year, this seems to bode well for our other buildings, but size is still an important factor to consider when we make comparisons between an average building size of 16,800 sqft and buildings as low as 1,440 sqft. 
+```
+
+``` {r Table_2}
+datatable(final_academic_admin,
+          rownames = FALSE,
+          colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh per year", "kWh (corrected)", "kWh per sqft", "Cost ($)", "CO2e (MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 6, autoWidth = TRUE, dom ='t'), caption = "Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.")
+
+###### Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025. The biggest electricity user for the academic year is still 5 North Orange Street at 371,381.6 kWh/year and 5 kWh/sqftt while the smallest electricity user is 556 West Louther Street at 2,791.509 kWh per year and 1 kWh/sqft. This is different from the fiscal year where Old West is overall one of the smallest electricity users per square foot whereas during the academic year Old West becomes one of the second least electricity users per square foot. While this doesn’t seem to be a big change, Old West is tied with 50 Mooreland Avenue and 41 Conway Street for second least, with Old West having the largest electricity use per year out of the three of them. There is less variability during the academic year compared to the fiscal year which could be due to having more data for Old West for the academic year than we have for the fiscal year, though it should still be emphasized we only have 96% of academic year days of data compared to the other buildings’ 100%. Dickinson College’s administrative buildings’ electricity use still remains low compared to the administrative buildings on other college campuses compiled by the EIA, both in terms of total electricity use and per square foot but it is important again to note the vast difference in average size of other colleges’ administrative buildings compared to ours.  
+```
+
+``` {r Figure_1}
+library(tidyverse)
+library(paletteer)
+
+ggplot(admin_daily_df, aes(x = month, y = kwh, fill = NAME)) +
+  geom_col() +
+  facet_wrap(~ NAME) +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+    legend.position = "none"
+  ) +
+  labs(
+    title = "Monthly patterns in electricity use by building for Admin buildings in FY25",
+    x = NULL,
+    y = "Electricity use (kWh)"
+  )
+
+###### Figure 1. Monthly changes in how much electricity administrative buildings used in FY25. This bar plot with facets shows how much electricity (in kWh) the college's administrative buildings used each month. Note: There is a known gap in data collection for all buildings connected to the Weiss Meter (including Old West) during part of August. This makes the reported total for that month seem lower than it really is. 
+```
+``` {r Figure 2}
+eia_median <- 10.1
+eia_q25 <- 6.1    
+eia_q75 <- 15.7   
+
+ggplot(admin_daily_df, aes(
+    x = reorder(NAME, kwh_sqft_yr, FUN = median, na.rm = TRUE), 
+    y = kwh_sqft_yr,
+    fill = NAME
+  )) +
+  annotate("rect", ymin = eia_q25, ymax = eia_q75, xmin = -Inf, xmax = Inf, 
+           alpha = 0.2, fill = "gray50") +
+  geom_hline(yintercept = eia_median, linetype = "dashed", color = "black", linewidth = 0.8) +
+  geom_boxplot(alpha = 0.9, outlier.alpha = 0.5) +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  coord_flip() +
+  facet_wrap(~ period) +
+  theme_bw() +
+  theme(
+    legend.position = "none"
+  ) +
+  labs(
+    title = "Electricity intensity by building for Admin buildings in FY25.",
+    subtitle = "Dashed line = EIA 2018 Median; Gray band = EIA 2018 IQR",
+    x = NULL, 
+    y = "Electricity Intensity (kWh/sqft/year)"
+  )
+
+###### Figure 2. Annualized daily electricity intensity by academic period and administrative building. This faceted boxplot shows how the daily electricity intensity (kWh/sqft/year) for administrative buildings changes throughout the year. The median usage of a building is used to rank it from highest to lowest. The horizontal dashed black line shows the national median (10.1 kWh/sqft/year), and the shaded gray band shows the interquartile range (6.1 to 15.7 kWh/sqft/year) from the EIA 2018 Commercial Buildings Energy Consumption Survey. 
+```
+## Recommendations
+
+###### As mentioned, Old West is on a submeter off of the Weiss Meter and only has 92% of days of data for the whole year. The missing 8% of data is partially during the academic year, making the percentage of days of data available for the academic year 96%. Applying the same analysis to a year with complete data for Old West is highly recommended as it seems Old West is one of the largest administrative buildings but has relatively low electricity intensity, however, we cannot rule out that this result may be due to the data missing. Context is also key for these administrative buildings as they vary drastically in square footage, open hours, and use. Square footage is taken into account, but knowing what hours and days of the week these buildings are in use and what equipment is used there could help explain findings. We can guess what days and times of the week buildings are open based on what use information is provided for them, but knowing what the ROTC offices do or when CASE utilizes 5 North Orange Street could provide specific information not inferrable from our findings.Based off of the information for similarly situated administrative buildings on college campuses, provided by the EIA, Dickinson is seemingly doing well in relation to electricity use in administrative buildings, but it is important that we gather more data for buildings similar in specific uses and sizes as the information provided by the EIA is not very similar to that of Dickinson’s administrative buildings.554 West Louther Street should be investigated further - it is the smallest building in terms of square footage on our list yet it uses the second highest kWh per academic year and per square footage for both fiscal and academic year. In addition, our portion of 5 North Orange Street’s findings should be compared to the other uses of 5 North Orange Street in the “Other” Building category to understand if the building uses a large amount of electricity overall or if specific departments are making up more of use than others. Our portion of 5 North Orange Street contains the Office of Conferences and Special Events, Facilities Storage, and the Print Center. The “Other” category contains Central Pennsylvania Youth Ballet and Project SHARE. Doing the same analysis using a complete year of data for all the buildings on the list including the submetered data of Old West is a good idea for future investigation. If we could compile that data we could compare Old West more effectively with 50 Mooreland Avenue who are similar in their uses and square footage but based on our findings have significantly different electricity use. Old West uses half as much kWh per square foot as Mooreland Avenue does despite being a larger building. However, since we only have 92% of the year’s data for Old West compared to Mooreland Avenue’s 100% we cannot rule out the possibility that the 8% of data we are missing for Old West may make them more comparable. Old West seems to use more electricity during the academic year as compared to the fiscal year, which makes sense when you consider the uses of the building are mainly for the academic year. However, it may be useful to analyze habits used by the departments who use the building year round as opposed to those who use it only for the academic year to understand if there is any difference that may be adjusted to lower electricity use during the academic year to a level more similar to the fiscal year. 
+
+## Sources
+
+###### Leary,N. (2025). *Dickinson College greenhouse gas inventory*. Dickinson College.U.S. Energy Information Administration. (2022). *2018 Commercial Buildings Energy Consumption Survey (CBECS)*. U.S. Department of Energy. https://www.eia.gov/consumption/commercial/
+
+## Partner Contributions
+
+###### Amiya did the Background section, adapted Eva & I code from PS5 into our report section 1, prepare data section, and Figure 1 and 2. As well as the Electricty use summary and sources. Eva did the Table 1 and table 2 as well as the recommendation section. 

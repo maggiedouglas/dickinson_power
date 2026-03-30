@@ -1,0 +1,178 @@
+---
+title: "Small Residence Halls"
+author: "Luke Heller & Valerie Larsen"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output: html_document
+---
+
+## Background
+The small residential building category includes all on-campus residence halls that are smaller than 2,000 square feet. (135 N. College St. shares a meter with 139 N. College St. and 49 S. College St. shares a meter with 51 S. College St. Each of these individual buildings are smaller than 2,000 square feet, but the square footage for each of these two meters adds up to more than 2,000 square feet.) This building category primarily contains small apartments as well as some townhouses that house students during the academic year.
+
+There are 19 buildings in this category. One of these buildings (169 W. High St.) is located on the main meter; the other 18 buildings are individually metered. Together, these buildings comprise 30,353 square feet. This is the smallest total square footage among the different building categories. Most of these buildings were built in the late 19th and early 20th centuries and acquired by Dickinson in the late 20th and early 21st centuries. Additionally, almost all of these buildings have been renovated within the last decade.
+
+## Data preparation
+```{r libraries}
+library(tidyverse)
+library(DT)
+library(paletteer)
+```
+
+### Load and check data
+```{r load}
+annual_kwh <- read.csv("./output/kwh_annual_2026-03-17.csv")
+daily_kwh <- read.csv("./output/kwh_daily_2026-03-17.csv")
+academic_kwh <- read.csv("./output/kwh_academic_2026-03-17.csv")
+kwh_dollar <- .08138507
+kwh_ghg <- .30082405
+```
+```{r check}
+str(annual_kwh)
+str(daily_kwh)
+str(academic_kwh)
+```
+
+### Wrangle data
+
+#### Annual data
+```{r annual}
+annual_kwh$NAME <- replace_values(annual_kwh$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.")
+
+annual_s_residential <- annual_kwh  %>%
+  filter(type == "Residential - S") %>%
+  mutate("Meter" = meter,
+         "Building" = NAME,
+         "Days of data (%)" = round(days_perc, digits = 0),
+         "Square footage" = sqft,
+         "kWh" = round(kwh, digits = 0),
+         "kWh (corrected)" = round(kwh_corr, digits = 0),
+         "kWh per sqft" = round((kwh_corr/sqft), digits = 1),
+         "Cost ($)" = paste("$", round((kwh_corr*kwh_dollar), digits = 0)),
+         "CO2e (MT)" = round((kwh_corr*kwh_ghg/1000), digits = 0)) %>%
+  arrange(desc(kwh_corr)) %>%
+  select("Meter", "Building", "Days of data (%)", "Square footage", "kWh", "kWh (corrected)", "kWh per sqft", "Cost ($)", "CO2e (MT)")
+
+str(annual_s_residential)
+```
+
+#### Academic data
+```{r academic_year}
+academic_kwh$NAME <- replace_values(academic_kwh$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.")
+
+academic_s_residential <- academic_kwh %>%
+  filter(type == "Residential - S") %>%
+  mutate("Meter" = meter,
+         "Building" = NAME,
+         "Days of data (%)" = round(days_perc, digits = 0),
+         "Square footage" = sqft,
+         "Occupants (AY)" = round(occupants, digits = 0),
+         "kWh" = round(kwh, digits = 0),
+         "kWh (corrected)" = round(kwh_corr, digits = 0),
+         "kWh per sqft" = round((kwh_corr/sqft), digits = 1),
+         "kWh per person" = round((kwh_corr/occupants), digits = 0),
+         "Cost ($)" = paste("$", round((kwh_corr*kwh_dollar), digits = 0)),
+         "CO2e (MT)" = round((kwh_corr*kwh_ghg/1000), digits = 0)) %>%
+  arrange(desc(kwh_corr)) %>%
+  select("Meter", "Building", "Days of data (%)", "Square footage", "Occupants (AY)", "kWh", "kWh (corrected)", "kWh per sqft", "kWh per person", "Cost ($)", "CO2e (MT)")
+
+str(academic_s_residential)
+```
+
+#### Daily data
+```{r daily}
+daily_kwh$NAME <- replace_values(daily_kwh$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.")
+
+daily_s_residential <- daily_kwh %>%
+  filter(type == "Residential - S") %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE),
+         kwh_sqft_annual = round((kwh/sqft*365), digits = 1),
+         kwh_occupants_annual = round((kwh/occupants*365), digits = 0))
+
+str(daily_s_residential)
+
+daily_s_residential_drop_winter <- daily_s_residential %>%
+  filter(!period %in% c("Winter Break")) # Dropping winter break data for faceted box plot as it doesn't communicate any relevant, new information
+
+str(daily_s_residential_drop_winter)
+```
+
+#### Monthly data
+```{r monthly}
+monthly_s_residential <- daily_s_residential %>%
+  group_by(NAME, month) %>%
+  summarize(total_kwh = sum(kwh))
+
+str(monthly_s_residential)
+```
+
+## Electricity use summary
+
+### Summary tables
+```{r table_fy}
+datatable(annual_s_residential, rownames = FALSE,
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 18, autoWidth = TRUE, dom = 't'),
+          caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.")
+```
+```{r table_ay}
+datatable(academic_s_residential, rownames = FALSE,
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 18, autoWidth = TRUE, dom = 't'),
+          caption = "Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.")
+```
+
+For the 2025 fiscal year, electricity use among small residence halls ranged between 1952 kWh and 18531 kWh with a median of 7518.5 kWh. For the 2024-2025 academic year only, electricity use ranged between 1481 kWh and 10149 kWh with a median of 4572.5 kWh. The estimated total cost of powering the small residence halls during the 2025 fiscal year was approximately $11,882 and total GHG emissions were approximately 44 metric tons of CO2. The three buildings which used the most electricity among small residence halls during both the fiscal year and the academic year were 135-139 N. College St., 49-51 S. College St., and 135 Cedar St., while the building which used the least electricity was Carriage House. 135 Cedar St. also had the highest electricity intensity among the small residence halls.
+
+### Summary figures
+```{r monthly_use}
+ggplot(monthly_s_residential, aes(x = month, y = total_kwh, fill = NAME)) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ NAME) +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  theme(legend.position = "none") + 
+  labs(title = "Figure 1. Monthly patterns in electricity use by building for small residence\nhalls in FY25", x = "", y = "Electricity use (kWh)")
+```
+
+As seen in Figure 1, most of the small residence halls observed a peak in electricity use during the summer months (June-August), while a few had electricity use evenly distributed throughout the year. A notable exception is 507 W. Louther St., which instead observed a peak in electricity use in early fall. All of the small residence halls had comparably low electricity use in late fall and early winter.
+```{r kwh_sqft}
+ggplot(daily_s_residential_drop_winter,
+       aes(fct_reorder(NAME, kwh_sqft_annual, median), y = kwh_sqft_annual, fill = NAME)) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 8.2, ymax = 36.1, color = "lightgray", alpha = 0.3) + geom_hline(yintercept = 13.6, linetype = "dashed", color = "white") +
+  geom_boxplot() +
+  coord_flip() +
+  facet_wrap(period ~ .) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  labs(title = "Figure 2. Electricity intensity by building for small residence halls\nin FY25", x = "", y = "Electricity Intensity (kWh/sqft/year)")
+```
+
+As seen in Figure 2, there was no significant variation in median electricity intensity among small residence halls during the 2025 fiscal year. Each building’s median electricity intensity fell below the median of all college and university buildings in the U.S. in 2018 (13.6 kWh/sqft/year), although some outliers lied above this median (EIA 2022). Overall electricity intensity was highest during summer break; the 75th percentile of electricity intensity for 135 Cedar St. during summer break lied above the median of all college and university buildings in the EIA report, while the 75th percentiles of a few other buildings also approached this value during the summer.
+
+## Recommendations
+The HVAC systems in each building could explain the distribution of electricity use; most of the small residence halls are heated by natural gas and oil and cooled using electricity (M. Kiner, personal communication, February 18, 2026). The high electricity use in the summer months is notable because occupancy data suggests that these buildings are uninhabited during summer break. We recommend minimizing electricity use during the summer months by performing the following actions:
+
+- Ensuring that thermostats are turned off or set to an electricity-efficient level.
+
+- Turning off and unplugging other unused appliances that could be using electricity.
+
+- Leaving small residence halls unoccupied during the summer months and rather assign students and guests to larger, newer, and more efficient residence halls.
+  
+We also recommend installing sub-meters for 135 and 139 N College St. as well as 49 and 51 S College St. This would allow us to better understand electricity use patterns per building for these four buildings.
+
+## Sources
+Leary, N. (2025). *Dickinson College Greenhouse Gas Inventory 2008-2023.* Center for Sustainability Education.
+
+Energy Information Administration (EIA). (2022). *2018 Commercial Buildings Energy Consumption Survey (CBECS).* https://www.eia.gov/consumption/commercial/
+
+## Partner contributions
+Luke revised and formatted the faceted bar plot and box plot figures and drafted the Background section. Valerie created the electricity use table for the academic year and drafted the electricity use summary. Luke & Valerie both drafted the Recommendations section. Luke proofread the final code and text and submitted the assignment.
+  
+The AI Search tool on Ecosia (a web browser) was used to help troubleshoot R code; one instance where we relied on help from AI was to add captions to our figures.
+  
+We noticed two potential issues in the small residence halls data: for the building 425 W. Louther St., the occupants variable is equal to 3.5 (this is true for the academic, annual, and daily datasets). Neither of us are sure what the half of an occupant is meant to represent. Additionally, the building 169 W. High St., which is included in our category, does not have any electricity use data and as such is not included in our summary table above (although this could be because it is on the main meter).

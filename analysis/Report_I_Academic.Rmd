@@ -1,0 +1,147 @@
+---
+title: "Academic Buildings"
+author: "Sophia Evans and Chloe Ross"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output: html_document
+---
+
+## Background
+
+The buildings in the academic category primarily hold classrooms, laboratories, offices and study spaces. They are primarily used by students and faculty during the day on weekdays. Many of the buildings are still used by a smaller number of people at nights and on weekends. The buildings in this category cover 517,099 sqft on campus which is about 27% of building space. These buildings have a wide range of square footage. The largest building is the Waidner Spahr Library with 120,000 sqft and the smallest is the Keck Archaeology lab with 1,511 sqft. This category also has significant variability in age, from 19 years to 199 years old.
+
+This category contains 20 buildings however only half of these have individual data. Five academic buildings are metered individually, and 5 are on the main meter but have submeter data. The rest are on the main meter but do not have submeter data. This presents a significant challenge to understanding the electricity use of academic buildings on campus. The following analysis is conducted only on the ten buildings with individual daily data. 
+
+
+## Data Preparation
+
+```{r load}
+library(tidyverse)
+library(DT)
+library(paletteer)
+kwh_academic_year <- read.csv("./output/kwh_academic_2026-03-17.csv")
+kwh_annual <- read.csv("./output/kwh_annual_2026-03-17.csv")
+kwh_daily <- read.csv("./output/kwh_daily_2026-03-17.csv")
+```
+
+```{r check}
+str(kwh_annual)
+str(kwh_daily)
+str(kwh_academic_year)
+```
+
+```{r annual_academic}
+annual_academic <- kwh_annual %>%
+  filter(type == "Academic") %>% 
+  mutate(MTCO2e = round(kwh_corr*0.30082405, digits = 0), 
+         Cost = round(kwh_corr*0.08138507,digits= 0),
+         kwh_sqft = round(kwh_corr/sqft, digits= 1),
+         days_perc = round(days_perc, digits = 0),
+         kwh = round(kwh, digits = 0),
+         kwh_corr = round(kwh_corr, digits = 0)
+         )%>%
+  arrange(desc = TRUE) %>%
+  select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kwh_sqft, Cost, MTCO2e)
+str(annual_academic)
+```
+
+```{r ayear_academic}
+ayear_academic <- kwh_academic_year %>%
+  filter(type == "Academic") %>% 
+  mutate(MTCO2e = round(kwh_corr*0.30082405, digits = 0), 
+         Cost = round(kwh_corr*0.08138507,digits= 0),
+         kwh_sqft = round(kwh_corr/sqft, digits= 1),
+         days_perc = round(days_perc, digits = 0),
+         kwh = round(kwh, digits = 0),
+         kwh_corr = round(kwh_corr, digits = 0))%>%
+  arrange(desc = TRUE) %>%
+  select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kwh_sqft, Cost, MTCO2e)
+str(ayear_academic)
+```
+
+```{r daily}
+academic_kwh_daily <- kwh_daily %>% 
+  filter(type == "Academic") %>% 
+  mutate(date = ymd(date), 
+         month = month(date, label = TRUE), 
+         day = wday(date, label = TRUE)) %>%
+  mutate(kwh_sqft = kwh/sqft*365)
+str(academic_kwh_daily)
+```
+
+## Electricity Use Summary
+
+For the academic buildings the total annual electricity consumption is highly variable by building. During fiscal year 2025, the median annual corrected electricity consumption for academic buildings is 34,465 kWh with an interquartile range of 103,559 kWh. These buildings also have significant variability in electricity cost and GHG emissions. The estimated cost of electricity per building in fiscal year 2025 ranges from $528 to $29,356. Similarly, the estimated GHG emissions ranges from 1,953 MT CO2e to 108,510 MT CO2e. This variability is not unexpected considering the range of sizes that this category covers. The square footage ranges from 1,775 sqft to 120,000 sqft (Table 1).However, electricity intensity is less variable. The median annual electricity intensity is 3.7 kWh/sqft and the interquartile range is only 1.1 kWh/sqft. 
+
+```{r table1}
+datatable(annual_academic, 
+          filter = 'none', 
+          colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh", "kWh (corrected)","kWh per sqft", "Cost ($)", "CO2e (MT)"),
+          rownames = FALSE, 
+          class = "compact",
+          options = list(pagelength = 10, autoWidth = TRUE, dom = 't'),
+          caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of academic buildings during fiscal year 2025")
+```
+
+The academic buildings are used differently throughout the year. During breaks, the academic buildings see less use while most of the student body is away from campus and classes are not in session. Thus, it is useful to examine the data excluding breaks to better characterize electricity use during the academic year. Table 2 shows electricity consumption by building during the academic year 2024-2025. Both electricity consumption and electricity intensity are lower during only the academic year and there is still significant variability between buildings. 
+
+```{r table2}
+datatable(ayear_academic, 
+          filter = 'none', 
+          colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh", "kWh (corrected)","kWh per sqft", "Cost ($)", "CO2e (MT)"),
+          rownames = FALSE, 
+          class = "compact",
+          options = list(pagelength = 10, autoWidth = TRUE, dom = 't'),
+          caption = "Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of academic buildings during academic year 2024/2025")
+```
+
+The largest electricity users among Dickinson’s academic buildings are **Waidner-Spahr Library, Althouse, Bosler Hall, and the Stern Center**, which consistently show the highest total monthly electricity consumption, particularly during the academic year (Figure 1). Buildings such as **46 S. West St., 162–164 Dickinson Ave. and 57 S. College St.** are the smallest electricity users overall, with consistently low consumption across all months (Figure 1). There is substantial variability in electricity use both across buildings and across seasons. Larger, high-use buildings maintain relatively high consumption year-round but often show slight decreases during summer or winter breaks. Other buildings, such as **Montgomery House**, exhibit extreme variability, with a sharp spike in December that is inconsistent with the rest of the year (Figure 1). 
+
+```{r figure1}
+ggplot(academic_kwh_daily, aes(x = month, y = kwh/(10^3), fill = NAME)) + 
+  geom_col(position = "stack") + 
+  facet_wrap(. ~ NAME) + 
+  scale_fill_paletteer_d("ggthemes::Tableau_20") + 
+  theme_bw() + 
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  theme(legend.position = "none") + 
+  labs(x = "",
+       y = "Electricity use (1000 kWh)",
+      title = "Figure 1. Monthly patterns in electricity use by building for academic buildings \nin FY25")
+```
+
+The buildings with the highest energy use relative to their size are **Green Valley Sanctuary and Carlisle Theatre**, which consistently fall at or above the upper range of typical values across multiple seasons (Figure 2). These buildings are the largest users when normalized by square footage, particularly during the academic year (fall and spring semesters).  **Montgomery House and 57 S. College St.** are among the lowest-intensity buildings across all seasons, suggesting relatively low energy use per square foot (Figure 2). Most other academic buildings, including **Althouse, Bosler Hall, Stern Center, and Waidner-Spahr Library**, fall within a moderate range of electricity intensity, generally below the national median (Figure 2). There is notable variability in electricity intensity across both buildings and seasons. Some buildings, such as the **Carlisle Theatre**, show a wide spread of values, particularly during the summer (Figure 2).  Others, like **Green Valley Sanctuary**, maintain consistently high intensity across all periods (Figure 2). Seasonal variation is also evident, with many buildings showing slightly lower intensity during summer and winter breaks, although this pattern is not uniform across all buildings. When compared to the EIA 2018 Commercial Buildings Energy Consumption Survey, most Dickinson academic buildings fall below the national median and within or below the interquartile range, indicating generally strong performance with the exception of **Green Valley Sanctuary and Carlisle Theatre** having the highest electricity intensities across multiple seasons (Figure 2), often approaching or exceeding the upper range of typical values for U.S. colleges and universities. 
+
+```{r figure2}
+ggplot(academic_kwh_daily, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
+                            fill = NAME)) + 
+         annotate("rect", xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = "lightgray", alpha = 0.3) + 
+         geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") + 
+  geom_boxplot() +
+  facet_wrap(. ~ period) + 
+  coord_flip() + 
+  theme_bw() + 
+  theme(legend.position = "none") + 
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  labs(x = "", 
+       y = "Electricity Intensity (kWh/sqft/year)", 
+       title = "Figure 2. Electricity intensity by building for academic buildings \nin FY25",
+      caption = "White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)") +
+  ylim(0,30) # Montogomery House as an outlier of 800
+```
+
+## Discussion
+
+A limitation in this study is the inconsistency in submeter data availability across academic buildings. As shown in Tables 1 and 2, several buildings do not have complete daily records due to meters going offline, which can result in unrecorded electricity use being aggregated into later days when the meter goes back online. To improve data quality, Dickinson should prioritize upgrading or replacing submeters in buildings with significant data gaps, particularly Waidner-Spahr Library, which has only 36% of days with electricity data despite being heavily used throughout the academic year (Table 1). Montgomery House is another building we recommend looking into because it exhibits an extreme outlier in electricity intensity (approximately 800 kWh/sqft/year) and unusually high electricity use just in the month of December (Figure 1). This pattern may reflect submeter problems or delayed reporting of electricity use due to going offline, but it could also indicate underlying issues.\
+
+When compared to the U.S. Energy Information Administration’s 2018 Commercial Buildings Energy Consumption Survey, most of Dickinson’s academic buildings perform well, with electricity intensities below the national median during both academic semesters and break periods. However, exceptions such as Carlisle Theatre and Green Valley Sanctuary meet or exceed the EIA median (Figure 2), suggesting potential problems or different electricity demands that should be further examined. Dickinson’s academic buildings are functioning well and are showing a generally strong performance compared to the college and university section in the EIA building survey, variation between buildings suggests there are still opportunities to improve efficiency. Several buildings (Althouse, Bosler Hall, Stern Center, and Waidner-Spahr Library) consistently show higher electricity use than others, particularly during the fall, winter, and spring months (Figure 1). These buildings should be prioritized to see what could possibly be causing these electricity inefficiencies. Buildings with consistently low electricity intensity relative to other buildings may serve as useful models, and analyzing their operational practices could help inform electricity-saving strategies across campus.
+
+
+## Sources
+
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+
+Leary, N. (2025). Dickinson College Greenhouse Gas Inventory 2008-2023. Center for Sustainability Education.
+
+## Partner Contributions
+
+Sophia wrote the background, generated the tables and wrote the associated text. Chloe wrote the reccomendations, generated the figures and wrote the associated text. 

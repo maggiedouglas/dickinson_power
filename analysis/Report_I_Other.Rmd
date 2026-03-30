@@ -1,0 +1,186 @@
+---
+title: "Other Buildings"
+author: "Ben Connors & Kyrie Sanchez"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output: html_document
+---
+
+## Background
+
+The “other” category is the accumulation of buildings that do not align with any one group. Some of the buildings may host residents but are not exclusively residential – such as Kade and King House. Some buildings represent multiple structures that are on the same meter, for example: Biddle Press Box, Restrooms, Durden ATC (Biddle). 5 N. Orange St. is shared by the facilities group, the half of the building represented by this category is used by ProjectSHARE and the Central Pennsylvania Youth Ballet (CPYB). As a result of the diversity within the category, it is hard to identify a main function.
+
+There are 17 buildings in total, which makes up roughly 8% of the total buildings on campus. The total square feet across every building category is 1,946,878 square feet; buildings listed as other have a combined total of 250,130 square feet (Table 1). 
+
+The buildings in this category are incredibly variable. There is not one consistent factor across all buildings besides being owned by Dickinson. The largest building is the Kline, which contributes to 20% of the other type buildings total square feet, whereas the smallest, 155 W. High St., Ground Floor, contributes less than 1%. There is also a lack of consistency with variables that have been identified as strong influences on electricity use, such as: population, age, and HVAC systems. 
+
+A majority of the other buildings have complete individual data sets. Kline, which has been disaggregated from the main meter, only has 35% of daily data and was therefore removed from the analysis due to insufficient information. We only have temperature data for Boiling Springs Cottage and Boiling Springs Farm. 25 Pomfret and 50 Wilson Street are missing square footage data. There are no buildings on the Weis meter.  
+
+## Data preparation
+
+```{r load}
+library(tidyverse)
+library(DT)
+library(paletteer)
+annual_data <- read.csv("./output/kwh_annual_2026-03-17.csv")
+academic_data <- read.csv("./output/kwh_academic_2026-03-17.csv")
+daily <- read.csv("./output/kwh_daily_2026-03-17.csv")
+```
+
+```{r check}
+str(annual_data)
+str(academic_data)
+str(daily)
+```
+
+```{r subset_annual}
+annual_other <- annual_data %>%
+   filter(type == "Other") %>%
+  mutate(kwh_per_sqft = round(kwh_corr / sqft, digits = 1),
+    cost_dol = round(kwh_corr * .08138507),
+         CO2e_MT = round(.30082405*kwh_corr/1000),
+         days_perc = round(days_perc),
+         kwh = round(kwh),
+         kwh_corr = round(kwh_corr),
+         building = NAME)%>%
+  arrange(desc(kwh_corr)) %>%
+  select(meter, building, days_perc, sqft, kwh, kwh_corr, kwh_per_sqft, cost_dol, CO2e_MT) %>%
+filter(building != "Kline Life Sport Complex")
+```
+
+```{r check_annual}
+str(annual_other)
+```
+
+```{r subset_academic}
+academic_other <- academic_data %>%
+  filter(type == "Other") %>%
+  mutate(kwh_per_sqft = round(kwh_corr / sqft, digits = 1),
+    cost_dol = round(kwh_corr * .08138507),
+         CO2e_MT = round(.30082405*kwh_corr/1000),
+         days_perc = round(days_perc),
+         kwh = round(kwh),
+         kwh_corr = round(kwh_corr),
+         building = NAME)%>%
+  arrange(desc(kwh_corr)) %>%
+  select(meter, building, days_perc, sqft, kwh, kwh_corr, kwh_per_sqft, cost_dol, CO2e_MT) %>%
+  filter(building != "Kline Life Sport Complex")
+```
+
+```{r check_academic}
+str(academic_other)
+```
+
+```{r daily}
+other.daily<-daily%>%
+  filter(type=="Other")%>%
+  mutate(date=ymd(date),
+        day=wday(date,label=TRUE),
+        month=month(date,label=TRUE))%>%
+  mutate(kwh.total=kwh*365,
+    kwh.sqft.year=kwh.total/sqft)%>%
+  filter(NAME !="Kline Life Sport Complex", NAME != "Boiling Springs Cottage", NAME != "Boiling Springs Farm")
+# Kline removed due to the building only having data for 37% of days
+# Boiling Springs Cottage and Farm removed due to only temperature data being available
+
+str(other.daily)
+```
+
+## Electricity use summary
+
+It is difficult to determine what a typical building is in this category due to the variation in square footage and usage of the buildings. However, the median kWh per year is 15,064, with a median kWh per square foot of 4.1. 
+
+The median cost value for a building in this category is $1226 per year, while the mean is $3399. The mean is significantly higher than the median because the two highest individually metered users in our category, Biddle press box, Restrooms, and Durden ATC, and 5 N. Orange St. CPYB/Project Share, use significantly more electricity than the rest of the buildings in the category.  
+
+The median GHG emissions in the other category is 5 metric tons of CO2 equivalent, with a mean of 12.62 metric tons of CO2 equivalent. While the median values better represent the majority of the buildings in the category, the mean value is still important, as it shows how much influence the biggest electricity consumers have on this category. 
+
+The conversion factors to find estimates for cost and GHG emissions were derived from Dickinson College's Greenhouse Gas Inventory (Leary, 2025).
+
+Biddle Press box, Restrooms and Durden ATC and 5 N. Orange St. CPYB/Project Share are the two biggest overall electricity users throughout the 2025 fiscal year (Table 1). Biddle used 298,475 kWh, and 5 N. Orange St. Used 277,590 kWh. These values were much higher than the third highest electricity consumer, which was King House, using 64,445 kWh throughout the year. However, King House was the largest electricity user when normalized by square footage, with a value of 23.5 kWh/sqft. Biddle was the second highest user when normalized, at 12.0 kWh/sqft. 5 N. Orange St. Was only the sixth highest electricity user when normalized, with 6.5 kWh/sqft.  155 W High St Ground Floor, and 368 W. North were the two smallest electricity users over the fiscal year, using 1068, and 3151 kWh respectively. Wentzel was the lowest normalized electricity user, using only 0.9 kWh/sqft. There is no square footage data for 25 Pomfret St or 50 Wilson St, so these two buildings were unable to be included in the normalization analysis. 	
+
+```{r table_one}
+datatable(annual_other, caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during fiscal year 2025 ",
+          rownames = FALSE,
+          colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh", "kWh (corrected)", "kWh per sqft", "cost ($)", "CO2e (MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pagelength = 10, audowidth = TRUE, dom = 'p'))
+
+summary(annual_other)
+```
+
+During the academic year, the same 2 buildings of Biddle press box, Restrooms, and Durden ATC are still by far the highest users (Table 2). However, during the academic year, 5 N. Orange St. Is the highest total electricity user, using 192,318 kWh, with Biddle right behind at 190,898 kWh. King House is still the third highest, at 46,665 kWh during the academic year. King House and Biddle are also still the two highest users when normalized, with values of 17.0 and 7.7 kWh/sqft respectively. 5 N. Orange St. Is the fifth highest electricity user when normalized, with a value of 4.5 kWh/sqft. During the academic year, 155 W High St Ground Floor and 368 W North are still the two lowest total electricity users, using 782 and 2206 kWh respectively. Wentzel is also still the lowest electricity user when normalized, using 0.7 kWh/sqft. 
+
+```{r table_two}
+datatable(academic_other, caption = "Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during academic year 2024/2025",
+          rownames = FALSE,
+          colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh", "kWh (corrected)", "kWh per sqft", "cost ($)", "CO2e (MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pagelength = 10, audowidth = TRUE, dom = 'p'))
+
+summary(academic_other)
+```
+
+There is overall a lot of variability in the seasonal patterns among buildings (Figure 1). Some buildings such as Biddle Press Box, Restrooms, and Durden ATC, and 362 W. North St display patterns of peak electricity use in the summer. Other buildings like King House, and 25 Pomfret St display the opposite pattern, and have peak electricity use in the winter, with the lowest use in the summer months. Wentzel also has a unique pattern, peaking in the fall during the months of September-November. All these buildings also display very different values for electricity usage due to the variance in the building category.  
+
+```{r figure_one, fig.width = 11, fig.height = 6}
+ggplot(other.daily, aes(x=month, y=kwh/10^3, fill=NAME))+
+  geom_col(stat = "identity", position = "stack")+
+  facet_wrap(. ~ NAME) +
+  scale_fill_paletteer_d("ggthemes::Tableau_20")+
+  labs(title="Figure 1. Monthly patterns in electricity use by building for other buildings in FY25",
+  subtitle = "Only includes buildings with individual meters",
+  x="",
+  y="Electricity use (1000 kWh)",
+  fill="Building")+
+  theme_bw()+
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))+
+  theme(legend.position = "none")
+```
+
+Between buildings in this category there is a lot of variance in electricity intensity, but the buildings displaying high or low energy intensity is generally consistent, with Summer Break displaying some exceptions (Figure 2). In all times of year, King House has by far the highest median and IQR compared to the rest of the buildings in this category. These values are also much higher than the median and Interquartile range (IQR) values for similar buildings at other colleges and universities (EIA 2022). Biddle Press Box, Restrooms, and Durden ATC, is generally consistent throughout the year, with a slight peak in electricity intensity during Summer Break, but the value is comparable to similar buildings at other colleges and universities. Most of the buildings in this category are also typically below the comparison values, but in the summer, there are 5 buildings that are very similar or higher: King House, Biddle, 344 W North St, Kade House, and 362 W North St. It can also be seen that 49 W High St and 119 W High St see noticeable peaks in electricity intensity during the spring semester, and winter break.  
+
+``` {r figure_two, fig.width = 10}
+other.box<-other.daily%>%
+  filter(!is.na(sqft))
+ggplot(other.box,aes(x=reorder(NAME,kwh.total/sqft,FUN=median),y=kwh.sqft.year,fill=NAME))+
+    annotate("rect", xmin=-Inf, xmax=Inf, ymin=7.4, ymax=14.3, 
+           color="lightgrey", alpha= 0.3) +
+  geom_hline(yintercept=10.3, linetype="dashed", color="white") +
+  geom_boxplot()+
+  facet_wrap(. ~ period) +
+  labs(title="Figure 2. Electricity Intensity by building for other buildings in FY25",
+  subtitle="Only includes buildings with individual meters, and square footage data",
+  x="",
+  y="Electricity Intensity (kWh/sqft/year)",
+  caption = "White dotted line and gray shaded area show median and 25th to 75th percentile of typical values in U.S. College and University buildings (EIA 2022)")+
+  coord_flip()+
+  theme_bw()+
+  theme(legend.position="none")+
+  scale_fill_paletteer_d("ggthemes::Tableau_20")
+
+# median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
+# https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
+```
+
+## Discussion
+
+Across all building categories it would be helpful to know how they are being heated and cooled, and when facilities automates heating and cooling changes. Additional information regarding occupation and how many people are in a building at a time would improve our understanding. Since there is such a lack of consistency, to improve our understanding for this building category, knowing what the heating and cooling systems are and how facilities expect them to use electricity would help us identify anomalies. 
+
+Buildings in this category must be looked at individually due to the lack of connection. 5 N. Orange St. is using electricity in a predictable way given the buildings layout and purpose despite being one of the largest electricity consumers. However, Biddle Press Box, Restrooms, Durden ATC has unusually high use at all times where we would expect to see a decrease in use seasonally, suggesting that there is room for improvement. Other individual buildings have not been observed as heavily as 5 N. Orange St. And Biddle Press Box, Restrooms, Durden ATC.
+
+Our analysis cannot be through comparison, which is why it is so important that we receive feedback from facilities and improve our understanding of HVAC systems. 
+
+Based off the total electricity consumption for this category, Biddle Press Box, Restrooms, and Durden ATC is definitely the most intriguing building to explore further. What makes this building so interesting is its peak in total use during the summer months. There is likely not as much use for these buildings during the summer, so this could potentially be an easy way to cut down a large amount of electricity. 5 N. Orange St might also be interesting to look into because of the large amount of electricity it consumes, but since the electricity intensity is not one of the highest values, this building may be operating reasonably efficiently already. It is unlikely that we could find a good model for this building category given the variance in seasonal patterns, electricity intensity, and total electricity usage.  
+
+Another pattern that is very interesting in the data is the consistently very high electricity intensity at King House. This is substantially higher than the other buildings in the category, and even surpasses the comparison value from other colleges and universities. This could be another building to look more into, to see how it could be more efficient with electricity usage. Wentzel’s electricity use peaking in the fall is also an interesting pattern, and it could be valuable to look more into this building to find out why this is, and if the electricity use could be lowered during the peak months. However, since the total usage of this building is not very high, it will likely not be a priority of further analysis.  
+
+## Sources
+
+Energy Information Administration (EIA). (2022). *2018 Commercial Buildings Energy Consumption Survey (CBECS).* [https://www.eia.gov/consumption/commercial/](https://www.eia.gov/consumption/commercial/)
+
+Leary, N. (2025). *Dickinson College Greenhouse Gas Inventory 2008-2023.* Center for Sustainability Education.
+
+## Partner contributions
+
+Ben did the wrangling and creating of tables, working with the annual and academic dataset. Because our data is not residential, we did not have occupancy data, and thus the two tables were the same setup and code could be copied with small changes. Kyrie worked on the wrangling of the daily data and the two figures. Ben wrote the answers to the electricity use summary and the last 2 of the 4 questions under recommendations. Kyrie wrote the answers for the background and the first two questions of recommendations. No AI tools were used for any part of this report.

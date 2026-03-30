@@ -1,0 +1,207 @@
+---
+title: "Community Buildings"
+author: "Dinela & Emma"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output: 
+  prettydoc::html_pretty:
+    theme: tactile
+    fig_caption: true
+    keep_md: true
+    toc: true
+    df_print: default
+---
+
+## Background  
+  There are 10 buildings within the Community Building group that are used for a **wide** variety of functions including private residency, dining services, daycare, social space, and healthcare. The Community Buildings take up a relatively significant amount of space on the Dickinson campus as the category includes larger buildings like the Holland Union Building (HUB) in addition to smaller buildings like Landis House that have a difference of about 100,000 square feet.  
+  
+  This drastic difference in square footage is consistent within the community group alongside other features such as differences in age and cooling. Allison Hall is the only building in the community group that utilizes window units for cooling and is also among the oldest of the buildings in the group, being constructed in 1958 with no renovations since then. The Quarry was built in 1899 but was renovated in 2000, about the same time the Kline Center Annex was built in 1998. The variety in usage, air conditioning, size, and age in the community group makes it particularly difficult to define the parameters that make up a "community" building, thus rendering some buildings *incomparable to one another*.  
+  
+  The data for the Community Buildings group is **not complete** as there are four buildings on the main meter: The HUB, The Quarry, ATS, and the Kline Center Annex. The HUB and The Quarry also contain disaggregated meters that provide some data. Two buildings, The Asbell Center and the Historic President's House are on the Weis Meter, and so they are also lacking data. 
+
+## Data Preparation
+```{r load_data}
+library(tidyverse)
+library(DT)
+library(paletteer)
+library(dplyr)
+library(lubridate)
+kwh_annual<-read.csv("./output/kwh_annual_2026-03-23.csv")
+kwh_academicYr<-read.csv("./output/kwh_academic_2026-03-23.csv")
+daily <- read.csv("./output/kwh_daily_2026-03-23.csv")
+list<- read.csv("./output/fy25_building_list_updated.csv")
+str(kwh_annual)
+str(kwh_academicYr)
+str(daily)
+``` 
+
+```{r annual_data}
+#Annual Data Preparation
+community_kwh_annual<-kwh_annual%>%
+  filter(type=="Community")%>%
+  mutate(cost_dollars=round(kwh_corr*0.08138507,digits=2),
+      ghg_emissions_MTco2=round(kwh_corr*(0.30082405/1000),
+                                digits=0),
+      kwh_sqft=round(kwh_corr/sqft, digits=1),
+      kwh=round(kwh, digits=0),
+      kwh_corr=round(kwh_corr,digits=0),
+      days_perc=round(days_perc,digits=0))%>%
+arrange(desc(kwh_corr))%>%
+select(-type,-occupants)
+str(community_kwh_annual)
+```
+
+```{r academic_year_data}
+#Academic Year Data Preparation
+community_kwh_academicYr<-kwh_academicYr%>%
+  filter(type=="Community")%>%
+  mutate(cost_dollars=round(kwh_corr*0.08138507,digits=2),
+         ghg_emissions_MTco2=round(kwh_corr*(0.30082405/1000),
+                                   digits=0),
+         kwh_sqft=round(kwh_corr/sqft,digits=1),
+         kwh=round(kwh, digits=0),
+      kwh_corr=round(kwh_corr,digits=0),
+      days_perc=round(days_perc,digits=0))%>%
+  arrange(desc(kwh_corr))%>%
+  select(-type,-occupants)
+str(community_kwh_academicYr)
+```
+```{r check_daily}
+#check og structure
+str(daily)
+```
+
+```{r fix_daily}
+#fix date data
+comm_daily <- daily %>%
+  mutate(date = ymd(date), 
+         year = lubridate::year(date),
+         month = lubridate::month(date, label = TRUE),
+         day = lubridate::wday(date, label = TRUE)) %>%
+  mutate(kwh_sqft_yr = ((kwh/sqft)*365))
+```
+
+```{r check.fixed_daily}
+#check fixed data
+#comm_daily
+#Made the code into a string so that it wouldn't take so much space in the final html document. 
+```
+
+```{r subset_daily}
+#subset for "community" (buildings containing data)
+comm_dailyfix <- comm_daily %>%
+  filter(type %in% "Community", kwh!=0)
+#comm_dailyfix
+#Made the code into a string so that it wouldn't take so much space in the final html document. 
+```
+
+## Electricity Use Summary
+  
+### Table 1
+```{r table_1}
+datatable(community_kwh_annual, 
+          caption="Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of Community buildings during fiscal year 2025.",
+          colnames=c("Meter","Building","Days of Data (%)","kWh","kWh (corrected)","Square Footage","kWh per sqft","Cost($)","CO2e(MT)"),
+          rownames=FALSE, 
+          class="compact",
+          options = list(autoWidth = TRUE, dom = 't'))
+
+# Allison Hall had the highest kWh usage in the fiscal year 2025 and the highest electricity intensity of the buildings in the community group despite not being the smallest building in the group. 
+
+# The smallest building, Landis House, had the least kWh usage and the lowest electricity intensity. Landis house also released the least CO2 emissions and cost the least to power throughout the fiscal year 2025. 
+
+# Allison Hall is over 20,000 square feet larger than The Quarry and the largest building in the community building group. Yet, The Quarry used only ~2000 less kWh than Allison Hall and also has a similar electricity intensity and cost to power. 
+
+# Despite using the most kWh, Allison Hall released the second least CO2 emissions, with Landis House releasing the least CO2. On the other hand, The Quarry released the most CO2 emissions in the fiscal year 2025, nearly 4 times the amount as Allison Hall.  
+
+# The Quarry cost about $22k to power in 2025, a little less than double the amount it took to power the DCCC ($12k) which has a square footage ~4,000 sqft larger than The Quarry.
+```
+  
+### Table 2
+```{r table_2}
+datatable(community_kwh_academicYr, 
+          caption="Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of Community buildings during academic year 2024/2025.",
+          colnames=c("Meter","Building","Days of Data (%)","kWh","kWh (corrected)","Square Footage","kWh per sqft","Cost($)","CO2e(MT)"),
+          rownames=FALSE, 
+          class="compact",
+          options = list(autoWidth = TRUE, dom = 't'))
+
+# Despite having less square footage, The Quarry used between ~11-12,000 more kWh than the largest building, Allison Hall, when limited to the 2024/2025 academic year. 
+
+# When limited to the 2024/2025 academic year, The Quarry overtook Allison Hall as the most electricity intensive building in the community group in addition to becoming the most expensive. 
+
+# The Quarry remains the building that releases the most CO2 emissions in the community group during the 2024/2025 academic year. 
+
+# With the exception of The Quarry, the buildings in the community group are less electricity intensive per square foot per year than other buildings at different colleges and universities across the United States as described by the Energy Information Administration (EIA) report. 
+
+# The President's House (New) can be described as having nearly double the kWh usage, electricity intensity, cost, and CO2 emissions than Landis House. However, this would be an unfair comparison considering that The President's House (New) is a building used for full-time residence by the Dickinson President and his wife whereas Landis House is not always occupied and certainly not a residential space. 
+```
+  
+### Figure 1
+```{r bar_graph}
+#create bar plot
+ggplot(comm_dailyfix, aes(x = month, y = kwh, fill=NAME)) +
+  geom_bar(stat = "identity") +
+  facet_wrap(.~NAME)+
+  scale_fill_paletteer_d("ggthemes::Tableau_20")+
+  theme_bw()+
+  theme(legend.position = "none")+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
+  labs(x="",
+       y="Electricity use (kWh)", 
+       title = "Figure 1. Monthly patterns in electricity use by building for Community 
+Buildings in FY25")
+
+# "Allison Hall", "Quarry, The", and "DCCC" (Dickinson College Children's Center) show the highest total electricity use over the course of the year. 
+
+# "Landis House" and the "President's House (New)" show the lowest total electricity use over the course of the year. 
+
+# There is a relatively similar, shared pattern in total electricity use over the year for all buildings but the Quarry. These three buildings show peaks in electricity use during the winter and summer months, and dips during the transitional spring and fall months (though the relative size of the peaks and dips each season varies with each building). "Quarry, The", on the other hand, shows overall high electricity use throughout the year, with slight peaks in April and November, and a sharp and sudden drop in August. 
+```
+  
+### Figure 2
+```{r boxplot}
+#Create boxplot
+ggplot(comm_dailyfix, aes(x = reorder(NAME, kwh_sqft_yr), y = kwh_sqft_yr, fill = NAME))+
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = "lightgray", alpha = 0.3) +
+geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
+  geom_boxplot()+
+  coord_flip()+
+  facet_wrap(.~period)+
+  theme_bw()+
+  theme(legend.position = "none")+
+  scale_fill_paletteer_d("ggthemes::Tableau_20")+
+  labs(x = "", 
+       y = "Electricity Intensity (kWh/sqft/yr)", 
+       title = "Figure 2. Electricity intensity by building for Community 
+buildings in FY25")
+
+# "Quarry, The" shows the highest electricity intensity in kwh/sqft/yr of all the buildings in our category.
+
+# "Landis House" shows the lowest electricity intensity in kwh/sqft/yr of all the buildings in our category.
+
+# The Electricity intensity (kWh/sqft/yr) of the "Quarry, The" ranks higher than the average values for colleges and universities as listed by the EIA for all points of the year except for Winter Break. 
+
+# The "President's House (New) and "Allion Hall" show significant variability in electricity intensity at different points in the year. The Fall and Spring semesters seem to plot relatively the same for the "President's House (New)" and "Allison Hall", while the summer shows a decent increase in electricity use (in median and spread of data) and the winter shows a significant decrease (in both median and spread). 
+
+# "DCCC" remains roughly the same throughout the year, plotting slightly larger in the Spring Semester and over Winter Break compared to Fall Semester and Summer Break.
+
+# "Landis House" plots consistently the lowest electricity intensity throughout the year and remains relatively the same between the Fall and Spring Semesters, as well as Summer and Winter Breaks.
+```
+
+
+## Discussion  
+Given that there is a decent variety in the uses for each of these buildings (as highlighted at our first ‘stakeholder presentation’) for this particular dataset, we recommend that further attention be given to the “community” category prior to moving any further with major parts of our analysis.
+  
+Further, we recommend adjusting the criteria of what makes a building a “community” building; while there seems to be points of interest in our data, it is hard to responsibly draw real, meaningful conclusions when we are essentially comparing apples to oranges. Although we can clearly see that the building “Quarry, The” (otherwise known as “Denim Coffee”, or “the Quarry”) stands far above the other buildings in this category in terms of both total electricity use AND electricity intensity, (AND that it even surpasses the listed EIA average electricity intensity for college and university buildings), we cannot reasonably compare the results of this building to, for example, the second largest consumer in our category, the “President’s House (New)” because their uses are so different. Although we can see there may be something meaningful in our data, we cannot responsibly draw conclusions that will truly reveal anything meaningful to CSE. Thus, we recommend refining this category prior to moving forward with our examination so we can provide the most accurate and meaningful analysis of that data to CSE.
+
+## Sources
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+
+Leary, N. (2025). Dickinson College Greenhouse Gas Inventory 2008-2023. Center for Sustainability Education.
+
+## Partner Contributions
+  I, Dinela worked on wrangling the annual and academic year data in addition to creating the two data tables. I also completed the Background section of the report and the integrated text explaining key take-aways within the tables. 
+    
+  I, Emma Keane, contributed to this work by providing the code for Figures 1 & 2 (as well as providing integrated text explaining key take-aways within ggplot code chunks), and writing up the Recommendations Section. 
+    
+  No AI was used in writing code, notes, or recommendations. 
