@@ -15,11 +15,7 @@ Our building category includes campus residential buildings between 2,000 and 10
 Our building category is  very complete for the 2024-25 fiscal year, with a good amount of buildings in our category being individually metered and having data for 365 days of the year. 
 
 
-
-
-## Data Preparation  
-
-```{r prep}
+```{r prep, include = FALSE}
 # Conversion Factors  
 dol_per_kWh <- 0.081385
 MTCO2_per_kWh <- 0.00030082405
@@ -155,7 +151,7 @@ The buildings in our category tend to be below the median of a similar building 
 
 Although the data for the medium residential building category is very complete, a significant portion of medium residential buildings are not individually metered and therefore cannot be analyzed. With the data for these buildings, a more complete understanding of how medium residential buildings differ in their electricity use could be attained. We recommend that Dickinson prioritize adding individual meters for buildings which don’t have any in order to better assess their consumption. However, from the data that is currently available, we can tell that most of the buildings fall below typical electricity use for similar buildings in the US, indicating that Dickinson is doing good in this category at keeping electricity use low (EIA, 2022). The buildings seem to be functioning in an electricity efficient way, but seasonal patterns which show a peak in the warmer months for most buildings show that many use the most electricity in a season where there are not many students, which may be an area to focus on improving. 
 
-	141 W High St is a building that stands out in this category for its unusually high electricity use. According to Lindsey Lyons, this building is also used for non-Dickinson companies which operate out of part of the building. We recommend that Dickinson investigate further whether their electricity use is being calculated into the college’s and may be skewing the data. Buildings that are working efficiently and may serve as models for how electricity use can be lowered for this category are 155 W High St and Schuman house. These are the two most efficient buildings in the category. For this category, there does not seem to be a common step that can be taken to drastically reduce electricity use, rather, it seems more productive to get to the root of breaks in the typical pattern for specific buildings in order to address what may be causing them to consume more electricity. For this, we recommend not only looking into 141 W High St, as previously stated, but also 100 S West St which shows a drastic difference from other buildings in electricity use during colder months, especially winter break when there are little students on campus. 
+141 W High St is a building that stands out in this category for its unusually high electricity use. According to Lindsey Lyons, this building is also used for non-Dickinson companies which operate out of part of the building. We recommend that Dickinson investigate further whether their electricity use is being calculated into the college’s and may be skewing the data. Buildings that are working efficiently and may serve as models for how electricity use can be lowered for this category are 155 W High St and Schuman house. These are the two most efficient buildings in the category. For this category, there does not seem to be a common step that can be taken to drastically reduce electricity use, rather, it seems more productive to get to the root of breaks in the typical pattern for specific buildings in order to address what may be causing them to consume more electricity. For this, we recommend not only looking into 141 W High St, as previously stated, but also 100 S West St which shows a drastic difference from other buildings in electricity use during colder months, especially winter break when there are little students on campus. 
 
 
 ## Sources  

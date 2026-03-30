@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Amiya Marbles &amp; Eva Hanlin" />
+
+<meta name="date" content="2026-03-30" />
+
+<title>Report_Section_1_Admin</title>
+
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
+<script src="site_libs/htmlwidgets-1.6.4/htmlwidgets.js"></script>
+<link href="site_libs/datatables-css-0.0.0/datatables-crosstalk.css" rel="stylesheet" />
+<script src="site_libs/datatables-binding-0.34.0/datatables.js"></script>
+<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
+<link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
+<script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
+<link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">dickinson_power</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="data_wrangling_final.html">Data prep</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity summary
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="campus_summary.html">All buildings</a>
+    </li>
+    <li>
+      <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Medium.html">Res. Halls 2-10K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Residential-L.html">Res. Halls &gt; 10K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Academic.html">Academic</a>
+    </li>
+    <li>
+      <a href="Report_I_Admin.html">Administrative</a>
+    </li>
+    <li>
+      <a href="Report_I_Community.html">Community</a>
+    </li>
+    <li>
+      <a href="Report_I_Other.html">Other</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity use models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="main_meter_regression.html">Main meter - reg</a>
+    </li>
+    <li>
+      <a href="main_meter_anova.html">Main meter - ANOVA</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Report_Section_1_Admin</h1>
+<h4 class="author">Amiya Marbles &amp; Eva Hanlin</h4>
+<h4 class="date">03/30/26</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-03-30
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>dickinson_power/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260107code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260107)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260107code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260107)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree10db689c16ade0fbd0a308cf838cc3b0d974d29btargetblank10db689a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/10db689c16ade0fbd0a308cf838cc3b0d974d29b" target="_blank">10db689</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree10db689c16ade0fbd0a308cf838cc3b0d974d29btargetblank10db689a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/10db689c16ade0fbd0a308cf838cc3b0d974d29b" target="_blank">10db689</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis_to-fix/.DS_Store
+    Ignored:    data/.DS_Store
+    Ignored:    data/FY25 Main Meter Data.xlsx
+    Ignored:    data/building_list_FY25_updated.xlsx
+    Ignored:    data/graph_data_life_exp.csv
+    Ignored:    data/housing_counts.csv
+    Ignored:    keys/.DS_Store
+    Ignored:    output/annual_kwh.csv
+    Ignored:    output/building_check.csv
+    Ignored:    output/building_check.xlsx
+    Ignored:    output/daily_kwh.csv
+    Ignored:    output/kwh_academic_2026-03-16.csv
+    Ignored:    output/kwh_academic_2026-03-17.csv
+    Ignored:    output/kwh_academic_2026-03-18.csv
+    Ignored:    output/kwh_academic_2026-03-22.csv
+    Ignored:    output/kwh_academic_2026-03-23.csv
+    Ignored:    output/kwh_academic_2026-03-25.csv
+    Ignored:    output/kwh_academic_2026-03-30.csv
+    Ignored:    output/kwh_annual.csv
+    Ignored:    output/kwh_annual_2026-03-04.csv
+    Ignored:    output/kwh_annual_2026-03-12.csv
+    Ignored:    output/kwh_annual_2026-03-16.csv
+    Ignored:    output/kwh_annual_2026-03-17.csv
+    Ignored:    output/kwh_annual_2026-03-18.csv
+    Ignored:    output/kwh_annual_2026-03-22.csv
+    Ignored:    output/kwh_annual_2026-03-23.csv
+    Ignored:    output/kwh_annual_2026-03-25.csv
+    Ignored:    output/kwh_annual_2026-03-30.csv
+    Ignored:    output/kwh_annual_20260225.csv
+    Ignored:    output/kwh_annual_20260226.csv
+    Ignored:    output/kwh_daily.csv
+    Ignored:    output/kwh_daily_2026-03-04.csv
+    Ignored:    output/kwh_daily_2026-03-12.csv
+    Ignored:    output/kwh_daily_2026-03-16.csv
+    Ignored:    output/kwh_daily_2026-03-17.csv
+    Ignored:    output/kwh_daily_2026-03-18.csv
+    Ignored:    output/kwh_daily_2026-03-22.csv
+    Ignored:    output/kwh_daily_2026-03-23.csv
+    Ignored:    output/kwh_daily_2026-03-25.csv
+    Ignored:    output/kwh_daily_2026-03-30.csv
+    Ignored:    output/kwh_daily_20260225.csv
+    Ignored:    output/kwh_daily_20260226.csv
+    Ignored:    output/kwh_main_annual.csv
+    Ignored:    output/kwh_main_daily.csv
+
+Unstaged changes:
+    Modified:   analysis/Report_I_Academic.Rmd
+    Modified:   analysis/Report_I_Admin.rmd
+    Modified:   analysis/_site.yml
+    Modified:   analysis/main_meter_anova.Rmd
+    Modified:   analysis/main_meter_regression.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/Report_I_Admin.rmd</code>) and
+HTML (<code>docs/Report_I_Admin.html</code>) files. If you’ve configured
+a remote Git repository (see <code>?wflow_git_remote</code>), click on
+the hyperlinks in the table below to view the files as they were in that
+past version.
+</p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/10db689c16ade0fbd0a308cf838cc3b0d974d29b/analysis/Report_I_Admin.rmd" target="_blank">10db689</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-03-30
+</td>
+<td>
+change navigation bar and add student report sections
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr>
+</div>
+</div>
+</div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<div
+id="there-are-11-total-administrative-buildings-listed-in-this-campus-category-accounting-for-a-combined-188060-square-feet-of-space.-however-since-the-electricity-dataset-only-covers-6-of-these-buildings-5-with-individual-meters-and-old-west-on-a-submeter-we-are-actively-analyzing-137948-square-feet-which-is-about-73-of-the-total-administrative-footprint.-these-administration-buildings-are-mainly-used-on-a-typical-9-5pm-schedule-year-round-and-cover-a-highly-diverse-range-of-campus-operations-including-executive-leadership-in-old-west-essential-student-facing-buildings-campus-backbone-departments-like-facilities-management-and-it-and-specialized-rotc-offices.-there-is-a-massive-spread-in-the-physical-size-of-these-buildings-which-will-heavily-impact-electricity-usage.-the-facilities-management-building-at-5-n.-orange-st.-is-by-far-the-largest-at-75000-sq.-ft.-followed-by-old-west-at-30208-sq.-ft.-while-the-smallest-spaces-are-converted-residential-style-structures-like-the-1440-sq.-ft.-rotc-office-and-the-1800-sq.-ft.-it-storage-annex.-additionally-the-architecture-spans-over-two-centuries-meaning-energy-efficiency-and-insulation-likely-vary-wildly-ranging-from-the-historic-1803-anchor-of-old-west-to-mid-century-buildingd-and-recently-renovated-spaces-like-waidner-admissions-and-the-rotc-offices."
+class="section level6">
+<h6>There are 11 total administrative buildings listed in this campus
+category, accounting for a combined 188,060 square feet of space.
+However, since the electricity dataset only covers 6 of these buildings
+5 with individual meters and Old West on a submeter, we are actively
+analyzing 137,948 square feet, which is about 73% of the total
+administrative footprint. These administration buildings are mainly used
+on a typical 9-5pm schedule year round and cover a highly diverse range
+of campus operations, including executive leadership in Old West,
+essential student facing buildings, campus backbone departments like
+Facilities Management and IT, and specialized ROTC offices. There is a
+massive spread in the physical size of these buildings, which will
+heavily impact electricity usage. The Facilities Management building at
+5 N. Orange St. is by far the largest at 75,000 sq. ft., followed by Old
+West at 30,208 sq. ft., while the smallest spaces are converted
+residential style structures like the 1,440 sq. ft. ROTC office and the
+1,800 sq. ft. IT Storage Annex. Additionally, the architecture spans
+over two centuries, meaning energy efficiency and insulation likely vary
+wildly, ranging from the historic 1803 anchor of Old West to mid century
+buildingd and recently renovated spaces like Waidner Admissions and the
+ROTC offices.</h6>
+<pre class="r"><code>kwh_academic &lt;- read_csv(&quot;./output/kwh_academic_2026-03-17.csv&quot;)</code></pre>
+<pre><code>Rows: 99 Columns: 8
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: &quot;,&quot;
+chr (3): type, meter, NAME
+dbl (5): days_perc, kwh, kwh_corr, sqft, occupants
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+<pre class="r"><code>kwh_academic &lt;- kwh_academic %&gt;%
+  mutate(across(where(is.character), as.factor))
+academic_admin &lt;- filter(kwh_academic, type == &quot;Admin&quot;)
+ghg_kg &lt;- 0.30082405
+cost_multiplier &lt;- 0.08138507 
+final_academic_admin &lt;- academic_admin %&gt;%
+  mutate(
+  
+    GHG.MT = round(kwh_corr * ghg_kg) / 1000,
+    cost = round(kwh_corr * cost_multiplier),
+    kwh_sqft = round(kwh_corr / sqft) 
+  ) %&gt;%
+  arrange(desc(kwh_corr)) %&gt;%
+  select(-type)
+final_academic_admin</code></pre>
+<pre><code># A tibble: 6 × 10
+  meter    NAME  days_perc    kwh kwh_corr  sqft occupants GHG.MT  cost kwh_sqft
+  &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
+1 Individ… 5 N.…     100   3.71e5  371382. 75000        NA 112.   30225        5
+2 Individ… 50 M…     100   6.54e4   65382. 27100        NA  19.7   5321        2
+3 Submeter Old …      96.7 5.17e4   53432. 30208        NA  16.1   4349        2
+4 Individ… 554 …     100   5.29e3    5289.  1440        NA   1.59   430        4
+5 Individ… 41 C…     100   3.68e3    3685.  2200        NA   1.11   300        2
+6 Individ… 556 …     100   2.79e3    2792.  2000        NA   0.84   227        1</code></pre>
+<pre class="r"><code>str(final_academic_admin)</code></pre>
+<pre><code>tibble [6 × 10] (S3: tbl_df/tbl/data.frame)
+ $ meter    : Factor w/ 4 levels &quot;Individual&quot;,&quot;Main Meter - Total&quot;,..: 1 1 3 1 1 1
+ $ NAME     : Factor w/ 99 levels &quot;100 S. West St.&quot;,..: 32 33 82 46 25 47
+ $ days_perc: num [1:6] 100 100 96.7 100 100 ...
+ $ kwh      : num [1:6] 371382 65382 51680 5289 3685 ...
+ $ kwh_corr : num [1:6] 371382 65382 53432 5289 3685 ...
+ $ sqft     : num [1:6] 75000 27100 30208 1440 2200 ...
+ $ occupants: num [1:6] NA NA NA NA NA NA
+ $ GHG.MT   : num [1:6] 111.72 19.67 16.07 1.59 1.11 ...
+ $ cost     : num [1:6] 30225 5321 4349 430 300 ...
+ $ kwh_sqft : num [1:6] 5 2 2 4 2 1</code></pre>
+<pre class="r"><code>admin_daily_df &lt;- kwh_daily %&gt;%
+  mutate(across(where(is.character), as.factor)) %&gt;%
+  filter(type == &quot;Admin&quot;) %&gt;%
+  mutate(
+    date = ymd(date), 
+    month = month(date, label = TRUE, abbr = FALSE), 
+    day_of_week = wday(date, label = TRUE, abbr = TRUE), 
+    kwh_sqft_yr = (kwh * 365) / sqft 
+  )
+str(admin_daily_df)</code></pre>
+<pre><code>tibble [2,190 × 13] (S3: tbl_df/tbl/data.frame)
+ $ type       : Factor w/ 13 levels &quot;Academic&quot;,&quot;Admin&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ meter      : Factor w/ 4 levels &quot;Individual&quot;,&quot;Main Meter - Total&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ NAME       : Factor w/ 102 levels &quot;100 S. West St.&quot;,..: 25 25 25 25 25 25 25 25 25 25 ...
+ $ days_perc  : num [1:2190] 100 100 100 100 100 100 100 100 100 100 ...
+ $ sqft       : num [1:2190] 2200 2200 2200 2200 2200 2200 2200 2200 2200 2200 ...
+ $ occupants  : num [1:2190] NA NA NA NA NA NA NA NA NA NA ...
+ $ period     : Factor w/ 4 levels &quot;Fall Semester&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
+ $ date       : Date[1:2190], format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
+ $ kwh        : num [1:2190] 22.8 20.3 24.3 17.7 18.2 ...
+ $ ave_temp   : num [1:2190] 69 73 78 81 84 86 84 84 86 87 ...
+ $ month      : Ord.factor w/ 12 levels &quot;January&quot;&lt;&quot;February&quot;&lt;..: 7 7 7 7 7 7 7 7 7 7 ...
+ $ day_of_week: Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 2 3 4 5 6 7 1 2 3 4 ...
+ $ kwh_sqft_yr: num [1:2190] 3.78 3.36 4.04 2.94 3.01 ...</code></pre>
+<pre class="r"><code>head(admin_daily_df)</code></pre>
+<pre><code># A tibble: 6 × 13
+  type  meter   NAME  days_perc  sqft occupants period date         kwh ave_temp
+  &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;  &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;
+1 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-01  22.8       69
+2 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-02  20.3       73
+3 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-03  24.3       78
+4 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-04  17.7       81
+5 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-05  18.2       84
+6 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-06  18.4       86
+# ℹ 3 more variables: month &lt;ord&gt;, day_of_week &lt;ord&gt;, kwh_sqft_yr &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="electricity-use-summary" class="section level2">
+<h2>Electricity Use Summary</h2>
+<div
+id="determining-a-typical-administrative-building-on-campus-is-difficult-given-the-large-fluctuation-in-square-footage-which-generally-has-a-positive-correlation-to-total-electricity-use.-however-based-on-averaged-data-from-mooreland-avenue-and-554-west-louther-street-a-typical-administrative-building-of-about-14270-square-feet-uses-approximately-51828.59-kwh-per-year-operating-at-an-intensity-of-5-kwhsqft.-this-typical-usage-translates-to-an-estimated-financial-cost-of-4218-and-greenhouse-gas-emissions-of-15.591-metric-tons-of-co2e-annually.-we-see-a-wide-range-of-variability-in-both-total-electricity-use-and-intensity-across-these-buildings.-5-north-orange-street-is-the-largest-building-and-the-largest-consumer-overall-using-567745.2-kwhyear-and-charting-the-highest-intensity-at-8-kwhsqft.-conversely-556-west-louther-street-has-the-smallest-total-electricity-use-per-fiscal-year-at-4985.55-kwh-and-ties-with-old-west-for-the-lowest-electricity-intensity-at-just-2-kwhsqft.-furthermore-total-electricity-use-is-not-always-the-best-indicator-of-efficiency-for-instance-554-west-louther-street-is-the-smallest-building-but-has-the-second-highest-electricity-use-per-square-foot.-when-comparing-dickinsons-electricity-intensity-to-similar-buildings-at-other-colleges-and-universities-the-campus-performs-well.-the-eia-notes-that-average-administrative-buildings-at-other-institutions-use-227000-kwh-per-year-at-an-average-of-13.5-kwhsqft-with-a-median-of-9.7-kwhsqft.-even-dickinsons-most-intensive-building-5-north-orange-street-8-kwhsqft-falls-below-the-eia-median-and-average-indicating-effective-electricity-management-despite-being-almost-five-times-the-size-of-the-eia-average-building-footprint-of-16800-square-feet."
+class="section level6">
+<h6>Determining a ‘typical’ administrative building on campus is
+difficult given the large fluctuation in square footage, which generally
+has a positive correlation to total electricity use. However, based on
+averaged data from Mooreland Avenue and 554 West Louther Street, a
+typical administrative building of about 14,270 square feet uses
+approximately 51,828.59 kWh per year, operating at an intensity of 5
+kWh/sqft. This typical usage translates to an estimated financial cost
+of $4,218 and greenhouse gas emissions of 15.591 metric tons of CO2e
+annually. We see a wide range of variability in both total electricity
+use and intensity across these buildings. 5 North Orange Street is the
+largest building and the largest consumer overall, using 567,745.2
+kWh/year and charting the highest intensity at 8 kWh/sqft. Conversely,
+556 West Louther Street has the smallest total electricity use per
+fiscal year at 4,985.55 kWh, and ties with Old West for the lowest
+electricity intensity at just 2 kWh/sqft. Furthermore, total electricity
+use is not always the best indicator of efficiency; for instance, 554
+West Louther Street is the smallest building but has the second-highest
+electricity use per square foot. When comparing Dickinson’s electricity
+intensity to similar buildings at other colleges and universities, the
+campus performs well. The EIA notes that average administrative
+buildings at other institutions use 227,000 kWh per year at an average
+of 13.5 kWh/sqft, with a median of 9.7 kWh/sqft. Even Dickinson’s most
+intensive building, 5 North Orange Street (8 kWh/sqft), falls below the
+EIA median and average, indicating effective electricity management
+despite being almost five times the size of the EIA average building
+footprint of 16,800 square feet.</h6>
+<pre class="r"><code>datatable(kwh_annual_admin_df,
+          rownames = FALSE,
+          colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh per year&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;Cost ($)&quot;, &quot;CO2e (MT)&quot;),
+          filter = &quot;none&quot;,
+          class = &quot;compact&quot;,
+          options = list(pageLength = 6, autoWidth = TRUE, dom =&#39;t&#39;), caption = &quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.&quot;)</code></pre>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Submeter","Individual","Individual","Individual"],["5 N. Orange St. - Facilities","50 Mooreland Ave.","Old West","554 W. Louther St.","41 Conway St.","556 W. Louther St."],[100,100,92.0547945205479,100,100,100],[567745.2,95137,67247,8520.184999999999,6276.694,4985.555],[567745.2,95137,73051.0565476191,8520.184999999999,6276.694,4985.555],[75000,27100,30208,1440,2200,2000],[null,null,null,null,null,null],[46205.982844164,7742.73140459,5945.265350701939,693.41585263795,510.82918055858,405.74974266385],[170791.41043206,28619.49764485,21975.5146874338,2563.07655844925,1888.1805096907,1499.77484659775],[7.569935999999999,3.510590405904059,2.418268556263873,5.916795138888888,2.853042727272728,2.4927775]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"kwh","targets":3},{"name":"kwh_corr","targets":4},{"name":"sqft","targets":5},{"name":"occupants","targets":6},{"name":"cost_usd","targets":7},{"name":"ghg_mt_co2e","targets":8},{"name":"kwh_per_sqft","targets":9}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>###### Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal 2025.     It’s hard to determine a ‘typical’ administrative building on Dickinson College campus given the large fluctuation in square footage that, based on the data, has a positive correlation to electricity use. Generally the larger the square footage, the larger the total electricity use. However, when we come to electricity use per square foot, we can see that total electricity use isn’t the best indicator of electricity efficiency. 5 North Orange Street is the largest building with the largest total electricity use and largest electricity use per square foot but 554 West Louther Street is the smallest building with the third smallest total electricity use but the second highest electricity use per square foot. Using a scale of 2-8 kWh/sqft (2 being the smallest kWh/sqft recorded, and 8 being the largest) the average kWh/sqft is between Mooreland Avenue and 554 West Louther Street, at about 5 kWh/sqft. Based on Mooreland Avenue and 554 West Louther Street’s averaged data for kWh/year, cost in USD, and CO2e measured in metric tons, the ‘typical’ administrative building may follow the following characteristics: - Square footage: 14,270 - kWh/year: 51/828.5925 kWh/yr - kWh/sqft: 5 kWh/sqft - Cost ($): $4,218 -CO2e (MT): 15.591 MT. 5 North Orange Street is by far the largest consumer of total electricity use per fiscal year and per square foot, at 567,745.2 kWh/year and 8 kWh/sqft respectively, while 556 West Louther Street and Old West are tied for smallest electricity use per square foot, both at 2 kWh/sqft, and 556 West Louther Street has the smallest total electricity use per fiscal year at 4,985.555 kWh/sqft. We see a wide range of variability in electricity use across administrative buildings on campus and the associated costs and greenhouse gas emissions, which will be discussed in the recommendations section of our paper. The EIA categorizes administrative or professional office buildings at other Colleges and Universities as using an average of 227,000 kWh per building per year, at an average of 13.5 kWh/sqft. The median of electricity use per square foot falls at 9.7 kWh/sqft while the low end measurement falls at 6.1 kWh/sq ft and the high end measurement falls at 15.5 kWh/sq ft. It’s important to note that the average square footage per building is 16,800 sqft which is much larger than our three smallest buildings and much smaller than our three largest buildings, making it not an ideal comparison for our building set. 5 North Orange Street at a square footage of 75,000 is almost five times the size of the average administrative building on other college campuses and uses about twice as much electricity per year which indicates that for its size, 5 North Orange Street does seem to be managing electricity use well for its size. Its kWh/sqft even falls below the median and average of electricity use per square foot. As 5 North Orange Street is our largest electricity user in all categories for the fiscal year, this seems to bode well for our other buildings, but size is still an important factor to consider when we make comparisons between an average building size of 16,800 sqft and buildings as low as 1,440 sqft. </code></pre>
+<pre class="r"><code>datatable(final_academic_admin,
+          rownames = FALSE,
+          colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh per year&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;Cost ($)&quot;, &quot;CO2e (MT)&quot;),
+          filter = &quot;none&quot;,
+          class = &quot;compact&quot;,
+          options = list(pageLength = 6, autoWidth = TRUE, dom =&#39;t&#39;), caption = &quot;Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.&quot;)</code></pre>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Submeter","Individual","Individual","Individual"],["5 N. Orange St. - Facilities","50 Mooreland Ave.","Old West","554 W. Louther St.","41 Conway St.","556 W. Louther St."],[100,100,96.72131147540981,100,100,100],[371381.6,65381.6,51680,5289.361,3684.863,2791.509],[371381.6,65381.6,53431.8644067797,5289.361,3684.863,2791.509],[75000,27100,30208,1440,2200,2000],[null,null,null,null,null,null],[111.721,19.668,16.074,1.591,1.108,0.84],[30225,5321,4349,430,300,227],[5,2,2,4,2,1]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"kwh","targets":3},{"name":"kwh_corr","targets":4},{"name":"sqft","targets":5},{"name":"occupants","targets":6},{"name":"GHG.MT","targets":7},{"name":"cost","targets":8},{"name":"kwh_sqft","targets":9}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code>###### Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025. The biggest electricity user for the academic year is still 5 North Orange Street at 371,381.6 kWh/year and 5 kWh/sqftt while the smallest electricity user is 556 West Louther Street at 2,791.509 kWh per year and 1 kWh/sqft. This is different from the fiscal year where Old West is overall one of the smallest electricity users per square foot whereas during the academic year Old West becomes one of the second least electricity users per square foot. While this doesn’t seem to be a big change, Old West is tied with 50 Mooreland Avenue and 41 Conway Street for second least, with Old West having the largest electricity use per year out of the three of them. There is less variability during the academic year compared to the fiscal year which could be due to having more data for Old West for the academic year than we have for the fiscal year, though it should still be emphasized we only have 96% of academic year days of data compared to the other buildings’ 100%. Dickinson College’s administrative buildings’ electricity use still remains low compared to the administrative buildings on other college campuses compiled by the EIA, both in terms of total electricity use and per square foot but it is important again to note the vast difference in average size of other colleges’ administrative buildings compared to ours.  </code></pre>
+<pre class="r"><code>library(tidyverse)
+library(paletteer)
+
+ggplot(admin_daily_df, aes(x = month, y = kwh, fill = NAME)) +
+  geom_col() +
+  facet_wrap(~ NAME) +
+  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
+  theme_bw() +
+  theme(
+    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
+    legend.position = &quot;none&quot;
+  ) +
+  labs(
+    title = &quot;Monthly patterns in electricity use by building for Admin buildings in FY25&quot;,
+    x = NULL,
+    y = &quot;Electricity use (kWh)&quot;
+  )</code></pre>
+<pre><code>Warning: Removed 29 rows containing missing values or values outside the scale range
+(`geom_col()`).</code></pre>
+<p><img src="figure/Report_I_Admin.rmd/Figure_1-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>###### Figure 1. Monthly changes in how much electricity administrative buildings used in FY25. This bar plot with facets shows how much electricity (in kWh) the college&#39;s administrative buildings used each month. Note: There is a known gap in data collection for all buildings connected to the Weiss Meter (including Old West) during part of August. This makes the reported total for that month seem lower than it really is. </code></pre>
+<pre class="r"><code>eia_median &lt;- 10.1
+eia_q25 &lt;- 6.1    
+eia_q75 &lt;- 15.7   
+
+ggplot(admin_daily_df, aes(
+    x = reorder(NAME, kwh_sqft_yr, FUN = median, na.rm = TRUE), 
+    y = kwh_sqft_yr,
+    fill = NAME
+  )) +
+  annotate(&quot;rect&quot;, ymin = eia_q25, ymax = eia_q75, xmin = -Inf, xmax = Inf, 
+           alpha = 0.2, fill = &quot;gray50&quot;) +
+  geom_hline(yintercept = eia_median, linetype = &quot;dashed&quot;, color = &quot;black&quot;, linewidth = 0.8) +
+  geom_boxplot(alpha = 0.9, outlier.alpha = 0.5) +
+  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
+  coord_flip() +
+  facet_wrap(~ period) +
+  theme_bw() +
+  theme(
+    legend.position = &quot;none&quot;
+  ) +
+  labs(
+    title = &quot;Electricity intensity by building for Admin buildings in FY25.&quot;,
+    subtitle = &quot;Dashed line = EIA 2018 Median; Gray band = EIA 2018 IQR&quot;,
+    x = NULL, 
+    y = &quot;Electricity Intensity (kWh/sqft/year)&quot;
+  )</code></pre>
+<pre><code>Warning: Removed 29 rows containing non-finite outside the scale range
+(`stat_boxplot()`).</code></pre>
+<p><img src="figure/Report_I_Admin.rmd/Figure%202-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>###### Figure 2. Annualized daily electricity intensity by academic period and administrative building. This faceted boxplot shows how the daily electricity intensity (kWh/sqft/year) for administrative buildings changes throughout the year. The median usage of a building is used to rank it from highest to lowest. The horizontal dashed black line shows the national median (10.1 kWh/sqft/year), and the shaded gray band shows the interquartile range (6.1 to 15.7 kWh/sqft/year) from the EIA 2018 Commercial Buildings Energy Consumption Survey. </code></pre>
+</div>
+</div>
+<div id="recommendations" class="section level2">
+<h2>Recommendations</h2>
+<div
+id="as-mentioned-old-west-is-on-a-submeter-off-of-the-weiss-meter-and-only-has-92-of-days-of-data-for-the-whole-year.-the-missing-8-of-data-is-partially-during-the-academic-year-making-the-percentage-of-days-of-data-available-for-the-academic-year-96.-applying-the-same-analysis-to-a-year-with-complete-data-for-old-west-is-highly-recommended-as-it-seems-old-west-is-one-of-the-largest-administrative-buildings-but-has-relatively-low-electricity-intensity-however-we-cannot-rule-out-that-this-result-may-be-due-to-the-data-missing.-context-is-also-key-for-these-administrative-buildings-as-they-vary-drastically-in-square-footage-open-hours-and-use.-square-footage-is-taken-into-account-but-knowing-what-hours-and-days-of-the-week-these-buildings-are-in-use-and-what-equipment-is-used-there-could-help-explain-findings.-we-can-guess-what-days-and-times-of-the-week-buildings-are-open-based-on-what-use-information-is-provided-for-them-but-knowing-what-the-rotc-offices-do-or-when-case-utilizes-5-north-orange-street-could-provide-specific-information-not-inferrable-from-our-findings.based-off-of-the-information-for-similarly-situated-administrative-buildings-on-college-campuses-provided-by-the-eia-dickinson-is-seemingly-doing-well-in-relation-to-electricity-use-in-administrative-buildings-but-it-is-important-that-we-gather-more-data-for-buildings-similar-in-specific-uses-and-sizes-as-the-information-provided-by-the-eia-is-not-very-similar-to-that-of-dickinsons-administrative-buildings.554-west-louther-street-should-be-investigated-further---it-is-the-smallest-building-in-terms-of-square-footage-on-our-list-yet-it-uses-the-second-highest-kwh-per-academic-year-and-per-square-footage-for-both-fiscal-and-academic-year.-in-addition-our-portion-of-5-north-orange-streets-findings-should-be-compared-to-the-other-uses-of-5-north-orange-street-in-the-other-building-category-to-understand-if-the-building-uses-a-large-amount-of-electricity-overall-or-if-specific-departments-are-making-up-more-of-use-than-others.-our-portion-of-5-north-orange-street-contains-the-office-of-conferences-and-special-events-facilities-storage-and-the-print-center.-the-other-category-contains-central-pennsylvania-youth-ballet-and-project-share.-doing-the-same-analysis-using-a-complete-year-of-data-for-all-the-buildings-on-the-list-including-the-submetered-data-of-old-west-is-a-good-idea-for-future-investigation.-if-we-could-compile-that-data-we-could-compare-old-west-more-effectively-with-50-mooreland-avenue-who-are-similar-in-their-uses-and-square-footage-but-based-on-our-findings-have-significantly-different-electricity-use.-old-west-uses-half-as-much-kwh-per-square-foot-as-mooreland-avenue-does-despite-being-a-larger-building.-however-since-we-only-have-92-of-the-years-data-for-old-west-compared-to-mooreland-avenues-100-we-cannot-rule-out-the-possibility-that-the-8-of-data-we-are-missing-for-old-west-may-make-them-more-comparable.-old-west-seems-to-use-more-electricity-during-the-academic-year-as-compared-to-the-fiscal-year-which-makes-sense-when-you-consider-the-uses-of-the-building-are-mainly-for-the-academic-year.-however-it-may-be-useful-to-analyze-habits-used-by-the-departments-who-use-the-building-year-round-as-opposed-to-those-who-use-it-only-for-the-academic-year-to-understand-if-there-is-any-difference-that-may-be-adjusted-to-lower-electricity-use-during-the-academic-year-to-a-level-more-similar-to-the-fiscal-year."
+class="section level6">
+<h6>As mentioned, Old West is on a submeter off of the Weiss Meter and
+only has 92% of days of data for the whole year. The missing 8% of data
+is partially during the academic year, making the percentage of days of
+data available for the academic year 96%. Applying the same analysis to
+a year with complete data for Old West is highly recommended as it seems
+Old West is one of the largest administrative buildings but has
+relatively low electricity intensity, however, we cannot rule out that
+this result may be due to the data missing. Context is also key for
+these administrative buildings as they vary drastically in square
+footage, open hours, and use. Square footage is taken into account, but
+knowing what hours and days of the week these buildings are in use and
+what equipment is used there could help explain findings. We can guess
+what days and times of the week buildings are open based on what use
+information is provided for them, but knowing what the ROTC offices do
+or when CASE utilizes 5 North Orange Street could provide specific
+information not inferrable from our findings.Based off of the
+information for similarly situated administrative buildings on college
+campuses, provided by the EIA, Dickinson is seemingly doing well in
+relation to electricity use in administrative buildings, but it is
+important that we gather more data for buildings similar in specific
+uses and sizes as the information provided by the EIA is not very
+similar to that of Dickinson’s administrative buildings.554 West Louther
+Street should be investigated further - it is the smallest building in
+terms of square footage on our list yet it uses the second highest kWh
+per academic year and per square footage for both fiscal and academic
+year. In addition, our portion of 5 North Orange Street’s findings
+should be compared to the other uses of 5 North Orange Street in the
+“Other” Building category to understand if the building uses a large
+amount of electricity overall or if specific departments are making up
+more of use than others. Our portion of 5 North Orange Street contains
+the Office of Conferences and Special Events, Facilities Storage, and
+the Print Center. The “Other” category contains Central Pennsylvania
+Youth Ballet and Project SHARE. Doing the same analysis using a complete
+year of data for all the buildings on the list including the submetered
+data of Old West is a good idea for future investigation. If we could
+compile that data we could compare Old West more effectively with 50
+Mooreland Avenue who are similar in their uses and square footage but
+based on our findings have significantly different electricity use. Old
+West uses half as much kWh per square foot as Mooreland Avenue does
+despite being a larger building. However, since we only have 92% of the
+year’s data for Old West compared to Mooreland Avenue’s 100% we cannot
+rule out the possibility that the 8% of data we are missing for Old West
+may make them more comparable. Old West seems to use more electricity
+during the academic year as compared to the fiscal year, which makes
+sense when you consider the uses of the building are mainly for the
+academic year. However, it may be useful to analyze habits used by the
+departments who use the building year round as opposed to those who use
+it only for the academic year to understand if there is any difference
+that may be adjusted to lower electricity use during the academic year
+to a level more similar to the fiscal year.</h6>
+</div>
+</div>
+<div id="sources" class="section level2">
+<h2>Sources</h2>
+<div
+id="learyn.-2025.-dickinson-college-greenhouse-gas-inventory.-dickinson-college.u.s.-energy-information-administration.-2022.-2018-commercial-buildings-energy-consumption-survey-cbecs.-u.s.-department-of-energy.-httpswww.eia.govconsumptioncommercial"
+class="section level6">
+<h6>Leary,N. (2025). <em>Dickinson College greenhouse gas
+inventory</em>. Dickinson College.U.S. Energy Information
+Administration. (2022). <em>2018 Commercial Buildings Energy Consumption
+Survey (CBECS)</em>. U.S. Department of Energy. <a
+href="https://www.eia.gov/consumption/commercial/"
+class="uri">https://www.eia.gov/consumption/commercial/</a></h6>
+</div>
+</div>
+<div id="partner-contributions" class="section level2">
+<h2>Partner Contributions</h2>
+<div
+id="amiya-did-the-background-section-adapted-eva-i-code-from-ps5-into-our-report-section-1-prepare-data-section-and-figure-1-and-2.-as-well-as-the-electricty-use-summary-and-sources.-eva-did-the-table-1-and-table-2-as-well-as-the-recommendation-section."
+class="section level6">
+<h6>Amiya did the Background section, adapted Eva &amp; I code from PS5
+into our report section 1, prepare data section, and Figure 1 and 2. As
+well as the Electricty use summary and sources. Eva did the Table 1 and
+table 2 as well as the recommendation section.</h6>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.5.2 (2025-10-31)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] rmarkdown_2.30     paletteer_1.7.0    DT_0.34.0          lubridate_1.9.5   
+ [5] forcats_1.0.1      stringr_1.6.0      purrr_1.2.1        tidyr_1.3.2       
+ [9] tibble_3.3.1       ggplot2_4.0.2      tidyverse_2.0.0    RColorBrewer_1.1-3
+[13] readr_2.2.0        dplyr_1.2.0       
+
+loaded via a namespace (and not attached):
+ [1] utf8_1.2.6        sass_0.4.10       generics_0.1.4    prismatic_1.1.2  
+ [5] stringi_1.8.7     hms_1.1.4         digest_0.6.39     magrittr_2.0.4   
+ [9] timechange_0.4.0  evaluate_1.0.5    grid_4.5.2        fastmap_1.2.0    
+[13] rprojroot_2.1.1   workflowr_1.7.2   jsonlite_2.0.0    whisker_0.4.1    
+[17] rematch2_2.1.2    promises_1.5.0    crosstalk_1.2.2   scales_1.4.0     
+[21] jquerylib_0.1.4   cli_3.6.5         crayon_1.5.3      rlang_1.1.7      
+[25] bit64_4.6.0-1     withr_3.0.2       cachem_1.1.0      yaml_2.3.12      
+[29] otel_0.2.0        parallel_4.5.2    tools_4.5.2       tzdb_0.5.0       
+[33] httpuv_1.6.16     vctrs_0.7.1       R6_2.6.1          lifecycle_1.0.5  
+[37] git2r_0.36.2      bit_4.6.0         htmlwidgets_1.6.4 fs_1.6.7         
+[41] vroom_1.7.0       pkgconfig_2.0.3   pillar_1.11.1     bslib_0.10.0     
+[45] later_1.4.8       gtable_0.3.6      glue_1.8.0        Rcpp_1.1.1       
+[49] xfun_0.56         tidyselect_1.2.1  rstudioapi_0.18.0 knitr_1.51       
+[53] farver_2.1.2      htmltools_0.5.9   labeling_0.4.3    compiler_4.5.2   
+[57] S7_0.2.1         </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

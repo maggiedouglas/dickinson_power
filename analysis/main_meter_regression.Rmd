@@ -23,7 +23,7 @@ library(segmented) # for segmented regression
 library(tseries) # for time series, including autocorrelation
 library(moderndive)
 
-daily <- read.csv("./output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
+daily <- read.csv("../output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
 
 daily_main <- daily %>%
   filter(NAME == "Main Meter") 

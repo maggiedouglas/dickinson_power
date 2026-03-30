@@ -18,8 +18,8 @@ output:
   
   The data for the Community Buildings group is **not complete** as there are four buildings on the main meter: The HUB, The Quarry, ATS, and the Kline Center Annex. The HUB and The Quarry also contain disaggregated meters that provide some data. Two buildings, The Asbell Center and the Historic President's House are on the Weis Meter, and so they are also lacking data. 
 
-## Data Preparation
-```{r load_data}
+
+```{r load_data, include = FALSE}
 library(tidyverse)
 library(DT)
 library(paletteer)
@@ -28,13 +28,13 @@ library(lubridate)
 kwh_annual<-read.csv("./output/kwh_annual_2026-03-23.csv")
 kwh_academicYr<-read.csv("./output/kwh_academic_2026-03-23.csv")
 daily <- read.csv("./output/kwh_daily_2026-03-23.csv")
-list<- read.csv("./output/fy25_building_list_updated.csv")
+list<- read.csv("./keys/fy25_building_list_updated.csv")
 str(kwh_annual)
 str(kwh_academicYr)
 str(daily)
 ``` 
 
-```{r annual_data}
+```{r annual_data, include = FALSE}
 #Annual Data Preparation
 community_kwh_annual<-kwh_annual%>%
   filter(type=="Community")%>%
@@ -50,7 +50,7 @@ select(-type,-occupants)
 str(community_kwh_annual)
 ```
 
-```{r academic_year_data}
+```{r academic_year_data, include = FALSE}
 #Academic Year Data Preparation
 community_kwh_academicYr<-kwh_academicYr%>%
   filter(type=="Community")%>%
@@ -65,12 +65,12 @@ community_kwh_academicYr<-kwh_academicYr%>%
   select(-type,-occupants)
 str(community_kwh_academicYr)
 ```
-```{r check_daily}
+```{r check_daily, include = FALSE}
 #check og structure
 str(daily)
 ```
 
-```{r fix_daily}
+```{r fix_daily, include = FALSE}
 #fix date data
 comm_daily <- daily %>%
   mutate(date = ymd(date), 
@@ -80,13 +80,13 @@ comm_daily <- daily %>%
   mutate(kwh_sqft_yr = ((kwh/sqft)*365))
 ```
 
-```{r check.fixed_daily}
+```{r check.fixed_daily, include = FALSE}
 #check fixed data
 #comm_daily
 #Made the code into a string so that it wouldn't take so much space in the final html document. 
 ```
 
-```{r subset_daily}
+```{r subset_daily, include = FALSE}
 #subset for "community" (buildings containing data)
 comm_dailyfix <- comm_daily %>%
   filter(type %in% "Community", kwh!=0)

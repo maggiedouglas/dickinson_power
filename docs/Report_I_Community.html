@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Liam and Charlotte" />
+<meta name="author" content="Dinela &amp; Emma" />
 
-<meta name="date" content="2026-03-04" />
+<meta name="date" content="2026-03-30" />
 
-<title>PS05_Prelim_results</title>
+<title>Community Buildings</title>
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -45,10 +45,6 @@
 <link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.min.css" rel="stylesheet" />
 <link href="site_libs/dt-core-1.13.6/css/jquery.dataTables.extra.css" rel="stylesheet" />
 <script src="site_libs/dt-core-1.13.6/js/jquery.dataTables.min.js"></script>
-<link href="site_libs/nouislider-7.0.10/jquery.nouislider.min.css" rel="stylesheet" />
-<script src="site_libs/nouislider-7.0.10/jquery.nouislider.min.js"></script>
-<link href="site_libs/selectize-0.12.0/selectize.bootstrap3.css" rel="stylesheet" />
-<script src="site_libs/selectize-0.12.0/selectize.min.js"></script>
 <link href="site_libs/crosstalk-1.2.2/css/crosstalk.min.css" rel="stylesheet" />
 <script src="site_libs/crosstalk-1.2.2/js/crosstalk.min.js"></script>
 
@@ -364,30 +360,42 @@ div.tocify {
       <a href="campus_summary.html">All buildings</a>
     </li>
     <li>
-      <a href="PS05_prelim_results_Res_Hall_S.html">Res. Halls &lt; 2K sqft</a>
+      <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
     <li>
-      <a href="PS05_prelim_results_Res_Hall_M.html">Res. Halls 2-10K sqft</a>
+      <a href="Report_I_Medium.html">Res. Halls 2-10K sqft</a>
     </li>
     <li>
-      <a href="PS05_prelim_results_Res_Hall_L.html">Res. Halls &gt; 10K sqft</a>
+      <a href="Report_I_Residential-L.html">Res. Halls &gt; 10K sqft</a>
     </li>
     <li>
-      <a href="PS05_prelim_results_Academic.html">Academic</a>
+      <a href="Report_I_Academic.html">Academic</a>
     </li>
     <li>
-      <a href="PS05_prelim_results_Admin.html">Administrative</a>
+      <a href="Report_I_Admin.html">Administrative</a>
     </li>
     <li>
-      <a href="PS05_prelim_results_Community.html">Community</a>
+      <a href="Report_I_Community.html">Community</a>
     </li>
     <li>
-      <a href="PS05_prelim_results_Other.html">Other</a>
+      <a href="Report_I_Other.html">Other</a>
     </li>
   </ul>
 </li>
-<li>
-  <a href="main_meter_regression.html">Electricity use models</a>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity use models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="main_meter_regression.html">Main meter - reg</a>
+    </li>
+    <li>
+      <a href="main_meter_anova.html">Main meter - ANOVA</a>
+    </li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -409,9 +417,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">PS05_Prelim_results</h1>
-<h4 class="author">Liam and Charlotte</h4>
-<h4 class="date">2026-03-04</h4>
+<h1 class="title toc-ignore">Community Buildings</h1>
+<h4 class="author">Dinela &amp; Emma</h4>
+<h4 class="date">03/30/26</h4>
 
 </div>
 
@@ -419,7 +427,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -430,8 +438,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -440,13 +448,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-03-25
+<strong>Last updated:</strong> 2026-03-30
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -469,18 +477,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -571,15 +582,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree474aa52d1d10b8e381e4f216282c9d1fef9fb52ftargetblank474aa52a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree10db689c16ade0fbd0a308cf838cc3b0d974d29btargetblank10db689a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/474aa52d1d10b8e381e4f216282c9d1fef9fb52f" target="_blank">474aa52</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/10db689c16ade0fbd0a308cf838cc3b0d974d29b" target="_blank">10db689</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree474aa52d1d10b8e381e4f216282c9d1fef9fb52ftargetblank474aa52a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree10db689c16ade0fbd0a308cf838cc3b0d974d29btargetblank10db689a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -589,7 +600,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/474aa52d1d10b8e381e4f216282c9d1fef9fb52f" target="_blank">474aa52</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/10db689c16ade0fbd0a308cf838cc3b0d974d29b" target="_blank">10db689</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -608,6 +619,7 @@ Ignored files:
     Ignored:    .Rhistory
     Ignored:    .Rproj.user/
     Ignored:    analysis/.DS_Store
+    Ignored:    analysis/.Rhistory
     Ignored:    analysis_to-fix/.DS_Store
     Ignored:    data/.DS_Store
     Ignored:    data/FY25 Main Meter Data.xlsx
@@ -625,6 +637,7 @@ Ignored files:
     Ignored:    output/kwh_academic_2026-03-22.csv
     Ignored:    output/kwh_academic_2026-03-23.csv
     Ignored:    output/kwh_academic_2026-03-25.csv
+    Ignored:    output/kwh_academic_2026-03-30.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_annual_2026-03-04.csv
     Ignored:    output/kwh_annual_2026-03-12.csv
@@ -634,6 +647,7 @@ Ignored files:
     Ignored:    output/kwh_annual_2026-03-22.csv
     Ignored:    output/kwh_annual_2026-03-23.csv
     Ignored:    output/kwh_annual_2026-03-25.csv
+    Ignored:    output/kwh_annual_2026-03-30.csv
     Ignored:    output/kwh_annual_20260225.csv
     Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
@@ -645,10 +659,23 @@ Ignored files:
     Ignored:    output/kwh_daily_2026-03-22.csv
     Ignored:    output/kwh_daily_2026-03-23.csv
     Ignored:    output/kwh_daily_2026-03-25.csv
+    Ignored:    output/kwh_daily_2026-03-30.csv
     Ignored:    output/kwh_daily_20260225.csv
     Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
+
+Unstaged changes:
+    Modified:   analysis/Report_I_Academic.Rmd
+    Modified:   analysis/Report_I_Admin.rmd
+    Modified:   analysis/Report_I_Community.Rmd
+    Modified:   analysis/Report_I_Medium.Rmd
+    Modified:   analysis/Report_I_Other.Rmd
+    Modified:   analysis/Report_I_Residential-L.Rmd
+    Modified:   analysis/Report_I_Small_Residence_Halls.Rmd
+    Modified:   analysis/_site.yml
+    Modified:   analysis/main_meter_anova.Rmd
+    Modified:   analysis/main_meter_regression.Rmd
 
 </code></pre>
 <p>
@@ -665,9 +692,8 @@ have uncommitted changes.
 <div id="versions" class="tab-pane fade">
 <p>
 These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/PS05_prelim_results_Res_Hall_M.Rmd</code>) and HTML
-(<code>docs/PS05_prelim_results_Res_Hall_M.html</code>) files. If you’ve
+made to the R Markdown (<code>analysis/Report_I_Community.Rmd</code>)
+and HTML (<code>docs/Report_I_Community.html</code>) files. If you’ve
 configured a remote Git repository (see <code>?wflow_git_remote</code>),
 click on the hyperlinks in the table below to view the files as they
 were in that past version.
@@ -696,53 +722,19 @@ Message
 <tbody>
 <tr>
 <td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/4ab0c6325280a0e51014fea47a71667cf474c872/docs/PS05_prelim_results_Res_Hall_M.html" target="_blank">4ab0c63</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-23
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
 Rmd
 </td>
 <td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/38132bb5862408fd73d3562dedb800105e3f41d7/analysis/PS05_prelim_results_Res_Hall_M.Rmd" target="_blank">38132bb</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/10db689c16ade0fbd0a308cf838cc3b0d974d29b/analysis/Report_I_Community.Rmd" target="_blank">10db689</a>
 </td>
 <td>
 maggiedouglas
 </td>
 <td>
-2026-03-11
+2026-03-30
 </td>
 <td>
-add student draft results
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/38132bb5862408fd73d3562dedb800105e3f41d7/docs/PS05_prelim_results_Res_Hall_M.html" target="_blank">38132bb</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-11
-</td>
-<td>
-add student draft results
+change navigation bar and add student report sections
 </td>
 </tr>
 </tbody>
@@ -752,180 +744,171 @@ add student draft results
 </div>
 </div>
 </div>
-<div id="data-preparation" class="section level2">
-<h2>Data Preparation</h2>
-<div id="conversion-factors" class="section level3">
-<h3>Conversion Factors</h3>
-<pre class="r"><code>dol_per_kWh &lt;- 0.081385
-MTCO2_per_kWh &lt;- 0.00030082405</code></pre>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>There are 10 buildings within the Community Building group that are
+used for a <strong>wide</strong> variety of functions including private
+residency, dining services, daycare, social space, and healthcare. The
+Community Buildings take up a relatively significant amount of space on
+the Dickinson campus as the category includes larger buildings like the
+Holland Union Building (HUB) in addition to smaller buildings like
+Landis House that have a difference of about 100,000 square feet.</p>
+<p>This drastic difference in square footage is consistent within the
+community group alongside other features such as differences in age and
+cooling. Allison Hall is the only building in the community group that
+utilizes window units for cooling and is also among the oldest of the
+buildings in the group, being constructed in 1958 with no renovations
+since then. The Quarry was built in 1899 but was renovated in 2000,
+about the same time the Kline Center Annex was built in 1998. The
+variety in usage, air conditioning, size, and age in the community group
+makes it particularly difficult to define the parameters that make up a
+“community” building, thus rendering some buildings <em>incomparable to
+one another</em>.</p>
+<p>The data for the Community Buildings group is <strong>not
+complete</strong> as there are four buildings on the main meter: The
+HUB, The Quarry, ATS, and the Kline Center Annex. The HUB and The Quarry
+also contain disaggregated meters that provide some data. Two buildings,
+The Asbell Center and the Historic President’s House are on the Weis
+Meter, and so they are also lacking data.</p>
 </div>
-<div id="libraries" class="section level3">
-<h3>Libraries</h3>
-<pre class="r"><code>library(tidyverse) 
-library(DT)</code></pre>
-</div>
-<div id="annual-electricity-data" class="section level3">
-<h3>Annual Electricity Data</h3>
-<pre class="r"><code>annual_kwh.df&lt;-read.csv(&#39;./output/kwh_annual_2026-03-04.csv&#39;, strip.white=TRUE) #load data
-
-str(annual_kwh.df) #check data
-
-med_res_annual_kwh&lt;-annual_kwh.df %&gt;% #wrangle for building group annually
-  filter(type==&quot;Res Hall - M&quot;)
-
-
-
-transform_med&lt;-med_res_annual_kwh%&gt;%
-  mutate(
-    cost=round(kwh_corr*dol_per_kWh, digits=0), 
-    GHG_emis=round(kwh_corr*MTCO2_per_kWh, digits=0),
-    kWh_per_sqft=round(kwh_corr/sqft, digits=1),
-    kWh_per_person= round(kwh_corr/occupants, digits=0)
-    )
-  
-  building_results&lt;-transform_med %&gt;%
-    select(NAME, kwh_corr, kWh_per_sqft, cost, GHG_emis, kWh_per_person, meter, days_perc) %&gt;%
-  arrange(desc(kwh_corr))</code></pre>
-</div>
-<div id="daily-electricity-data" class="section level3">
-<h3>Daily Electricity Data</h3>
-<pre class="r"><code>med_res_daily_kwh &lt;- read.csv(&quot;./output/kwh_daily_2026-03-04.csv&quot;)
-str(med_res_daily_kwh)
-med_res_daily_kwh &lt;- med_res_daily_kwh %&gt;%
-  filter(type == &quot;Res Hall - M&quot;) %&gt;%
-  mutate(date = ymd(date),
-         month = month(date, label= TRUE),
-         day = wday(date, label = TRUE)) %&gt;%
-  mutate(kwh_sqft_year = kwh/sqft*365, kwh_person_year = kwh/occupants*365) %&gt;%
-  arrange(desc(kwh))</code></pre>
-</div>
-</div>
-<div id="building-type-summary" class="section level2">
-<h2>Building Type Summary</h2>
-<div id="descriptive-table" class="section level3">
-<h3>Descriptive Table</h3>
-<pre class="r"><code>datatable(building_results,
-          filter=&#39;top&#39;,
-          rownames=FALSE,
-          colnames = c(&quot;Building&quot;, &quot;kWh&quot;, &quot;kWh per sqft&quot;,&quot;Cost-$&quot;, &quot;CO2e - MT&quot;, &quot;kWh per person&quot;, &quot;Meter&quot;, &quot;Days of data (%)&quot;),
-          caption=&#39;Table 1. Annual Electricity Use Indicators by Medium Residence Hall in Fiscal Year 2025&#39;)</code></pre>
+<div id="electricity-use-summary" class="section level2">
+<h2>Electricity Use Summary</h2>
+<div id="table-1" class="section level3">
+<h3>Table 1</h3>
+<pre class="r"><code>datatable(community_kwh_annual, 
+          caption=&quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of Community buildings during fiscal year 2025.&quot;,
+          colnames=c(&quot;Meter&quot;,&quot;Building&quot;,&quot;Days of Data (%)&quot;,&quot;kWh&quot;,&quot;kWh (corrected)&quot;,&quot;Square Footage&quot;,&quot;kWh per sqft&quot;,&quot;Cost($)&quot;,&quot;CO2e(MT)&quot;),
+          rownames=FALSE, 
+          class=&quot;compact&quot;,
+          options = list(autoWidth = TRUE, dom = &#39;t&#39;))</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"8851.004\" data-max=\"60837.222\" data-scale=\"3\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"2.2\" data-max=\"10.4\" data-scale=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"720\" data-max=\"4951\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"3\" data-max=\"18\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"760\" data-max=\"3511\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"number\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\" disabled=\"\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n    <div style=\"display: none;position: absolute;width: 200px;opacity: 1\">\n      <div data-min=\"0\" data-max=\"1\"><\/div>\n      <span style=\"float: left;\"><\/span>\n      <span style=\"float: right;\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","caption":"<caption>Table 1. Annual Electricity Use Indicators by Medium Residence Hall in Fiscal Year 2025<\/caption>","data":[["141 W. High St.","100 S. West St.","Reed Apts.","159 W. High St.","Treehouse","Cherry Apts","146 W. Louther St.","Strayer House","133 N. College St.","163 W. High St","Vincett House","165 W. High St","Schuman House","155 W. High St."],[60837.222,54882.271,31914.116,29252.356,21774.959,19463.818,18466.638,18275.169,17555.004,14862.634,14796.702,12690.482,10946.413,8851.004000000001],[10.4,7.6,6.1,6.5,3.6,5.5,6.4,2.7,7.7,3.3,5.5,2.8,2.5,2.2],[4951,4467,2597,2381,1772,1584,1503,1487,1429,1210,1204,1033,891,720],[18,17,10,9,7,6,6,5,5,4,4,4,3,3],[3042,2889,760,1625,1675,1622,2638,1523,3511,1239,1973,1154,1824,1475],["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Building<\/th>\n      <th>kWh<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost-$<\/th>\n      <th>CO2e - MT<\/th>\n      <th>kWh per person<\/th>\n      <th>Meter<\/th>\n      <th>Days of data (%)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5,7]},{"name":"NAME","targets":0},{"name":"kwh_corr","targets":1},{"name":"kWh_per_sqft","targets":2},{"name":"cost","targets":3},{"name":"GHG_emis","targets":4},{"name":"kWh_per_person","targets":5},{"name":"meter","targets":6},{"name":"days_perc","targets":7}],"order":[],"autoWidth":false,"orderClasses":false,"orderCellsTop":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of Community buildings during fiscal year 2025.<\/caption>","data":[["Individual","Submeter","Individual","Individual","Individual"],["Allison Hall","Quarry, The ","DCCC","President's House (New)","Landis House"],[100,92,100,100,100],[77578,68043,39786,30585,14429],[77578,73916,39786,30585,14429],[33310,6887,10892,6274,7953],[6313.69,6015.64,3237.99,2489.14,1174.31],[23,22,12,9,4],[2.3,10.7,3.7,4.9,1.8]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of Data (%)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>Square Footage<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost($)<\/th>\n      <th>CO2e(MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"kwh","targets":3},{"name":"kwh_corr","targets":4},{"name":"sqft","targets":5},{"name":"cost_dollars","targets":6},{"name":"ghg_emissions_MTco2","targets":7},{"name":"kwh_sqft","targets":8}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code># Allison Hall had the highest kWh usage in the fiscal year 2025 and the highest electricity intensity of the buildings in the community group despite not being the smallest building in the group. 
+
+# The smallest building, Landis House, had the least kWh usage and the lowest electricity intensity. Landis house also released the least CO2 emissions and cost the least to power throughout the fiscal year 2025. 
+
+# Allison Hall is over 20,000 square feet larger than The Quarry and the largest building in the community building group. Yet, The Quarry used only ~2000 less kWh than Allison Hall and also has a similar electricity intensity and cost to power. 
+
+# Despite using the most kWh, Allison Hall released the second least CO2 emissions, with Landis House releasing the least CO2. On the other hand, The Quarry released the most CO2 emissions in the fiscal year 2025, nearly 4 times the amount as Allison Hall.  
+
+# The Quarry cost about $22k to power in 2025, a little less than double the amount it took to power the DCCC ($12k) which has a square footage ~4,000 sqft larger than The Quarry.</code></pre>
 </div>
-<div id="electrcity-use-over-the-year" class="section level3">
-<h3>Electrcity Use Over the Year ’</h3>
-<pre class="r"><code>ggplot() +
-  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
-  geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
-  geom_boxplot(data = med_res_daily_kwh, aes(x = reorder(NAME, kwh_sqft_year, FUN = median), y = kwh_sqft_year, fill = NAME), show.legend = FALSE) +
-  coord_flip() +
-  labs(
-    x = &quot;&quot;,
-    y = &quot;Electricity Intensity (kWh/sqft/year)&quot;,
-    title = &quot;Electricity Intensity in Medium Residential Halls \nin the Fiscal Year 2025&quot;,
-    subtitle = &quot;Buildings ordered by median energy intensity&quot;) +
-  theme_bw()</code></pre>
-<p><img src="figure/PS05_prelim_results_Res_Hall_M.Rmd/electricity%20use%20over%20the%20year-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-electricity-use-over-the-year-1">
-Past versions of "electricity use over the year-1.png"
-</button>
-</p>
-<div id="fig-no-spaces-electricity-use-over-the-year-1"
-class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/38132bb5862408fd73d3562dedb800105e3f41d7/docs/figure/PS05_prelim_results_Res_Hall_M.Rmd/electricity use over the year-1.png" target="_blank">38132bb</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-11
-</td>
-</tr>
-</tbody>
-</table>
+<div id="table-2" class="section level3">
+<h3>Table 2</h3>
+<pre class="r"><code>datatable(community_kwh_academicYr, 
+          caption=&quot;Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of Community buildings during academic year 2024/2025.&quot;,
+          colnames=c(&quot;Meter&quot;,&quot;Building&quot;,&quot;Days of Data (%)&quot;,&quot;kWh&quot;,&quot;kWh (corrected)&quot;,&quot;Square Footage&quot;,&quot;kWh per sqft&quot;,&quot;Cost($)&quot;,&quot;CO2e(MT)&quot;),
+          rownames=FALSE, 
+          class=&quot;compact&quot;,
+          options = list(autoWidth = TRUE, dom = &#39;t&#39;))</code></pre>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of Community buildings during academic year 2024/2025.<\/caption>","data":[["Submeter","Individual","Individual","Individual","Individual"],["Quarry, The ","Allison Hall","DCCC","President's House (New)","Landis House"],[97,100,100,100,100],[50044,38936,26913,16680,9065],[51740,38936,26913,16680,9065],[6887,33310,10892,6274,7953],[4210.9,3168.84,2190.29,1357.5,737.76],[16,12,8,5,3],[7.5,1.2,2.5,2.7,1.1]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of Data (%)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>Square Footage<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost($)<\/th>\n      <th>CO2e(MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"kwh","targets":3},{"name":"kwh_corr","targets":4},{"name":"sqft","targets":5},{"name":"cost_dollars","targets":6},{"name":"ghg_emissions_MTco2","targets":7},{"name":"kwh_sqft","targets":8}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
+<pre class="r"><code># Despite having less square footage, The Quarry used between ~11-12,000 more kWh than the largest building, Allison Hall, when limited to the 2024/2025 academic year. 
+
+# When limited to the 2024/2025 academic year, The Quarry overtook Allison Hall as the most electricity intensive building in the community group in addition to becoming the most expensive. 
+
+# The Quarry remains the building that releases the most CO2 emissions in the community group during the 2024/2025 academic year. 
+
+# With the exception of The Quarry, the buildings in the community group are less electricity intensive per square foot per year than other buildings at different colleges and universities across the United States as described by the Energy Information Administration (EIA) report. 
+
+# The President&#39;s House (New) can be described as having nearly double the kWh usage, electricity intensity, cost, and CO2 emissions than Landis House. However, this would be an unfair comparison considering that The President&#39;s House (New) is a building used for full-time residence by the Dickinson President and his wife whereas Landis House is not always occupied and certainly not a residential space. </code></pre>
 </div>
-</div>
-</div>
-<div id="electricity-intensity" class="section level3">
-<h3>Electricity Intensity</h3>
-<pre class="r"><code>ggplot(med_res_daily_kwh , aes(x=month, y=kwh, fill=NAME))+
-  geom_bar(position=&quot;stack&quot;, stat=&quot;identity&quot;)+
+<div id="figure-1" class="section level3">
+<h3>Figure 1</h3>
+<pre class="r"><code>#create bar plot
+ggplot(comm_dailyfix, aes(x = month, y = kwh, fill=NAME)) +
+  geom_bar(stat = &quot;identity&quot;) +
+  facet_wrap(.~NAME)+
+  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;)+
   theme_bw()+
+  theme(legend.position = &quot;none&quot;)+
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))+
   labs(x=&quot;&quot;,
-       y=&quot;Electricity Use (kWh)&quot;,
-       fill= &quot;Building&quot;,
-       title= &quot;Monthly Electricity Use by Medium Residence Hall in Fiscal Year 2025&quot;)</code></pre>
-<p><img src="figure/PS05_prelim_results_Res_Hall_M.Rmd/intensity-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity-1">
-Past versions of intensity-1.png
-</button>
-</p>
-<div id="fig-intensity-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/38132bb5862408fd73d3562dedb800105e3f41d7/docs/figure/PS05_prelim_results_Res_Hall_M.Rmd/intensity-1.png" target="_blank">38132bb</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-11
-</td>
-</tr>
-</tbody>
-</table>
+       y=&quot;Electricity use (kWh)&quot;, 
+       title = &quot;Figure 1. Monthly patterns in electricity use by building for Community 
+Buildings in FY25&quot;)</code></pre>
+<p><img src="figure/Report_I_Community.Rmd/bar_graph-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># &quot;Allison Hall&quot;, &quot;Quarry, The&quot;, and &quot;DCCC&quot; (Dickinson College Children&#39;s Center) show the highest total electricity use over the course of the year. 
+
+# &quot;Landis House&quot; and the &quot;President&#39;s House (New)&quot; show the lowest total electricity use over the course of the year. 
+
+# There is a relatively similar, shared pattern in total electricity use over the year for all buildings but the Quarry. These three buildings show peaks in electricity use during the winter and summer months, and dips during the transitional spring and fall months (though the relative size of the peaks and dips each season varies with each building). &quot;Quarry, The&quot;, on the other hand, shows overall high electricity use throughout the year, with slight peaks in April and November, and a sharp and sudden drop in August. </code></pre>
+</div>
+<div id="figure-2" class="section level3">
+<h3>Figure 2</h3>
+<pre class="r"><code>#Create boxplot
+ggplot(comm_dailyfix, aes(x = reorder(NAME, kwh_sqft_yr), y = kwh_sqft_yr, fill = NAME))+
+  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
+geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
+  geom_boxplot()+
+  coord_flip()+
+  facet_wrap(.~period)+
+  theme_bw()+
+  theme(legend.position = &quot;none&quot;)+
+  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;)+
+  labs(x = &quot;&quot;, 
+       y = &quot;Electricity Intensity (kWh/sqft/yr)&quot;, 
+       title = &quot;Figure 2. Electricity intensity by building for Community 
+buildings in FY25&quot;)</code></pre>
+<p><img src="figure/Report_I_Community.Rmd/boxplot-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># &quot;Quarry, The&quot; shows the highest electricity intensity in kwh/sqft/yr of all the buildings in our category.
+
+# &quot;Landis House&quot; shows the lowest electricity intensity in kwh/sqft/yr of all the buildings in our category.
+
+# The Electricity intensity (kWh/sqft/yr) of the &quot;Quarry, The&quot; ranks higher than the average values for colleges and universities as listed by the EIA for all points of the year except for Winter Break. 
+
+# The &quot;President&#39;s House (New) and &quot;Allion Hall&quot; show significant variability in electricity intensity at different points in the year. The Fall and Spring semesters seem to plot relatively the same for the &quot;President&#39;s House (New)&quot; and &quot;Allison Hall&quot;, while the summer shows a decent increase in electricity use (in median and spread of data) and the winter shows a significant decrease (in both median and spread). 
+
+# &quot;DCCC&quot; remains roughly the same throughout the year, plotting slightly larger in the Spring Semester and over Winter Break compared to Fall Semester and Summer Break.
+
+# &quot;Landis House&quot; plots consistently the lowest electricity intensity throughout the year and remains relatively the same between the Fall and Spring Semesters, as well as Summer and Winter Breaks.</code></pre>
 </div>
 </div>
+<div id="discussion" class="section level2">
+<h2>Discussion</h2>
+<p>Given that there is a decent variety in the uses for each of these
+buildings (as highlighted at our first ‘stakeholder presentation’) for
+this particular dataset, we recommend that further attention be given to
+the “community” category prior to moving any further with major parts of
+our analysis.</p>
+<p>Further, we recommend adjusting the criteria of what makes a building
+a “community” building; while there seems to be points of interest in
+our data, it is hard to responsibly draw real, meaningful conclusions
+when we are essentially comparing apples to oranges. Although we can
+clearly see that the building “Quarry, The” (otherwise known as “Denim
+Coffee”, or “the Quarry”) stands far above the other buildings in this
+category in terms of both total electricity use AND electricity
+intensity, (AND that it even surpasses the listed EIA average
+electricity intensity for college and university buildings), we cannot
+reasonably compare the results of this building to, for example, the
+second largest consumer in our category, the “President’s House (New)”
+because their uses are so different. Although we can see there may be
+something meaningful in our data, we cannot responsibly draw conclusions
+that will truly reveal anything meaningful to CSE. Thus, we recommend
+refining this category prior to moving forward with our examination so
+we can provide the most accurate and meaningful analysis of that data to
+CSE.</p>
 </div>
+<div id="sources" class="section level2">
+<h2>Sources</h2>
+<p>Energy Information Administration (EIA). (2022). 2018 Commercial
+Buildings Energy Consumption Survey (CBECS). <a
+href="https://www.eia.gov/consumption/commercial/"
+class="uri">https://www.eia.gov/consumption/commercial/</a></p>
+<p>Leary, N. (2025). Dickinson College Greenhouse Gas Inventory
+2008-2023. Center for Sustainability Education.</p>
 </div>
 <div id="partner-contributions" class="section level2">
 <h2>Partner Contributions</h2>
-<p>Charlotte prepared the annual electricity data for this problem set
-while Liam prepared the daily electricity data. For the building type
-summary, Charlotte adapted a table she had made last lab to create the
-summarizing table for annual electricity use indicators by building,
-Liam created the ranked box plot of daily electricity intensity by
-building, and Charlotte created the stacked bar graph to show
-electricity use by month. The data seems to have no issues or problems,
-all the data is individually metered and clear. There is no missing
-data. There is occupancy data for all buildings and 100% of the days in
-the 2025 Fiscal Year were measured.</p>
+<p>I, Dinela worked on wrangling the annual and academic year data in
+addition to creating the two data tables. I also completed the
+Background section of the report and the integrated text explaining key
+take-aways within the tables.</p>
+<p>I, Emma Keane, contributed to this work by providing the code for
+Figures 1 &amp; 2 (as well as providing integrated text explaining key
+take-aways within ggplot code chunks), and writing up the
+Recommendations Section.</p>
+<p>No AI was used in writing code, notes, or recommendations.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -953,25 +936,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] DT_0.34.0       lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0  
- [5] dplyr_1.2.0     purrr_1.2.1     readr_2.2.0     tidyr_1.3.2    
- [9] tibble_3.3.1    ggplot2_4.0.2   tidyverse_2.0.0 workflowr_1.7.2
+ [1] paletteer_1.7.0 DT_0.34.0       lubridate_1.9.5 forcats_1.0.1  
+ [5] stringr_1.6.0   dplyr_1.2.0     purrr_1.2.1     readr_2.2.0    
+ [9] tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.2   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] sass_0.4.10        generics_0.1.4     stringi_1.8.7      hms_1.1.4         
- [5] digest_0.6.39      magrittr_2.0.4     timechange_0.4.0   evaluate_1.0.5    
- [9] grid_4.5.2         RColorBrewer_1.1-3 fastmap_1.2.0      rprojroot_2.1.1   
-[13] jsonlite_2.0.0     processx_3.8.6     whisker_0.4.1      ps_1.9.1          
-[17] promises_1.5.0     httr_1.4.8         crosstalk_1.2.2    scales_1.4.0      
+ [1] sass_0.4.10        generics_0.1.4     prismatic_1.1.2    stringi_1.8.7     
+ [5] hms_1.1.4          digest_0.6.39      magrittr_2.0.4     timechange_0.4.0  
+ [9] evaluate_1.0.5     grid_4.5.2         RColorBrewer_1.1-3 fastmap_1.2.0     
+[13] rprojroot_2.1.1    workflowr_1.7.2    jsonlite_2.0.0     whisker_0.4.1     
+[17] rematch2_2.1.2     promises_1.5.0     crosstalk_1.2.2    scales_1.4.0      
 [21] jquerylib_0.1.4    cli_3.6.5          rlang_1.1.7        withr_3.0.2       
 [25] cachem_1.1.0       yaml_2.3.12        otel_0.2.0         tools_4.5.2       
 [29] tzdb_0.5.0         httpuv_1.6.16      vctrs_0.7.1        R6_2.6.1          
 [33] lifecycle_1.0.5    git2r_0.36.2       htmlwidgets_1.6.4  fs_1.6.7          
-[37] pkgconfig_2.0.3    callr_3.7.6        pillar_1.11.1      bslib_0.10.0      
-[41] later_1.4.8        gtable_0.3.6       glue_1.8.0         Rcpp_1.1.1        
-[45] xfun_0.56          tidyselect_1.2.1   rstudioapi_0.18.0  knitr_1.51        
-[49] farver_2.1.2       htmltools_0.5.9    labeling_0.4.3     rmarkdown_2.30    
-[53] compiler_4.5.2     getPass_0.2-4      S7_0.2.1          </code></pre>
+[37] pkgconfig_2.0.3    pillar_1.11.1      bslib_0.10.0       later_1.4.8       
+[41] gtable_0.3.6       glue_1.8.0         Rcpp_1.1.1         xfun_0.56         
+[45] tidyselect_1.2.1   rstudioapi_0.18.0  knitr_1.51         farver_2.1.2      
+[49] htmltools_0.5.9    labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2    
+[53] S7_0.2.1          </code></pre>
 </div>
 </div>
 </div>

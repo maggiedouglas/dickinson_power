@@ -15,9 +15,8 @@ The buildings in this category are incredibly variable. There is not one consist
 
 A majority of the other buildings have complete individual data sets. Kline, which has been disaggregated from the main meter, only has 35% of daily data and was therefore removed from the analysis due to insufficient information. We only have temperature data for Boiling Springs Cottage and Boiling Springs Farm. 25 Pomfret and 50 Wilson Street are missing square footage data. There are no buildings on the Weis meter.  
 
-## Data preparation
 
-```{r load}
+```{r load, include = FALSE}
 library(tidyverse)
 library(DT)
 library(paletteer)
@@ -26,13 +25,13 @@ academic_data <- read.csv("./output/kwh_academic_2026-03-17.csv")
 daily <- read.csv("./output/kwh_daily_2026-03-17.csv")
 ```
 
-```{r check}
+```{r check, include = FALSE}
 str(annual_data)
 str(academic_data)
 str(daily)
 ```
 
-```{r subset_annual}
+```{r subset_annual, include = FALSE}
 annual_other <- annual_data %>%
    filter(type == "Other") %>%
   mutate(kwh_per_sqft = round(kwh_corr / sqft, digits = 1),
@@ -47,11 +46,11 @@ annual_other <- annual_data %>%
 filter(building != "Kline Life Sport Complex")
 ```
 
-```{r check_annual}
+```{r check_annual, include = FALSE}
 str(annual_other)
 ```
 
-```{r subset_academic}
+```{r subset_academic, include = FALSE}
 academic_other <- academic_data %>%
   filter(type == "Other") %>%
   mutate(kwh_per_sqft = round(kwh_corr / sqft, digits = 1),
@@ -66,11 +65,11 @@ academic_other <- academic_data %>%
   filter(building != "Kline Life Sport Complex")
 ```
 
-```{r check_academic}
+```{r check_academic, include = FALSE}
 str(academic_other)
 ```
 
-```{r daily}
+```{r daily, include = FALSE}
 other.daily<-daily%>%
   filter(type=="Other")%>%
   mutate(date=ymd(date),

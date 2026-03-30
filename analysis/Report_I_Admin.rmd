@@ -4,12 +4,13 @@ author: "Amiya Marbles & Eva Hanlin"
 date: "`r format(Sys.time(), '%m/%d/%y')`"
 output: html_document
 ---
+
 ## Background
 
 ###### There are 11 total administrative buildings listed in this campus category, accounting for a combined 188,060 square feet of space. However, since the electricity dataset only covers 6 of these buildings 5 with individual meters and Old West on a submeter, we are actively analyzing 137,948 square feet, which is about 73% of the total administrative footprint. These administration buildings are mainly used on a typical 9-5pm schedule year round and cover a highly diverse range of campus operations, including executive leadership in Old West, essential student facing buildings, campus backbone departments like Facilities Management and IT, and specialized ROTC offices. There is a massive spread in the physical size of these buildings, which will heavily impact electricity usage. The Facilities Management building at 5 N. Orange St. is by far the largest at 75,000 sq. ft., followed by Old West at 30,208 sq. ft., while the smallest spaces are converted residential style structures like the 1,440 sq. ft. ROTC office and the 1,800 sq. ft. IT Storage Annex. Additionally, the architecture spans over two centuries, meaning energy efficiency and insulation likely vary wildly, ranging from the historic 1803 anchor of Old West to mid century buildingd and recently renovated spaces like Waidner Admissions and the ROTC offices.
 
-## Data Preparation
-``` {r data_prep}
+
+``` {r data_prep, include = FALSE}
 library(dplyr)
 library(readr)
 library(RColorBrewer)
@@ -71,6 +72,7 @@ admin_daily_df <- kwh_daily %>%
 str(admin_daily_df)
 head(admin_daily_df)
 ```
+
 ## Electricity Use Summary
 
 ###### Determining a ‘typical’ administrative building on campus is difficult given the large fluctuation in square footage, which generally has a positive correlation to total electricity use. However, based on averaged data from Mooreland Avenue and 554 West Louther Street, a typical administrative building of about 14,270 square feet uses approximately 51,828.59 kWh per year, operating at an intensity of 5 kWh/sqft. This typical usage translates to an estimated financial cost of $4,218 and greenhouse gas emissions of 15.591 metric tons of CO2e annually. We see a wide range of variability in both total electricity use and intensity across these buildings. 5 North Orange Street is the largest building and the largest consumer overall, using 567,745.2 kWh/year and charting the highest intensity at 8 kWh/sqft. Conversely, 556 West Louther Street has the smallest total electricity use per fiscal year at 4,985.55 kWh, and ties with Old West for the lowest electricity intensity at just 2 kWh/sqft. Furthermore, total electricity use is not always the best indicator of efficiency; for instance, 554 West Louther Street is the smallest building but has the second-highest electricity use per square foot. When comparing Dickinson's electricity intensity to similar buildings at other colleges and universities, the campus performs well. The EIA notes that average administrative buildings at other institutions use 227,000 kWh per year at an average of 13.5 kWh/sqft, with a median of 9.7 kWh/sqft. Even Dickinson's most intensive building, 5 North Orange Street (8 kWh/sqft), falls below the EIA median and average, indicating effective electricity management despite being almost five times the size of the EIA average building footprint of 16,800 square feet.

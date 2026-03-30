@@ -12,9 +12,7 @@ The buildings in the academic category primarily hold classrooms, laboratories, 
 This category contains 20 buildings however only half of these have individual data. Five academic buildings are metered individually, and 5 are on the main meter but have submeter data. The rest are on the main meter but do not have submeter data. This presents a significant challenge to understanding the electricity use of academic buildings on campus. The following analysis is conducted only on the ten buildings with individual daily data. 
 
 
-## Data Preparation
-
-```{r load}
+```{r load, include = FALSE}
 library(tidyverse)
 library(DT)
 library(paletteer)
@@ -23,13 +21,13 @@ kwh_annual <- read.csv("./output/kwh_annual_2026-03-17.csv")
 kwh_daily <- read.csv("./output/kwh_daily_2026-03-17.csv")
 ```
 
-```{r check}
+```{r check, include = FALSE}
 str(kwh_annual)
 str(kwh_daily)
 str(kwh_academic_year)
 ```
 
-```{r annual_academic}
+```{r annual_academic, include = FALSE}
 annual_academic <- kwh_annual %>%
   filter(type == "Academic") %>% 
   mutate(MTCO2e = round(kwh_corr*0.30082405, digits = 0), 
@@ -44,7 +42,7 @@ annual_academic <- kwh_annual %>%
 str(annual_academic)
 ```
 
-```{r ayear_academic}
+```{r ayear_academic, include = FALSE}
 ayear_academic <- kwh_academic_year %>%
   filter(type == "Academic") %>% 
   mutate(MTCO2e = round(kwh_corr*0.30082405, digits = 0), 
@@ -58,7 +56,7 @@ ayear_academic <- kwh_academic_year %>%
 str(ayear_academic)
 ```
 
-```{r daily}
+```{r daily, include = FALSE}
 academic_kwh_daily <- kwh_daily %>% 
   filter(type == "Academic") %>% 
   mutate(date = ymd(date), 

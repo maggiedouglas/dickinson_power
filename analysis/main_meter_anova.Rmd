@@ -68,6 +68,20 @@ ggplot(daily_main, aes(x = period, y = kwh)) +
   theme(axis.text.x = element_text(angle = 30, hjust = 1)) # rotate labels for readability
 ```
 
+```{r hist, fig.height = 3, fig.width = 4.5}
+# electricity x day of week
+ggplot(daily_main, aes(x = kwh, fill = wday)) +
+  geom_density(alpha = 0.3) +
+  theme_bw() + labs(x = "") +
+  theme(axis.text.y = element_blank())
+
+# electricity x time of year
+ggplot(daily_main, aes(x = kwh, fill = period)) +
+  geom_density(alpha = 0.3) +
+  theme_bw() + labs(x = "") +
+  theme(axis.text.y = element_blank())
+```
+
 ## Day of the week
 
 Now we will fit a model to investigate the influence of day of the week on electricity use...
@@ -75,9 +89,8 @@ Now we will fit a model to investigate the influence of day of the week on elect
 ### Fit the model
 
 ```{r mod_day}
-# equivalent model using lm()
-mod_day <- lm(formula = kwh ~ wday, 
-              data = daily_main)
+# fit model using lm()
+mod_day <- lm(formula = kwh ~ wday, data = daily_main)
 ```
 
 ### Check the fit
@@ -101,7 +114,11 @@ Similar to linear regression, we can unpack each part of this code. The intercep
 Looking at the bottom of the output, we can see that day of the week is significantly related to electricity use (*P* < 0.001), but does not explain very much variation (*R^2^* = 0.05).
 
 ```{r results_day}
-summary(mod_day) # Examine model terms + outcomes
+# Examine model terms + outcomes in regression format
+summary(mod_day) 
+
+# Examine results in ANOVA format
+anova(mod_day)
 
 # which days are different?
 TukeyHSD(aov(mod_day))
@@ -146,6 +163,9 @@ Looking at the bottom of the output, we can see that period of the year is signi
 
 ```{r results}
 summary(mod_yr) # Examine model terms + outcomes
+
+# Examine results in ANOVA format
+anova(mod_yr)
 
 # let's see if using a Welch's ANOVA gives a similar result
 oneway.test(kwh ~ period, data = daily_main, var.equal = FALSE)

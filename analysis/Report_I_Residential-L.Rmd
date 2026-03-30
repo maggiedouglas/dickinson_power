@@ -13,11 +13,8 @@ This report examines the category of large residential halls across the Dickinso
 Residences range in size from 10,724 sqft to 48,720 sqft with a total of building space of 417,027 sqft. Together, this building category makes up **21.9%** of the total campus building space. Spaces range from the traditional dormitory style rooms with shared common spaces such as bathrooms, study areas, and kitchens to apartments with private amenities. Annual electricity usage ranges from 269,770 kWh to 36,395 kWh which may be due to the variability in building size, style, and HVAC systems. Overall, this report will show differences in electricity usage and intensity during fiscal year 2025 and academic year 2024-2025.
 
 
-## Data preparation
 
-### Load libraries
-
-```{r load}
+```{r load, include = FALSE}
 
 library(tidyverse)
 library(DT)
@@ -25,9 +22,8 @@ library(paletteer)
 
 ```
 
-### Annual data
 
-```{r annual}
+```{r annual, include = FALSE}
 
 annual_data <- read.csv("./output/kwh_annual_2026-03-17.csv")
 
@@ -54,9 +50,8 @@ summary(annual_lg_res)
 
 ```
 
-### Academic year data
 
-```{r academic}
+```{r academic, include = FALSE}
 
 academic_data <- read.csv("./output/kwh_academic_2026-03-17.csv")
 
@@ -86,9 +81,8 @@ summary(academic_lg_res)
 
 ```
 
-### Daily data
 
-```{r daily}
+```{r daily, include = FALSE}
 
 daily_data <- read.csv("./output/kwh_daily_2026-03-17.csv")
 

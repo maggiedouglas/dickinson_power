@@ -10,15 +10,14 @@ The small residential building category includes all on-campus residence halls t
 
 There are 19 buildings in this category. One of these buildings (169 W. High St.) is located on the main meter; the other 18 buildings are individually metered. Together, these buildings comprise 30,353 square feet. This is the smallest total square footage among the different building categories. Most of these buildings were built in the late 19th and early 20th centuries and acquired by Dickinson in the late 20th and early 21st centuries. Additionally, almost all of these buildings have been renovated within the last decade.
 
-## Data preparation
-```{r libraries}
+
+```{r libraries, include = FALSE}
 library(tidyverse)
 library(DT)
 library(paletteer)
 ```
 
-### Load and check data
-```{r load}
+```{r load, include = FALSE}
 annual_kwh <- read.csv("./output/kwh_annual_2026-03-17.csv")
 daily_kwh <- read.csv("./output/kwh_daily_2026-03-17.csv")
 academic_kwh <- read.csv("./output/kwh_academic_2026-03-17.csv")
@@ -31,10 +30,7 @@ str(daily_kwh)
 str(academic_kwh)
 ```
 
-### Wrangle data
-
-#### Annual data
-```{r annual}
+```{r annual, include = FALSE}
 annual_kwh$NAME <- replace_values(annual_kwh$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.")
 
 annual_s_residential <- annual_kwh  %>%
@@ -54,8 +50,7 @@ annual_s_residential <- annual_kwh  %>%
 str(annual_s_residential)
 ```
 
-#### Academic data
-```{r academic_year}
+```{r academic_year, include = FALSE}
 academic_kwh$NAME <- replace_values(academic_kwh$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.")
 
 academic_s_residential <- academic_kwh %>%
@@ -77,8 +72,7 @@ academic_s_residential <- academic_kwh %>%
 str(academic_s_residential)
 ```
 
-#### Daily data
-```{r daily}
+```{r daily, include = FALSE}
 daily_kwh$NAME <- replace_values(daily_kwh$NAME, "135 N. College St. 139 N. College St." ~ "135-139 N. College St.", "49 S. College St.51 S. College St." ~ "49-51 S. College St.")
 
 daily_s_residential <- daily_kwh %>%
@@ -97,8 +91,7 @@ daily_s_residential_drop_winter <- daily_s_residential %>%
 str(daily_s_residential_drop_winter)
 ```
 
-#### Monthly data
-```{r monthly}
+```{r monthly, include = FALSE}
 monthly_s_residential <- daily_s_residential %>%
   group_by(NAME, month) %>%
   summarize(total_kwh = sum(kwh))

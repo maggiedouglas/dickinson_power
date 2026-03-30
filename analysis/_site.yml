@@ -26,7 +26,11 @@ navbar:
       - text: "Other"
         href: Report_I_Other.html
   - text: "Electricity use models"
-    href: main_meter_regression.html
+    menu:
+      - text: "Main meter - reg"
+        href: main_meter_regression.html
+      - text: "Main meter - ANOVA"
+        href: main_meter_anova.html
 
 output:
   workflowr::wflow_html:
