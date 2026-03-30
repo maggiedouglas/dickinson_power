@@ -1,0 +1,15 @@
+/* Make the workflowr buttons disappear */
+.btn-workflowr {
+  opacity: 0;
+}
+
+
+/* Make the workflowr report button disappear */
+.btn-workflowr-report {
+  opacity: 0;
+}
+
+/* Make the workflowr figure past versions buttons disappear */
+.btn-workflowr-fig {
+  opacity: 0;
+}

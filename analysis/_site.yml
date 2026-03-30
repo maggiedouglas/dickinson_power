@@ -39,3 +39,5 @@ output:
     theme: cosmo
     highlight: textmate
     code_folding: hide
+    css: style.css
+
