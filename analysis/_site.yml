@@ -12,19 +12,19 @@ navbar:
       - text: "All buildings"
         href: campus_summary.html
       - text: "Res. Halls < 2K sqft"
-        href: PS05_prelim_results_Res_Hall_S.html
+        href: Report_I_Small_Residence_Halls.html
       - text: "Res. Halls 2-10K sqft"
-        href: PS05_prelim_results_Res_Hall_M.html
+        href: Report_I_Medium.html
       - text: "Res. Halls > 10K sqft"
-        href: PS05_prelim_results_Res_Hall_L.html
+        href: Report_I_Residential-L.html
       - text: "Academic"
-        href: PS05_prelim_results_Academic.html
+        href: Report_I_Academic.html
       - text: "Administrative"
-        href: PS05_prelim_results_Admin.html
+        href: Report_I_Admin.html
       - text: "Community"
-        href: PS05_prelim_results_Community.html
+        href: Report_I_Community.html
       - text: "Other"
-        href: PS05_prelim_results_Other.html
+        href: Report_I_Other.html
   - text: "Electricity use models"
     href: main_meter_regression.html
 
