@@ -139,7 +139,7 @@ datatable(academic_lg_res,
 Table 2 shows the electricity use during the 2024-2025 academic year. The median electricity use is approximately 95,000 kWh, demonstrating a 'typical' building during the academic year. This is equivalent to about **29 metric tons** of carbon emissions and **$8,000** per year. Kisner-Woodward has the most total electricity use and Matthews House has the least. 27 W. High Street has the most electricity use per square foot and Matthews House has the least. 27 W. High Street has the most electricity use per person and Spradley-Young has the least. Again, Kisner-Woodward and 27 W. High Street have high usage in total, per square foot, and per person despite not being the largest or most heavily occupied buildings.
 
 
-```{r fig1}
+```{r fig1, fig.height = 6, fig.width = 9}
 
 ggplot(daily_lg_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
   geom_col(position = "stack") +
@@ -150,8 +150,7 @@ ggplot(daily_lg_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
   theme(legend.position = "none") +
   labs(x = "",
        y = "Electricity use (1000 kWh)",
-       title = "Figure 1. Monthly patterns in electricity use by building for large 
-       residential halls",
+       title = "Figure 1. Monthly patterns in electricity use by building for large residential halls",
        subtitle = "Fiscal Year 2025")
 
 ```

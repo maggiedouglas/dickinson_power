@@ -19,8 +19,9 @@ The below analysis provides an example of how to use ANOVA to shed light on this
 
 ```{r load, message = FALSE}
 library(tidyverse)
+library(rstatix) # this one is only necessary if you need to run a post-hoc test after a significant Welch's ANOVA
 
-daily <- read.csv("./output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
+daily <- read.csv("./output/kwh_daily_2026-03-23.csv")
 
 daily_main <- daily %>%
   filter(NAME == "Main Meter") %>%
@@ -29,7 +30,12 @@ daily_main <- daily %>%
 
 str(daily_main)
 
-# Weekday is already a factor ordered from Sunday to Saturday
+# Weekday is a factor ordered from Sunday to Saturday
+# Reorganize days of the week slightly so weekdays are together + remove ordering 
+# For ANOVA, we want to treat weekdays equally
+daily_main$wday <- factor(daily_main$wday,
+                          levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                          ordered = FALSE)
 
 # For ANOVA, it's a good idea to convert period to a factor, too
 # This code converts period from character to factor and puts the time periods in chronological order
@@ -37,23 +43,14 @@ daily_main$period <- factor(daily_main$period,
                             levels = c("Fall Semester","Winter Break",
                                        "Spring Semester", "Summer Break"))
 
-# Reorganize days of the week slightly so weekdays are together + remove ordering 
-# For ANOVA, we want to treat weekday as a factor without order
-daily_main$wday <- factor(daily_main$wday,
-                          levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
-                          ordered = FALSE)
 
 # check again
 str(daily_main)
 ```
 
-## Set expectations
+### Exploratory graphs
 
-Let's start by looking at our data. For now we will do some quick-and-dirty graphs using ggplot. Since we are now interested in categorical variables, we will use a simple boxplot to look at patterns in the data.
-
-The first boxplot seems to show a slightly elevated electricity use during the week compared to the weekends, but the pattern does not look very strong. The weekdays also appear to have a bit more variability in electricity use, with more outliers than the weekends. Since the main meter tracks use in a mix of buildings with different activities in them (classrooms, residences, etc.) it makes sense that the signal for day of the week appears pretty weak.
-
-The second boxplot shows that typical electricity use during the fall and spring semesters is pretty similar (both median and spread). Electricity use in summer appears to be a a bit elevated and typical use during winter break appears considerably lower. The variation in electricity use looks lowest in the winter and highest in the summer. This overall patterns makes sense in light of what we've learned so far - electricity is more involved in cooling than heating, so the summer is elevated over spring/fall semesters. We also know that facilities adjusts the buildings to use less electricity when nobody is on campus over winter break.
+Let's start by looking at our data. For now we will do some quick-and-dirty graphs using ggplot. Since we are now interested in categorical variables, we will use a simple boxplot and density plot to look at patterns in the data.
 
 ```{r vis, fig.height = 3, fig.width = 3.5}
 # electricity x day of week
@@ -71,16 +68,22 @@ ggplot(daily_main, aes(x = period, y = kwh)) +
 ```{r hist, fig.height = 3, fig.width = 4.5}
 # electricity x day of week
 ggplot(daily_main, aes(x = kwh, fill = wday)) +
-  geom_density(alpha = 0.3) +
+  geom_density(alpha = 0.3) + # alpha makes the curves + fills transparent
   theme_bw() + labs(x = "") +
   theme(axis.text.y = element_blank())
 
 # electricity x time of year
 ggplot(daily_main, aes(x = kwh, fill = period)) +
-  geom_density(alpha = 0.3) +
+  geom_density(alpha = 0.3) + # alpha makes the curves + fills transparent
   theme_bw() + labs(x = "") +
   theme(axis.text.y = element_blank())
 ```
+
+## Set expectations
+
+The first boxplot seems to show a slightly elevated electricity use during the week compared to the weekends, but the pattern does not look very strong. The weekdays also appear to have a bit more variability in electricity use, with more outliers than the weekends. Since the main meter tracks use in a mix of buildings with different activities in them (classrooms, residences, etc.) it makes sense that the signal for day of the week appears pretty weak.
+
+The second boxplot shows that typical electricity use during the fall and spring semesters is pretty similar (both median and spread). Electricity use in summer appears to be a a bit elevated and use during winter break appears considerably lower. The variation in electricity use looks lowest in the winter and highest in the summer. This overall pattern makes sense in light of what we've learned so far - electricity is more involved in cooling than heating, so the summer is elevated over spring/fall/winter. We also know that facilities adjusts the buildings to use less electricity when nobody is on campus over winter break.
 
 ## Day of the week
 
@@ -109,9 +112,11 @@ acf(mod_day$residuals) # Assess dependence between successive observations
 
 ### Examine results
 
-Similar to linear regression, we can unpack each part of this code. The intercept here represents the mean electricity use on Mondays, the first level in our categorical variable. The coefficients for the other days represent the average difference between them and electricity use on Mondays. For example, electricity use on the weekends appears to be about 3100 kWh less per day than on Mondays. The P values next to the individual coefficients tell us that electricity use on Saturday and Sunday is significantly different from Monday (P < 0.001), whereas there are no significant differences between Mondays and the other weekdays (P > 0.05). 
+Similar to linear regression, we can unpack each part of this code. The intercept here represents the mean electricity use on Mondays, the first level in our categorical variable. The coefficients for the other days represent the average difference between them and electricity use on Mondays. For example, electricity use on the weekends appears to be about 3100 kWh less per day than on Mondays. The P values next to the individual coefficients tell us that electricity use on Saturday and Sunday is significantly different from Monday (P < 0.001), whereas there are no significant differences between Mondays and the other weekdays (P > 0.05). Looking at the bottom of the output, we can see that day of the week is significantly related to electricity use (*P* < 0.001), but does not explain very much variation (*R^2^* = 0.05).
 
-Looking at the bottom of the output, we can see that day of the week is significantly related to electricity use (*P* < 0.001), but does not explain very much variation (*R^2^* = 0.05).
+The function `anova()` allows us to look at our model in a slightly different way. This generates a summary of the model in a format that is traditionally used for ANOVA. Notice that the P value here is the same as the P value for the overall model from the output from `summary()`. 
+
+Since we have evidence of a significant relationship (P < 0.001), it makes sense to run a Tukey HSD test to see where the significant differences lie. The results shows that mean electricity use on weekends was significantly or marginally lower than on Monday, Tuesday, Wednesday, and Thursday. Weekend use was ~3000-3500 kWh lower (~10%) than use on weekdays other than Friday.
 
 ```{r results_day}
 # Examine model terms + outcomes in regression format
@@ -157,18 +162,17 @@ acf(mod_yr$residuals)  # Assess dependence between successive observations
 
 ### Examine results
 
-The intercept here represents the mean electricity use during fall semester, the first level in our categorical variable. The coefficients for the other periods represent the average difference between them and electricity use in fall. For example, electricity use during winter break appears to be about 9563 kWh less per day than in fall. The P values next to the individual coefficients tell us that electricity use during winter and summer break is significantly different from fall semester (P < 0.001), whereas electricity use in fall and spring are marginally different (P 0 0.08). 
+The intercept here represents the mean electricity use during fall semester, the first level in our categorical variable. The coefficients for the other periods represent the average difference between them and electricity use in fall. For example, electricity use during winter break appears to be about 9563 kWh less per day than in fall. The P values next to the individual coefficients tell us that electricity use during winter and summer break is significantly different from fall semester (P < 0.001), whereas electricity use in fall and spring are marginally different (P 0 0.08). Looking at the bottom of the output, we can see that period of the year is significantly related to electricity use (*P* < 0.001), and explains about a third of the variation in electricity use (*R^2^* = 0.29).
 
-Looking at the bottom of the output, we can see that period of the year is significantly related to electricity use (*P* < 0.001), and explains about a third of the variation in electricity use (*R^2^* = 0.29).
+The function `anova()` allows us to look at our model in a slightly different way. This generates a summary of the model in a format that is traditionally used for ANOVA. Notice that the P value here is the same as the P value for the overall model from the output from `summary()`. 
+
+Since we have evidence of a significant relationship (P < 0.001), it makes sense to run a Tukey HSD test to see where the significant differences lie. Mean electricity use during winter break was significantly lower than during all other periods. Use in winter was ~30% lower than fall/spring semesters. Mean electricity use during summer was significantly higher than all other periods. Use in summer was ~16% higher than during fall/spring semesters. 
 
 ```{r results}
 summary(mod_yr) # Examine model terms + outcomes
 
 # Examine results in ANOVA format
 anova(mod_yr)
-
-# let's see if using a Welch's ANOVA gives a similar result
-oneway.test(kwh ~ period, data = daily_main, var.equal = FALSE)
 
 # which periods are different?
 TukeyHSD(aov(mod_yr))
@@ -186,8 +190,21 @@ ggplot(daily_main, aes(x = period, y = kwh, fill = period)) +
 
 ## Revisit expectations
 
-The model for day of the week appeared to fit most of the assumptions of the model fairly well. We saw a small but statistically significant effect, with electricity use about 10% lower on weekends compared to weekdays. That said, there was quite a lot of variability in electricity use within days of the week and a low *R^2^*, suggesting that other factors may be more important in explaining electricity use patterns. This is also seen in the significant temporal autocorrelation in the data compared to the model last week examining the effect of temperature.
+The model for day of the week appeared to fit most of the assumptions of the model fairly well. We saw a small but statistically significant effect, with electricity use about 10% lower on weekends compared to weekdays. That said, there was quite a lot of variability in electricity use within days of the week and a low *R^2^* value, suggesting that other factors may be more important in explaining electricity use patterns. This is also seen in the significant temporal autocorrelation in the data compared to the model last week examining the effect of temperature.
 
-The model for period in the year appeared to fit some assumptions but likely violated equality of variance. That is problematic given that we also have unequal numbers of days across periods (i.e. unequal sample size). That said, there appeared to be a strong signal in the data, with time of year explaining around a third of the variation in electricity use. Electricity use in winter was about 30% lower than in fall semester and in summer was about 14% higher than in fall semester. The significant effect remained even when using a Welch's ANOVA that did not assume equal variance. Similar to the day of the week analysis, there is significant dependency in the data through time. 
+The model for period in the year appeared to fit some assumptions but likely violated equality of variance. That is problematic given that we also have unequal numbers of days across periods (i.e. unequal sample size). That said, there appeared to be a strong signal in the data, with time of year explaining around a third of the variation in electricity use based on the *R^2^* value. Electricity use in winter was about 30% lower than in fall semester and in summer was about 14% higher than in fall semester. The significant effect remained even when using a Welch's ANOVA that did not assume equal variance (see below). Similar to the day of the week analysis, there is significant dependency in the data through time. 
 
-For our future modeling efforts, both of these variables appear to have value in explaining patterns of electricity use, although integrating them into a final model will require grappling with violations of the assumptions. 
+For our future modeling efforts, both of these variables appear to have value in explaining patterns of electricity use, with time of year having a larger effect than day of week. Integrating them into a final model will require grappling with violations of the assumptions. 
+
+## Welch's ANOVA
+
+Welch's ANOVA is an alternative modeling approach that does not assume equal variance among groups. See code below for how to fit a Welch's ANOVA. After a significant result, the Games-Howell test is a good post-hoc option that works similarly to Tukey HSD but does not assume equal variances. We can see from this output that using a Welch's ANOVA does not change our conclusion - we still have significant differences among all periods except fall and spring, and the direction and magnitude of differences is the same.
+
+```{r welch}
+# let's see if using a Welch's ANOVA gives a similar result
+oneway.test(kwh ~ period, data = daily_main, var.equal = FALSE)
+```
+
+```{r games howell}
+games_howell_test(kwh ~ period, data = daily_main)
+```
