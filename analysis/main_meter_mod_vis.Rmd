@@ -1,0 +1,140 @@
+---
+title: "Final model visualization"
+author: "Maggie Douglas"
+date: "2026-04-07"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Prepare data
+
+```{r load}
+library(tidyverse)
+library(segmented) # for segmented regression 
+library(tseries) # for time series, including autocorrelation
+library(car) # contains vif() function to check Variance Inflation Factor
+library(lmtest) # has functions for robust standard errors
+library(sandwich) # has functions for robust standard errors
+
+library(dotwhisker) # create plots of effects from regression
+library(broom) # package with tidy() function
+library(marginaleffects) # package to allow prediction with robust SEs
+library(modelsummary) # tools to compare models more easily
+```
+
+```{r wrangle}
+daily <- read.csv("./output/kwh_daily_2026-03-30.csv")
+
+daily_date <- daily %>%
+  mutate(date = ymd(date), # convert date to date object
+         month = month(date, label = TRUE), # extract month
+         day = wday(date, label = TRUE)) # extract day of week
+
+# filter to the main meter
+daily_main <- filter(daily_date, NAME == "Main Meter") 
+
+# create factor for period and put in order
+daily_main$period <- factor(daily_main$period,
+                            levels = c("Fall Semester","Winter Break",
+                                       "Spring Semester","Summer Break"))
+
+# create factor for day, put in order, and store as a regular factor
+daily_main$day <- factor(daily_main$day,
+                         levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                         ordered = FALSE)
+
+str(daily_main)
+```
+
+## Fit the models
+
+```{r mod}
+# Original linear model
+mod_full <- lm(kwh ~ day + period + ave_temp, data = daily_main)
+
+# Segmented regression
+mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
+
+# Quadratic model
+mod_quad <- lm(kwh ~ day + period + ave_temp + I(ave_temp^2), data = daily_main)
+```
+
+## Final graphs
+
+### Categorical variables (day + period)
+
+```{r results2}
+# Store results with robust estimates
+rob_res <- coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+
+# Convert coeftest object to tidy data frame
+rob_tidy <- tidy(rob_res) %>%
+  filter(!str_detect(term, "temp")) # remove temp-related terms (not meaningful this way)
+
+# Graph
+dwplot(rob_tidy) + 
+  geom_vline(xintercept = 0, colour = "grey50", linetype = 2) +
+  scale_color_manual(values = "darkorchid") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(title = "Figure 1. Effect on electricity use compared to a Monday in Fall",
+       subtitle = "Mean difference + 95% confidence interval with other factors taken into account",
+       x = "Difference (kWh)",
+       col = "") +
+  geom_vline(xintercept = 0, col = "black", linetype = "dashed", alpha = 0.5)
+```
+
+### Continuous variable (temp)
+
+```{r predict, warning = FALSE}
+# Create a data frame with new values (must match model's predictor names)
+temp_data <- data.frame(ave_temp = seq(5, 87, by = 1), 
+                       day = "Mon", 
+                       period = "Fall Semester")
+
+# Generate estimated means + confidence interval
+conf_temp <- as.data.frame(predictions(mod_seg,  vcov = vcovHAC(mod_seg), 
+                                       newdata = temp_data, 
+                                       interval = "confidence", level = 0.95)) 
+
+rob_res2 <- broken.line(mod_seg, vcov = vcovHAC(mod_seg))
+rob_res_fit <- rob_res2$fit
+rob_res_se <- rob_res$se.fit
+
+conf_temp_fit <- filter(conf_temp, group == "fit")
+
+# Graph results
+ggplot(data = conf_temp_fit, aes(x = ave_temp, y = estimate)) +
+  geom_line(color = "darkorchid3", linewidth = 1) +
+  geom_ribbon(aes(x = ave_temp, ymin = conf.low, ymax = conf.high), 
+              fill = "gray", alpha = 0.3) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh)",
+       title = "Figure 2. Relationship between outdoor temperature and electricity use",
+       subtitle = "Mean + 95% confidence interval with all other factors taken into account")
+
+ggplot(data = conf_temp_fit, aes(x = ave_temp, y = estimate)) +
+  geom_line(color = "darkorchid3", linewidth = 1) +
+  geom_ribbon(aes(x = ave_temp, ymin = conf.low, ymax = conf.high), 
+              fill = "gray", alpha = 0.3) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh)",
+       title = "Figure 2. Relationship between outdoor temperature and electricity use",
+       subtitle = "Mean + 95% confidence interval with all other factors taken into account")
+```
+
+```{r plot_seg, fig.height = 6, fig.width = 7.5}
+# plot original data with fit
+plot(mod_seg, , vcov = vcovHAC(mod_seg), 
+     col = 'black', res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor("steelblue", alpha.f = 0.7), # set color of data + transparency
+     xlab = "Temperature (deg F)", ylab = "Electricity use (kWh)") # label axes
+title("Figure 2. Relationship between temperature and electricity use", adj = 0) # set title, left-adjust
+
+```
+

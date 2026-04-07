@@ -1,0 +1,1347 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Maggie Douglas" />
+
+<meta name="date" content="2026-04-01" />
+
+<title>Main Meter multiple regression</title>
+
+<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">dickinson_power</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">About</a>
+</li>
+<li>
+  <a href="data_wrangling_final.html">Data prep</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity summary
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="campus_summary.html">All buildings</a>
+    </li>
+    <li>
+      <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Medium.html">Res. Halls 2-10K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Residential-L.html">Res. Halls &gt; 10K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Academic.html">Academic</a>
+    </li>
+    <li>
+      <a href="Report_I_Admin.html">Administrative</a>
+    </li>
+    <li>
+      <a href="Report_I_Community.html">Community</a>
+    </li>
+    <li>
+      <a href="Report_I_Other.html">Other</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity use models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="main_meter_regression.html">Main meter - reg</a>
+    </li>
+    <li>
+      <a href="main_meter_anova.html">Main meter - ANOVA</a>
+    </li>
+    <li>
+      <a href="main_meter_mult_reg.html">Main meter - Full model</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Main Meter multiple regression</h1>
+<h4 class="author">Maggie Douglas</h4>
+<h4 class="date">2026-04-01</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-04-07
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>dickinson_power/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260107code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260107)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260107code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260107)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree00381987e0dc4547c8c7e8bb8433c091f88a81cctargetblank0038198a">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/00381987e0dc4547c8c7e8bb8433c091f88a81cc" target="_blank">0038198</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree00381987e0dc4547c8c7e8bb8433c091f88a81cctargetblank0038198a"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/00381987e0dc4547c8c7e8bb8433c091f88a81cc" target="_blank">0038198</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis_to-fix/.DS_Store
+    Ignored:    data/.DS_Store
+    Ignored:    data/FY25 Main Meter Data.xlsx
+    Ignored:    data/building_list_FY25_updated.xlsx
+    Ignored:    data/graph_data_life_exp.csv
+    Ignored:    data/housing_counts.csv
+    Ignored:    keys/.DS_Store
+    Ignored:    output/annual_kwh.csv
+    Ignored:    output/building_check.csv
+    Ignored:    output/building_check.xlsx
+    Ignored:    output/daily_kwh.csv
+    Ignored:    output/kwh_academic_2026-03-16.csv
+    Ignored:    output/kwh_academic_2026-03-17.csv
+    Ignored:    output/kwh_academic_2026-03-18.csv
+    Ignored:    output/kwh_academic_2026-03-22.csv
+    Ignored:    output/kwh_academic_2026-03-23.csv
+    Ignored:    output/kwh_academic_2026-03-25.csv
+    Ignored:    output/kwh_academic_2026-03-30.csv
+    Ignored:    output/kwh_annual.csv
+    Ignored:    output/kwh_annual_2026-03-04.csv
+    Ignored:    output/kwh_annual_2026-03-12.csv
+    Ignored:    output/kwh_annual_2026-03-16.csv
+    Ignored:    output/kwh_annual_2026-03-17.csv
+    Ignored:    output/kwh_annual_2026-03-18.csv
+    Ignored:    output/kwh_annual_2026-03-22.csv
+    Ignored:    output/kwh_annual_2026-03-23.csv
+    Ignored:    output/kwh_annual_2026-03-25.csv
+    Ignored:    output/kwh_annual_2026-03-30.csv
+    Ignored:    output/kwh_annual_20260225.csv
+    Ignored:    output/kwh_annual_20260226.csv
+    Ignored:    output/kwh_daily.csv
+    Ignored:    output/kwh_daily_2026-03-04.csv
+    Ignored:    output/kwh_daily_2026-03-12.csv
+    Ignored:    output/kwh_daily_2026-03-16.csv
+    Ignored:    output/kwh_daily_2026-03-17.csv
+    Ignored:    output/kwh_daily_2026-03-18.csv
+    Ignored:    output/kwh_daily_2026-03-22.csv
+    Ignored:    output/kwh_daily_2026-03-23.csv
+    Ignored:    output/kwh_daily_2026-03-25.csv
+    Ignored:    output/kwh_daily_2026-03-30.csv
+    Ignored:    output/kwh_daily_20260225.csv
+    Ignored:    output/kwh_daily_20260226.csv
+    Ignored:    output/kwh_main_annual.csv
+    Ignored:    output/kwh_main_daily.csv
+
+Untracked files:
+    Untracked:  analysis/main_meter_mod_vis.Rmd
+    Untracked:  analysis/main_meter_mult_reg.Rmd
+    Untracked:  analysis/support_buildings.Rmd
+
+Unstaged changes:
+    Modified:   analysis/_site.yml
+    Modified:   analysis/main_meter_anova.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="guiding-question" class="section level2">
+<h2>Guiding question</h2>
+<p>What model best describes electricity use on the main meter?
+(considering day of the week, time of year, and outdoor temperature)</p>
+</div>
+<div id="prepare-data" class="section level2">
+<h2>Prepare data</h2>
+<pre class="r"><code>library(tidyverse)
+library(segmented) # for segmented regression 
+library(tseries) # for time series, including autocorrelation
+library(car) # contains vif() function to check Variance Inflation Factor
+library(lmtest) # has functions for robust standard errors
+library(sandwich) # has functions for robust standard errors
+
+# You don&#39;t need these, but I&#39;m using them to create some supplemental figures + summaries
+library(dotwhisker) # create plots of effects from regression
+library(modelsummary) # tools to compare models more easily</code></pre>
+<pre class="r"><code>daily &lt;- read.csv(&quot;./output/kwh_daily_2026-03-30.csv&quot;)
+
+daily_date &lt;- daily %&gt;%
+  mutate(date = ymd(date), # convert date to date object
+         month = month(date, label = TRUE), # extract month
+         day = wday(date, label = TRUE)) # extract day of week
+
+# filter to the main meter
+daily_main &lt;- filter(daily_date, NAME == &quot;Main Meter&quot;) 
+
+# create factor for period and put in order
+daily_main$period &lt;- factor(daily_main$period,
+                            levels = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,
+                                       &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
+
+# create factor for day, put in order, and store as a regular factor
+daily_main$day &lt;- factor(daily_main$day,
+                         levels = c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;),
+                         ordered = FALSE)
+
+str(daily_main)</code></pre>
+<pre><code>&#39;data.frame&#39;:   365 obs. of  12 variables:
+ $ type     : chr  &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; ...
+ $ meter    : chr  &quot;Main Meter - Total&quot; &quot;Main Meter - Total&quot; &quot;Main Meter - Total&quot; &quot;Main Meter - Total&quot; ...
+ $ NAME     : chr  &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; ...
+ $ days_perc: num  100 100 100 100 100 100 100 100 100 100 ...
+ $ sqft     : int  1119435 1119435 1119435 1119435 1119435 1119435 1119435 1119435 1119435 1119435 ...
+ $ occupants: num  NA NA NA NA NA NA NA NA NA NA ...
+ $ period   : Factor w/ 4 levels &quot;Fall Semester&quot;,..: 4 4 4 4 4 4 4 4 4 4 ...
+ $ date     : Date, format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
+ $ kwh      : num  33919 35412 38561 42526 45794 ...
+ $ ave_temp : int  69 73 78 81 84 86 84 84 86 87 ...
+ $ month    : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 7 7 7 7 7 7 7 7 7 7 ...
+ $ day      : Factor w/ 7 levels &quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,..: 1 2 3 4 5 6 7 1 2 3 ...</code></pre>
+<div id="check-data-visually" class="section level3">
+<h3>Check data visually</h3>
+<p>In our previous work we identified an important non-linear pattern in
+the electricity vs. temperature relationship. Let’s visually examine a
+few different modeling options that might be helpful.</p>
+<p>(you don’t have to do this, but are welcome to adapt the code if you
+want to experiment)</p>
+<pre class="r"><code>## let&#39;s look visually at my options...
+# Straight linear
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(method = &#39;lm&#39;, formula = &#39;y ~ x&#39;) +
+  labs(title = &quot;Simple linear regression&quot;)</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/model_opts-1.png" alt="" width="384" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Segmented regression
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(data = filter(daily_main, ave_temp &lt; 60), # model for heating 
+              method = &#39;lm&#39;, formula = &#39;y ~ x&#39;) +
+  geom_smooth(data = filter(daily_main, ave_temp &gt;= 60), # model for cooling
+              method = &#39;lm&#39;, formula = &#39;y ~ x&#39;) +
+  labs(title = &quot;Segmented regression&quot;)</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/model_opts-2.png" alt="" width="384" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Quadratic model
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(method = &#39;lm&#39;, formula = &#39;y ~ x + I(x^2)&#39;) +
+  labs(title = &quot;Quadratic function&quot;)</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/model_opts-3.png" alt="" width="384" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Smoothed function (Locally Estimated Scatterplot Smoothing)
+## This is not a model we are going to learn, but can be helpful to check shape
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(method = &quot;loess&quot;)+
+  labs(title = &quot;Smoothed function&quot;)</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/model_opts-4.png" alt="" width="384" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="set-expectations" class="section level2">
+<h2>Set expectations</h2>
+<p>Based on what we found in the single-variable models, I expect that
+electricity use will be strongly related to temperature in a non-linear
+fashion, decreasing with temperature during the heating season and
+increasing with temperature in the cooling season. I also expect that
+electricity use will be lowest over winter break and highest in the
+summer, with intermediate usage in the academic year. Finally, I expect
+electricity use to be slightly lower on the weekend than on
+weekdays.</p>
+</div>
+<div id="fit-the-models" class="section level2">
+<h2>Fit the models</h2>
+<pre class="r"><code># Original linear model
+mod_full &lt;- lm(kwh ~ day + period + ave_temp, data = daily_main)
+
+# Segmented regression
+mod_seg &lt;- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
+
+# Quadratic model
+mod_quad &lt;- lm(kwh ~ day + period + ave_temp + I(ave_temp^2), data = daily_main)</code></pre>
+</div>
+<div id="check-the-fit" class="section level2">
+<h2>Check the fit</h2>
+<div id="simple-linear-model" class="section level3">
+<h3>Simple linear model</h3>
+<ul>
+<li>Residuals appear reasonably close to normal</li>
+<li>Variance appears pretty similar across days of the week and times of
+year, although summer looks a bit more variable than the other times of
+year.</li>
+<li>The residuals vs. fits graph shows evidence of a non-linear pattern
+(violating normality)</li>
+<li>The ACF plot shows that observations close in time are correlated
+out to lag 20 (not independent)</li>
+<li>GVIF values suggest that we do not have a problem with
+multicollinearity</li>
+</ul>
+<pre class="r"><code>par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_full$residuals) # Histogram of residuals
+plot(mod_full, which = 2) # QQ Plot</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_lm-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>boxplot(mod_full$residuals ~ daily_main$day) # Equality of variance across factors
+boxplot(mod_full$residuals ~ daily_main$period) # Equality of variance across factors</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_lm-2.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(mod_full, which = 1) # Residuals vs. Fits plot
+acf(mod_full$residuals) # Assess dependence between successive observations</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_lm-3.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>vif(mod_full) # Check the variance inflation factor</code></pre>
+<pre><code>             GVIF Df GVIF^(1/(2*Df))
+day      1.003419  6        1.000284
+period   1.874236  3        1.110378
+ave_temp 1.869153  1        1.367170</code></pre>
+</div>
+<div id="segmented-regression" class="section level3">
+<h3>Segmented regression</h3>
+<ul>
+<li>Residuals appear reasonably close to normal</li>
+<li>Variance appears pretty similar across days of the week and times of
+year</li>
+<li>The residuals vs. fits graph looks like a cloud; no concerning
+patterns (linearity met)</li>
+<li>The ACF plot shows that observations close in time are correlated
+out to lag 4 (not independent)</li>
+<li>GVIF values suggest that we do not have a problem with
+multicollinearity</li>
+</ul>
+<pre class="r"><code>par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_seg$residuals) # Histogram of residuals
+plot(mod_seg$residuals ~ mod_seg$fitted.values) # Residuals vs. fits</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_seg-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>boxplot(mod_seg$residuals ~ daily_main$day) # Equality of variance across factors
+boxplot(mod_seg$residuals ~ daily_main$period) # Equality of variance across factors</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_seg-2.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>acf(mod_seg$residuals) # Assess dependence between successive observations
+vif(mod_seg) # Check the variance inflation factor</code></pre>
+<pre><code>                  GVIF Df GVIF^(1/(2*Df))
+day           1.013662  6        1.001131
+period        2.405014  3        1.157496
+ave_temp      6.030125  1        2.455631
+U1.ave_temp   4.436248  1        2.106240
+psi1.ave_temp 3.699911  1        1.923515</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_seg-3.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+</div>
+<div id="quadratic-regression" class="section level3">
+<h3>Quadratic regression</h3>
+<ul>
+<li>Residuals appear reasonably close to normal but slightly
+left-skewed</li>
+<li>Variance appears pretty similar across days of the week and
+borderline across times of year</li>
+<li>The residuals vs. fits graph looks mostly like a cloud except for a
+few outliers</li>
+<li>The ACF plot shows that observations close in time are correlated
+out to lag 11 (not independent)</li>
+<li>GVIF values show that temperature is correlated with its square (as
+expected), but otherwise okay</li>
+</ul>
+<pre class="r"><code>par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_quad$residuals) # Histogram of residuals
+plot(mod_full, which = 2) # QQ Plot</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_quad-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>boxplot(mod_quad$residuals ~ daily_main$day) # Equality of variance across factors
+boxplot(mod_quad$residuals ~ daily_main$period) # Equality of variance across factors</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_quad-2.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>plot(mod_quad, which = 1) # Residuals vs. fits
+acf(mod_quad$residuals) # Assess dependence between successive observations</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/check_quad-3.png" alt="" width="768" style="display: block; margin: auto;" /></p>
+<pre class="r"><code>vif(mod_quad) # Check the variance inflation factor</code></pre>
+<pre><code>                   GVIF Df GVIF^(1/(2*Df))
+day            1.005837  6        1.000485
+period         2.369457  3        1.154626
+ave_temp      36.673927  1        6.055900
+I(ave_temp^2) 40.244415  1        6.343849</code></pre>
+</div>
+</div>
+<div id="examine-results" class="section level2">
+<h2>Examine results</h2>
+<p>Let’s examine the results for each of our models…</p>
+<p>Notice here that we are using a new approach, in order to address the
+remaining assumptions that some of these models violate (unequal
+variance and nonindependence).</p>
+<p>You will see that many of these lines of code include
+<code>vcovHAC()</code> - this is a function that allows us to adjust our
+results to account for unequal variance and temporal autocorrelation.
+Standard linear regression assumes equal variance and that covariance =
+0 (a mathematical way to say that observations are independent). The
+<code>vcov</code> in the function stands for “variance-covariance
+matrix” - this function estimates the variance and covariance from the
+data instead of making simplifying assumptions about them.
+<code>HAC</code> stands for “Heteroscedasticity and Autocorrelation
+Consistent” estimation which is a fancy way of saying that we account
+for both unequal variance among groups and dependence in time.</p>
+<p><strong>See below segmented regression for an example of how to
+report the results.</strong></p>
+<div id="simple-linear-regression" class="section level3">
+<h3>Simple linear regression</h3>
+<pre class="r"><code># ANOVA table corrected for unequal variance/nonindependence
+Anova(mod_full, type = &quot;II&quot;, vcov = vcovHAC(mod_full))</code></pre>
+<pre><code>Coefficient covariances computed by vcovHAC(mod_full)</code></pre>
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: kwh
+           Df       F    Pr(&gt;F)    
+day         6 86.1236 &lt; 2.2e-16 ***
+period      3  9.0801 8.333e-06 ***
+ave_temp    1  7.9544  0.005067 ** 
+Residuals 354                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Tests of coefficients corrected for unequal variance/nonindependence
+coeftest(mod_full, vcov = vcovHAC(mod_full))</code></pre>
+<pre><code>
+t test of coefficients:
+
+                       Estimate Std. Error  t value  Pr(&gt;|t|)    
+(Intercept)           23334.149   3273.081   7.1291 5.715e-12 ***
+dayTue                 -283.337    259.203  -1.0931  0.275089    
+dayWed                   67.579    346.409   0.1951  0.845440    
+dayThu                  282.966    227.188   1.2455  0.213767    
+dayFri                 -444.370    303.973  -1.4619  0.144663    
+daySat                -3309.613    294.974 -11.2200 &lt; 2.2e-16 ***
+daySun                -3032.726    273.461 -11.0901 &lt; 2.2e-16 ***
+periodWinter Break    -6059.166   1434.707  -4.2233 3.065e-05 ***
+periodSpring Semester   607.207   1333.658   0.4553  0.649176    
+periodSummer Break     1364.896   2637.296   0.5175  0.605105    
+ave_temp                166.805     59.143   2.8203  0.005067 ** 
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Adjusted R squared (this doesn&#39;t require correction)
+summary(mod_full)$adj.r.sq</code></pre>
+<pre><code>[1] 0.4943815</code></pre>
+</div>
+<div id="segmented-regression-1" class="section level3">
+<h3>Segmented regression</h3>
+<p>The outcomes of the segmented model show significant effects of day
+(F<sub>6,352</sub> = 34.6, P &lt; 0.001), period (F<sub>3,352</sub> =
+55.2, P &lt; 0.001), temperature below 58 deg F (F<sub>1,352</sub> =
+14.4, P &lt; 0.001), and temperature above 58 deg F (F<sub>1,352</sub> =
+353.5, P &lt; 0.001). The model was able to explain 87% of the variation
+in daily electricity use on the main meter (R<sup>2</sup> = 0.87).</p>
+<p>The estimates from the fitted model suggest that after accounting for
+other factors, electricity use was fairly similar on all weekdays but
+~3% lower on Fridays and ~11% lower on Saturdays and Sundays.
+Electricity use during spring did not differ significantly from use
+during fall (P = 0.70). Compared to fall and spring, electricity use
+during winter break was reduced by ~25%. Interestingly, after accounting
+for temperature, electricity use over summer break was reduced by
+~12%.</p>
+<p>The model found a significant non-linear relationship between
+electricity use and temperature, with a break point at 58 degrees F.
+During the heating season (temperatures below 58 deg F), electricity use
+declined by 103 kWh (+/- 15 kWh) per degree F. During the cooling season
+(temperatures above 58 deg F), electricity use increased by 761 kWh (+/-
+24 kWh) per degree F.</p>
+<pre class="r"><code># ANOVA table adjusted for unequal variance/nonindependence
+Anova(mod_seg, type = &quot;II&quot;, vcov = vcovHAC(mod_seg))</code></pre>
+<pre><code>Coefficient covariances computed by vcovHAC(mod_seg)</code></pre>
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: kwh
+               Df       F    Pr(&gt;F)    
+day             6  34.583 &lt; 2.2e-16 ***
+period          3  55.203 &lt; 2.2e-16 ***
+ave_temp        1  14.398 0.0001741 ***
+U1.ave_temp     1 353.476 &lt; 2.2e-16 ***
+psi1.ave_temp   1   0.000 1.0000000    
+Residuals     352                      
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Tests of coefficients adjusted for unequal variance/nonindependence
+coeftest(mod_seg, vcov = vcovHAC(mod_seg))</code></pre>
+<pre><code>
+t test of coefficients:
+
+                         Estimate  Std. Error  t value  Pr(&gt;|t|)    
+(Intercept)           35007.66960  1315.95158  26.6026 &lt; 2.2e-16 ***
+dayTue                 -269.54354   246.34316  -1.0942 0.2746246    
+dayWed                 -467.92469   326.87795  -1.4315 0.1531752    
+dayThu                 -616.59416   344.01113  -1.7924 0.0739328 .  
+dayFri                -1008.14844   331.74211  -3.0390 0.0025516 ** 
+daySat                -3870.55413   302.86068 -12.7800 &lt; 2.2e-16 ***
+daySun                -3459.26800   269.42237 -12.8396 &lt; 2.2e-16 ***
+periodWinter Break    -8197.51039   711.22486 -11.5259 &lt; 2.2e-16 ***
+periodSpring Semester  -205.94336   533.60613  -0.3859 0.6997695    
+periodSummer Break    -3877.41525   714.27279  -5.4285 1.061e-07 ***
+ave_temp               -103.41888    27.25482  -3.7945 0.0001741 ***
+U1.ave_temp             863.97479    45.95379  18.8009 &lt; 2.2e-16 ***
+psi1.ave_temp             0.00000     0.76653   0.0000 1.0000000    
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># For segmented regression, we need an extra step to extract the break point + intercepts/slopes 
+# for the relationships on either side of the break point in temperature
+# Again we&#39;ll adjust for unequal variance/nonindependence
+intercept(mod_seg, vcov = vcovHAC(mod_seg)) # intercept for each equation</code></pre>
+<pre><code>$ave_temp
+             Est.
+intercept1  35008
+intercept2 -14808</code></pre>
+<pre class="r"><code>slope(mod_seg, vcov = vcovHAC(mod_seg)) # slopes for each equation</code></pre>
+<pre><code>$ave_temp
+          Est. St.Err. t value CI(95%).l CI(95%).u
+slope1 -103.42  14.950 -6.9177   -132.82   -74.016
+slope2  760.56  23.962 31.7410    713.43   807.680</code></pre>
+<pre class="r"><code>summary(mod_seg)$psi # extract break point</code></pre>
+<pre><code>              Initial     Est.    St.Err
+psi1.ave_temp      NA 57.65835 0.4910027</code></pre>
+<pre class="r"><code># Adjusted R squared (this doens&#39;t require correction)
+summary(mod_seg)$adj.r.sq</code></pre>
+<pre><code>[1] 0.8659336</code></pre>
+</div>
+<div id="quadratic-regression-1" class="section level3">
+<h3>Quadratic regression</h3>
+<p>Here is a resource on how to interpret the coefficients for a
+quadratic term in a regression: <a
+href="https://quantifyinghealth.com/quadratic-term-in-regression/"
+class="uri">https://quantifyinghealth.com/quadratic-term-in-regression/</a></p>
+<pre class="r"><code># ANOVA table adjusted for unequal variance/nonindependence
+Anova(mod_quad, type = &quot;II&quot;, vcov = vcovHAC(mod_quad))</code></pre>
+<pre><code>Coefficient covariances computed by vcovHAC(mod_quad)</code></pre>
+<pre><code>Analysis of Deviance Table (Type II tests)
+
+Response: kwh
+               Df      F    Pr(&gt;F)    
+day             6 35.556 &lt; 2.2e-16 ***
+period          3 24.077 3.370e-14 ***
+ave_temp        1 28.833 1.434e-07 ***
+I(ave_temp^2)   1 47.445 2.604e-11 ***
+Residuals     353                     
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Tests of coefficients adjusted for unequal variance/nonindependence
+coeftest(mod_quad, vcov = vcovHAC(mod_quad))</code></pre>
+<pre><code>
+t test of coefficients:
+
+                        Estimate Std. Error  t value  Pr(&gt;|t|)    
+(Intercept)           47496.5170  4343.1714  10.9359 &lt; 2.2e-16 ***
+dayTue                 -293.6117   248.8658  -1.1798  0.238875    
+dayWed                 -329.9844   329.1146  -1.0026  0.316720    
+dayThu                 -142.5408   351.4299  -0.4056  0.685281    
+dayFri                 -538.2553   343.0060  -1.5692  0.117490    
+daySat                -3504.7217   313.7179 -11.1716 &lt; 2.2e-16 ***
+daySun                -3229.6059   307.9665 -10.4869 &lt; 2.2e-16 ***
+periodWinter Break    -7490.9813   956.5689  -7.8311 5.717e-14 ***
+periodSpring Semester  -164.8023   670.4083  -0.2458  0.805961    
+periodSummer Break    -3446.9289  1220.7918  -2.8235  0.005019 ** 
+ave_temp               -886.4215   165.0816  -5.3696 1.434e-07 ***
+I(ave_temp^2)            10.6359     1.5441   6.8880 2.604e-11 ***
+---
+Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Adjusted R squared (this doens&#39;t require correction)
+summary(mod_quad)$adj.r.sq</code></pre>
+<pre><code>[1] 0.8195353</code></pre>
+</div>
+</div>
+<div id="compare-models" class="section level2">
+<h2>Compare models</h2>
+<div id="explanatory-power" class="section level3">
+<h3>Explanatory power</h3>
+<ul>
+<li>The segmented model has the greatest explanatory power, accounting
+for 87% of the variation in electricity use. The quadratic model is a
+close second and the basic linear model is significantly less
+explanatory.</li>
+<li>Lower AIC values indicate a better-fitting model. The AIC values
+also suggest that the segmented model is the one with the best fit, with
+the quadratic model a close second.</li>
+</ul>
+<pre class="r"><code># Compare R squared for all three models
+summary(mod_full)$adj.r.sq</code></pre>
+<pre><code>[1] 0.4943815</code></pre>
+<pre class="r"><code>summary(mod_seg)$adj.r.sq</code></pre>
+<pre><code>[1] 0.8659336</code></pre>
+<pre class="r"><code>summary(mod_quad)$adj.r.sq</code></pre>
+<pre><code>[1] 0.8195353</code></pre>
+<pre class="r"><code># Compare AIC for all models (lower is better)
+AIC(mod_full, mod_seg, mod_quad)</code></pre>
+<pre><code>         df      AIC
+mod_full 12 7119.558
+mod_seg  14 6636.972
+mod_quad 13 6744.486</code></pre>
+</div>
+<div id="similarity-in-estimates" class="section level3">
+<h3>Similarity in estimates</h3>
+<ul>
+<li>The estimated coefficients for days of the week and most periods of
+the year are very similar across models (overlapping confidence
+intervals).</li>
+<li>The big exception is the estimate for Summer Break. The models that
+include the non-linear relationship between electricity use and
+temperature (segmented and quadratic) estimate that electricity use in
+summer is lower than that of fall and spring, but the models that do not
+account for the non-linearity estimate use in summer as higher than
+fall. This makes sense because when the relationship to temperature is
+adequately captured, we would expect use in summer to be lower due to
+non-temperature factors (e.g. lower occupancy by students and other
+building users).</li>
+</ul>
+<pre class="r"><code>dwplot(list(`Period only` = mod_pd, 
+            `Standard LM` = mod_full, 
+            Segmented = mod_seg, 
+            Quadratic = mod_quad)) + 
+  theme_bw() +
+  labs(x = &quot;Diff. in daily kWh (compared to Monday in Fall)&quot;)</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/est-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+</div>
+</div>
+<div id="revisit-expectations" class="section level2">
+<h2>Revisit expectations</h2>
+<p>It appears that the segmented model is the best choice for the main
+meter. This model has the most explanatory power (highest R<sup>2</sup>
+value) and makes sense conceptually; we would expect that electricity
+use would decrease with temperature during the heating season and
+increase with temperature during the cooling season. This model
+reasonably meets all assumptions, except that it still shows some
+evidence of nonindependence between observations close in time.
+Fortunately, we generated results that account for this violation, so we
+can be confident in the final outcomes. Overall, this appears to be a
+strong statistical model, and the results show that these three factors
+(outdoor temperature, time of year, and day of the week) explained the
+vast majority of variation in daily electricity use in buildings on the
+main meter in fiscal year 2025.</p>
+</div>
+<div id="more-on-non-independence" class="section level2">
+<h2>More on non-independence</h2>
+<p>Let’s look a bit more closely at how our estimates change when we
+estimate the error using a method that accounts for temporal
+autocorrelation…</p>
+<p>We can see in the graph below that the HAC estimation procedure
+slightly shrinks the error on the weekday terms, but slightly expands
+the error on the time of year terms.</p>
+<pre class="r"><code># Store the coefficient estimates in our original model
+coef &lt;- coeftest(mod_seg)
+coef_df &lt;- as.data.frame(coef[,]) %&gt;%
+  rownames_to_column(&quot;term&quot;) %&gt;%
+  filter(term != &quot;(Intercept)&quot; &amp; term != &quot;psi1.ave_temp&quot;) %&gt;%
+  mutate(lcb = Estimate - (`Std. Error`*1.96),
+         ucb = Estimate + (`Std. Error`*1.96))
+
+# Calculate Robust Standard Errors 
+# Heteroskedasticity and Autocorrelation Consistent (HAC) estimators
+coef_rob &lt;- coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+coef_rob_df &lt;- as.data.frame(coef_rob[,]) %&gt;%
+  rownames_to_column(&quot;term&quot;) %&gt;%
+  filter(term != &quot;(Intercept)&quot; &amp; term != &quot;psi1.ave_temp&quot;) %&gt;%
+  mutate(lcb = Estimate - (`Std. Error`*1.96),
+         ucb = Estimate + (`Std. Error`*1.96))
+
+ggplot(data = coef_df) +
+  geom_point(aes(x = term, y = Estimate), col = &quot;orange&quot;)  +
+  geom_errorbar(data = coef_rob_df, 
+                aes(x = term, ymin = lcb, ymax = ucb), width=0.1, col = &quot;darkmagenta&quot;) +
+  geom_errorbar(data = coef_df, aes(x = term, ymin = lcb, ymax = ucb), width=0.1, col = &quot;orange&quot;, alpha = 0.5) +
+  coord_flip() +
+  theme_bw() +
+  labs(title = &quot;Comparison of original (orange) and HAC (purple) errors&quot;)</code></pre>
+<p><img src="figure/main_meter_mult_reg.Rmd/robust-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.5.2 (2025-10-31)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] modelsummary_2.6.0 dotwhisker_0.8.4   sandwich_3.1-1     lmtest_0.9-40     
+ [5] zoo_1.8-15         car_3.1-5          carData_3.0-6      tseries_0.10-60   
+ [9] segmented_2.2-1    nlme_3.1-168       MASS_7.3-65        lubridate_1.9.5   
+[13] forcats_1.0.1      stringr_1.6.0      dplyr_1.2.0        purrr_1.2.1       
+[17] readr_2.2.0        tidyr_1.3.2        tibble_3.3.1       ggplot2_4.0.2     
+[21] tidyverse_2.0.0   
+
+loaded via a namespace (and not attached):
+ [1] tidyselect_1.2.1       farver_2.1.2           S7_0.2.1              
+ [4] fastmap_1.2.0          TH.data_1.1-5          bayestestR_0.17.0     
+ [7] promises_1.5.0         digest_0.6.39          timechange_0.4.0      
+[10] estimability_1.5.1     lifecycle_1.0.5        survival_3.8-3        
+[13] magrittr_2.0.4         compiler_4.5.2         rlang_1.1.7           
+[16] sass_0.4.10            tools_4.5.2            yaml_2.3.12           
+[19] data.table_1.18.2.1    knitr_1.51             labeling_0.4.3        
+[22] curl_7.0.0             ggstance_0.3.7         plyr_1.8.9            
+[25] TTR_0.24.4             RColorBrewer_1.1-3     abind_1.4-8           
+[28] multcomp_1.4-30        tinytable_0.16.0       workflowr_1.7.2       
+[31] withr_3.0.2            grid_4.5.2             datawizard_1.3.0      
+[34] git2r_0.36.2           xts_0.14.2             xtable_1.8-8          
+[37] emmeans_2.0.2          scales_1.4.0           insight_1.4.6         
+[40] cli_3.6.5              mvtnorm_1.3-6          rmarkdown_2.30        
+[43] generics_0.1.4         otel_0.2.0             rstudioapi_0.18.0     
+[46] performance_0.16.0     tzdb_0.5.0             parameters_0.28.3     
+[49] cachem_1.1.0           splines_4.5.2          marginaleffects_0.32.0
+[52] vctrs_0.7.1            Matrix_1.7-4           jsonlite_2.0.0        
+[55] hms_1.1.4              patchwork_1.3.2        Formula_1.2-5         
+[58] jquerylib_0.1.4        quantmod_0.4.28        glue_1.8.0            
+[61] codetools_0.2-20       stringi_1.8.7          gtable_0.3.6          
+[64] later_1.4.8            tables_0.9.33          quadprog_1.5-8        
+[67] pillar_1.11.1          htmltools_0.5.9        R6_2.6.1              
+[70] rprojroot_2.1.1        evaluate_1.0.5         lattice_0.22-7        
+[73] backports_1.5.0        httpuv_1.6.16          bslib_0.10.0          
+[76] Rcpp_1.1.1             checkmate_2.3.4        gridExtra_2.3         
+[79] mgcv_1.9-4             xfun_0.56              fs_1.6.7              
+[82] pkgconfig_2.0.3       </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

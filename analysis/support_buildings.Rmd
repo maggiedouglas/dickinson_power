@@ -1,0 +1,63 @@
+---
+title: "Support building exploration"
+author: "Maggie Douglas"
+date: "2026-04-05"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Purpose
+
+This script is to look at some patterns of electricity use in buildings that support other campus buildings - specifically Kaufman Hall and Althouse, which both play a role in distributing heated and cooled water to other buildings.
+
+## Load data
+
+```{r libraries}
+library(tidyverse)
+```
+
+```{r data}
+data <- read.csv("../output/kwh_daily_2026-03-30.csv") %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE))
+
+kauf <- filter(data, NAME == "Kaufman Hall" & !is.na(kwh))
+alt <- filter(data, NAME == "Althouse" & !is.na(kwh))
+```
+
+## Graphs
+
+```{r bar, warning = FALSE}
+ggplot(kauf, aes(x = month, y = kwh)) +
+  geom_col(position = "stack") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(x = "", y = "Electricity use (kWh)", 
+       title = "Kaufman Hall")
+
+ggplot(alt, aes(x = month, y = kwh)) +
+  geom_col(position = "stack") +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(x = "", y = "Electricity use (kWh)", 
+       title = "Althouse")
+```
+
+```{r scatter, warning = FALSE}
+ggplot(kauf, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(data = filter(kauf, ave_temp >= 60),
+              method = 'lm', formula = 'y ~ x') +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh)", 
+       title = "Kaufman Hall")
+
+ggplot(alt, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh)", 
+       title = "Althouse")
+```

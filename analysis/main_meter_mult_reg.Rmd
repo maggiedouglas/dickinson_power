@@ -1,0 +1,322 @@
+---
+title: "Main Meter multiple regression"
+author: "Maggie Douglas"
+date: "2026-04-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Guiding question
+
+What model best describes electricity use on the main meter? (considering day of the week, time of year, and outdoor temperature)
+
+## Prepare data
+
+```{r load, message = FALSE}
+library(tidyverse)
+library(segmented) # for segmented regression 
+library(tseries) # for time series, including autocorrelation
+library(car) # contains vif() function to check Variance Inflation Factor
+library(lmtest) # has functions for robust standard errors
+library(sandwich) # has functions for robust standard errors
+
+# You don't need these, but I'm using them to create some supplemental figures + summaries
+library(dotwhisker) # create plots of effects from regression
+library(modelsummary) # tools to compare models more easily
+```
+
+```{r wrangle}
+daily <- read.csv("./output/kwh_daily_2026-03-30.csv")
+
+daily_date <- daily %>%
+  mutate(date = ymd(date), # convert date to date object
+         month = month(date, label = TRUE), # extract month
+         day = wday(date, label = TRUE)) # extract day of week
+
+# filter to the main meter
+daily_main <- filter(daily_date, NAME == "Main Meter") 
+
+# create factor for period and put in order
+daily_main$period <- factor(daily_main$period,
+                            levels = c("Fall Semester","Winter Break",
+                                       "Spring Semester","Summer Break"))
+
+# create factor for day, put in order, and store as a regular factor
+daily_main$day <- factor(daily_main$day,
+                         levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                         ordered = FALSE)
+
+str(daily_main)
+```
+
+### Check data visually
+
+In our previous work we identified an important non-linear pattern in the electricity vs. temperature relationship. Let's visually examine a few different modeling options that might be helpful.
+
+(you don't have to do this, but are welcome to adapt the code if you want to experiment)
+
+```{r model_opts, fig.height = 3, fig.width = 4, warning = FALSE, message = FALSE}
+## let's look visually at my options...
+# Straight linear
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = 'y ~ x') +
+  labs(title = "Simple linear regression")
+
+# Segmented regression
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(data = filter(daily_main, ave_temp < 60), # model for heating 
+              method = 'lm', formula = 'y ~ x') +
+  geom_smooth(data = filter(daily_main, ave_temp >= 60), # model for cooling
+              method = 'lm', formula = 'y ~ x') +
+  labs(title = "Segmented regression")
+
+# Quadratic model
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(method = 'lm', formula = 'y ~ x + I(x^2)') +
+  labs(title = "Quadratic function")
+
+# Smoothed function (Locally Estimated Scatterplot Smoothing)
+## This is not a model we are going to learn, but can be helpful to check shape
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(method = "loess")+
+  labs(title = "Smoothed function")
+```
+
+## Set expectations
+
+Based on what we found in the single-variable models, I expect that electricity use will be strongly related to temperature in a non-linear fashion, decreasing with temperature during the heating season and increasing with temperature in the cooling season. I also expect that electricity use will be lowest over winter break and highest in the summer, with intermediate usage in the academic year. Finally, I expect electricity use to be slightly lower on the weekend than on weekdays.
+
+## Fit the models
+
+```{r mod}
+# Original linear model
+mod_full <- lm(kwh ~ day + period + ave_temp, data = daily_main)
+
+# Segmented regression
+mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
+
+# Quadratic model
+mod_quad <- lm(kwh ~ day + period + ave_temp + I(ave_temp^2), data = daily_main)
+```
+
+```{r mod_comp, include = FALSE}
+# Just for comparison later, let's fit some univariate models too
+mod_day <- lm(kwh ~ day, data = daily_main)
+mod_pd <- lm(kwh ~ period, data = daily_main)
+mod_temp <- lm(kwh ~ ave_temp, data = daily_main)
+mod_temp_seg <- segmented(mod_temp, seg.Z = ~ ave_temp, psi = 60)
+
+# And an intercept only model
+mod_int <- lm(kwh ~ 1, data = daily_main)
+```
+
+## Check the fit
+
+### Simple linear model
+
+- Residuals appear reasonably close to normal
+- Variance appears pretty similar across days of the week and times of year, although summer looks a bit more variable than the other times of year.
+- The residuals vs. fits graph shows evidence of a non-linear pattern (violating normality)
+- The ACF plot shows that observations close in time are correlated out to lag 20 (not independent)
+- GVIF values suggest that we do not have a problem with multicollinearity
+
+```{r check_lm, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_full$residuals) # Histogram of residuals
+plot(mod_full, which = 2) # QQ Plot
+boxplot(mod_full$residuals ~ daily_main$day) # Equality of variance across factors
+boxplot(mod_full$residuals ~ daily_main$period) # Equality of variance across factors
+plot(mod_full, which = 1) # Residuals vs. Fits plot
+acf(mod_full$residuals) # Assess dependence between successive observations
+vif(mod_full) # Check the variance inflation factor
+```
+
+### Segmented regression
+
+- Residuals appear reasonably close to normal
+- Variance appears pretty similar across days of the week and times of year
+- The residuals vs. fits graph looks like a cloud; no concerning patterns (linearity met)
+- The ACF plot shows that observations close in time are correlated out to lag 4 (not independent)
+- GVIF values suggest that we do not have a problem with multicollinearity
+
+```{r check_seg, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_seg$residuals) # Histogram of residuals
+plot(mod_seg$residuals ~ mod_seg$fitted.values) # Residuals vs. fits
+boxplot(mod_seg$residuals ~ daily_main$day) # Equality of variance across factors
+boxplot(mod_seg$residuals ~ daily_main$period) # Equality of variance across factors
+acf(mod_seg$residuals) # Assess dependence between successive observations
+vif(mod_seg) # Check the variance inflation factor
+```
+
+### Quadratic regression
+
+- Residuals appear reasonably close to normal but slightly left-skewed
+- Variance appears pretty similar across days of the week and borderline across times of year
+- The residuals vs. fits graph looks mostly like a cloud except for a few outliers
+- The ACF plot shows that observations close in time are correlated out to lag 11 (not independent)
+- GVIF values show that temperature is correlated with its square (as expected), but otherwise okay
+
+```{r check_quad, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_quad$residuals) # Histogram of residuals
+plot(mod_full, which = 2) # QQ Plot
+boxplot(mod_quad$residuals ~ daily_main$day) # Equality of variance across factors
+boxplot(mod_quad$residuals ~ daily_main$period) # Equality of variance across factors
+plot(mod_quad, which = 1) # Residuals vs. fits
+acf(mod_quad$residuals) # Assess dependence between successive observations
+vif(mod_quad) # Check the variance inflation factor
+```
+
+## Examine results
+
+Let's examine the results for each of our models...
+
+Notice here that we are using a new approach, in order to address the remaining assumptions that some of these models violate (unequal variance and nonindependence).
+
+You will see that many of these lines of code include `vcovHAC()` - this is a function that allows us to adjust our results to account for unequal variance and temporal autocorrelation. Standard linear regression assumes equal variance and that covariance = 0 (a mathematical way to say that observations are independent). The `vcov` in the function stands for "variance-covariance matrix" - this function estimates the variance and covariance from the data instead of making simplifying assumptions about them. `HAC` stands for "Heteroscedasticity and Autocorrelation Consistent" estimation which is a fancy way of saying that we account for both unequal variance among groups and dependence in time. 
+
+**See below segmented regression for an example of how to report the results.**
+
+### Simple linear regression
+
+```{r results simple}
+# ANOVA table corrected for unequal variance/nonindependence
+Anova(mod_full, type = "II", vcov = vcovHAC(mod_full))
+
+# Tests of coefficients corrected for unequal variance/nonindependence
+coeftest(mod_full, vcov = vcovHAC(mod_full))
+
+# Adjusted R squared (this doesn't require correction)
+summary(mod_full)$adj.r.sq
+```
+
+### Segmented regression
+
+The outcomes of the segmented model show significant effects of day (F~6,352~ = 34.6, P < 0.001), period (F~3,352~ = 55.2, P < 0.001), temperature below 58 deg F (F~1,352~ = 14.4, P < 0.001), and temperature above 58 deg F (F~1,352~ = 353.5, P < 0.001). The model was able to explain 87% of the variation in daily electricity use on the main meter (R^2^ = 0.87). 
+
+The estimates from the fitted model suggest that after accounting for other factors, electricity use was fairly similar on all weekdays but ~3% lower on Fridays and ~11% lower on Saturdays and Sundays. Electricity use during spring did not differ significantly from use during fall (P = 0.70). Compared to fall and spring, electricity use during winter break was reduced by ~25%. Interestingly, after accounting for temperature, electricity use over summer break was reduced by ~12%. 
+
+The model found a significant non-linear relationship between electricity use and temperature, with a break point at 58 degrees F. During the heating season (temperatures below 58 deg F), electricity use declined by 103 kWh (+/- 15 kWh) per degree F. During the cooling season (temperatures above 58 deg F), electricity use increased by 761 kWh (+/- 24 kWh) per degree F. 
+
+```{r results segmented}
+# ANOVA table adjusted for unequal variance/nonindependence
+Anova(mod_seg, type = "II", vcov = vcovHAC(mod_seg))
+
+# Tests of coefficients adjusted for unequal variance/nonindependence
+coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+
+# For segmented regression, we need an extra step to extract the break point + intercepts/slopes 
+# for the relationships on either side of the break point in temperature
+# Again we'll adjust for unequal variance/nonindependence
+intercept(mod_seg, vcov = vcovHAC(mod_seg)) # intercept for each equation
+slope(mod_seg, vcov = vcovHAC(mod_seg)) # slopes for each equation
+summary(mod_seg)$psi # extract break point
+
+# Adjusted R squared (this doens't require correction)
+summary(mod_seg)$adj.r.sq
+```
+
+### Quadratic regression
+
+Here is a resource on how to interpret the coefficients for a quadratic term in a regression:
+https://quantifyinghealth.com/quadratic-term-in-regression/
+
+```{r results quad}
+# ANOVA table adjusted for unequal variance/nonindependence
+Anova(mod_quad, type = "II", vcov = vcovHAC(mod_quad))
+
+# Tests of coefficients adjusted for unequal variance/nonindependence
+coeftest(mod_quad, vcov = vcovHAC(mod_quad))
+
+# Adjusted R squared (this doens't require correction)
+summary(mod_quad)$adj.r.sq
+```
+
+## Compare models
+
+### Explanatory power
+
+- The segmented model has the greatest explanatory power, accounting for 87% of the variation in electricity use. The quadratic model is a close second and the basic linear model is significantly less explanatory.
+- Lower AIC values indicate a better-fitting model. The AIC values also suggest that the segmented model is the one with the best fit, with the quadratic model a close second.
+
+```{r R-sq}
+# Compare R squared for all three models
+summary(mod_full)$adj.r.sq
+summary(mod_seg)$adj.r.sq
+summary(mod_quad)$adj.r.sq
+
+# Compare AIC for all models (lower is better)
+AIC(mod_full, mod_seg, mod_quad)
+```
+
+### Similarity in estimates
+
+- The estimated coefficients for days of the week and most periods of the year are very similar across models (overlapping confidence intervals).
+- The big exception is the estimate for Summer Break. The models that include the non-linear relationship between electricity use and temperature (segmented and quadratic) estimate that electricity use in summer is lower than that of fall and spring, but the models that do not account for the non-linearity estimate use in summer as higher than fall. This makes sense because when the relationship to temperature is adequately captured, we would expect use in summer to be lower due to non-temperature factors (e.g. lower occupancy by students and other building users). 
+
+```{r est, warning = FALSE}
+dwplot(list(`Period only` = mod_pd, 
+            `Standard LM` = mod_full, 
+            Segmented = mod_seg, 
+            Quadratic = mod_quad)) + 
+  theme_bw() +
+  labs(x = "Diff. in daily kWh (compared to Monday in Fall)")
+```
+
+
+## Revisit expectations
+
+It appears that the segmented model is the best choice for the main meter. This model has the most explanatory power (highest R^2^ value) and makes sense conceptually; we would expect that electricity use would decrease with temperature during the heating season and increase with temperature during the cooling season. This model reasonably meets all assumptions, except that it still shows some evidence of nonindependence between observations close in time. Fortunately, we generated results that account for this violation, so we can be confident in the final outcomes. Overall, this appears to be a strong statistical model, and the results show that these three factors (outdoor temperature, time of year, and day of the week) explained the vast majority of variation in daily electricity use in buildings on the main meter in fiscal year 2025.
+
+## More on non-independence
+
+```{r robust2, include = FALSE}
+# Add an extra row with the error names
+se_info <- tibble(term = "Standard errors", "Regular", "Robust", "HAC")
+
+modelsummary(list(mod_seg),
+             # Specify how to robustify/cluster the model
+             vcov = list("iid", "robust", function(x) vcovHAC(x)),
+             add_rows = se_info)
+```
+
+
+Let's look a bit more closely at how our estimates change when we estimate the error using a method that accounts for temporal autocorrelation...
+
+We can see in the graph below that the HAC estimation procedure slightly shrinks the error on the weekday terms, but slightly expands the error on the time of year terms.
+
+```{r robust}
+# Store the coefficient estimates in our original model
+coef <- coeftest(mod_seg)
+coef_df <- as.data.frame(coef[,]) %>%
+  rownames_to_column("term") %>%
+  filter(term != "(Intercept)" & term != "psi1.ave_temp") %>%
+  mutate(lcb = Estimate - (`Std. Error`*1.96),
+         ucb = Estimate + (`Std. Error`*1.96))
+
+# Calculate Robust Standard Errors 
+# Heteroskedasticity and Autocorrelation Consistent (HAC) estimators
+coef_rob <- coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+coef_rob_df <- as.data.frame(coef_rob[,]) %>%
+  rownames_to_column("term") %>%
+  filter(term != "(Intercept)" & term != "psi1.ave_temp") %>%
+  mutate(lcb = Estimate - (`Std. Error`*1.96),
+         ucb = Estimate + (`Std. Error`*1.96))
+
+ggplot(data = coef_df) +
+  geom_point(aes(x = term, y = Estimate), col = "orange")  +
+  geom_errorbar(data = coef_rob_df, 
+                aes(x = term, ymin = lcb, ymax = ucb), width=0.1, col = "darkmagenta") +
+  geom_errorbar(data = coef_df, aes(x = term, ymin = lcb, ymax = ucb), width=0.1, col = "orange", alpha = 0.5) +
+  coord_flip() +
+  theme_bw() +
+  labs(title = "Comparison of original (orange) and HAC (purple) errors")
+```

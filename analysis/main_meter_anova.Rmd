@@ -46,11 +46,12 @@ daily_main$period <- factor(daily_main$period,
 
 # check again
 str(daily_main)
+
 ```
 
 ### Exploratory graphs
 
-Let's start by looking at our data. For now we will do some quick-and-dirty graphs using ggplot. Since we are now interested in categorical variables, we will use a simple boxplot and density plot to look at patterns in the data.
+Let's start by looking at our data. For now we will do some quick-and-dirty graphs using ggplot. Since we are now interested in categorical variables, we will use a simple boxplot and density plot to look at patterns in the data
 
 ```{r vis, fig.height = 3, fig.width = 3.5}
 # electricity x day of week
