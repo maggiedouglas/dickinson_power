@@ -31,6 +31,8 @@ navbar:
         href: main_meter_regression.html
       - text: "Main meter - ANOVA"
         href: main_meter_anova.html
+      - text: "Main meter - Full model"
+        href: main_meter_mult_reg.html
 
 output:
   workflowr::wflow_html:
