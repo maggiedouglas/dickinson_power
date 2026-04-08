@@ -167,7 +167,7 @@ vif(mod_seg) # Check the variance inflation factor
 ```{r check_quad, fig.height = 4, fig.width = 8}
 par(mfrow = c(1, 2)) # This code put two plots in the same window
 hist(mod_quad$residuals) # Histogram of residuals
-plot(mod_full, which = 2) # QQ Plot
+plot(mod_quad, which = 2) # QQ Plot
 boxplot(mod_quad$residuals ~ daily_main$day) # Equality of variance across factors
 boxplot(mod_quad$residuals ~ daily_main$period) # Equality of variance across factors
 plot(mod_quad, which = 1) # Residuals vs. fits
