@@ -11,7 +11,7 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-04-07" />
+<meta name="date" content="2026-04-08" />
 
 <title>Main Meter multiple regression</title>
 
@@ -414,7 +414,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Main Meter multiple regression</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">04/07/26</h4>
+<h4 class="date">04/08/26</h4>
 
 </div>
 
@@ -443,7 +443,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-07
+<strong>Last updated:</strong> 2026-04-08
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -577,15 +577,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreee4349ceacd6220d5c9f8bda7113f95a961f96b7atargetblanke4349cea">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree069e893759c88c213a481840defd37e57ca96e35targetblank069e893a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/e4349ceacd6220d5c9f8bda7113f95a961f96b7a" target="_blank">e4349ce</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/069e893759c88c213a481840defd37e57ca96e35" target="_blank">069e893</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreee4349ceacd6220d5c9f8bda7113f95a961f96b7atargetblanke4349cea"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree069e893759c88c213a481840defd37e57ca96e35targetblank069e893a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -595,7 +595,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/e4349ceacd6220d5c9f8bda7113f95a961f96b7a" target="_blank">e4349ce</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/069e893759c88c213a481840defd37e57ca96e35" target="_blank">069e893</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -615,6 +615,7 @@ Ignored files:
     Ignored:    .Rproj.user/
     Ignored:    analysis/.DS_Store
     Ignored:    analysis/.Rhistory
+    Ignored:    analysis/figure/
     Ignored:    analysis_to-fix/.DS_Store
     Ignored:    data/.DS_Store
     Ignored:    data/FY25 Main Meter Data.xlsx
@@ -709,6 +710,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/069e893759c88c213a481840defd37e57ca96e35/analysis/main_meter_mult_reg.Rmd" target="_blank">069e893</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-07
+</td>
+<td>
+added dynamic date
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/069e893759c88c213a481840defd37e57ca96e35/docs/main_meter_mult_reg.html" target="_blank">069e893</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-07
+</td>
+<td>
+added dynamic date
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1470,6 +1505,9 @@ ave_temp    1  7.9544  0.005067 **
 Residuals 354                      
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Adjusted R squared (this doesn&#39;t require correction)
+summary(mod_full)$adj.r.sq</code></pre>
+<pre><code>[1] 0.4943815</code></pre>
 <pre class="r"><code># Tests of coefficients corrected for unequal variance/nonindependence
 coeftest(mod_full, vcov = vcovHAC(mod_full))</code></pre>
 <pre><code>
@@ -1489,9 +1527,6 @@ periodSummer Break     1364.896   2637.296   0.5175  0.605105
 ave_temp                166.805     59.143   2.8203  0.005067 ** 
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code># Adjusted R squared (this doesn&#39;t require correction)
-summary(mod_full)$adj.r.sq</code></pre>
-<pre><code>[1] 0.4943815</code></pre>
 </div>
 <div id="segmented-regression-1" class="section level3">
 <h3>Segmented regression</h3>
@@ -1530,6 +1565,9 @@ psi1.ave_temp   1   0.000 1.0000000
 Residuals     352                      
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Adjusted R squared (this doesn&#39;t require correction)
+summary(mod_seg)$adj.r.sq</code></pre>
+<pre><code>[1] 0.8659336</code></pre>
 <pre class="r"><code># Tests of coefficients adjusted for unequal variance/nonindependence
 coeftest(mod_seg, vcov = vcovHAC(mod_seg))</code></pre>
 <pre><code>
@@ -1551,10 +1589,14 @@ U1.ave_temp             863.97479    45.95379  18.8009 &lt; 2.2e-16 ***
 psi1.ave_temp             0.00000     0.76653   0.0000 1.0000000    
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code># For segmented regression, we need an extra step to extract the break point + intercepts/slopes 
+<pre class="r"><code># For segmented regression, we need an extra step to extract 
+# the break point + intercepts/slopes 
 # for the relationships on either side of the break point in temperature
 # Again we&#39;ll adjust for unequal variance/nonindependence
-intercept(mod_seg, vcov = vcovHAC(mod_seg)) # intercept for each equation</code></pre>
+summary(mod_seg)$psi # extract break point</code></pre>
+<pre><code>              Initial     Est.    St.Err
+psi1.ave_temp      NA 57.65835 0.4910027</code></pre>
+<pre class="r"><code>intercept(mod_seg, vcov = vcovHAC(mod_seg)) # intercept for each equation</code></pre>
 <pre><code>$ave_temp
              Est.
 intercept1  35008
@@ -1564,12 +1606,6 @@ intercept2 -14808</code></pre>
           Est. St.Err. t value CI(95%).l CI(95%).u
 slope1 -103.42  14.950 -6.9177   -132.82   -74.016
 slope2  760.56  23.962 31.7410    713.43   807.680</code></pre>
-<pre class="r"><code>summary(mod_seg)$psi # extract break point</code></pre>
-<pre><code>              Initial     Est.    St.Err
-psi1.ave_temp      NA 57.65835 0.4910027</code></pre>
-<pre class="r"><code># Adjusted R squared (this doens&#39;t require correction)
-summary(mod_seg)$adj.r.sq</code></pre>
-<pre><code>[1] 0.8659336</code></pre>
 </div>
 <div id="quadratic-regression-1" class="section level3">
 <h3>Quadratic regression</h3>
@@ -1591,6 +1627,9 @@ I(ave_temp^2)   1 47.445 2.604e-11 ***
 Residuals     353                     
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># Adjusted R squared (this doens&#39;t require correction)
+summary(mod_quad)$adj.r.sq</code></pre>
+<pre><code>[1] 0.8195353</code></pre>
 <pre class="r"><code># Tests of coefficients adjusted for unequal variance/nonindependence
 coeftest(mod_quad, vcov = vcovHAC(mod_quad))</code></pre>
 <pre><code>
@@ -1611,9 +1650,6 @@ ave_temp               -886.4215   165.0816  -5.3696 1.434e-07 ***
 I(ave_temp^2)            10.6359     1.5441   6.8880 2.604e-11 ***
 ---
 Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
-<pre class="r"><code># Adjusted R squared (this doens&#39;t require correction)
-summary(mod_quad)$adj.r.sq</code></pre>
-<pre><code>[1] 0.8195353</code></pre>
 </div>
 </div>
 <div id="compare-models" class="section level2">

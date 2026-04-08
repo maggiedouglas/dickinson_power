@@ -191,11 +191,11 @@ You will see that many of these lines of code include `vcovHAC()` - this is a fu
 # ANOVA table corrected for unequal variance/nonindependence
 Anova(mod_full, type = "II", vcov = vcovHAC(mod_full))
 
-# Tests of coefficients corrected for unequal variance/nonindependence
-coeftest(mod_full, vcov = vcovHAC(mod_full))
-
 # Adjusted R squared (this doesn't require correction)
 summary(mod_full)$adj.r.sq
+
+# Tests of coefficients corrected for unequal variance/nonindependence
+coeftest(mod_full, vcov = vcovHAC(mod_full))
 ```
 
 ### Segmented regression
@@ -210,18 +210,19 @@ The model found a significant non-linear relationship between electricity use an
 # ANOVA table adjusted for unequal variance/nonindependence
 Anova(mod_seg, type = "II", vcov = vcovHAC(mod_seg))
 
+# Adjusted R squared (this doesn't require correction)
+summary(mod_seg)$adj.r.sq
+
 # Tests of coefficients adjusted for unequal variance/nonindependence
 coeftest(mod_seg, vcov = vcovHAC(mod_seg))
 
-# For segmented regression, we need an extra step to extract the break point + intercepts/slopes 
+# For segmented regression, we need an extra step to extract 
+# the break point + intercepts/slopes 
 # for the relationships on either side of the break point in temperature
 # Again we'll adjust for unequal variance/nonindependence
+summary(mod_seg)$psi # extract break point
 intercept(mod_seg, vcov = vcovHAC(mod_seg)) # intercept for each equation
 slope(mod_seg, vcov = vcovHAC(mod_seg)) # slopes for each equation
-summary(mod_seg)$psi # extract break point
-
-# Adjusted R squared (this doens't require correction)
-summary(mod_seg)$adj.r.sq
 ```
 
 ### Quadratic regression
@@ -233,11 +234,11 @@ https://quantifyinghealth.com/quadratic-term-in-regression/
 # ANOVA table adjusted for unequal variance/nonindependence
 Anova(mod_quad, type = "II", vcov = vcovHAC(mod_quad))
 
-# Tests of coefficients adjusted for unequal variance/nonindependence
-coeftest(mod_quad, vcov = vcovHAC(mod_quad))
-
 # Adjusted R squared (this doens't require correction)
 summary(mod_quad)$adj.r.sq
+
+# Tests of coefficients adjusted for unequal variance/nonindependence
+coeftest(mod_quad, vcov = vcovHAC(mod_quad))
 ```
 
 ## Compare models
