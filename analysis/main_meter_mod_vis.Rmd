@@ -11,18 +11,17 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Prepare data
 
-```{r load}
+```{r load, message = FALSE}
 library(tidyverse)
 library(segmented) # for segmented regression 
-library(tseries) # for time series, including autocorrelation
-library(car) # contains vif() function to check Variance Inflation Factor
 library(lmtest) # has functions for robust standard errors
 library(sandwich) # has functions for robust standard errors
 
+library(parameters) # print results table
+library(gt) # format results table
+
+library(visreg) # visualize regression results
 library(dotwhisker) # create plots of effects from regression
-library(broom) # package with tidy() function
-library(marginaleffects) # package to allow prediction with robust SEs
-library(modelsummary) # tools to compare models more easily
 ```
 
 ```{r wrangle}
@@ -62,79 +61,111 @@ mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
 mod_quad <- lm(kwh ~ day + period + ave_temp + I(ave_temp^2), data = daily_main)
 ```
 
-## Final graphs
+## Visualize results
 
-### Categorical variables (day + period)
+### Results table
 
-```{r results2}
-# Store results with robust estimates
-rob_res <- coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+When we are fitting a complex model, it is helpful to report the full results in a concise format. A table is a good way to do this. Below is an example for the segmented model; similar code should also work for standard or quadratic models. This function doesn't seem to have a built-in caption, so we will simply create a caption in our usual R Markdown text (remember that you can bold the table number by enclosing the text in two asterisks `**`)
 
-# Convert coeftest object to tidy data frame
-rob_tidy <- tidy(rob_res) %>%
-  filter(!str_detect(term, "temp")) # remove temp-related terms (not meaningful this way)
+**Table 1.** Statistical results of a segmented regression model for daily electricity use on the main meter. 
 
-# Graph
-dwplot(rob_tidy) + 
-  geom_vline(xintercept = 0, colour = "grey50", linetype = 2) +
-  scale_color_manual(values = "darkorchid") +
-  theme_bw() +
-  theme(legend.position = "none") +
-  labs(title = "Figure 1. Effect on electricity use compared to a Monday in Fall",
-       subtitle = "Mean difference + 95% confidence interval with other factors taken into account",
-       x = "Difference (kWh)",
-       col = "") +
-  geom_vline(xintercept = 0, col = "black", linetype = "dashed", alpha = 0.5)
+```{r res_tab}
+results <- coeftest(mod_seg, vcov = vcovHAC(mod_seg)) 
+
+print_html(model_parameters(results, summary = TRUE), digits = 0)
 ```
 
-### Continuous variable (temp)
+### Time of year
 
-```{r predict, warning = FALSE}
+- This may throw a warning; it is okay to ignore.
+
+```{r pred_period, warning = FALSE, fig.height = 4.5, fig.width = 5.5}
 # Create a data frame with new values (must match model's predictor names)
-temp_data <- data.frame(ave_temp = seq(5, 87, by = 1), 
-                       day = "Mon", 
+period_data <- data.frame(ave_temp = 58, # set temp to the mean in the dataset
+                       day = "Mon", # set day as Monday for consistency with other summaries
+                       period = c("Fall Semester","Winter Break", # include all levels of period
+                                  "Spring Semester","Summer Break"))
+
+# Generate estimated means + confidence interval
+conf_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions from fitted model
+                                     vcov = vcovHAC(mod_seg), # address the violations of assumptions
+                                       newdata = period_data, # feed in the new data for which I want predictions
+                                       interval = "confidence", level = 0.95)) %>% # set confidence interval to 95%
+  mutate(period = c("Fall Semester","Winter Break",  # add period back into the data frame
+                                  "Spring Semester","Summer Break"))
+
+# Graph
+ggplot(conf_period) +
+    geom_bar(aes(x=period, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
+    geom_errorbar( aes(x=period, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", alpha=0.9, size=1) +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = "Figure 1. Main meter electricity use by time of year",
+       subtitle = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+```
+
+### Day of the week
+
+```{r pred_day, fig.height = 4.5, fig.width = 6, warning = FALSE}
+# Create a data frame with new values (must match model's predictor names)
+day_data <- data.frame(ave_temp = 58, 
+                       day = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
                        period = "Fall Semester")
 
 # Generate estimated means + confidence interval
-conf_temp <- as.data.frame(predictions(mod_seg,  vcov = vcovHAC(mod_seg), 
-                                       newdata = temp_data, 
-                                       interval = "confidence", level = 0.95)) 
+conf_day <- as.data.frame(predict(mod_seg,  vcov = vcovHAC(mod_seg), 
+                                       newdata = day_data, 
+                                       interval = "confidence", level = 0.95)) %>%
+  mutate(day = factor(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                      levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
 
-rob_res2 <- broken.line(mod_seg, vcov = vcovHAC(mod_seg))
-rob_res_fit <- rob_res2$fit
-rob_res_se <- rob_res$se.fit
-
-conf_temp_fit <- filter(conf_temp, group == "fit")
-
-# Graph results
-ggplot(data = conf_temp_fit, aes(x = ave_temp, y = estimate)) +
-  geom_line(color = "darkorchid3", linewidth = 1) +
-  geom_ribbon(aes(x = ave_temp, ymin = conf.low, ymax = conf.high), 
-              fill = "gray", alpha = 0.3) +
+# Graph
+ggplot(conf_day) +
+    geom_bar(aes(x=day, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
+    geom_errorbar( aes(x=day, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", alpha=0.9, size=1) +
   theme_bw() +
-  theme(legend.position = "none") +
-  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh)",
-       title = "Figure 2. Relationship between outdoor temperature and electricity use",
-       subtitle = "Mean + 95% confidence interval with all other factors taken into account")
-
-ggplot(data = conf_temp_fit, aes(x = ave_temp, y = estimate)) +
-  geom_line(color = "darkorchid3", linewidth = 1) +
-  geom_ribbon(aes(x = ave_temp, ymin = conf.low, ymax = conf.high), 
-              fill = "gray", alpha = 0.3) +
-  theme_bw() +
-  theme(legend.position = "none") +
-  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh)",
-       title = "Figure 2. Relationship between outdoor temperature and electricity use",
-       subtitle = "Mean + 95% confidence interval with all other factors taken into account")
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = "Figure 2. Main meter electricity use by day of the week",
+       subtitle = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
 ```
 
-```{r plot_seg, fig.height = 6, fig.width = 7.5}
+### Temperature
+
+#### Segmented model
+
+The segmented model does not interact well with standard plotting functions, so we need to use a slightly different approach to its visualization. The code below uses R's base plotting function to visualize the fitted model.
+
+```{r plot, fig.height = 5, fig.width = 6}
 # plot original data with fit
-plot(mod_seg, , vcov = vcovHAC(mod_seg), 
+plot(mod_seg, vcov = vcovHAC(mod_seg), 
      col = 'black', res = TRUE, conf.level = .95, shade = T, 
      res.col = adjustcolor("steelblue", alpha.f = 0.7), # set color of data + transparency
-     xlab = "Temperature (deg F)", ylab = "Electricity use (kWh)") # label axes
-title("Figure 2. Relationship between temperature and electricity use", adj = 0) # set title, left-adjust
-
+     xlab = "Temperature (degrees F)", ylab = "Electricity use (kWh per day)") # label axes
+title("Figure 3. Main meter electricity use by temperature", # how to set the title in base R plotting function
+      adj = 0, cex.main = 1.2, font.main = 1) 
 ```
 
+#### Quadratic or linear model
+
+For a linear model with or without a quadratic term, we can use a helpful function called `visreg` to visualize the results. Helpfully, by setting `gg = TRUE` the graph will be generated using ggplot, and then we can use all our usual functions to adjust its formatting. 
+
+```{r visreg, warning = FALSE, fig.height = 4, fig.width = 6}
+visreg(mod_quad, xvar = "ave_temp", # feed in model, specify temp as the variable
+      cond=list(day = "Mon", period = "Fall Semester"), # set levels of other variables
+       gg = TRUE) + # specify to use ggplot
+  theme_bw() +
+  labs(x = "Temperature (degrees F)", y = "Electricity use (kWh per day)",
+       title = "Figure 3. Main meter daily electricity use by temperature")
+```
+
+### Comparing model estimates
+
+Sometimes it's helpful to compare the estimates derived from different models to contextualize and interpret our results. Doing so helps us assess the sensitivity of our results to the modeling choices. The `dwplot` function allows us to easily compare the coefficients from a list of fitted models. 
+
+```{r est, warning = FALSE}
+dwplot(list(`Standard LM` = mod_full, # code on the left is the name of the model; right is the model object
+            Segmented = mod_seg, 
+            Quadratic = mod_quad)) + 
+  theme_bw() +
+  labs(x = "Diff. in daily kWh (compared to Monday in Fall)")
+```
