@@ -33,6 +33,8 @@ navbar:
         href: main_meter_anova.html
       - text: "Main meter - Full model"
         href: main_meter_mult_reg.html
+      - text: "Main meter - visualization"
+        href: main_meter_mod_vis.html
 
 output:
   workflowr::wflow_html:
