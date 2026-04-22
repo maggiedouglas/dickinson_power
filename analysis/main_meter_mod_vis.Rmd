@@ -147,7 +147,8 @@ ggplot(conf_day) +
   theme_bw() +
   labs(x = "", y = "Electricity use (kWh per day)", 
        title = "Figure 2. Main meter electricity use by day of the week",
-       subtitle = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
+       subtitle = "Mean +/- 95% prediction interval",
+       caption = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
 ```
 
 ### Temperature

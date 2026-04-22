@@ -241,9 +241,10 @@ daily_focal <- daily %>%
 ```
 
 ```{r plots, warning = F, fig.height = 9, fig.width = 12, include = FALSE}
-ggplot(daily_focal, aes(x = ave_temp, y = kwh)) +
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
   geom_point() +
   theme_bw() +
+ # theme(legend.position = "none") +
   facet_wrap(HVAC ~ NAME, scales = "free_y") +
   labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
 ```
