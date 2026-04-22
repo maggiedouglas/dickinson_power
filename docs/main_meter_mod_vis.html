@@ -580,15 +580,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeb34eba269be31c0bd75058776f2150ab26a773abtargetblankb34eba2a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree425b82c700cbfa1f45204c6702c8506ee44991d7targetblank425b82ca">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/b34eba269be31c0bd75058776f2150ab26a773ab" target="_blank">b34eba2</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/425b82c700cbfa1f45204c6702c8506ee44991d7" target="_blank">425b82c</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeb34eba269be31c0bd75058776f2150ab26a773abtargetblankb34eba2a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree425b82c700cbfa1f45204c6702c8506ee44991d7targetblank425b82ca"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -598,7 +598,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/b34eba269be31c0bd75058776f2150ab26a773ab" target="_blank">b34eba2</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/425b82c700cbfa1f45204c6702c8506ee44991d7" target="_blank">425b82c</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -671,7 +671,6 @@ Ignored files:
 
 Unstaged changes:
     Modified:   analysis/main_meter_mod_vis.Rmd
-    Modified:   analysis/main_meter_regression.Rmd
 
 </code></pre>
 <p>
@@ -716,6 +715,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/425b82c700cbfa1f45204c6702c8506ee44991d7/analysis/main_meter_mod_vis.Rmd" target="_blank">425b82c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-22
+</td>
+<td>
+minor changes to vis
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/425b82c700cbfa1f45204c6702c8506ee44991d7/docs/main_meter_mod_vis.html" target="_blank">425b82c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-22
+</td>
+<td>
+minor changes to vis
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -890,6 +923,10 @@ conf_period &lt;- as.data.frame(predict(mod_seg,  # store as a data frame, gener
   mutate(period = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,  # add period back into data frame
                                   &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
 
+conf_period$period &lt;- factor(conf_period$period,
+                                levels = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,  # add period back into data frame
+                                  &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
+
 # Generate estimated means + prediction interval
 pred_period &lt;- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
                                      vcov = vcovHAC(mod_seg), # address violations 
@@ -1026,7 +1063,7 @@ ggplot(conf_day) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
        title = &quot;Figure 2. Main meter electricity use by day of the week&quot;,
-       subtitle = &quot;Mean +/- 95% prediction interval&quot;,
+       subtitle = &quot;Mean +/- 95% confidence interval&quot;,
        caption = &quot;Estimated for a day in fall with an outdoor temperature of 58 degrees F&quot;)</code></pre>
 <p><img src="figure/main_meter_mod_vis.Rmd/pred_day-1.png" alt="" width="576" style="display: block; margin: auto;" /></p>
 <p>
@@ -1051,6 +1088,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/425b82c700cbfa1f45204c6702c8506ee44991d7/docs/figure/main_meter_mod_vis.Rmd/pred_day-1.png" target="_blank">425b82c</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-22
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/docs/figure/main_meter_mod_vis.Rmd/pred_day-1.png" target="_blank">e2cfff1</a>

@@ -95,6 +95,10 @@ conf_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate
   mutate(period = c("Fall Semester","Winter Break",  # add period back into data frame
                                   "Spring Semester","Summer Break"))
 
+conf_period$period <- factor(conf_period$period,
+                                levels = c("Fall Semester","Winter Break",  # add period back into data frame
+                                  "Spring Semester","Summer Break"))
+
 # Generate estimated means + prediction interval
 pred_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
                                      vcov = vcovHAC(mod_seg), # address violations 
@@ -147,7 +151,7 @@ ggplot(conf_day) +
   theme_bw() +
   labs(x = "", y = "Electricity use (kWh per day)", 
        title = "Figure 2. Main meter electricity use by day of the week",
-       subtitle = "Mean +/- 95% prediction interval",
+       subtitle = "Mean +/- 95% confidence interval",
        caption = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
 ```
 
