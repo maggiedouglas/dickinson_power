@@ -178,7 +178,7 @@ ggplot(daily_lg_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
   scale_fill_paletteer_d("ggthemes::Tableau_20") +
   labs(x = "",
        y = "Electricity Intensity (kWh/sqft/year)",
-       title = "Figure 2. Electricity intensity by building for large residence buildings in FY25.",
+       title = "Figure 2. Electricity intensity by building for large residence buildings in FY25",
        caption = "White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University dormitories (EIA 2022)") +
   coord_flip()
 
