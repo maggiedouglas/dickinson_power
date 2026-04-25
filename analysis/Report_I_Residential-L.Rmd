@@ -152,8 +152,7 @@ ggplot(daily_lg_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
   labs(x = "",
        y = "Electricity use (1000 kWh)",
        title = "Figure 1. Monthly patterns in electricity use by building for large 
-       residential halls",
-       subtitle = "Fiscal Year 2025")
+       residential halls in FY25")
 
 ```
 
