@@ -151,8 +151,8 @@ ggplot(daily_lg_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
   theme(legend.position = "none") +
   labs(x = "",
        y = "Electricity use (1000 kWh)",
-       title = "Figure 1. Monthly patterns in electricity use by building for large 
-       residential halls in FY25")
+       title = "Figure 1. Monthly patterns in electricity use by building for large residential halls",
+       subtitle = "Fiscal Year 2025")
 
 ```
 
@@ -163,7 +163,7 @@ Overall, the electricity intensity of the majority of large residential building
 
 
 
-```{r fig2, fig.height = 8, fig.width = 10, warning = FALSE}
+```{r fig2, fig.height = 7, fig.width = 9, warning = FALSE}
 
 ggplot(daily_lg_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
                             fill = NAME)) +
@@ -187,17 +187,13 @@ ggplot(daily_lg_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
 
 ## Recommendations
 
-The recommendations for large residence halls are driven by building-specific usage patterns, which vary considerably and require individual consideration.
-
 Dickinson’s electricity intensity in large residential buildings was generally below that of the typical U.S. dormitory, fraternity, and sorority buildings, based on the EIA building survey (2022). However, several buildings stand out as higher-intensity cases, including Factory Apartments, 27 W. High Street, Kisner-Woodward, and Malcolm Hall.
 
-27 W. High Street is the oldest building in this category, constructed in 1905, and it has the highest annual electricity intensity at 18.8 kWh per square foot. Both 27 W. High Street and Factory Apartments rely on *all-electric* heating and cooling (personal communication, Mike Kiner, spring 2026), which likely contributed to their elevated electricity intensity. In contrast, buildings such as Drayer Hall are served by the *Central Energy Plant* in Kaufman Hall, meaning that some portion of their heating and cooling demand is not reflected in their on-site electricity use. As a result, differences in HVAC systems must be considered when comparing buildings, as higher electricity use in all-electric buildings does not necessarily indicate inefficiency. 
+Buildings such as 27 W. High Street, Factory Apartments, and Kisner-Woodward show relatively high electricity use per square foot and should be prioritized for further investigation. However, this evaluation should account for HVAC system to distinguish between buildings that are electricity-intensive due to system design versus those that present genuine efficiency improvement opportunities. Both 27 W. High Street and Factory Apartments rely on *all-electric* heating and cooling (personal communication, Mike Kiner, spring 2026), which likely contributed to their elevated electricity intensity. In contrast, Drayer Hall and High Street Residence Hall use 5.5 and 5.6 kWh per square foot, respectively, serving as useful reference points for lower electricity intensity in large residence halls. Many buildings including Drayer Hall are served by the *Central Energy Plant* in Kaufman Hall, meaning that some portion of their heating and cooling demand is not reflected in their on-site electricity use. Differences in HVAC systems must be considered when comparing buildings, as higher electricity use in all-electric buildings does not necessarily indicate inefficiency. 
+
+This analysis also revealed a *U-shaped* curve of electricity use over the year in 27 W. High St., Kisner-Woodward, and Malcom Hall, indicating strong sensitivity to low outdoor temperatures. Increased electricity use during colder months likely reflects higher heating demand, particularly in buildings with all-electric systems. This pattern highlights the impact of HVAC system performance across seasons and underscores the possible value of evaluating building insulation, control strategies, and overall system efficiency to reduce peak electricity use. 
 
 Additionally, more than half of the buildings have a dip in total electricity usage in August. While this pattern initially appears counterintuitive given high outdoor temperatures and student move-in in August, it is likely a result of incomplete data, potentially during the campus electricity hub maintenance outage. Submetered buildings capture 97% of data days, whereas individually metered buildings have complete coverage. This discrepancy suggests that the observed dip should be carefully interpreted and verified against buildings with complete data.
-
-Buildings such as 27 W. High Street, Factory Apartments, and Kisner-Woodward show relatively high electricity use per square foot and should be prioritized for further investigation. However, this evaluation should account for HVAC system to distinguish between buildings that are electricity-intensive due to system design versus those that may present genuine efficiency improvement opportunities. It is important to note that Drayer Hall and High Street Residence Hall use 5.5 and 5.6 kWh per square foot, respectively, serving as useful reference points for lower electricity intensity in large residence halls, though these comparisons must also be contextualized by their connection to the Central Energy Plant. 
-
-This analysis also revealed a *U-shaped* curve of electricity use over the year in 27 W. High St., Kisner-Woodward, and Malcom Hall, indicating strong sensitivity to both low outdoor temperatures. Increased electricity use during colder months likely reflects higher heating demand, particularly in buildings with all-electric systems. This pattern highlights the impact of HVAC system performance across seasons and underscores the possible value of evaluating building insulation, control strategies, and overall system efficiency to reduce peak electricity use. 
 
 Finally, the electricity use data for Goodyear Apartments is missing from this analysis because it is combined with that of the Goodyear Art Studio, as they share the same meter. To improve understanding of electricity use in large residential halls and academic buildings, Dickinson should consider submetering these two sections separately. Disaggregated data would enable more precise identification of usage patterns and efficiency opportunities, particularly in older buildings (constructed in 1891 and last renovated in 2000).
 
