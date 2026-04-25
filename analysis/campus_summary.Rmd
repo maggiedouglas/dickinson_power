@@ -141,7 +141,7 @@ The electricity data analyzed here were derived from a combination of daily elec
 
 Electricity use information was joined with information on building characteristics shared by Facilities. Electricity data for individual buildings is most available for residential buildings and 'Other' buildings (Figure 1 and 2), a category including assorted athletics buildings, faculty/staff residences, and auxillary buildings. Aggregate meters are prevalent for Academic, Administrative, and Community buildings (Figure 1 and 2). Once the data were joined, we summarized electricity use by building and calculated electricity use indicators including estimated financial cost, associated greenhouse gas emissions in metric tons of CO2-equivalents, and electricity use normalized by square footage and student occupancy (for residence halls only). Financial cost is a rough estimate based on per kWh supply and delivery charges in June 2025 for the main meter, a value that will underestimate cost for smaller buildings due to variable electricity costs. Greenhouse gas emissions are estimated using standard conversion factors based on a regional fuel blend for electricity (Leary 2025). 
 
-```{r graph meter, warning = F, fig.height = 5, fig.height = 4}
+```{r graph meter, warning = F, fig.width = 6, fig.height = 4}
 
 pal <- c("lightgrey","darkgrey","#CAB2D6","#6A3D9A")
 

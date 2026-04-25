@@ -227,21 +227,32 @@ title("Figure 2", adj = 0) # how to set the title in base R plotting function
 
 ```{r focal, include = FALSE}
 NAME <- c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
-                     "Allison Hall","Biddle Press Box, Restrooms, Durden ATC")
+                     "Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")
 
 HVAC <- c("Gas_heat_Electric_cool","Central_plant_FCU","Central_plant_FCU","Central_plant_FCU",
-          "Gas_heat_Electric_cool", "Gas_heat_Electric_cool", "Mixed_heat_Electric_cool")
+          "Gas_heat_Electric_cool", "Gas_heat_Electric_cool", "Mixed_systems",
+          "Mixed_heat_Electric_cool")
 
 hvac_key <- as.data.frame(cbind(NAME, HVAC))
 
 daily_focal <- daily %>%
   filter(NAME %in% c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
-                     "Allison Hall","Biddle Press Box, Restrooms, Durden ATC")) %>%
-  left_join(hvac_key, by = "NAME")
+                     "Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")) %>%
+  left_join(hvac_key, by = "NAME")  %>%
+  mutate(date = ymd(date), # convert date to date object
+         month = month(date, label = TRUE), # extract month
+         day = wday(date, label = TRUE)) # extract day of week
 ```
 
-```{r plots, warning = F, fig.height = 9, fig.width = 12, include = FALSE}
+```{r plots, warning = F, fig.height = 9, fig.width = 12}
 ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+  geom_point() +
+  theme_bw() +
+ # theme(legend.position = "none") +
+  facet_wrap(HVAC ~ NAME, scales = "free_y") +
+  labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = day)) +
   geom_point() +
   theme_bw() +
  # theme(legend.position = "none") +
