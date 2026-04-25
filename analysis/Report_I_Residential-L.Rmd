@@ -1,0 +1,217 @@
+---
+title: "Large Residential Buildings"
+author: 'Claire Raesly and Liv Kacar'
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output: html_document
+---
+
+## Background
+
+
+This report examines electricity use in the category of large residence halls across the Dickinson College campus. This category encompasses all student residence halls with a total area greater than 10,000 square feet. There are 21 buildings in this category with nine on individual meters, ten on submeters, and two on the main meter without disaggregated data. The analyses in this report will cover the *19 buildings* for which there is individual electricity usage data.
+
+Large residence halls range in size from 10,724 square feet to 48,720 square feet with a total building space of 417,027 square feet. Together, this building category makes up **22%** of total campus building space. Spaces range from the traditional dormitory style rooms with shared common spaces such as bathrooms, study areas, and kitchens to apartments with private amenities. Overall, this report will show differences in electricity usage and intensity in these buildings during fiscal year 2025 and academic year 2024-2025.
+
+
+## Data preparation
+
+```{r load, include = FALSE}
+
+library(tidyverse)
+library(DT)
+library(paletteer)
+
+```
+
+```{r annual, include = FALSE}
+
+annual_data <- read.csv("./output/kwh_annual_2026-03-17.csv")
+
+str(annual_data)
+
+cost_conversion <- 0.08138507
+ghg_conversion <- 0.30082405 / 1000
+
+annual_lg_res <- annual_data %>%
+  filter(type == "Residential - L") %>%
+  mutate(cost = round(kwh_corr * cost_conversion, digits = 0),
+         ghgs = round(kwh_corr * ghg_conversion, digits = 0),
+         kwh_sqft = round(kwh_corr/sqft, digits = 1),
+         data_days = round(days_perc, digits = 0),
+         kwh = round(kwh, digits = 0),
+         kwh_corr = round(kwh_corr, digits = 0),
+         building = NAME) %>%
+  select(meter, building, data_days, sqft, kwh, kwh_corr, kwh_sqft, cost, ghgs) %>%
+  arrange(desc(kwh_corr))
+
+str(annual_lg_res)
+
+summary(annual_lg_res)
+
+```
+
+```{r academic, include = FALSE}
+
+academic_data <- read.csv("./output/kwh_academic_2026-03-17.csv")
+
+str(academic_data)
+
+cost_conversion <- 0.08138507
+ghg_conversion <- 0.30082405 / 1000
+
+academic_lg_res <- academic_data %>%
+  filter(type == "Residential - L") %>%
+  mutate(cost = round(kwh_corr * cost_conversion, digits = 0), 
+         ghgs = round(kwh_corr * ghg_conversion, digits = 0),
+         kwh_sqft = round(kwh_corr/sqft, digits = 1),
+         kwh_person = round(kwh_corr/occupants, digits = 0), 
+         data_days = round(days_perc, digits = 0), 
+         kwh = round(kwh, digits = 0),
+         kwh_corr = round(kwh_corr, digits = 0),
+         occupants = round(occupants, digits = 0),
+         building = NAME) %>%
+  select(meter, building, data_days, sqft, occupants, kwh, kwh_corr,
+         kwh_sqft, kwh_person, cost, ghgs) %>%
+  arrange(desc(kwh))
+
+str(academic_lg_res)
+
+summary(academic_lg_res)
+
+```
+
+```{r daily, include = FALSE}
+
+daily_data <- read.csv("./output/kwh_daily_2026-03-17.csv")
+
+str(daily_data)
+
+daily_lg_res <- daily_data %>%
+  filter(type == "Residential - L") %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE)) %>%
+  mutate(kwh_yr = kwh*365,
+         kwh_sqft = kwh_yr/sqft)
+
+str(daily_data)
+
+summary(daily_data)
+
+```
+
+## Electricity use summary
+
+Table 1 shows the electricity use during fiscal year 2025 for large residential buildings. Annual electricity usage ranges from 36,395 kWh to 269,770 kWh which may be due to variability in building size, style, and HVAC systems. The median electricity use was approximately **135,000 kWh per year**, demonstrating a ‘typical’ building in this category. This equates to about **40 metric tons** of carbon emissions and about **$10,000 per year**. Kisner-Woodward is the 8^th^ largest building and had the most total electricity use while Spradley-Young is the smallest building and had the least. 27 W. High Street is the 8^th^ smallest building and had the most electricity use per square foot while Matthews House is only the 7^th^ smallest and had the least. 
+
+```{r table1}
+
+datatable(annual_lg_res,
+          rownames = FALSE,
+          colnames = c("Meter","Building", "Days of data (%)", "Square\nfootage", 
+                       "kWh", "kWh (corrected)", "kWh per\nsqft", "Cost ($)", "CO2e\n(MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 10, autoWidth = TRUE, dom = 'p'),
+          caption = "Table 1. Total electricity use, esimated financial cost, and estimated 
+          greenhouse gas emissions of large residential buildings during fiscal year 2025.")
+
+```
+
+
+Table 2 shows the electricity use during the 2024-2025 academic year. The median electricity use was approximately **95,000 kWh per academic year**, demonstrating a ‘typical’ building during this time. This equates to about **29 metric tons** of carbon emissions and **$8,000 per academic year**. Kisner-Woodward is the 8^th^ largest building and had the most total electricity use while Matthews House is the 7^th^ smallest and had the least. 27 W. High Street is the 8^th^ smallest building and had the most electricity use per square foot while Matthews House had the least. 27 W. High Street had the most electricity use per person and Spradley-Young had the least. 
+
+```{r table2}
+
+datatable(academic_lg_res,
+          rownames = FALSE,
+          colnames = c("Meter", "Building", "Days of data (%)", "Square footage",
+                       "Occupants (AY)", "kWh", "kWh (corrected)", "kWh per sqft",
+                       "kWh per person", "Cost ($)", "CO2e (MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 10, autoWidth = TRUE, dom = 'p'),
+          caption = "Table 2. Total electricity use, estimated financial cost, and estimated 
+          greenhouse gas emissions of large residential buildings during academic year 2024/2025.")
+
+```
+
+
+Figure 1 shows the monthly patterns in electricity use during fiscal year 2025. Some buildings, such as Kisner-Woodward and 27 W. High Street, had a distinct *U-shape*, indicating higher use during winter months, and lower use during the summer months. The buildings with this shape also tended to have the highest electricity usage. However, the majority of buildings had a *flat shape*, showing that electricity use did not differ much during any point of the year. It is also notable that more than half of the buildings had a dip during August due to missing data from this time period.
+
+
+```{r fig1, warning = FALSE}
+
+ggplot(daily_lg_res, aes(x= month, y= kwh/(10^3), fill = NAME)) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ NAME) +
+  scale_fill_paletteer_d("ggthemes::Tableau_20")+
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  theme(legend.position = "none") +
+  labs(x = "",
+       y = "Electricity use (1000 kWh)",
+       title = "Figure 1. Monthly patterns in electricity use by building for large 
+       residential halls",
+       subtitle = "Fiscal Year 2025")
+
+```
+
+
+Figure 2 shows the electricity intensity by building for fiscal year 2025, and is faceted into different sections by seasons: Fall, Spring, Summer, and Winter. Winter break had the least variability in electricity intensity, demonstrated by the box plots with very small ranges. Spring semester had the highest overall electricity intensity, followed closely by fall semester. Factory Apartments, 27 W. High Street, and Kisner-Woodward consistently had the highest electricity intensity across seasons. Malcolm Hall also had notably high electricity intensity in the fall, spring, and winter. Additionally, buildings that usually had low variability in electricity intensity had increased variability over summer break. This can be seen in Armstrong, Adams, Atwater, and Matthews House.
+
+Overall, the electricity intensity of the majority of large residential buildings was **lower** than the range of typical U.S dormitory, fraternity, or sorority buildings (EIA, 2022). However, buildings like Factory Apartments and 27 W. High Street regularly had a median above the median of these typical buildings.
+
+
+
+```{r fig2, fig.height = 8, fig.width = 10, warning = FALSE}
+
+ggplot(daily_lg_res, aes(fct_reorder(NAME, kwh_sqft, median), y = kwh_sqft,
+                            fill = NAME)) +
+  annotate("rect", xmin=-Inf, xmax=Inf, ymin=8.2, ymax=36.1, 
+           color="lightgrey", alpha= 0.3) +
+  geom_hline(yintercept=13.6, linetype="dashed", color="white") +
+  geom_boxplot() +
+  facet_wrap(. ~ period) +
+#  ylim(0,50) +
+  theme_bw() +
+  theme(legend.position = "none") +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  labs(x = "",
+       y = "Electricity Intensity (kWh/sqft/year)",
+       title = "Figure 2. Electricity intensity by building for large residence buildings in FY25.",
+       caption = "White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University dormitories (EIA 2022)") +
+  coord_flip()
+
+```
+
+
+## Recommendations
+
+The recommendations for large residence halls are driven by building-specific usage patterns, which vary considerably and require individual consideration.
+
+Dickinson’s electricity intensity in large residential buildings was generally below that of the typical U.S. dormitory, fraternity, and sorority buildings, based on the EIA building survey (2022). However, several buildings stand out as higher-intensity cases, including Factory Apartments, 27 W. High Street, Kisner-Woodward, and Malcolm Hall.
+
+27 W. High Street is the oldest building in this category, constructed in 1905, and it has the highest annual electricity intensity at 18.8 kWh per square foot. Both 27 W. High Street and Factory Apartments rely on *all-electric* heating and cooling (personal communication, Mike Kiner, spring 2026), which likely contributed to their elevated electricity intensity. In contrast, buildings such as Drayer Hall are served by the *Central Energy Plant* in Kaufman Hall, meaning that some portion of their heating and cooling demand is not reflected in their on-site electricity use. As a result, differences in HVAC systems must be considered when comparing buildings, as higher electricity use in all-electric buildings does not necessarily indicate inefficiency. 
+
+Additionally, more than half of the buildings have a dip in total electricity usage in August. While this pattern initially appears counterintuitive given high outdoor temperatures and student move-in in August, it is likely a result of incomplete data, potentially during the campus electricity hub maintenance outage. Submetered buildings capture 97% of data days, whereas individually metered buildings have complete coverage. This discrepancy suggests that the observed dip should be carefully interpreted and verified against buildings with complete data.
+
+Buildings such as 27 W. High Street, Factory Apartments, and Kisner-Woodward show relatively high electricity use per square foot and should be prioritized for further investigation. However, this evaluation should account for HVAC system to distinguish between buildings that are electricity-intensive due to system design versus those that may present genuine efficiency improvement opportunities. It is important to note that Drayer Hall and High Street Residence Hall use 5.5 and 5.6 kWh per square foot, respectively, serving as useful reference points for lower electricity intensity in large residence halls, though these comparisons must also be contextualized by their connection to the Central Energy Plant. 
+
+This analysis also revealed a *U-shaped* curve of electricity use over the year in 27 W. High St., Kisner-Woodward, and Malcom Hall, indicating strong sensitivity to both low outdoor temperatures. Increased electricity use during colder months likely reflects higher heating demand, particularly in buildings with all-electric systems. This pattern highlights the impact of HVAC system performance across seasons and underscores the possible value of evaluating building insulation, control strategies, and overall system efficiency to reduce peak electricity use. 
+
+Finally, the electricity use data for Goodyear Apartments is missing from this analysis because it is combined with that of the Goodyear Art Studio, as they share the same meter. To improve understanding of electricity use in large residential halls and academic buildings, Dickinson should consider submetering these two sections separately. Disaggregated data would enable more precise identification of usage patterns and efficiency opportunities, particularly in older buildings (constructed in 1891 and last renovated in 2000).
+
+Overall, our recommendations emphasize targeted follow-up analysis of buildings with high electricity intensity and unusual usage patterns, with careful attention to HVAC system differences and data completeness to ensure accurate interpretation.
+
+
+## Sources
+
+Energy Information Administration (EIA). (2022). *2018 Commerical Buildings Energy Consumption Survey (CBECS).* https://www.eia.gov/consumption/commercial/
+
+Leary, N. (2025). *Dickinson College Greenhouse Gas Inventory 2008-2023.* Center for Sustainability Education. 
+
+## Partner contributions
+
+Liv Kacar developed the annual data, Table 1, and Figure 1. She also wrote the background. Claire Raesly developed the academic year data, Table 2, and Figure 2. She also wrote the electricity use summary. Both partners contributed to recommendations and revisions.
+
