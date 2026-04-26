@@ -161,7 +161,8 @@ geom_hline(yintercept = 10.3, linetype = "dashed", color = "white") +
   labs(x = "", 
        y = "Electricity Intensity (kWh/sqft/year)", 
        title = "Figure 2. Electricity intensity by building for Community buildings",
-       subtitle = "Fiscal Year 2025")
+       subtitle = "Fiscal Year 2025",
+       caption = "White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College/University buildings (EIA 2022)")
 ```
 
 ## Recommendations  

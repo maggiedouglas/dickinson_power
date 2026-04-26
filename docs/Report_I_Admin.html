@@ -9,11 +9,11 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Amiya Marbles &amp; Eva Hanlin" />
+<meta name="author" content="Eva Hanlin &amp; Amiya Marbles" />
 
-<meta name="date" content="2026-04-13" />
+<meta name="date" content="2026-04-26" />
 
-<title>Report_Section_1_Admin</title>
+<title>Administrative Buildings</title>
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -345,10 +345,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">About</a>
+  <a href="about.html">Introduction</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Data prep</a>
+  <a href="data_wrangling_final.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -357,9 +357,6 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="campus_summary.html">All buildings</a>
-    </li>
     <li>
       <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
@@ -424,9 +421,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Report_Section_1_Admin</h1>
-<h4 class="author">Amiya Marbles &amp; Eva Hanlin</h4>
-<h4 class="date">04/13/26</h4>
+<h1 class="title toc-ignore">Administrative Buildings</h1>
+<h4 class="author">Eva Hanlin &amp; Amiya Marbles</h4>
+<h4 class="date">04/26/26</h4>
 
 </div>
 
@@ -434,7 +431,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -445,8 +442,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -455,13 +452,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-13
+<strong>Last updated:</strong> 2026-04-26
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -484,18 +481,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -586,15 +586,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree5c4e58fb211961c2df34542ee4e7c293976e2572targetblank5c4e58fa">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/5c4e58fb211961c2df34542ee4e7c293976e2572" target="_blank">5c4e58f</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree5c4e58fb211961c2df34542ee4e7c293976e2572targetblank5c4e58fa"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -604,7 +604,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/5c4e58fb211961c2df34542ee4e7c293976e2572" target="_blank">5c4e58f</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -630,6 +630,7 @@ Ignored files:
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
     Ignored:    data/housing_counts.csv
+    Ignored:    data/~$building_list_FY25_updated.xlsx
     Ignored:    keys/.DS_Store
     Ignored:    output/annual_kwh.csv
     Ignored:    output/building_check.csv
@@ -675,9 +676,11 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
+Untracked files:
+    Untracked:  analysis/Report_I_Admin.Rmd
+
 Unstaged changes:
-    Modified:   analysis/main_meter_mod_vis.Rmd
-    Modified:   analysis/main_meter_regression.Rmd
+    Modified:   analysis/Report_I_Community.Rmd
 
 </code></pre>
 <p>
@@ -694,7 +697,7 @@ have uncommitted changes.
 <div id="versions" class="tab-pane fade">
 <p>
 These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/Report_I_Admin.rmd</code>) and
+made to the R Markdown (<code>analysis/Report_I_Admin.Rmd</code>) and
 HTML (<code>docs/Report_I_Admin.html</code>) files. If you’ve configured
 a remote Git repository (see <code>?wflow_git_remote</code>), click on
 the hyperlinks in the table below to view the files as they were in that
@@ -722,6 +725,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/Report_I_Admin.html" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -758,23 +778,6 @@ Build site.
 </tr>
 <tr>
 <td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/7140affc7c50f23879e7a03e256d5aec41f29970/analysis/Report_I_Admin.rmd" target="_blank">7140aff</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-30
-</td>
-<td>
-attempt to update website to integrate new student results
-</td>
-</tr>
-<tr>
-<td>
 html
 </td>
 <td>
@@ -790,23 +793,6 @@ maggiedouglas
 attempt to update website to integrate new student results
 </td>
 </tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/10db689c16ade0fbd0a308cf838cc3b0d974d29b/analysis/Report_I_Admin.rmd" target="_blank">10db689</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-30
-</td>
-<td>
-change navigation bar and add student report sections
-</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -816,180 +802,152 @@ change navigation bar and add student report sections
 </div>
 <div id="background" class="section level2">
 <h2>Background</h2>
-<div
-id="there-are-11-total-administrative-buildings-listed-in-this-campus-category-accounting-for-a-combined-188060-square-feet-of-space.-however-since-the-electricity-dataset-only-covers-6-of-these-buildings-5-with-individual-meters-and-old-west-on-a-submeter-we-are-actively-analyzing-137948-square-feet-which-is-about-73-of-the-total-administrative-footprint.-these-administration-buildings-are-mainly-used-on-a-typical-9-5pm-schedule-year-round-and-cover-a-highly-diverse-range-of-campus-operations-including-executive-leadership-in-old-west-essential-student-facing-buildings-campus-backbone-departments-like-facilities-management-and-it-and-specialized-rotc-offices.-there-is-a-massive-spread-in-the-physical-size-of-these-buildings-which-will-heavily-impact-electricity-usage.-the-facilities-management-building-at-5-n.-orange-st.-is-by-far-the-largest-at-75000-sq.-ft.-followed-by-old-west-at-30208-sq.-ft.-while-the-smallest-spaces-are-converted-residential-style-structures-like-the-1440-sq.-ft.-rotc-office-and-the-1800-sq.-ft.-it-storage-annex.-additionally-the-architecture-spans-over-two-centuries-meaning-energy-efficiency-and-insulation-likely-vary-wildly-ranging-from-the-historic-1803-anchor-of-old-west-to-mid-century-buildingd-and-recently-renovated-spaces-like-waidner-admissions-and-the-rotc-offices."
-class="section level6">
-<h6>There are 11 total administrative buildings listed in this campus
+<p>There are eleven total administrative buildings listed in this campus
 category, accounting for a combined 188,060 square feet of space.
-However, since the electricity dataset only covers 6 of these buildings
-5 with individual meters and Old West on a submeter, we are actively
-analyzing 137,948 square feet, which is about 73% of the total
-administrative footprint. These administration buildings are mainly used
-on a typical 9-5pm schedule year round and cover a highly diverse range
-of campus operations, including executive leadership in Old West,
-essential student facing buildings, campus backbone departments like
-Facilities Management and IT, and specialized ROTC offices. There is a
-massive spread in the physical size of these buildings, which will
-heavily impact electricity usage. The Facilities Management building at
-5 N. Orange St. is by far the largest at 75,000 sq. ft., followed by Old
-West at 30,208 sq. ft., while the smallest spaces are converted
-residential style structures like the 1,440 sq. ft. ROTC office and the
-1,800 sq. ft. IT Storage Annex. Additionally, the architecture spans
-over two centuries, meaning energy efficiency and insulation likely vary
-wildly, ranging from the historic 1803 anchor of Old West to mid century
-buildingd and recently renovated spaces like Waidner Admissions and the
-ROTC offices.</h6>
-<pre class="r"><code>kwh_academic &lt;- read_csv(&quot;./output/kwh_academic_2026-03-17.csv&quot;)</code></pre>
-<pre><code>Rows: 99 Columns: 8
-── Column specification ────────────────────────────────────────────────────────
-Delimiter: &quot;,&quot;
-chr (3): type, meter, NAME
-dbl (5): days_perc, kwh, kwh_corr, sqft, occupants
-
-ℹ Use `spec()` to retrieve the full column specification for this data.
-ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
-<pre class="r"><code>kwh_academic &lt;- kwh_academic %&gt;%
-  mutate(across(where(is.character), as.factor))
-academic_admin &lt;- filter(kwh_academic, type == &quot;Admin&quot;)
-ghg_kg &lt;- 0.30082405
-cost_multiplier &lt;- 0.08138507 
-final_academic_admin &lt;- academic_admin %&gt;%
-  mutate(
-  
-    GHG.MT = round(kwh_corr * ghg_kg) / 1000,
-    cost = round(kwh_corr * cost_multiplier),
-    kwh_sqft = round(kwh_corr / sqft) 
-  ) %&gt;%
-  arrange(desc(kwh_corr)) %&gt;%
-  select(-type)
-final_academic_admin</code></pre>
-<pre><code># A tibble: 6 × 10
-  meter    NAME  days_perc    kwh kwh_corr  sqft occupants GHG.MT  cost kwh_sqft
-  &lt;fct&gt;    &lt;fct&gt;     &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;
-1 Individ… 5 N.…     100   3.71e5  371382. 75000        NA 112.   30225        5
-2 Individ… 50 M…     100   6.54e4   65382. 27100        NA  19.7   5321        2
-3 Submeter Old …      96.7 5.17e4   53432. 30208        NA  16.1   4349        2
-4 Individ… 554 …     100   5.29e3    5289.  1440        NA   1.59   430        4
-5 Individ… 41 C…     100   3.68e3    3685.  2200        NA   1.11   300        2
-6 Individ… 556 …     100   2.79e3    2792.  2000        NA   0.84   227        1</code></pre>
-<pre class="r"><code>str(final_academic_admin)</code></pre>
-<pre><code>tibble [6 × 10] (S3: tbl_df/tbl/data.frame)
- $ meter    : Factor w/ 4 levels &quot;Individual&quot;,&quot;Main Meter - Total&quot;,..: 1 1 3 1 1 1
- $ NAME     : Factor w/ 99 levels &quot;100 S. West St.&quot;,..: 32 33 82 46 25 47
- $ days_perc: num [1:6] 100 100 96.7 100 100 ...
- $ kwh      : num [1:6] 371382 65382 51680 5289 3685 ...
- $ kwh_corr : num [1:6] 371382 65382 53432 5289 3685 ...
- $ sqft     : num [1:6] 75000 27100 30208 1440 2200 ...
- $ occupants: num [1:6] NA NA NA NA NA NA
- $ GHG.MT   : num [1:6] 111.72 19.67 16.07 1.59 1.11 ...
- $ cost     : num [1:6] 30225 5321 4349 430 300 ...
- $ kwh_sqft : num [1:6] 5 2 2 4 2 1</code></pre>
-<pre class="r"><code>admin_daily_df &lt;- kwh_daily %&gt;%
-  mutate(across(where(is.character), as.factor)) %&gt;%
-  filter(type == &quot;Admin&quot;) %&gt;%
-  mutate(
-    date = ymd(date), 
-    month = month(date, label = TRUE, abbr = FALSE), 
-    day_of_week = wday(date, label = TRUE, abbr = TRUE), 
-    kwh_sqft_yr = (kwh * 365) / sqft 
-  )
-str(admin_daily_df)</code></pre>
-<pre><code>tibble [2,190 × 13] (S3: tbl_df/tbl/data.frame)
- $ type       : Factor w/ 13 levels &quot;Academic&quot;,&quot;Admin&quot;,..: 2 2 2 2 2 2 2 2 2 2 ...
- $ meter      : Factor w/ 4 levels &quot;Individual&quot;,&quot;Main Meter - Total&quot;,..: 1 1 1 1 1 1 1 1 1 1 ...
- $ NAME       : Factor w/ 102 levels &quot;100 S. West St.&quot;,..: 25 25 25 25 25 25 25 25 25 25 ...
- $ days_perc  : num [1:2190] 100 100 100 100 100 100 100 100 100 100 ...
- $ sqft       : num [1:2190] 2200 2200 2200 2200 2200 2200 2200 2200 2200 2200 ...
- $ occupants  : num [1:2190] NA NA NA NA NA NA NA NA NA NA ...
- $ period     : Factor w/ 4 levels &quot;Fall Semester&quot;,..: 3 3 3 3 3 3 3 3 3 3 ...
- $ date       : Date[1:2190], format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
- $ kwh        : num [1:2190] 22.8 20.3 24.3 17.7 18.2 ...
- $ ave_temp   : num [1:2190] 69 73 78 81 84 86 84 84 86 87 ...
- $ month      : Ord.factor w/ 12 levels &quot;January&quot;&lt;&quot;February&quot;&lt;..: 7 7 7 7 7 7 7 7 7 7 ...
- $ day_of_week: Ord.factor w/ 7 levels &quot;Sun&quot;&lt;&quot;Mon&quot;&lt;&quot;Tue&quot;&lt;..: 2 3 4 5 6 7 1 2 3 4 ...
- $ kwh_sqft_yr: num [1:2190] 3.78 3.36 4.04 2.94 3.01 ...</code></pre>
-<pre class="r"><code>head(admin_daily_df)</code></pre>
-<pre><code># A tibble: 6 × 13
-  type  meter   NAME  days_perc  sqft occupants period date         kwh ave_temp
-  &lt;fct&gt; &lt;fct&gt;   &lt;fct&gt;     &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt; &lt;fct&gt;  &lt;date&gt;     &lt;dbl&gt;    &lt;dbl&gt;
-1 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-01  22.8       69
-2 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-02  20.3       73
-3 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-03  24.3       78
-4 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-04  17.7       81
-5 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-05  18.2       84
-6 Admin Indivi… 41 C…       100  2200        NA Summe… 2024-07-06  18.4       86
-# ℹ 3 more variables: month &lt;ord&gt;, day_of_week &lt;ord&gt;, kwh_sqft_yr &lt;dbl&gt;</code></pre>
-</div>
+However, since the electricity dataset only covers six of these
+buildings - five with individual meters and Old West on a submeter - we
+are actively analyzing 137,948 square feet, which is about 73% of the
+total administrative footprint. These administration buildings are
+mainly used on a typical 9-5PM schedule year-round and cover a highly
+diverse range of campus operations, including executive leadership in
+Old West, essential student facing buildings, campus backbone
+departments like Facilities Management and IT, and specialized ROTC
+offices. There is a massive spread in the physical size of these
+buildings, which will heavily impact electricity usage. The Facilities
+Management building at 5 North Orange Street is by far the largest at
+75,000 square feet, followed by Old West at 30,208 square feet, while
+the smallest spaces are converted residential style structures like the
+1,440 square feet. ROTC office and the 1,800 square feet IT Storage
+Annex. Additionally, the architecture spans over two centuries, meaning
+energy efficiency and insulation likely vary wildly, ranging from the
+historic 1803 anchor of Old West to mid-century buildings and recently
+renovated spaces like Waidner Admissions and the ROTC offices.</p>
 </div>
 <div id="electricity-use-summary" class="section level2">
 <h2>Electricity Use Summary</h2>
-<div
-id="determining-a-typical-administrative-building-on-campus-is-difficult-given-the-large-fluctuation-in-square-footage-which-generally-has-a-positive-correlation-to-total-electricity-use.-however-based-on-averaged-data-from-mooreland-avenue-and-554-west-louther-street-a-typical-administrative-building-of-about-14270-square-feet-uses-approximately-51828.59-kwh-per-year-operating-at-an-intensity-of-5-kwhsqft.-this-typical-usage-translates-to-an-estimated-financial-cost-of-4218-and-greenhouse-gas-emissions-of-15.591-metric-tons-of-co2e-annually.-we-see-a-wide-range-of-variability-in-both-total-electricity-use-and-intensity-across-these-buildings.-5-north-orange-street-is-the-largest-building-and-the-largest-consumer-overall-using-567745.2-kwhyear-and-charting-the-highest-intensity-at-8-kwhsqft.-conversely-556-west-louther-street-has-the-smallest-total-electricity-use-per-fiscal-year-at-4985.55-kwh-and-ties-with-old-west-for-the-lowest-electricity-intensity-at-just-2-kwhsqft.-furthermore-total-electricity-use-is-not-always-the-best-indicator-of-efficiency-for-instance-554-west-louther-street-is-the-smallest-building-but-has-the-second-highest-electricity-use-per-square-foot.-when-comparing-dickinsons-electricity-intensity-to-similar-buildings-at-other-colleges-and-universities-the-campus-performs-well.-the-eia-notes-that-average-administrative-buildings-at-other-institutions-use-227000-kwh-per-year-at-an-average-of-13.5-kwhsqft-with-a-median-of-9.7-kwhsqft.-even-dickinsons-most-intensive-building-5-north-orange-street-8-kwhsqft-falls-below-the-eia-median-and-average-indicating-effective-electricity-management-despite-being-almost-five-times-the-size-of-the-eia-average-building-footprint-of-16800-square-feet."
-class="section level6">
-<h6>Determining a ‘typical’ administrative building on campus is
+<p>Determining a ‘typical’ administrative building on campus is
 difficult given the large fluctuation in square footage, which generally
 has a positive correlation to total electricity use. However, based on
 averaged data from Mooreland Avenue and 554 West Louther Street, a
 typical administrative building of about 14,270 square feet uses
-approximately 51,828.59 kWh per year, operating at an intensity of 5
-kWh/sqft. This typical usage translates to an estimated financial cost
-of $4,218 and greenhouse gas emissions of 15.591 metric tons of CO2e
-annually. We see a wide range of variability in both total electricity
-use and intensity across these buildings. 5 North Orange Street is the
-largest building and the largest consumer overall, using 567,745.2
-kWh/year and charting the highest intensity at 8 kWh/sqft. Conversely,
-556 West Louther Street has the smallest total electricity use per
-fiscal year at 4,985.55 kWh, and ties with Old West for the lowest
-electricity intensity at just 2 kWh/sqft. Furthermore, total electricity
-use is not always the best indicator of efficiency; for instance, 554
-West Louther Street is the smallest building but has the second-highest
-electricity use per square foot. When comparing Dickinson’s electricity
-intensity to similar buildings at other colleges and universities, the
-campus performs well. The EIA notes that average administrative
-buildings at other institutions use 227,000 kWh per year at an average
-of 13.5 kWh/sqft, with a median of 9.7 kWh/sqft. Even Dickinson’s most
-intensive building, 5 North Orange Street (8 kWh/sqft), falls below the
-EIA median and average, indicating effective electricity management
-despite being almost five times the size of the EIA average building
-footprint of 16,800 square feet.</h6>
-<pre class="r"><code>datatable(kwh_annual_admin_df,
+approximately 51,828 kWh per year, operating at an intensity of 5
+kWh/sqft (Table 1). This typical usage translates to an estimated
+financial cost of $4,218 and greenhouse gas emissions of 15.6 metric
+tons of CO2e annually. We see a wide range of variability in both total
+electricity use and intensity across these buildings. 5 North Orange
+Street is the largest building and the largest consumer overall, using
+567,745 kWh/year and charting the highest intensity at 8 kWh/sqft.
+Conversely, 556 West Louther Street has the smallest total electricity
+use per fiscal year at 4,985 kWh, and ties with Old West for the lowest
+electricity intensity at just 2 kWh/sqft (Figure 1 and Table 1).
+Furthermore, total electricity use is not always the best indicator of
+efficiency; for instance, 554 West Louther Street is the smallest
+building but has the second-highest electricity use per square foot
+(Table 1). When comparing Dickinson’s electricity intensity to similar
+buildings at other colleges and universities, the campus performs well.
+The EIA notes that average administrative buildings at other
+institutions use 227,000 kWh per year at an average of 13 kWh/sqft, with
+a median of 9 kWh/sqft (Figure 2). Even Dickinson’s most intensive
+building, 5 North Orange Street (8 kWh/sqft), falls below the EIA median
+and average, indicating effective electricity management (Figures 1 and
+2).</p>
+<pre class="r"><code>datatable(final2_annual_admin,
           rownames = FALSE,
           colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh per year&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;Cost ($)&quot;, &quot;CO2e (MT)&quot;),
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
           options = list(pageLength = 6, autoWidth = TRUE, dom =&#39;t&#39;), caption = &quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Submeter","Individual","Individual","Individual"],["5 N. Orange St. - Facilities","50 Mooreland Ave.","Old West","554 W. Louther St.","41 Conway St.","556 W. Louther St."],[100,100,92.0547945205479,100,100,100],[567745.2,95137,67247,8520.184999999999,6276.694,4985.555],[567745.2,95137,73051.0565476191,8520.184999999999,6276.694,4985.555],[75000,27100,30208,1440,2200,2000],[null,null,null,null,null,null],[46205.982844164,7742.73140459,5945.265350701939,693.41585263795,510.82918055858,405.74974266385],[170791.41043206,28619.49764485,21975.5146874338,2563.07655844925,1888.1805096907,1499.77484659775],[7.569935999999999,3.510590405904059,2.418268556263873,5.916795138888888,2.853042727272728,2.4927775]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"kwh","targets":3},{"name":"kwh_corr","targets":4},{"name":"sqft","targets":5},{"name":"occupants","targets":6},{"name":"cost_usd","targets":7},{"name":"ghg_mt_co2e","targets":8},{"name":"kwh_per_sqft","targets":9}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>###### Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal 2025.     It’s hard to determine a ‘typical’ administrative building on Dickinson College campus given the large fluctuation in square footage that, based on the data, has a positive correlation to electricity use. Generally the larger the square footage, the larger the total electricity use. However, when we come to electricity use per square foot, we can see that total electricity use isn’t the best indicator of electricity efficiency. 5 North Orange Street is the largest building with the largest total electricity use and largest electricity use per square foot but 554 West Louther Street is the smallest building with the third smallest total electricity use but the second highest electricity use per square foot. Using a scale of 2-8 kWh/sqft (2 being the smallest kWh/sqft recorded, and 8 being the largest) the average kWh/sqft is between Mooreland Avenue and 554 West Louther Street, at about 5 kWh/sqft. Based on Mooreland Avenue and 554 West Louther Street’s averaged data for kWh/year, cost in USD, and CO2e measured in metric tons, the ‘typical’ administrative building may follow the following characteristics: - Square footage: 14,270 - kWh/year: 51/828.5925 kWh/yr - kWh/sqft: 5 kWh/sqft - Cost ($): $4,218 -CO2e (MT): 15.591 MT. 5 North Orange Street is by far the largest consumer of total electricity use per fiscal year and per square foot, at 567,745.2 kWh/year and 8 kWh/sqft respectively, while 556 West Louther Street and Old West are tied for smallest electricity use per square foot, both at 2 kWh/sqft, and 556 West Louther Street has the smallest total electricity use per fiscal year at 4,985.555 kWh/sqft. We see a wide range of variability in electricity use across administrative buildings on campus and the associated costs and greenhouse gas emissions, which will be discussed in the recommendations section of our paper. The EIA categorizes administrative or professional office buildings at other Colleges and Universities as using an average of 227,000 kWh per building per year, at an average of 13.5 kWh/sqft. The median of electricity use per square foot falls at 9.7 kWh/sqft while the low end measurement falls at 6.1 kWh/sq ft and the high end measurement falls at 15.5 kWh/sq ft. It’s important to note that the average square footage per building is 16,800 sqft which is much larger than our three smallest buildings and much smaller than our three largest buildings, making it not an ideal comparison for our building set. 5 North Orange Street at a square footage of 75,000 is almost five times the size of the average administrative building on other college campuses and uses about twice as much electricity per year which indicates that for its size, 5 North Orange Street does seem to be managing electricity use well for its size. Its kWh/sqft even falls below the median and average of electricity use per square foot. As 5 North Orange Street is our largest electricity user in all categories for the fiscal year, this seems to bode well for our other buildings, but size is still an important factor to consider when we make comparisons between an average building size of 16,800 sqft and buildings as low as 1,440 sqft. </code></pre>
-<pre class="r"><code>datatable(final_academic_admin,
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Individual","Submeter","Individual","Individual"],["556 W. Louther St.","41 Conway St.","554 W. Louther St.","Old West","50 Mooreland Ave.","5 N. Orange St. - Facilities"],[100,100,100,92,100,100],[2000,2200,1440,30208,27100,75000],[4986,6277,8520,67247,95137,567745],[4986,6277,8520,73051,95137,567745],[2.5,2.9,5.9,2.2,3.5,7.6],[406,511,693,5945,7743,46206],[1,2,3,22,29,171]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_sqft","targets":6},{"name":"est.cost","targets":7},{"name":"CO2e.MT","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>It’s hard to determine a ‘typical’ administrative building on
+Dickinson College campus given the large variation in square footage;
+generally the larger the square footage, the larger the total
+electricity use. However, examining electricity use per square foot, we
+can see that total electricity use isn’t the best indicator of
+electricity efficiency. 5 North Orange Street is the largest building
+with the largest total electricity use and largest electricity use per
+square foot but 554 West Louther Street is the smallest building with
+the third smallest total electricity use but the second highest
+electricity use per square foot. Using a scale of 2-8 kWh/sqft (2 being
+the smallest kWh/sqft recorded, and 8 being the largest) the average
+kWh/sqft is between Mooreland Avenue and 554 West Louther Street, at
+about 5 kWh/sqft. Based on Mooreland Avenue and 554 West Louther
+Street’s averaged data for kWh/year, cost in USD, and CO2e measured in
+metric tons, the ‘typical’ administrative building may follow the
+following characteristics:</p>
+<ul>
+<li>Square footage: 14,270</li>
+<li>kWh/year: 51/828.5925 kWh/yr</li>
+<li>kWh/sqft: 5 kWh/sqft</li>
+<li>Cost ($): $4,218 -CO2e (MT): 15.591 MT</li>
+</ul>
+<p>5 North Orange Street is by far the largest consumer of total
+electricity use per fiscal year and per square foot, at 567,745 kWh/year
+and 8 kWh/sqft respectively, while 556 West Louther Street and Old West
+are tied for smallest electricity use per square foot, both at 2
+kWh/sqft, and 556 West Louther Street has the smallest total electricity
+use per fiscal year at 4,985 kWh/sqft. We see a wide range of
+variability in electricity use across administrative buildings on campus
+and the associated costs and greenhouse gas emissions, which will be
+discussed in the recommendations section of our paper. The EIA
+categorizes administrative or professional office buildings at other
+Colleges and Universities as using an average of 227,000 kWh per
+building per year, at an average of 13 kWh/sqft. The median of
+electricity use per square foot falls at 9 kWh/sqft while the low end
+measurement falls at 6 kWh/sqft and the high end measurement falls at 15
+kWh/sq ft. It’s important to note that the average square footage per
+building is 16,800 square feet which is much larger than our three
+smallest buildings and much smaller than our three largest buildings,
+making it not an ideal comparison for our building set. 5 North Orange
+Street at a square footage of 75,000 is almost five times the size of
+the average administrative building on other college campuses and uses
+about twice as much electricity per year which indicates that for its
+size, 5 North Orange Street does seem to be managing electricity use
+well for its size. Its kWh/sqft even falls below the median and average
+of electricity use per square foot. As 5 North Orange Street is our
+largest electricity user in all categories for the fiscal year, this
+seems to bode well for our other buildings, but size is still an
+important factor to consider when we make comparisons between an average
+building size of 16,800 square feet and buildings as low as 1,440 square
+feet.</p>
+<pre class="r"><code>datatable(final2_academic_admin,
           rownames = FALSE,
           colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh per year&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;Cost ($)&quot;, &quot;CO2e (MT)&quot;),
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
           options = list(pageLength = 6, autoWidth = TRUE, dom =&#39;t&#39;), caption = &quot;Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Submeter","Individual","Individual","Individual"],["5 N. Orange St. - Facilities","50 Mooreland Ave.","Old West","554 W. Louther St.","41 Conway St.","556 W. Louther St."],[100,100,96.72131147540981,100,100,100],[371381.6,65381.6,51680,5289.361,3684.863,2791.509],[371381.6,65381.6,53431.8644067797,5289.361,3684.863,2791.509],[75000,27100,30208,1440,2200,2000],[null,null,null,null,null,null],[111.721,19.668,16.074,1.591,1.108,0.84],[30225,5321,4349,430,300,227],[5,2,2,4,2,1]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th> <\/th>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9]},{"orderable":false,"targets":0},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"kwh","targets":3},{"name":"kwh_corr","targets":4},{"name":"sqft","targets":5},{"name":"occupants","targets":6},{"name":"GHG.MT","targets":7},{"name":"cost","targets":8},{"name":"kwh_sqft","targets":9}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>###### Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025. The biggest electricity user for the academic year is still 5 North Orange Street at 371,381.6 kWh/year and 5 kWh/sqftt while the smallest electricity user is 556 West Louther Street at 2,791.509 kWh per year and 1 kWh/sqft. This is different from the fiscal year where Old West is overall one of the smallest electricity users per square foot whereas during the academic year Old West becomes one of the second least electricity users per square foot. While this doesn’t seem to be a big change, Old West is tied with 50 Mooreland Avenue and 41 Conway Street for second least, with Old West having the largest electricity use per year out of the three of them. There is less variability during the academic year compared to the fiscal year which could be due to having more data for Old West for the academic year than we have for the fiscal year, though it should still be emphasized we only have 96% of academic year days of data compared to the other buildings’ 100%. Dickinson College’s administrative buildings’ electricity use still remains low compared to the administrative buildings on other college campuses compiled by the EIA, both in terms of total electricity use and per square foot but it is important again to note the vast difference in average size of other colleges’ administrative buildings compared to ours.  </code></pre>
-<pre class="r"><code>library(tidyverse)
-library(paletteer)
-
-ggplot(admin_daily_df, aes(x = month, y = kwh, fill = NAME)) +
-  geom_col() +
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Individual","Submeter","Individual","Individual"],["556 W. Louther St.","41 Conway St.","554 W. Louther St.","Old West","50 Mooreland Ave.","5 N. Orange St. - Facilities"],[100,100,100,97,100,100],[2000,2200,1440,30208,27100,75000],[2792,3685,5289,51680,65382,371382],[2792,3685,5289,53432,65382,371382],[1.4,1.7,3.7,1.7,2.4,5],[227,300,430,4349,5321,30225],[1,1,2,16,20,112]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_sqft","targets":6},{"name":"est.cost","targets":7},{"name":"CO2e.MT","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>The biggest electricity user for the academic year is still 5 North
+Orange Street at 371,381 kWh/year and 5 kWh/sqft while the smallest
+electricity user is 556 West Louther Street at 2,791 kWh per year and 1
+kWh/sqft. This is different from the fiscal year where Old West is
+overall one of the smallest electricity users per square foot whereas
+during the academic year Old West becomes one of the second least
+electricity users per square foot. While this doesn’t seem to be a big
+change, Old West is tied with 50 Mooreland Avenue and 41 Conway Street
+for second least, with Old West having the largest electricity use per
+year out of the three of them. There is less variability during the
+academic year compared to the fiscal year which could be due to having
+more data for Old West for the academic year than we have for the fiscal
+year, though it should still be emphasized we only have 96% of academic
+year days of data compared to the other buildings’ 100%. Dickinson
+College’s administrative buildings’ electricity use still remains low
+compared to the administrative buildings on other college campuses
+compiled by the EIA, both in terms of total electricity use and per
+square foot but it is important again to note the vast difference in
+average size of other colleges’ administrative buildings compared to
+ours.</p>
+<pre class="r"><code>ggplot(daily_admin) +
+  geom_col(aes(x = month, y = kwh, fill = NAME)) +
   facet_wrap(~ NAME) +
-  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
   theme_bw() +
-  theme(
-    axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1),
-    legend.position = &quot;none&quot;
-  ) +
-  labs(
-    title = &quot;Monthly patterns in electricity use by building for Admin buildings in FY25&quot;,
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), legend.position = &quot;none&quot;) +
+  labs(title = &quot;Figure 1. Monthly patterns in electricity use for Administrative buildings&quot;,
+       subtitle = &quot;Fiscal Year 2025&quot;,
     x = NULL,
-    y = &quot;Electricity use (kWh)&quot;
-  )</code></pre>
-<pre><code>Warning: Removed 29 rows containing missing values or values outside the scale range
-(`geom_col()`).</code></pre>
-<p><img src="figure/Report_I_Admin.rmd/Figure_1-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+    y = &quot;Electricity use (kWh)&quot;)</code></pre>
+<p><img src="figure/Report_I_Admin.Rmd/Figure_1-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-Figure_1-1">
 Past versions of Figure_1-1.png
@@ -1027,36 +985,30 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>###### Figure 1. Monthly changes in how much electricity administrative buildings used in FY25. This bar plot with facets shows how much electricity (in kWh) the college&#39;s administrative buildings used each month. Note: There is a known gap in data collection for all buildings connected to the Weiss Meter (including Old West) during part of August. This makes the reported total for that month seem lower than it really is. </code></pre>
+<p><em>Note:</em> There is a known gap in data collection for all
+buildings connected to the Main Meter (including Old West) during part
+of August. This makes the reported total for that month seem lower than
+it really is.</p>
 <pre class="r"><code>eia_median &lt;- 10.1
 eia_q25 &lt;- 6.1    
-eia_q75 &lt;- 15.7   
-
-ggplot(admin_daily_df, aes(
-    x = reorder(NAME, kwh_sqft_yr, FUN = median, na.rm = TRUE), 
+eia_q75 &lt;- 15.7  </code></pre>
+<pre class="r"><code>ggplot(daily_admin, aes(x = reorder(NAME, kwh_sqft_yr, FUN = median, na.rm = TRUE), 
     y = kwh_sqft_yr,
-    fill = NAME
-  )) +
+    fill = NAME)) +
   annotate(&quot;rect&quot;, ymin = eia_q25, ymax = eia_q75, xmin = -Inf, xmax = Inf, 
            alpha = 0.2, fill = &quot;gray50&quot;) +
   geom_hline(yintercept = eia_median, linetype = &quot;dashed&quot;, color = &quot;black&quot;, linewidth = 0.8) +
   geom_boxplot(alpha = 0.9, outlier.alpha = 0.5) +
-  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
   coord_flip() +
   facet_wrap(~ period) +
   theme_bw() +
-  theme(
-    legend.position = &quot;none&quot;
-  ) +
-  labs(
-    title = &quot;Electricity intensity by building for Admin buildings in FY25.&quot;,
-    subtitle = &quot;Dashed line = EIA 2018 Median; Gray band = EIA 2018 IQR&quot;,
+  theme(legend.position = &quot;none&quot;) +
+  labs(title = &quot;Figure 2. Electricity intensity Administrative buildings&quot;,
+    subtitle = &quot;Fiscal Year 2025&quot;,
+       caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College/University buildings (EIA 2022)&quot;,
     x = NULL, 
-    y = &quot;Electricity Intensity (kWh/sqft/year)&quot;
-  )</code></pre>
-<pre><code>Warning: Removed 29 rows containing non-finite outside the scale range
-(`stat_boxplot()`).</code></pre>
-<p><img src="figure/Report_I_Admin.rmd/Figure%202-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
+    y = &quot;Electricity Intensity (kWh/sqft/year)&quot;)</code></pre>
+<p><img src="figure/Report_I_Admin.Rmd/Figure%202-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-Figure-2-1">
 Past versions of "Figure 2-1.png"
@@ -1094,88 +1046,89 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>###### Figure 2. Annualized daily electricity intensity by academic period and administrative building. This faceted boxplot shows how the daily electricity intensity (kWh/sqft/year) for administrative buildings changes throughout the year. The median usage of a building is used to rank it from highest to lowest. The horizontal dashed black line shows the national median (10.1 kWh/sqft/year), and the shaded gray band shows the interquartile range (6.1 to 15.7 kWh/sqft/year) from the EIA 2018 Commercial Buildings Energy Consumption Survey. </code></pre>
-</div>
-</div>
-<div id="recommendations" class="section level2">
-<h2>Recommendations</h2>
-<div
-id="as-mentioned-old-west-is-on-a-submeter-off-of-the-weiss-meter-and-only-has-92-of-days-of-data-for-the-whole-year.-the-missing-8-of-data-is-partially-during-the-academic-year-making-the-percentage-of-days-of-data-available-for-the-academic-year-96.-applying-the-same-analysis-to-a-year-with-complete-data-for-old-west-is-highly-recommended-as-it-seems-old-west-is-one-of-the-largest-administrative-buildings-but-has-relatively-low-electricity-intensity-however-we-cannot-rule-out-that-this-result-may-be-due-to-the-data-missing.-context-is-also-key-for-these-administrative-buildings-as-they-vary-drastically-in-square-footage-open-hours-and-use.-square-footage-is-taken-into-account-but-knowing-what-hours-and-days-of-the-week-these-buildings-are-in-use-and-what-equipment-is-used-there-could-help-explain-findings.-we-can-guess-what-days-and-times-of-the-week-buildings-are-open-based-on-what-use-information-is-provided-for-them-but-knowing-what-the-rotc-offices-do-or-when-case-utilizes-5-north-orange-street-could-provide-specific-information-not-inferrable-from-our-findings.based-off-of-the-information-for-similarly-situated-administrative-buildings-on-college-campuses-provided-by-the-eia-dickinson-is-seemingly-doing-well-in-relation-to-electricity-use-in-administrative-buildings-but-it-is-important-that-we-gather-more-data-for-buildings-similar-in-specific-uses-and-sizes-as-the-information-provided-by-the-eia-is-not-very-similar-to-that-of-dickinsons-administrative-buildings.554-west-louther-street-should-be-investigated-further---it-is-the-smallest-building-in-terms-of-square-footage-on-our-list-yet-it-uses-the-second-highest-kwh-per-academic-year-and-per-square-footage-for-both-fiscal-and-academic-year.-in-addition-our-portion-of-5-north-orange-streets-findings-should-be-compared-to-the-other-uses-of-5-north-orange-street-in-the-other-building-category-to-understand-if-the-building-uses-a-large-amount-of-electricity-overall-or-if-specific-departments-are-making-up-more-of-use-than-others.-our-portion-of-5-north-orange-street-contains-the-office-of-conferences-and-special-events-facilities-storage-and-the-print-center.-the-other-category-contains-central-pennsylvania-youth-ballet-and-project-share.-doing-the-same-analysis-using-a-complete-year-of-data-for-all-the-buildings-on-the-list-including-the-submetered-data-of-old-west-is-a-good-idea-for-future-investigation.-if-we-could-compile-that-data-we-could-compare-old-west-more-effectively-with-50-mooreland-avenue-who-are-similar-in-their-uses-and-square-footage-but-based-on-our-findings-have-significantly-different-electricity-use.-old-west-uses-half-as-much-kwh-per-square-foot-as-mooreland-avenue-does-despite-being-a-larger-building.-however-since-we-only-have-92-of-the-years-data-for-old-west-compared-to-mooreland-avenues-100-we-cannot-rule-out-the-possibility-that-the-8-of-data-we-are-missing-for-old-west-may-make-them-more-comparable.-old-west-seems-to-use-more-electricity-during-the-academic-year-as-compared-to-the-fiscal-year-which-makes-sense-when-you-consider-the-uses-of-the-building-are-mainly-for-the-academic-year.-however-it-may-be-useful-to-analyze-habits-used-by-the-departments-who-use-the-building-year-round-as-opposed-to-those-who-use-it-only-for-the-academic-year-to-understand-if-there-is-any-difference-that-may-be-adjusted-to-lower-electricity-use-during-the-academic-year-to-a-level-more-similar-to-the-fiscal-year."
-class="section level6">
-<h6>As mentioned, Old West is on a submeter off of the Weiss Meter and
-only has 92% of days of data for the whole year. The missing 8% of data
-is partially during the academic year, making the percentage of days of
-data available for the academic year 96%. Applying the same analysis to
-a year with complete data for Old West is highly recommended as it seems
-Old West is one of the largest administrative buildings but has
-relatively low electricity intensity, however, we cannot rule out that
-this result may be due to the data missing. Context is also key for
-these administrative buildings as they vary drastically in square
-footage, open hours, and use. Square footage is taken into account, but
-knowing what hours and days of the week these buildings are in use and
-what equipment is used there could help explain findings. We can guess
-what days and times of the week buildings are open based on what use
+<div id="recommendations" class="section level3">
+<h3>Recommendations</h3>
+<p>Overall, Dickinson’s administrative buildings are performing on
+average below the electricity intensity of administrative buildings
+studied by the EIA (Figure 2). However, there are outliers and a few
+upper level bounds that fall above EIA averages for administrative
+buildings. These include 554 West Louther Street in the Spring Semester
+and Summer Break, 5 North Orange Street in all academic periods, and 41
+Conway Street during Summer Break (Figure 2). Studying these outliers
+and contextualizing those measurements may provide insight to how we can
+eliminate high electricity usage in certain situations.</p>
+<p>In terms of limitations for our data, as mentioned, Old West is on a
+submeter off of the Weis Meter and only has 92% of days of data for the
+whole year (Table 1). The missing 8% of data is partially during the
+academic year, making the percentage of days of data available for the
+academic year 96% (Table 2). While this may appear to affect our data
+and analysis, the small percentage of days missing does not
+significantly impact the patterns found in Figures 1 and 2. A different
+limitation we are facing is the lack of similarly sized administrative
+buildings on campus. As Tables 1 and 2 show, the range in square footage
+of our administrative buildings on campus is wide and makes it hard to
+compare similarly sized Dickinson administrative buildings to understand
+if the electricity intensity for these buildings is consistent with
+Dickinson buildings of this size and usage.</p>
+<p>We have a few ideas for more exploration based on the data we’ve
+seen. 554 West Louther Street should be investigated further - it is the
+smallest building in terms of square footage on our list yet it uses the
+second highest kWh per academic year and per square footage for both
+fiscal and academic year (Tables 1 and 2). In addition, our portion of 5
+North Orange Street’s findings should be compared to the other uses of 5
+North Orange Street in the “Other” Building category to understand if
+the building uses a large amount of electricity overall or if specific
+departments are making up more of use than others. Our portion of 5
+North Orange Street contains the Office of Conferences and Special
+Events, Facilities Storage, and the Print Center. The “Other” category
+contains Central Pennsylvania Youth Ballet and Project SHARE (Please
+refer to the Building List provided by Facilities).</p>
+<p>We could compare Old West more effectively with 50 Mooreland Avenue
+which is similar in their uses and square footage but based on our
+findings have significantly different electricity use. Old West uses
+half as much kWh per square foot as Mooreland Avenue. Old West seems to
+use more electricity during the academic year as compared to the fiscal
+year, which makes sense when you consider the uses of the building are
+mainly for the academic year (Tables 1 and 2). However, it may be useful
+to analyze habits used by the departments who use the building year
+round as opposed to those who use it only for the academic year to
+understand if there is any difference that may be adjusted to lower
+electricity use during the academic year to a level more similar to the
+fiscal year.</p>
+<p>Context is also key for these administrative buildings as they vary
+drastically in square footage, open hours, and use. Square footage is
+taken into account in Tables 1 and 2 and Figures 1 and 2, but knowing
+what hours and days of the week these buildings are in use and what
+equipment is used there could help explain findings. We can guess what
+days and times of the week buildings are open based on what use
 information is provided for them, but knowing what the ROTC offices do
 or when CASE utilizes 5 North Orange Street could provide specific
-information not inferrable from our findings.Based off of the
-information for similarly situated administrative buildings on college
-campuses, provided by the EIA, Dickinson is seemingly doing well in
-relation to electricity use in administrative buildings, but it is
-important that we gather more data for buildings similar in specific
-uses and sizes as the information provided by the EIA is not very
-similar to that of Dickinson’s administrative buildings.554 West Louther
-Street should be investigated further - it is the smallest building in
-terms of square footage on our list yet it uses the second highest kWh
-per academic year and per square footage for both fiscal and academic
-year. In addition, our portion of 5 North Orange Street’s findings
-should be compared to the other uses of 5 North Orange Street in the
-“Other” Building category to understand if the building uses a large
-amount of electricity overall or if specific departments are making up
-more of use than others. Our portion of 5 North Orange Street contains
-the Office of Conferences and Special Events, Facilities Storage, and
-the Print Center. The “Other” category contains Central Pennsylvania
-Youth Ballet and Project SHARE. Doing the same analysis using a complete
-year of data for all the buildings on the list including the submetered
-data of Old West is a good idea for future investigation. If we could
-compile that data we could compare Old West more effectively with 50
-Mooreland Avenue who are similar in their uses and square footage but
-based on our findings have significantly different electricity use. Old
-West uses half as much kWh per square foot as Mooreland Avenue does
-despite being a larger building. However, since we only have 92% of the
-year’s data for Old West compared to Mooreland Avenue’s 100% we cannot
-rule out the possibility that the 8% of data we are missing for Old West
-may make them more comparable. Old West seems to use more electricity
-during the academic year as compared to the fiscal year, which makes
-sense when you consider the uses of the building are mainly for the
-academic year. However, it may be useful to analyze habits used by the
-departments who use the building year round as opposed to those who use
-it only for the academic year to understand if there is any difference
-that may be adjusted to lower electricity use during the academic year
-to a level more similar to the fiscal year.</h6>
+information not inferrable from our findings.</p>
 </div>
 </div>
 <div id="sources" class="section level2">
 <h2>Sources</h2>
-<div
-id="learyn.-2025.-dickinson-college-greenhouse-gas-inventory.-dickinson-college.u.s.-energy-information-administration.-2022.-2018-commercial-buildings-energy-consumption-survey-cbecs.-u.s.-department-of-energy.-httpswww.eia.govconsumptioncommercial"
-class="section level6">
-<h6>Leary,N. (2025). <em>Dickinson College greenhouse gas
-inventory</em>. Dickinson College.U.S. Energy Information
-Administration. (2022). <em>2018 Commercial Buildings Energy Consumption
-Survey (CBECS)</em>. U.S. Department of Energy. <a
-href="https://www.eia.gov/consumption/commercial/"
-class="uri">https://www.eia.gov/consumption/commercial/</a></h6>
+<p>Leary, N. (2025). <em>Dickinson College greenhouse gas
+inventory</em>. Dickinson College.</p>
+<p>U.S. Energy Information Administration. (2022). <em>2018 Commercial
+Buildings Energy Consumption Survey (CBECS)</em>. U.S. Department of
+Energy. <a href="https://www.eia.gov/consumption/commercial/"
+class="uri">https://www.eia.gov/consumption/commercial/</a>.</p>
 </div>
+<div id="statement-of-ai-use" class="section level2">
+<h2>Statement of AI Use</h2>
+<p>Amiya used AI to create Figures 1 and 2. Eva did not use AI to create
+Tables 1 and 2. No writing was created using AI.</p>
 </div>
 <div id="partner-contributions" class="section level2">
 <h2>Partner Contributions</h2>
-<div
-id="amiya-did-the-background-section-adapted-eva-i-code-from-ps5-into-our-report-section-1-prepare-data-section-and-figure-1-and-2.-as-well-as-the-electricty-use-summary-and-sources.-eva-did-the-table-1-and-table-2-as-well-as-the-recommendation-section."
-class="section level6">
-<h6>Amiya did the Background section, adapted Eva &amp; I code from PS5
-into our report section 1, prepare data section, and Figure 1 and 2. As
-well as the Electricty use summary and sources. Eva did the Table 1 and
-table 2 as well as the recommendation section.</h6>
+<p>Amiya did the Background section, adapting her &amp; Eva’s code from
+PS5 into Report Section 1. Both prepared data to create their respective
+figures/tables. Amita created Figures 1 and 2. Eva created Tables 1 and
+2. Amiya wrote the Electricity Use Summary section and Eva wrote the
+Recommendations section. Both prepared the Sources, Partner
+Contributions, and Statement of AI Use. Each conducted the revisions for
+their respective sections.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1203,29 +1156,25 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] rmarkdown_2.30     paletteer_1.7.0    DT_0.34.0          lubridate_1.9.5   
- [5] forcats_1.0.1      stringr_1.6.0      purrr_1.2.1        tidyr_1.3.2       
- [9] tibble_3.3.1       ggplot2_4.0.2      tidyverse_2.0.0    RColorBrewer_1.1-3
-[13] readr_2.2.0        dplyr_1.2.0        workflowr_1.7.2   
+ [1] DT_0.34.0          rmarkdown_2.30     RColorBrewer_1.1-3 lubridate_1.9.5   
+ [5] forcats_1.0.1      stringr_1.6.0      dplyr_1.2.0        purrr_1.2.1       
+ [9] readr_2.2.0        tidyr_1.3.2        tibble_3.3.1       tidyverse_2.0.0   
+[13] ggplot2_4.0.2     
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6      xfun_0.56         bslib_0.10.0      htmlwidgets_1.6.4
- [5] processx_3.8.6    callr_3.7.6       tzdb_0.5.0        vctrs_0.7.1      
- [9] tools_4.5.2       crosstalk_1.2.2   ps_1.9.1          generics_0.1.4   
-[13] parallel_4.5.2    pkgconfig_2.0.3   S7_0.2.1          lifecycle_1.0.5  
-[17] compiler_4.5.2    farver_2.1.2      git2r_0.36.2      getPass_0.2-4    
-[21] httpuv_1.6.16     htmltools_0.5.9   sass_0.4.10       yaml_2.3.12      
-[25] later_1.4.8       pillar_1.11.1     crayon_1.5.3      jquerylib_0.1.4  
-[29] whisker_0.4.1     cachem_1.1.0      tidyselect_1.2.1  digest_0.6.39    
-[33] stringi_1.8.7     rematch2_2.1.2    labeling_0.4.3    rprojroot_2.1.1  
-[37] fastmap_1.2.0     grid_4.5.2        cli_3.6.5         magrittr_2.0.4   
-[41] utf8_1.2.6        withr_3.0.2       scales_1.4.0      promises_1.5.0   
-[45] bit64_4.6.0-1     timechange_0.4.0  httr_1.4.8        bit_4.6.0        
-[49] otel_0.2.0        hms_1.1.4         evaluate_1.0.5    knitr_1.51       
-[53] rlang_1.1.7       Rcpp_1.1.1        glue_1.8.0        rstudioapi_0.18.0
-[57] vroom_1.7.0       jsonlite_2.0.0    R6_2.6.1          prismatic_1.1.2  
-[61] fs_1.6.7         </code></pre>
-</div>
+ [1] sass_0.4.10       generics_0.1.4    stringi_1.8.7     hms_1.1.4        
+ [5] digest_0.6.39     magrittr_2.0.4    timechange_0.4.0  evaluate_1.0.5   
+ [9] grid_4.5.2        fastmap_1.2.0     rprojroot_2.1.1   workflowr_1.7.2  
+[13] jsonlite_2.0.0    whisker_0.4.1     promises_1.5.0    crosstalk_1.2.2  
+[17] scales_1.4.0      jquerylib_0.1.4   cli_3.6.5         rlang_1.1.7      
+[21] withr_3.0.2       cachem_1.1.0      yaml_2.3.12       otel_0.2.0       
+[25] tools_4.5.2       tzdb_0.5.0        httpuv_1.6.16     vctrs_0.7.1      
+[29] R6_2.6.1          lifecycle_1.0.5   git2r_0.36.2      htmlwidgets_1.6.4
+[33] fs_1.6.7          pkgconfig_2.0.3   pillar_1.11.1     bslib_0.10.0     
+[37] later_1.4.8       gtable_0.3.6      glue_1.8.0        Rcpp_1.1.1       
+[41] xfun_0.56         tidyselect_1.2.1  rstudioapi_0.18.0 knitr_1.51       
+[45] farver_2.1.2      htmltools_0.5.9   labeling_0.4.3    compiler_4.5.2   
+[49] S7_0.2.1         </code></pre>
 </div>
 </div>
 </div>
