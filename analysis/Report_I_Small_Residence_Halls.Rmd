@@ -107,14 +107,15 @@ As seen in Table 1, for the 2025 fiscal year, electricity use among small reside
 datatable(annual_s_residential, rownames = FALSE,
           filter = "none",
           class = "compact",
-          options = list(pageLength = 18, autoWidth = TRUE, dom = 't'),
+          options = list(pageLength = 10, autoWidth = TRUE, dom = 'p'),
           caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.")
 ```
+
 ```{r table_ay}
 datatable(academic_s_residential, rownames = FALSE,
           filter = "none",
           class = "compact",
-          options = list(pageLength = 18, autoWidth = TRUE, dom = 't'),
+          options = list(pageLength = 10, autoWidth = TRUE, dom = 'p'),
           caption = "Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.")
 ```
 

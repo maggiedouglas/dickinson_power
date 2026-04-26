@@ -431,7 +431,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -442,8 +442,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -456,9 +456,9 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -481,18 +481,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown file has unstaged changes. To know which version of
+the R Markdown file created these results, you’ll want to first commit
+it to the Git repo. If you’re still working on the analysis, you can
+ignore this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -583,15 +586,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeccedb67757e57eaf7ab2c1dd41058b9a62b11bd7targetblankccedb67a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreed048351b4d6687e9ffdbbc0ec5f42dd50dae9441targetblankd048351a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7" target="_blank">ccedb67</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/d048351b4d6687e9ffdbbc0ec5f42dd50dae9441" target="_blank">d048351</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeccedb67757e57eaf7ab2c1dd41058b9a62b11bd7targetblankccedb67a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreed048351b4d6687e9ffdbbc0ec5f42dd50dae9441targetblankd048351a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -601,7 +604,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7" target="_blank">ccedb67</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/d048351b4d6687e9ffdbbc0ec5f42dd50dae9441" target="_blank">d048351</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -673,6 +676,9 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
+Unstaged changes:
+    Modified:   analysis/Report_I_Small_Residence_Halls.Rmd
+
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not
@@ -717,6 +723,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/d048351b4d6687e9ffdbbc0ec5f42dd50dae9441/docs/Report_I_Small_Residence_Halls.html" target="_blank">d048351</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-26
+</td>
+<td>
+update small halls
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -931,17 +954,17 @@ to more than 2,000 square feet.</p>
 <pre class="r"><code>datatable(annual_s_residential, rownames = FALSE,
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
-          options = list(pageLength = 18, autoWidth = TRUE, dom = &#39;t&#39;),
+          options = list(pageLength = 10, autoWidth = TRUE, dom = &#39;p&#39;),
           caption = &quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","505 W. Louther St.","519 W. Louther St.","417 W. Louther St.","513 W. Louther St.","529 W. Louther St.","531 W. Louther St.","425 W. Louther St.","509 W. Louther St.","2 Conway St.","521 W. Louther St.","527 W. Louther St.","538 W. Louther St.","515 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1492,1330,1462,1532,1352,1636,1318,1532,1729,1448,1244,1200,1268,725],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[5.8,5.2,7.3,6,5.9,6.2,5.6,5.2,5.7,4.5,5.6,4.6,3.2,3.5,4,3.8,3.4,2.7],["$ 1508","$ 1271","$ 1126","$ 730","$ 714","$ 675","$ 660","$ 644","$ 624","$ 600","$ 596","$ 575","$ 451","$ 414","$ 407","$ 373","$ 354","$ 159"],[5.6,4.7,4.2,2.7,2.6,2.5,2.4,2.4,2.3,2.2,2.2,2.1,1.7,1.5,1.5,1.4,1.3,0.6]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":18,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,8]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"kWh","targets":4},{"name":"kWh (corrected)","targets":5},{"name":"kWh per sqft","targets":6},{"name":"Cost ($)","targets":7},{"name":"CO2e (MT)","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,18,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","505 W. Louther St.","519 W. Louther St.","417 W. Louther St.","513 W. Louther St.","529 W. Louther St.","531 W. Louther St.","425 W. Louther St.","509 W. Louther St.","2 Conway St.","521 W. Louther St.","527 W. Louther St.","538 W. Louther St.","515 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1492,1330,1462,1532,1352,1636,1318,1532,1729,1448,1244,1200,1268,725],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[5.8,5.2,7.3,6,5.9,6.2,5.6,5.2,5.7,4.5,5.6,4.6,3.2,3.5,4,3.8,3.4,2.7],["$ 1508","$ 1271","$ 1126","$ 730","$ 714","$ 675","$ 660","$ 644","$ 624","$ 600","$ 596","$ 575","$ 451","$ 414","$ 407","$ 373","$ 354","$ 159"],[5.6,4.7,4.2,2.7,2.6,2.5,2.4,2.4,2.3,2.2,2.2,2.1,1.7,1.5,1.5,1.4,1.3,0.6]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"dom":"p","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,8]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"kWh","targets":4},{"name":"kWh (corrected)","targets":5},{"name":"kWh per sqft","targets":6},{"name":"Cost ($)","targets":7},{"name":"CO2e (MT)","targets":8}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>datatable(academic_s_residential, rownames = FALSE,
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
-          options = list(pageLength = 18, autoWidth = TRUE, dom = &#39;t&#39;),
+          options = list(pageLength = 10, autoWidth = TRUE, dom = &#39;p&#39;),
           caption = &quot;Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","417 W. Louther St.","519 W. Louther St.","509 W. Louther St.","513 W. Louther St.","425 W. Louther St.","505 W. Louther St.","529 W. Louther St.","531 W. Louther St.","521 W. Louther St.","527 W. Louther St.","2 Conway St.","515 W. Louther St.","538 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1462,1330,1532,1532,1318,1492,1352,1636,1448,1244,1729,1268,1200,725],[8,6,4,5,5,4,5,5,4,5,5,6,6,4,4,6,3,null],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[3.2,2.8,4.2,4.6,4,3.9,3.3,3.2,3.6,3,3.3,2.2,2.2,2.5,1.7,2.2,1.7,2],[1269,1413,1998,1362,1163,1307,1009,977,1338,892,879,605,540,769,740,460,694,null],["$ 826","$ 690","$ 650","$ 554","$ 473","$ 425","$ 411","$ 398","$ 381","$ 363","$ 358","$ 296","$ 264","$ 250","$ 241","$ 225","$ 169","$ 120"],[3.1,2.6,2.4,2,1.7,1.6,1.5,1.5,1.4,1.3,1.3,1.1,1,0.9,0.9,0.8,0.6,0.4]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>Occupants (AY)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":18,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,10]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"Occupants (AY)","targets":4},{"name":"kWh","targets":5},{"name":"kWh (corrected)","targets":6},{"name":"kWh per sqft","targets":7},{"name":"kWh per person","targets":8},{"name":"Cost ($)","targets":9},{"name":"CO2e (MT)","targets":10}],"order":[],"orderClasses":false,"lengthMenu":[10,18,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","417 W. Louther St.","519 W. Louther St.","509 W. Louther St.","513 W. Louther St.","425 W. Louther St.","505 W. Louther St.","529 W. Louther St.","531 W. Louther St.","521 W. Louther St.","527 W. Louther St.","2 Conway St.","515 W. Louther St.","538 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1462,1330,1532,1532,1318,1492,1352,1636,1448,1244,1729,1268,1200,725],[8,6,4,5,5,4,5,5,4,5,5,6,6,4,4,6,3,null],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[3.2,2.8,4.2,4.6,4,3.9,3.3,3.2,3.6,3,3.3,2.2,2.2,2.5,1.7,2.2,1.7,2],[1269,1413,1998,1362,1163,1307,1009,977,1338,892,879,605,540,769,740,460,694,null],["$ 826","$ 690","$ 650","$ 554","$ 473","$ 425","$ 411","$ 398","$ 381","$ 363","$ 358","$ 296","$ 264","$ 250","$ 241","$ 225","$ 169","$ 120"],[3.1,2.6,2.4,2,1.7,1.6,1.5,1.5,1.4,1.3,1.3,1.1,1,0.9,0.9,0.8,0.6,0.4]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>Occupants (AY)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":10,"autoWidth":true,"dom":"p","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,10]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"Occupants (AY)","targets":4},{"name":"kWh","targets":5},{"name":"kWh (corrected)","targets":6},{"name":"kWh per sqft","targets":7},{"name":"kWh per person","targets":8},{"name":"Cost ($)","targets":9},{"name":"CO2e (MT)","targets":10}],"order":[],"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
 <p>As seen in Figure 1, most of the small residence halls observed a
 peak in electricity use during the summer months (June-August), while a
 few had electricity use evenly distributed throughout the year. A
