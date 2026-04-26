@@ -11,9 +11,9 @@
 
 <meta name="author" content="Luke Heller &amp; Valerie Larsen" />
 
-<meta name="date" content="2026-04-13" />
+<meta name="date" content="2026-04-26" />
 
-<title>Small Residence Halls</title>
+<title>Small Residential Buildings</title>
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -345,10 +345,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">About</a>
+  <a href="about.html">Introduction</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Data prep</a>
+  <a href="data_wrangling_final.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -357,9 +357,6 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="campus_summary.html">All buildings</a>
-    </li>
     <li>
       <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
@@ -424,9 +421,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Small Residence Halls</h1>
+<h1 class="title toc-ignore">Small Residential Buildings</h1>
 <h4 class="author">Luke Heller &amp; Valerie Larsen</h4>
-<h4 class="date">04/13/26</h4>
+<h4 class="date">04/26/26</h4>
 
 </div>
 
@@ -434,7 +431,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -445,8 +442,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -455,13 +452,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-13
+<strong>Last updated:</strong> 2026-04-26
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -484,18 +481,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -586,15 +586,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree96b1e0998bad2f0654b01fa5a8bdbf8f0085175atargetblank96b1e09a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/96b1e0998bad2f0654b01fa5a8bdbf8f0085175a" target="_blank">96b1e09</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree96b1e0998bad2f0654b01fa5a8bdbf8f0085175atargetblank96b1e09a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -604,7 +604,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/96b1e0998bad2f0654b01fa5a8bdbf8f0085175a" target="_blank">96b1e09</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -630,6 +630,7 @@ Ignored files:
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
     Ignored:    data/housing_counts.csv
+    Ignored:    data/~$building_list_FY25_updated.xlsx
     Ignored:    keys/.DS_Store
     Ignored:    output/annual_kwh.csv
     Ignored:    output/building_check.csv
@@ -675,9 +676,8 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
-Unstaged changes:
-    Modified:   analysis/main_meter_mod_vis.Rmd
-    Modified:   analysis/main_meter_regression.Rmd
+Untracked files:
+    Untracked:  analysis/Report_I_Small_Residence_Halls.Rmd
 
 </code></pre>
 <p>
@@ -723,6 +723,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d34161b8d717b41f39a7b35fa9bbbfff7334d6d6/analysis/Report_I_Small_Residence_Halls.Rmd" target="_blank">d34161b</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+<td>
+update academic section of Part 1
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/Report_I_Small_Residence_Halls.html" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -818,87 +852,74 @@ change navigation bar and add student report sections
 <div id="background" class="section level2">
 <h2>Background</h2>
 <p>The small residential building category includes all on-campus
-residence halls that are smaller than 2,000 square feet. (135 N. College
-St. shares a meter with 139 N. College St. and 49 S. College St. shares
-a meter with 51 S. College St. Each of these individual buildings are
-smaller than 2,000 square feet, but the square footage for each of these
-two meters adds up to more than 2,000 square feet.) This building
-category primarily contains small apartments as well as some townhouses
-that house students during the academic year.</p>
+student residences that are smaller than 2,000 square feet. This
+building category primarily contains small apartments as well as some
+townhouses that house between three and eight students during the
+academic year; the exception is Carriage House, which was unoccupied
+during the 2024-2025 academic year and used only for temporary housing
+assignments (Mike Kiner, personal communication, March 2026). Most of
+the buildings in this category were likely unoccupied during summer
+break.</p>
 <p>There are 19 buildings in this category. One of these buildings (169
 W. High St.) is located on the main meter; the other 18 buildings are
 individually metered. Together, these buildings comprise 30,353 square
-feet. This is the smallest total square footage among the different
-building categories. Most of these buildings were built in the late 19th
-and early 20th centuries and acquired by Dickinson in the late 20th and
-early 21st centuries. Additionally, almost all of these buildings have
-been renovated within the last decade.</p>
-<pre class="r"><code>str(annual_kwh)</code></pre>
-<pre><code>&#39;data.frame&#39;:   99 obs. of  8 variables:
- $ type     : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
- $ meter    : chr  &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; ...
- $ NAME     : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;Carlisle Theatre&quot; ...
- $ days_perc: num  100 100 100 100 100 ...
- $ kwh      : num  9217 6493 12221 29070 21575 ...
- $ kwh_corr : num  9217 6493 12221 29070 21575 ...
- $ sqft     : int  2500 1775 4576 4000 2500 29133 33692 11039 22000 120000 ...
- $ occupants: num  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
-<pre class="r"><code>str(daily_kwh)</code></pre>
-<pre><code>&#39;data.frame&#39;:   37230 obs. of  10 variables:
- $ type     : chr  &quot;Residential - M&quot; &quot;Residential - M&quot; &quot;Residential - M&quot; &quot;Residential - M&quot; ...
- $ meter    : chr  &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; ...
- $ NAME     : chr  &quot;100 S. West St.&quot; &quot;100 S. West St.&quot; &quot;100 S. West St.&quot; &quot;100 S. West St.&quot; ...
- $ days_perc: num  100 100 100 100 100 100 100 100 100 100 ...
- $ sqft     : int  7190 7190 7190 7190 7190 7190 7190 7190 7190 7190 ...
- $ occupants: num  19 19 19 19 19 19 19 19 19 19 ...
- $ period   : chr  &quot;Summer Break&quot; &quot;Summer Break&quot; &quot;Summer Break&quot; &quot;Summer Break&quot; ...
- $ date     : chr  &quot;2024-07-01&quot; &quot;2024-07-02&quot; &quot;2024-07-03&quot; &quot;2024-07-04&quot; ...
- $ kwh      : num  98.5 106.7 122.8 135.9 138 ...
- $ ave_temp : int  69 73 78 81 84 86 84 84 86 87 ...</code></pre>
-<pre class="r"><code>str(academic_kwh)</code></pre>
-<pre><code>&#39;data.frame&#39;:   99 obs. of  8 variables:
- $ type     : chr  &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; &quot;Academic&quot; ...
- $ meter    : chr  &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; &quot;Individual&quot; ...
- $ NAME     : chr  &quot;162-164 Dickinson Ave.&quot; &quot;46 S. West St.&quot; &quot;57 S. College&quot; &quot;Carlisle Theatre&quot; ...
- $ days_perc: num  100 100 100 100 100 ...
- $ kwh      : num  4986 3208 8443 15478 15421 ...
- $ kwh_corr : num  4986 3208 8443 15478 15421 ...
- $ sqft     : int  2500 1775 4576 4000 2500 29133 33692 11039 22000 120000 ...
- $ occupants: num  NA NA NA NA NA NA NA NA NA NA ...</code></pre>
+feet (1.5% of campus building space). This is the smallest total square
+footage among the different building categories. Most of these buildings
+were built in the late 19th and early 20th centuries and acquired by
+Dickinson in the late 20th and early 21st centuries. Additionally,
+almost all of these buildings have been renovated within the last
+decade.</p>
+<p>Comprehensive information about appliances and HVAC systems is not
+available for the small residential buildings, but the available
+information provides some insight. All small residence halls on West
+Louther Street have one main fridge but no dishwasher, laundry washer,
+or dryer (L. Burchel, personal communication, April 18th, 2026).
+Additionally, the residence halls on West Louther Street use natural gas
+and oil for heating and DX systems for cooling (M. Kiner, personal
+communication, March 2nd, 2026). 135-139 North College Street also uses
+natural gas for heating while 135 Cedar Street uses an oil-fired furnace
+for heating.</p>
 </div>
 <div id="electricity-use-summary" class="section level2">
 <h2>Electricity use summary</h2>
-<div id="summary-tables" class="section level3">
-<h3>Summary tables</h3>
+<p>As seen in Table 1, for the 2025 fiscal year, electricity use among
+small residence halls ranged between 1952 kWh and 18531 kWh with a
+median of 7519 kWh. As seen in Table 2, for the 2024-2025 academic year
+only, electricity use ranged between 1481 kWh and 10149 kWh with a
+median of 4573 kWh. The estimated total cost of powering the small
+residence halls during the 2025 fiscal year was approximately $11,882
+and total GHG emissions were approximately 44 metric tons of CO2 (Table
+1). The three buildings that used the most electricity among small
+residence halls during both the fiscal year and the academic year were
+135-139 N. College St., 49-51 S. College St., and 135 Cedar St., while
+the building that used the least electricity was Carriage House (Table
+1, Table 2). 135 Cedar St. also had the highest electricity intensity
+among the small residence halls (Table 1).</p>
+<p><em>Note on square footage:</em> 135 N. College St. shares a meter
+with 139 N. College St. and 49 S. College St. shares a meter with 51 S.
+College St. Each of these individual buildings are smaller than 2,000
+square feet, but the square footage for each of these two meters adds up
+to more than 2,000 square feet.</p>
 <pre class="r"><code>datatable(annual_s_residential, rownames = FALSE,
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
           options = list(pageLength = 18, autoWidth = TRUE, dom = &#39;t&#39;),
           caption = &quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","505 W. Louther St.","519 W. Louther St.","417 W. Louther St.","513 W. Louther St.","529 W. Louther St.","531 W. Louther St.","425 W. Louther St.","509 W. Louther St.","2 Conway St.","521 W. Louther St.","527 W. Louther St.","538 W. Louther St.","515 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1492,1330,1462,1532,1352,1636,1318,1532,1729,1448,1244,1200,1268,725],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[5.8,5.2,7.3,6,5.9,6.2,5.6,5.2,5.7,4.5,5.6,4.6,3.2,3.5,4,3.8,3.4,2.7],["$ 1508","$ 1271","$ 1126","$ 730","$ 714","$ 675","$ 660","$ 644","$ 624","$ 600","$ 596","$ 575","$ 451","$ 414","$ 407","$ 373","$ 354","$ 159"],[6,5,4,3,3,2,2,2,2,2,2,2,2,2,2,1,1,1]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":18,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,8]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"kWh","targets":4},{"name":"kWh (corrected)","targets":5},{"name":"kWh per sqft","targets":6},{"name":"Cost ($)","targets":7},{"name":"CO2e (MT)","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,18,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","505 W. Louther St.","519 W. Louther St.","417 W. Louther St.","513 W. Louther St.","529 W. Louther St.","531 W. Louther St.","425 W. Louther St.","509 W. Louther St.","2 Conway St.","521 W. Louther St.","527 W. Louther St.","538 W. Louther St.","515 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1492,1330,1462,1532,1352,1636,1318,1532,1729,1448,1244,1200,1268,725],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[18531,15611,13830,8965,8772,8294,8115,7910,7663,7374,7326,7070,5543,5082,4998,4578,4352,1952],[5.8,5.2,7.3,6,5.9,6.2,5.6,5.2,5.7,4.5,5.6,4.6,3.2,3.5,4,3.8,3.4,2.7],["$ 1508","$ 1271","$ 1126","$ 730","$ 714","$ 675","$ 660","$ 644","$ 624","$ 600","$ 596","$ 575","$ 451","$ 414","$ 407","$ 373","$ 354","$ 159"],[5.6,4.7,4.2,2.7,2.6,2.5,2.4,2.4,2.3,2.2,2.2,2.1,1.7,1.5,1.5,1.4,1.3,0.6]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":18,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,8]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"kWh","targets":4},{"name":"kWh (corrected)","targets":5},{"name":"kWh per sqft","targets":6},{"name":"Cost ($)","targets":7},{"name":"CO2e (MT)","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,18,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 <pre class="r"><code>datatable(academic_s_residential, rownames = FALSE,
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
           options = list(pageLength = 18, autoWidth = TRUE, dom = &#39;t&#39;),
           caption = &quot;Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","417 W. Louther St.","519 W. Louther St.","509 W. Louther St.","513 W. Louther St.","425 W. Louther St.","505 W. Louther St.","529 W. Louther St.","531 W. Louther St.","521 W. Louther St.","527 W. Louther St.","2 Conway St.","515 W. Louther St.","538 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1462,1330,1532,1532,1318,1492,1352,1636,1448,1244,1729,1268,1200,725],[8,6,4,5,5,4,5,5,4,5,5,6,6,4,4,6,3,null],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[3.2,2.8,4.2,4.6,4,3.9,3.3,3.2,3.6,3,3.3,2.2,2.2,2.5,1.7,2.2,1.7,2],[1269,1413,1998,1362,1163,1307,1009,977,1338,892,879,605,540,769,740,460,694,null],["$ 826","$ 690","$ 650","$ 554","$ 473","$ 425","$ 411","$ 398","$ 381","$ 363","$ 358","$ 296","$ 264","$ 250","$ 241","$ 225","$ 169","$ 120"],[3,3,2,2,2,2,2,1,1,1,1,1,1,1,1,1,1,0]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>Occupants (AY)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":18,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,10]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"Occupants (AY)","targets":4},{"name":"kWh","targets":5},{"name":"kWh (corrected)","targets":6},{"name":"kWh per sqft","targets":7},{"name":"kWh per person","targets":8},{"name":"Cost ($)","targets":9},{"name":"CO2e (MT)","targets":10}],"order":[],"orderClasses":false,"lengthMenu":[10,18,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-<p>For the 2025 fiscal year, electricity use among small residence halls
-ranged between 1952 kWh and 18531 kWh with a median of 7518.5 kWh. For
-the 2024-2025 academic year only, electricity use ranged between 1481
-kWh and 10149 kWh with a median of 4572.5 kWh. The estimated total cost
-of powering the small residence halls during the 2025 fiscal year was
-approximately $11,882 and total GHG emissions were approximately 44
-metric tons of CO2. The three buildings which used the most electricity
-among small residence halls during both the fiscal year and the academic
-year were 135-139 N. College St., 49-51 S. College St., and 135 Cedar
-St., while the building which used the least electricity was Carriage
-House. 135 Cedar St. also had the highest electricity intensity among
-the small residence halls.</p>
-</div>
-<div id="summary-figures" class="section level3">
-<h3>Summary figures</h3>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of small residence halls during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["135-139 N. College St.","49-51 S. College St.","135 Cedar St.","507 W. Louther St.","417 W. Louther St.","519 W. Louther St.","509 W. Louther St.","513 W. Louther St.","425 W. Louther St.","505 W. Louther St.","529 W. Louther St.","531 W. Louther St.","521 W. Louther St.","527 W. Louther St.","2 Conway St.","515 W. Louther St.","538 W. Louther St.","Carriage House"],[100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100],[3204,3000,1900,1492,1462,1330,1532,1532,1318,1492,1352,1636,1448,1244,1729,1268,1200,725],[8,6,4,5,5,4,5,5,4,5,5,6,6,4,4,6,3,null],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[10149,8479,7993,6810,5815,5228,5044,4887,4683,4462,4397,3632,3238,3076,2960,2763,2081,1481],[3.2,2.8,4.2,4.6,4,3.9,3.3,3.2,3.6,3,3.3,2.2,2.2,2.5,1.7,2.2,1.7,2],[1269,1413,1998,1362,1163,1307,1009,977,1338,892,879,605,540,769,740,460,694,null],["$ 826","$ 690","$ 650","$ 554","$ 473","$ 425","$ 411","$ 398","$ 381","$ 363","$ 358","$ 296","$ 264","$ 250","$ 241","$ 225","$ 169","$ 120"],[3.1,2.6,2.4,2,1.7,1.6,1.5,1.5,1.4,1.3,1.3,1.1,1,0.9,0.9,0.8,0.6,0.4]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>Occupants (AY)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":18,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,10]},{"name":"Meter","targets":0},{"name":"Building","targets":1},{"name":"Days of data (%)","targets":2},{"name":"Square footage","targets":3},{"name":"Occupants (AY)","targets":4},{"name":"kWh","targets":5},{"name":"kWh (corrected)","targets":6},{"name":"kWh per sqft","targets":7},{"name":"kWh per person","targets":8},{"name":"Cost ($)","targets":9},{"name":"CO2e (MT)","targets":10}],"order":[],"orderClasses":false,"lengthMenu":[10,18,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>As seen in Figure 1, most of the small residence halls observed a
+peak in electricity use during the summer months (June-August), while a
+few had electricity use evenly distributed throughout the year. A
+notable exception was 507 W. Louther St., which instead observed a peak
+in electricity use in early fall. All of the small residence halls had
+comparably low electricity use in late fall and early winter.</p>
 <pre class="r"><code>ggplot(monthly_s_residential, aes(x = month, y = total_kwh, fill = NAME)) +
   geom_col(position = &quot;stack&quot;) +
   facet_wrap(. ~ NAME) +
@@ -906,7 +927,8 @@ the small residence halls.</p>
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   theme(legend.position = &quot;none&quot;) + 
-  labs(title = &quot;Figure 1. Monthly patterns in electricity use by building for small residence\nhalls in FY25&quot;, x = &quot;&quot;, y = &quot;Electricity use (kWh)&quot;)</code></pre>
+  labs(title = &quot;Figure 1. Monthly patterns in electricity use for small residential buildings&quot;,
+       subtitle = &quot;Fiscal Year 2025&quot;, x = &quot;&quot;, y = &quot;Electricity use (kWh)&quot;)</code></pre>
 <p><img src="figure/Report_I_Small_Residence_Halls.Rmd/monthly_use-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-monthly_use-1">
@@ -945,13 +967,17 @@ maggiedouglas
 </table>
 </div>
 </div>
-<p>As seen in Figure 1, most of the small residence halls observed a
-peak in electricity use during the summer months (June-August), while a
-few had electricity use evenly distributed throughout the year. A
-notable exception is 507 W. Louther St., which instead observed a peak
-in electricity use in early fall. All of the small residence halls had
-comparably low electricity use in late fall and early winter.</p>
-<pre class="r"><code>ggplot(daily_s_residential_drop_winter,
+<p>As seen in Figure 2, there was no significant variation in median
+electricity intensity among small residence halls during the 2024-2025
+academic year. The median electricity intensity of each building fell
+below the median of U.S. College/University dormitories (13.6
+kWh/sqft/year; EIA 2022), though some outliers fell above this median.
+Electricity intensity was highest during summer break; the 75th
+percentile of electricity intensity for 135 Cedar St. during summer
+break fell above the median from comparable buildings in the EIA report,
+while the 75th percentiles of a few other buildings also approached this
+value during the summer.</p>
+<pre class="r"><code>ggplot(daily_s_residential,
        aes(fct_reorder(NAME, kwh_sqft_annual, median), y = kwh_sqft_annual, fill = NAME)) +
   annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 8.2, ymax = 36.1, color = &quot;lightgray&quot;, alpha = 0.3) + geom_hline(yintercept = 13.6, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
   geom_boxplot() +
@@ -960,7 +986,8 @@ comparably low electricity use in late fall and early winter.</p>
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
-  labs(title = &quot;Figure 2. Electricity intensity by building for small residence halls\nin FY25&quot;, x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;)</code></pre>
+  labs(title = &quot;Figure 2. Electricity intensity by building for small residence halls\nin FY25&quot;, x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;,
+  caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile\n of typical values in U.S. dormitory, fraternity, and sorority buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/Report_I_Small_Residence_Halls.Rmd/kwh_sqft-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-kwh_sqft-1">
@@ -999,41 +1026,21 @@ maggiedouglas
 </table>
 </div>
 </div>
-<p>As seen in Figure 2, there was no significant variation in median
-electricity intensity among small residence halls during the 2025 fiscal
-year. Each building’s median electricity intensity fell below the median
-of all college and university buildings in the U.S. in 2018 (13.6
-kWh/sqft/year), although some outliers lied above this median (EIA
-2022). Overall electricity intensity was highest during summer break;
-the 75th percentile of electricity intensity for 135 Cedar St. during
-summer break lied above the median of all college and university
-buildings in the EIA report, while the 75th percentiles of a few other
-buildings also approached this value during the summer.</p>
-</div>
 </div>
 <div id="recommendations" class="section level2">
 <h2>Recommendations</h2>
-<p>The HVAC systems in each building could explain the distribution of
-electricity use; most of the small residence halls are heated by natural
-gas and oil and cooled using electricity (M. Kiner, personal
-communication, February 18, 2026). The high electricity use in the
-summer months is notable because occupancy data suggests that these
-buildings are uninhabited during summer break. We recommend minimizing
-electricity use during the summer months by performing the following
-actions:</p>
-<ul>
-<li><p>Ensuring that thermostats are turned off or set to an
-electricity-efficient level.</p></li>
-<li><p>Turning off and unplugging other unused appliances that could be
-using electricity.</p></li>
-<li><p>Leaving small residence halls unoccupied during the summer months
-and rather assign students and guests to larger, newer, and more
-efficient residence halls.</p></li>
-</ul>
-<p>We also recommend installing sub-meters for 135 and 139 N College
-St. as well as 49 and 51 S College St. This would allow us to better
-understand electricity use patterns per building for these four
-buildings.</p>
+<p>Like other residence halls on campus, the median electricity
+intensity of the small residence halls fell well below the median
+electricity intensity for U.S. College and University residential
+buildings (EIA, 2022). However, there is still room for improvement:
+specifically, electricity use during the summer months was notably high.
+This is partly expected given that most of these buildings use
+electricity for cooling and either natural gas or oil for heating, but
+we also expect that most of these buildings were likely unoccupied
+during summer break. We recommend minimizing electricity use during
+summer break by ensuring that thermostats are turned off or set to an
+electricity-efficient level while other electricity-consuming appliances
+are turned off and unplugged.</p>
 </div>
 <div id="sources" class="section level2">
 <h2>Sources</h2>
@@ -1046,22 +1053,12 @@ class="uri">https://www.eia.gov/consumption/commercial/</a></p>
 </div>
 <div id="partner-contributions" class="section level2">
 <h2>Partner contributions</h2>
-<p>Luke revised and formatted the faceted bar plot and box plot figures
-and drafted the Background section. Valerie created the electricity use
-table for the academic year and drafted the electricity use summary.
-Luke &amp; Valerie both drafted the Recommendations section. Luke
-proofread the final code and text and submitted the assignment.</p>
+<p>Luke Heller drafted the background section and created the figures,
+while Valerie Larsen drafted the electricity use summary and created the
+electricity use tables. Both partners contributed to recommendations and
+revisions. Luke Heller proofread the final code and text.</p>
 <p>The AI Search tool on Ecosia (a web browser) was used to help
-troubleshoot R code; one instance where we relied on help from AI was to
-add captions to our figures.</p>
-<p>We noticed two potential issues in the small residence halls data:
-for the building 425 W. Louther St., the occupants variable is equal to
-3.5 (this is true for the academic, annual, and daily datasets). Neither
-of us are sure what the half of an occupant is meant to represent.
-Additionally, the building 169 W. High St., which is included in our
-category, does not have any electricity use data and as such is not
-included in our summary table above (although this could be because it
-is on the main meter).</p>
+troubleshoot R code, for example to add captions to figures.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1092,24 +1089,22 @@ other attached packages:
  [1] paletteer_1.7.0 DT_0.34.0       lubridate_1.9.5 forcats_1.0.1  
  [5] stringr_1.6.0   dplyr_1.2.0     purrr_1.2.1     readr_2.2.0    
  [9] tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.2   tidyverse_2.0.0
-[13] workflowr_1.7.2
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.10        generics_0.1.4     prismatic_1.1.2    stringi_1.8.7     
  [5] hms_1.1.4          digest_0.6.39      magrittr_2.0.4     timechange_0.4.0  
  [9] evaluate_1.0.5     grid_4.5.2         RColorBrewer_1.1-3 fastmap_1.2.0     
-[13] rprojroot_2.1.1    jsonlite_2.0.0     processx_3.8.6     whisker_0.4.1     
-[17] rematch2_2.1.2     ps_1.9.1           promises_1.5.0     httr_1.4.8        
-[21] crosstalk_1.2.2    scales_1.4.0       jquerylib_0.1.4    cli_3.6.5         
-[25] rlang_1.1.7        withr_3.0.2        cachem_1.1.0       yaml_2.3.12       
-[29] otel_0.2.0         tools_4.5.2        tzdb_0.5.0         httpuv_1.6.16     
-[33] vctrs_0.7.1        R6_2.6.1           lifecycle_1.0.5    git2r_0.36.2      
-[37] htmlwidgets_1.6.4  fs_1.6.7           pkgconfig_2.0.3    callr_3.7.6       
-[41] pillar_1.11.1      bslib_0.10.0       later_1.4.8        gtable_0.3.6      
-[45] glue_1.8.0         Rcpp_1.1.1         xfun_0.56          tidyselect_1.2.1  
-[49] rstudioapi_0.18.0  knitr_1.51         farver_2.1.2       htmltools_0.5.9   
-[53] labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2     getPass_0.2-4     
-[57] S7_0.2.1          </code></pre>
+[13] rprojroot_2.1.1    workflowr_1.7.2    jsonlite_2.0.0     whisker_0.4.1     
+[17] rematch2_2.1.2     promises_1.5.0     crosstalk_1.2.2    scales_1.4.0      
+[21] jquerylib_0.1.4    cli_3.6.5          rlang_1.1.7        withr_3.0.2       
+[25] cachem_1.1.0       yaml_2.3.12        otel_0.2.0         tools_4.5.2       
+[29] tzdb_0.5.0         httpuv_1.6.16      vctrs_0.7.1        R6_2.6.1          
+[33] lifecycle_1.0.5    git2r_0.36.2       htmlwidgets_1.6.4  fs_1.6.7          
+[37] pkgconfig_2.0.3    pillar_1.11.1      bslib_0.10.0       later_1.4.8       
+[41] gtable_0.3.6       glue_1.8.0         Rcpp_1.1.1         xfun_0.56         
+[45] tidyselect_1.2.1   rstudioapi_0.18.0  knitr_1.51         farver_2.1.2      
+[49] htmltools_0.5.9    labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2    
+[53] S7_0.2.1          </code></pre>
 </div>
 </div>
 </div>
