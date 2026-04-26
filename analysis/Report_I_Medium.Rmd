@@ -1,0 +1,182 @@
+---
+title: "Medium Residential Buildings"
+author: Liam Glackin and Charlotte Durietz Bourdain
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output:
+  html_document:
+    toc: true
+    toc_float: true
+    code_folding: show
+---
+
+## Background  
+
+Our building category includes campus residential buildings between 2,000 and 10,000 square feet. We have analyzed 14 buildings in the category that are individually metered. In addition, there are eight buildings on the main meter and one building on the Weis meter. In total, this category comprises 23 buildings and their main purpose is housing students on campus. They have a combined footprint of 93,708 square feet (~5% of campus building space). Residential buildings on campus differ in their specific architecture, with most buildings being apartments and individual homes. Buildings in this category tend to have fewer residents and more floor space for each resident compared to large dormitories. The buildings vary in age of construction and ways they are heated and cooled, which is likely to affect the amount of electricity they use. Data on electricity usage for this building category is somewhat complete for the 2025 fiscal year, with 61% of buildings individually metered and with data for 365 days of the year. 
+
+```{r prep, include = FALSE}
+# Conversion Factors  
+dol_per_kWh <- 0.081385
+MTCO2_per_kWh <- 0.00030082405
+
+#Load Libraries
+library(tidyverse) 
+library(DT)
+library(paletteer)
+
+#Load Annual Data
+annual_kwh.df<-read.csv('./output/kwh_annual_2026-03-17.csv', strip.white=TRUE) 
+academic_updated <- read.csv("./output/kwh_academic_2026-03-17.csv")
+# Check Data
+str(annual_kwh.df)
+
+# Subset
+med_res_annual_kwh<-annual_kwh.df %>% 
+  filter(type=="Residential - M")
+
+#Transform
+transform_med<-med_res_annual_kwh%>%
+  mutate(
+    cost=round(kwh_corr*dol_per_kWh, digits=0), 
+    GHG_emis=round(kwh_corr*MTCO2_per_kWh, digits=1),
+    kWh_per_sqft=round(kwh_corr/sqft, digits=1),
+    kwh=round(kwh, digits=0),
+    kwh_corr=round(kwh_corr, digits=0))
+
+#Arranging and Removing Building Type
+annual_med<-transform_med %>%
+    select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kWh_per_sqft, cost, GHG_emis) %>%
+  arrange(desc(kwh_corr))
+annual_med_table1 <- annual_med[,c(1,2,3,4,5,6,7,8,9)]
+#Checking Again
+str(annual_med)
+
+
+residential_m_academic <- academic_updated %>%
+  filter(type == "Residential - M") %>% 
+  mutate(kwh = round(kwh),
+         kwh_corr = round(kwh_corr),
+         kwh_sqft = round(kwh_corr/sqft, digits = 1), 
+         kwh_occ = round(kwh_corr/occupants), 
+         cost = round(kwh_corr*dol_per_kWh), 
+         kwh_ghg = round(kwh_corr*MTCO2_per_kWh, digits=1), 
+         ) %>%
+  arrange(desc(kwh_corr)) %>%
+  select(-type)
+residential_m_academic_table2 <- residential_m_academic[,c(1,2,3,6,7,4,5,8,9,10,11)]
+
+#Load Daily Data
+med_res_daily_kwh <- read.csv("./output/kwh_daily_2026-03-17.csv")
+
+#Check data
+str(med_res_daily_kwh)
+
+#Subset Data
+med_res_daily_kwh <- med_res_daily_kwh %>%
+  filter(type == "Residential - M") %>%
+#Wrangle Data
+  mutate(date = ymd(date),
+         month = month(date, label= TRUE),
+         day = wday(date, label = TRUE)) %>%
+#Transform Data
+  mutate(kwh_sqft_year = kwh/sqft*365) %>%
+  arrange(desc(kwh))
+#Check Again
+str(med_res_daily_kwh)
+
+```
+
+## Electricity Use Summary  
+
+A typical building within medium residential halls consumed around 18,300 kWh during fiscal year 2025. This translates to a median cost of $1,489 and 5.5 metric tons CO2e. Our largest and smallest users during FY25 in total electricity use were 141 W. High Street and 155 W. High Street, respectively. The buildings with the highest and lowest electricity intensity, or kWh use per square foot, were also 141 W. High Street and 155 W. High Street. According to the U.S. Electricity Information Administration’s 2018 survey of electricity consumption (2022), U.S. dormitories, fraternities, and sororities had a median electricity intensity of 13.6 kWh/sqft. All of the medium residential halls on campus fall below this intensity threshold. The total use and electricity intensity ranged from the building with the highest and lowest value by 51986 kWh and 8.2 kWh/sqft respectively. 
+
+```{r table1}
+# Table 1
+datatable(annual_med_table1,
+          rownames = FALSE,
+          colnames = c("Meter status","Buildings", "Days of data (%)", "Square\nfootage", "kWh", "kWh (corrected)", "kWh per\nsqft", "Cost ($)", 
+                       "CO2e\n(MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 14, autoWidth = TRUE, dom = 't'),
+          caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings")
+```
+
+
+A typical building in this category used about 12,000 kWh during the academic year. With a median of 12 occupants in each building, the typical building used 1,000-1,200 kWh per occupant, which translates to about 301-361 kg of CO2e and $80-100 per occupant. The largest user overall was 141 W. High Street, while the lowest user was 155 W. High Street. Adjusting for occupancy, the highest and lowest users were 141 W. High Street, using 2178 kWh of electricity per person during the academic year 2024/2025, and the Reed Apartments, using 486 kWh of electricity per person during the academic year 2024/2025, respectively. The highest and lowest users ranged in total use and electricity intensity per occupant by 38,506 kWh and 1,334 kWh/occupant.
+
+```{r table 2}
+# Table 2 
+
+datatable(residential_m_academic_table2,
+          rownames = FALSE,
+          colnames = c("Meter","Building","Days of data (%)", "Square footage", "Occupants (AY)","kWh","kWh (corrected)", "kWh per sqft", "kWh per person", "Cost($)", "CO2e (MT)"),
+          filter = "none",
+          class = "compact",
+          options = list(pageLength = 14, autoWidth = TRUE, dom = 't'),
+          caption = "Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings during the academic year 2024/2025")
+
+```
+
+Medium residential buildings differed significantly in both overall usage and seasonal pattern, with many buildings showing a noticeable increase in the summer months while others stayed consistent throughout the year or peaked during the coldest months (Figure 1). Some of the variation in this category buildings may be explained by the differences in age of building, occupancy, and time since the last renovation. The fact that several campus buildings peak in the summer when occupancy is expected to be lowest is surprising and warrants further analysis. 
+
+```{r figure 1}
+ggplot(med_res_daily_kwh,
+       aes(x = month, y = kwh, fill = NAME)) +
+  geom_col(position = "stack") +
+  facet_wrap(. ~ NAME) +
+  scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  theme_bw() +
+  theme(legend.position = "none") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
+  labs(x = "", y = "Electricity use (kWh)", fill = "",
+       title = "Figure 1. Monthly patterns in electricity use for medium residential buildings",
+       subtitle = "Fiscal Year 2025"
+       )
+
+```
+
+The electricity intensity of medium residence halls at Dickinson College were compared to the EIA reported electricity intensity across dormitories, fraternities, and sororities throughout the US (EIA, 2022), 13.6 kWh/sqft (Figure 2). The median electricity intensities of all buildings in this category fell below the median of similar buildings in the U.S. Most buildings in this category followed a similar pattern in each season with higher electricity intensity in the summer season and lower intensity in the winter break with some exceptions such as 100 S. West St., Cherry Apartments, Treehouse, 141 W. High St., and 146 W. Louther St. The pattern was more or less strong depending on the building. It is worth noting that the EIA reported values that are being used as comparison are not broken down into different periods and are the recorded median across the entirety of the year.   
+
+
+```{r figure2}
+ggplot(med_res_daily_kwh,
+       aes(x = reorder(NAME, kwh_sqft_year,FUN = "median"),
+                        y = kwh_sqft_year, fill = NAME)) +
+  annotate("rect", xmin = -Inf, xmax = Inf, ymin = 8.2, ymax = 36.1, color = "lightgray", alpha = 0.3) +
+  geom_hline(yintercept = 13.6, linetype = "dashed", color = "white") +
+  facet_wrap(.~period) +
+    scale_fill_paletteer_d("ggthemes::Tableau_20") +
+  geom_boxplot() +
+  coord_flip() +
+  theme_bw() +
+  theme(legend.position = "none") +
+  labs(x = "", y = "Electricity Intensity (kWh/sqft/year)", 
+       title = "Figure 2. Electricity intensity for medium residential buildings", 
+       subtitle = "Fiscal Year 2025",
+       caption = "White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. dormitory, fraternity, and sorority buildings (EIA 2022)")
+```
+
+ 
+
+## Recommendations   
+  
+From the data that is currently available, the individually metered medium residential buildings fell below typical electricity use for similar buildings in the U.S. (EIA, 2022), indicating that Dickinson is doing well in this category at keeping electricity use low. The buildings seem to be using electricity efficiently, but seasonal patterns with a peak in the warmer months for most buildings show that many of these buildings use the most electricity in a season where there are few students on campus, which may be an area to focus on improving.  
+
+Although the data for the individually metered medium residential building category was complete for fiscal year 2025, about 40% of medium residential buildings are not individually metered and therefore could not be analyzed. Because the patterns of electricity use varied significantly between buildings, it is difficult to predict what the electricity use of buildings on an aggregated meter may be. Reducing electricity use in medium residence halls as a whole group may not be an effective use of time and resources for the college considering that this type of building accounts for only 5% of campus square footage, but reducing electricity use in this category of buildings could yield a small cost reduction in the long term (the median annual cost of electricity for this category is $1,495) and prevent unnecessary electricity use. If the college pursues a reduction in the electricity use of any medium residence halls on an aggregated meter, we recommend that individual meters be added to the buildings to inform assessment. However, because the buildings in this category are not among the biggest electricity users on campus and are numerous, we do not believe it should be a priority to individually meter all medium residence halls.  
+    
+141 W. High St. is a building that stands out in this category for its unusually high electricity use. According to Lindsey Lyons, this building is also used for non-Dickinson companies which operate out of part of the building. We recommend that Dickinson investigate further whether the College is paying for electricity being used by others. Buildings that are working efficiently and may serve as models for how electricity use can be lowered for this category are 155 W. High St. and Schuman House. These are the two most efficient buildings in the category. For this category, there does not seem to be a common step that can be taken to drastically reduce electricity use; rather, it seems more productive to get to the root of breaks in the typical pattern for specific buildings in order to address what may be causing them to consume more electricity. For this, we recommend not only looking into 141 W. High St., as previously stated, but also 100 S. West St., which shows a drastic difference from other buildings in electricity use during colder months, especially winter break when there are few students on campus. 
+
+
+## Sources  
+
+
+EIA. (2016). *Energy Information Administration (EIA)- Commercial Buildings Energy Consumption Survey (CBECS)*. Eia.gov. https://www.eia.gov/consumption/commercial/  
+
+Leary, N. (2025). *Dickinson College Greenhouse Gas Inventory, 2008 – 2023.*
+
+
+
+## Partner Contributions  
+
+Liam Glackin wrote the background portion of this report and created Figure 1 and Table 1, as well as their associated descriptions. He also prepared the academic year data for use. Charlotte Durietz Bourdain wrote and revised the recommendations portion of this report and prepared the annual and daily data. Charlotte wrote and revised the references. She also created Table 2 and Figure 2, as well as their associated descriptions. Overall, both partners helped each other troubleshoot issues in code and understanding the data. 
+

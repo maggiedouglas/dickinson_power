@@ -11,7 +11,7 @@
 
 <meta name="author" content="Liam Glackin and Charlotte Durietz Bourdain" />
 
-<meta name="date" content="2026-04-13" />
+<meta name="date" content="2026-04-26" />
 
 <title>Medium Residential Buildings</title>
 
@@ -426,7 +426,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Medium Residential Buildings</h1>
 <h4 class="author">Liam Glackin and Charlotte Durietz Bourdain</h4>
-<h4 class="date">04/13/26</h4>
+<h4 class="date">04/26/26</h4>
 
 </div>
 
@@ -434,7 +434,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -445,8 +445,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -455,13 +455,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-13
+<strong>Last updated:</strong> 2026-04-26
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -484,18 +484,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -586,15 +589,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef8b588003005cdd833ac5b6f258ffce09689a4ebtargetblankf8b5880a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/f8b588003005cdd833ac5b6f258ffce09689a4eb" target="_blank">f8b5880</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef8b588003005cdd833ac5b6f258ffce09689a4ebtargetblankf8b5880a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -604,7 +607,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/f8b588003005cdd833ac5b6f258ffce09689a4eb" target="_blank">f8b5880</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -675,9 +678,8 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
-Unstaged changes:
-    Modified:   analysis/main_meter_mod_vis.Rmd
-    Modified:   analysis/main_meter_regression.Rmd
+Untracked files:
+    Untracked:  analysis/Report_I_Medium.Rmd
 
 </code></pre>
 <p>
@@ -722,6 +724,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d34161b8d717b41f39a7b35fa9bbbfff7334d6d6/analysis/Report_I_Medium.Rmd" target="_blank">d34161b</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+<td>
+update academic section of Part 1
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/Report_I_Medium.html" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -817,37 +853,61 @@ change navigation bar and add student report sections
 <div id="background" class="section level2">
 <h2>Background</h2>
 <p>Our building category includes campus residential buildings between
-2,000 and 10,000 square feet. We have analyzed 14 buildings in our
-category which are individually metered. In addition, there are 8
-buildings on the main meter and 1 building on the Weis meter. In total,
-our category comprises 23 buildings and their main purpose is housing
-students on campus. They have a combined footprint of 64,465 square
-feet, while all buildings on campus with available data have a combined
-footprint of 2,515,620 square feet. Residential buildings on campus
-differ in their specific architecture, with most of our buildings being
-apartments and individual homes. Buildings in our category tend to have
+2,000 and 10,000 square feet. We have analyzed 14 buildings in the
+category that are individually metered. In addition, there are eight
+buildings on the main meter and one building on the Weis meter. In
+total, this category comprises 23 buildings and their main purpose is
+housing students on campus. They have a combined footprint of 93,708
+square feet (~5% of campus building space). Residential buildings on
+campus differ in their specific architecture, with most buildings being
+apartments and individual homes. Buildings in this category tend to have
 fewer residents and more floor space for each resident compared to large
-dormitories. The buildings in our category vary in age of construction
-and the ways they are heated and cooled which affect the amount of
-electricity they use. Our building category is very complete for the
-2024-25 fiscal year, with a good amount of buildings in our category
-being individually metered and having data for 365 days of the year.</p>
+dormitories. The buildings vary in age of construction and ways they are
+heated and cooled, which is likely to affect the amount of electricity
+they use. Data on electricity usage for this building category is
+somewhat complete for the 2025 fiscal year, with 61% of buildings
+individually metered and with data for 365 days of the year.</p>
 </div>
 <div id="electricity-use-summary" class="section level2">
 <h2>Electricity Use Summary</h2>
-<pre class="r"><code>#Table 1
-
+<p>A typical building within medium residential halls consumed around
+18,300 kWh during fiscal year 2025. This translates to a median cost of
+$1,489 and 5.5 metric tons CO2e. Our largest and smallest users during
+FY25 in total electricity use were 141 W. High Street and 155 W. High
+Street, respectively. The buildings with the highest and lowest
+electricity intensity, or kWh use per square foot, were also 141 W. High
+Street and 155 W. High Street. According to the U.S. Electricity
+Information Administration’s 2018 survey of electricity consumption
+(2022), U.S. dormitories, fraternities, and sororities had a median
+electricity intensity of 13.6 kWh/sqft. All of the medium residential
+halls on campus fall below this intensity threshold. The total use and
+electricity intensity ranged from the building with the highest and
+lowest value by 51986 kWh and 8.2 kWh/sqft respectively.</p>
+<pre class="r"><code># Table 1
 datatable(annual_med_table1,
           rownames = FALSE,
           colnames = c(&quot;Meter status&quot;,&quot;Buildings&quot;, &quot;Days of data (%)&quot;, &quot;Square\nfootage&quot;, &quot;kWh&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per\nsqft&quot;, &quot;Cost ($)&quot;, 
                        &quot;CO2e\n(MT)&quot;),
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
-          options = list(pageLength = 4, autoWidth = TRUE, dom = &#39;t&#39;),
+          options = list(pageLength = 14, autoWidth = TRUE, dom = &#39;t&#39;),
           caption = &quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["141 W. High St.","100 S. West St.","Reed Apts.","159 W. High St.","Treehouse","Cherry Apts","146 W. Louther St.","Strayer House","133 N. College St.","163 W. High St","Vincett House","165 W. High St","Schuman House","155 W. High St."],[100,100,100,100,100,100,100,100,100,100,100,100,100,100],[5825,7190,5206,4500,6000,3519,2864,6845,2272,4550,2700,4550,4444,4000],[60837,54882,31914,29252,21775,19464,18467,18275,17555,14863,14797,12690,10946,8851],[60837,54882,31914,29252,21775,19464,18467,18275,17555,14863,14797,12690,10946,8851],[10.4,7.6,6.1,6.5,3.6,5.5,6.4,2.7,7.7,3.3,5.5,2.8,2.5,2.2],[4951,4467,2597,2381,1772,1584,1503,1487,1429,1210,1204,1033,891,720],[18,17,10,9,7,6,6,5,5,4,4,4,3,3]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter status<\/th>\n      <th>Buildings<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per\nsqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e\n(MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":4,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kWh_per_sqft","targets":6},{"name":"cost","targets":7},{"name":"GHG_emis","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[4,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>datatable(residential_m_academic_table2,
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["141 W. High St.","100 S. West St.","Reed Apts.","159 W. High St.","Treehouse","Cherry Apts","146 W. Louther St.","Strayer House","133 N. College St.","163 W. High St","Vincett House","165 W. High St","Schuman House","155 W. High St."],[100,100,100,100,100,100,100,100,100,100,100,100,100,100],[5825,7190,5206,4500,6000,3519,2864,6845,2272,4550,2700,4550,4444,4000],[60837,54882,31914,29252,21775,19464,18467,18275,17555,14863,14797,12690,10946,8851],[60837,54882,31914,29252,21775,19464,18467,18275,17555,14863,14797,12690,10946,8851],[10.4,7.6,6.1,6.5,3.6,5.5,6.4,2.7,7.7,3.3,5.5,2.8,2.5,2.2],[4951,4467,2597,2381,1772,1584,1503,1487,1429,1210,1204,1033,891,720],[18.3,16.5,9.6,8.800000000000001,6.6,5.9,5.6,5.5,5.3,4.5,4.5,3.8,3.3,2.7]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter status<\/th>\n      <th>Buildings<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per\nsqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e\n(MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":14,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kWh_per_sqft","targets":6},{"name":"cost","targets":7},{"name":"GHG_emis","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,14,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>A typical building in this category used about 12,000 kWh during the
+academic year. With a median of 12 occupants in each building, the
+typical building used 1,000-1,200 kWh per occupant, which translates to
+about 301-361 kg of CO2e and $80-100 per occupant. The largest user
+overall was 141 W. High Street, while the lowest user was 155 W. High
+Street. Adjusting for occupancy, the highest and lowest users were 141
+W. High Street, using 2178 kWh of electricity per person during the
+academic year 2024/2025, and the Reed Apartments, using 486 kWh of
+electricity per person during the academic year 2024/2025, respectively.
+The highest and lowest users ranged in total use and electricity
+intensity per occupant by 38,506 kWh and 1,334 kWh/occupant.</p>
+<pre class="r"><code># Table 2 
+
+datatable(residential_m_academic_table2,
           rownames = FALSE,
           colnames = c(&quot;Meter&quot;,&quot;Building&quot;,&quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;Occupants (AY)&quot;,&quot;kWh&quot;,&quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;kWh per person&quot;, &quot;Cost($)&quot;, &quot;CO2e (MT)&quot;),
           filter = &quot;none&quot;,
@@ -855,15 +915,15 @@ datatable(annual_med_table1,
           options = list(pageLength = 14, autoWidth = TRUE, dom = &#39;t&#39;),
           caption = &quot;Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings during the academic year 2024/2025&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings during the academic year 2024/2025<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["141 W. High St.","100 S. West St.","Reed Apts.","Cherry Apts","159 W. High St.","Treehouse","146 W. Louther St.","Strayer House","163 W. High St","133 N. College St.","Vincett House","165 W. High St","Schuman House","155 W. High St."],[100,100,100,100,100,100,100,100,100,100,100,100,100,100],[5825,7190,5206,3519,4500,6000,2864,6845,4550,2272,2700,4550,4444,4000],[20,19,42,12,18,13,7,12,12,5,7.5,11,6,6],[43567,39972,20392,14738,14675,13966,13268,10869,10775,9397,8999,8233,6526,5061],[43567,39972,20392,14738,14675,13966,13268,10869,10775,9397,8999,8233,6526,5061],[7.5,5.6,3.9,4.2,3.3,2.3,4.6,1.6,2.4,4.1,3.3,1.8,1.5,1.3],[2178,2104,486,1228,815,1074,1895,906,898,1879,1200,748,1088,844],[3546,3253,1660,1199,1194,1137,1080,885,877,765,732,670,531,412],[0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>Occupants (AY)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":14,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"occupants","targets":4},{"name":"kwh","targets":5},{"name":"kwh_corr","targets":6},{"name":"kwh_sqft","targets":7},{"name":"kwh_occ","targets":8},{"name":"cost","targets":9},{"name":"kwh_ghg","targets":10}],"order":[],"orderClasses":false,"lengthMenu":[10,14,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-<p>A typical building in our category uses about 16,000 kWh during the
-academic year on average, with the median skewing slightly lower at
-closer to 12,000 kWh. With a median of 12 occupants in each building,
-our typical building uses anywhere between 1,000-1,200 kWh per occupant,
-which translates to about 325-360 kg of CO2e and $80-100 per occupant.
-Our largest user overall was 141 W. High Street, while our lowest user
-was 155 W. High Street. Adjusting for occupancy, our highest and lowest
-users were 141 W. High Street and the Reed Apartments, respectively.</p>
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings during the academic year 2024/2025<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["141 W. High St.","100 S. West St.","Reed Apts.","Cherry Apts","159 W. High St.","Treehouse","146 W. Louther St.","Strayer House","163 W. High St","133 N. College St.","Vincett House","165 W. High St","Schuman House","155 W. High St."],[100,100,100,100,100,100,100,100,100,100,100,100,100,100],[5825,7190,5206,3519,4500,6000,2864,6845,4550,2272,2700,4550,4444,4000],[20,19,42,12,18,13,7,12,12,5,7.5,11,6,6],[43567,39972,20392,14738,14675,13966,13268,10869,10775,9397,8999,8233,6526,5061],[43567,39972,20392,14738,14675,13966,13268,10869,10775,9397,8999,8233,6526,5061],[7.5,5.6,3.9,4.2,3.3,2.3,4.6,1.6,2.4,4.1,3.3,1.8,1.5,1.3],[2178,2104,486,1228,815,1074,1895,906,898,1879,1200,748,1088,844],[3546,3253,1660,1199,1194,1137,1080,885,877,765,732,670,531,412],[13.1,12,6.1,4.4,4.4,4.2,4,3.3,3.2,2.8,2.7,2.5,2,1.5]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>Occupants (AY)<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>kWh per person<\/th>\n      <th>Cost($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":14,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8,9,10]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"occupants","targets":4},{"name":"kwh","targets":5},{"name":"kwh_corr","targets":6},{"name":"kwh_sqft","targets":7},{"name":"kwh_occ","targets":8},{"name":"cost","targets":9},{"name":"kwh_ghg","targets":10}],"order":[],"orderClasses":false,"lengthMenu":[10,14,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>Medium residential buildings differed significantly in both overall
+usage and seasonal pattern, with many buildings showing a noticeable
+increase in the summer months while others stayed consistent throughout
+the year or peaked during the coldest months (Figure 1). Some of the
+variation in this category buildings may be explained by the differences
+in age of building, occupancy, and time since the last renovation. The
+fact that several campus buildings peak in the summer when occupancy is
+expected to be lowest is surprising and warrants further analysis.</p>
 <pre class="r"><code>ggplot(med_res_daily_kwh,
        aes(x = month, y = kwh, fill = NAME)) +
   geom_col(position = &quot;stack&quot;) +
@@ -873,7 +933,8 @@ users were 141 W. High Street and the Reed Apartments, respectively.</p>
   theme(legend.position = &quot;none&quot;) +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   labs(x = &quot;&quot;, y = &quot;Electricity use (kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Figure 1. Monthly patterns in electricity use by building for \nmedium residential buildings in FY25&quot;,
+       title = &quot;Figure 1. Monthly patterns in electricity use for medium residential buildings&quot;,
+       subtitle = &quot;Fiscal Year 2025&quot;
        )</code></pre>
 <p><img src="figure/Report_I_Medium.Rmd/figure%201-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
@@ -913,11 +974,24 @@ maggiedouglas
 </table>
 </div>
 </div>
+<p>The electricity intensity of medium residence halls at Dickinson
+College were compared to the EIA reported electricity intensity across
+dormitories, fraternities, and sororities throughout the US (EIA, 2022),
+13.6 kWh/sqft (Figure 2). The median electricity intensities of all
+buildings in this category fell below the median of similar buildings in
+the U.S. Most buildings in this category followed a similar pattern in
+each season with higher electricity intensity in the summer season and
+lower intensity in the winter break with some exceptions such as 100 S.
+West St., Cherry Apartments, Treehouse, 141 W. High St., and 146 W.
+Louther St. The pattern was more or less strong depending on the
+building. It is worth noting that the EIA reported values that are being
+used as comparison are not broken down into different periods and are
+the recorded median across the entirety of the year.</p>
 <pre class="r"><code>ggplot(med_res_daily_kwh,
        aes(x = reorder(NAME, kwh_sqft_year,FUN = &quot;median&quot;),
                         y = kwh_sqft_year, fill = NAME)) +
-  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
-  geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
+  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 8.2, ymax = 36.1, color = &quot;lightgray&quot;, alpha = 0.3) +
+  geom_hline(yintercept = 13.6, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
   facet_wrap(.~period) +
     scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
   geom_boxplot() +
@@ -925,8 +999,9 @@ maggiedouglas
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +
   labs(x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;, 
-       title = &quot;Figure 2. Electricity intensity by \nbuilding for medium residential buildings in FY25.&quot;, 
-       caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)&quot;)</code></pre>
+       title = &quot;Figure 2. Electricity intensity for medium residential buildings&quot;, 
+       subtitle = &quot;Fiscal Year 2025&quot;,
+       caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. dormitory, fraternity, and sorority buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/Report_I_Medium.Rmd/figure2-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-figure2-1">
@@ -965,63 +1040,74 @@ maggiedouglas
 </table>
 </div>
 </div>
-<p>The buildings in our category tend to be below the median of a
-similar building in the US with some exceptions such as 141 W High St
-and occasional 100 S West St. These building usually follow a similar
-pattern in each season with higher electricity use in the summer season
-and lower use in the winter break.</p>
 </div>
-<div id="discussion" class="section level2">
-<h2>Discussion</h2>
-<p>Although the data for the medium residential building category is
-very complete, a significant portion of medium residential buildings are
-not individually metered and therefore cannot be analyzed. With the data
-for these buildings, a more complete understanding of how medium
-residential buildings differ in their electricity use could be attained.
-We recommend that Dickinson prioritize adding individual meters for
-buildings which don’t have any in order to better assess their
-consumption. However, from the data that is currently available, we can
-tell that most of the buildings fall below typical electricity use for
-similar buildings in the US, indicating that Dickinson is doing good in
-this category at keeping electricity use low (EIA, 2022). The buildings
-seem to be functioning in an electricity efficient way, but seasonal
-patterns which show a peak in the warmer months for most buildings show
-that many use the most electricity in a season where there are not many
-students, which may be an area to focus on improving.</p>
-<p>141 W High St is a building that stands out in this category for its
-unusually high electricity use. According to Lindsey Lyons, this
+<div id="recommendations" class="section level2">
+<h2>Recommendations</h2>
+<p>From the data that is currently available, the individually metered
+medium residential buildings fell below typical electricity use for
+similar buildings in the U.S. (EIA, 2022), indicating that Dickinson is
+doing well in this category at keeping electricity use low. The
+buildings seem to be using electricity efficiently, but seasonal
+patterns with a peak in the warmer months for most buildings show that
+many of these buildings use the most electricity in a season where there
+are few students on campus, which may be an area to focus on
+improving.</p>
+<p>Although the data for the individually metered medium residential
+building category was complete for fiscal year 2025, about 40% of medium
+residential buildings are not individually metered and therefore could
+not be analyzed. Because the patterns of electricity use varied
+significantly between buildings, it is difficult to predict what the
+electricity use of buildings on an aggregated meter may be. Reducing
+electricity use in medium residence halls as a whole group may not be an
+effective use of time and resources for the college considering that
+this type of building accounts for only 5% of campus square footage, but
+reducing electricity use in this category of buildings could yield a
+small cost reduction in the long term (the median annual cost of
+electricity for this category is $1,495) and prevent unnecessary
+electricity use. If the college pursues a reduction in the electricity
+use of any medium residence halls on an aggregated meter, we recommend
+that individual meters be added to the buildings to inform assessment.
+However, because the buildings in this category are not among the
+biggest electricity users on campus and are numerous, we do not believe
+it should be a priority to individually meter all medium residence
+halls.</p>
+<p>141 W. High St. is a building that stands out in this category for
+its unusually high electricity use. According to Lindsey Lyons, this
 building is also used for non-Dickinson companies which operate out of
 part of the building. We recommend that Dickinson investigate further
-whether their electricity use is being calculated into the college’s and
-may be skewing the data. Buildings that are working efficiently and may
-serve as models for how electricity use can be lowered for this category
-are 155 W High St and Schuman house. These are the two most efficient
-buildings in the category. For this category, there does not seem to be
-a common step that can be taken to drastically reduce electricity use,
-rather, it seems more productive to get to the root of breaks in the
-typical pattern for specific buildings in order to address what may be
-causing them to consume more electricity. For this, we recommend not
-only looking into 141 W High St, as previously stated, but also 100 S
-West St which shows a drastic difference from other buildings in
+whether the College is paying for electricity being used by others.
+Buildings that are working efficiently and may serve as models for how
+electricity use can be lowered for this category are 155 W. High St. and
+Schuman House. These are the two most efficient buildings in the
+category. For this category, there does not seem to be a common step
+that can be taken to drastically reduce electricity use; rather, it
+seems more productive to get to the root of breaks in the typical
+pattern for specific buildings in order to address what may be causing
+them to consume more electricity. For this, we recommend not only
+looking into 141 W. High St., as previously stated, but also 100 S. West
+St., which shows a drastic difference from other buildings in
 electricity use during colder months, especially winter break when there
-are little students on campus.</p>
+are few students on campus.</p>
 </div>
 <div id="sources" class="section level2">
 <h2>Sources</h2>
-<p>EIA. “Energy Information Administration (EIA)- Commercial Buildings
-Energy Consumption Survey (CBECS).” <em>Eia.gov</em>, 2016,
-www.eia.gov/consumption/commercial/.</p>
-<p>Leary, Neil. <em>Dickinson College Greenhouse Gas Inventory</em>,
-2008 – 2023. 9 Dec. 2025.</p>
+<p>EIA. (2016). <em>Energy Information Administration (EIA)- Commercial
+Buildings Energy Consumption Survey (CBECS)</em>. Eia.gov. <a
+href="https://www.eia.gov/consumption/commercial/"
+class="uri">https://www.eia.gov/consumption/commercial/</a></p>
+<p>Leary, N. (2025). <em>Dickinson College Greenhouse Gas Inventory,
+2008 – 2023.</em></p>
 </div>
 <div id="partner-contributions" class="section level2">
 <h2>Partner Contributions</h2>
 <p>Liam Glackin wrote the background portion of this report and created
-Figure 1 and Table 2. He also Prepared the academic year data for use.
-Charlotte Durietz Bourdain wrote the discussion portion of this report
-and prepared the annual and daily data, as well as the references. She
-also created Table 1 and Figure 2. Overall, both partners helped each
-other troubleshoot issues in code and understanding the data.</p>
+Figure 1 and Table 1, as well as their associated descriptions. He also
+prepared the academic year data for use. Charlotte Durietz Bourdain
+wrote and revised the recommendations portion of this report and
+prepared the annual and daily data. Charlotte wrote and revised the
+references. She also created Table 2 and Figure 2, as well as their
+associated descriptions. Overall, both partners helped each other
+troubleshoot issues in code and understanding the data.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1052,24 +1138,22 @@ other attached packages:
  [1] paletteer_1.7.0 DT_0.34.0       lubridate_1.9.5 forcats_1.0.1  
  [5] stringr_1.6.0   dplyr_1.2.0     purrr_1.2.1     readr_2.2.0    
  [9] tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.2   tidyverse_2.0.0
-[13] workflowr_1.7.2
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.10        generics_0.1.4     prismatic_1.1.2    stringi_1.8.7     
  [5] hms_1.1.4          digest_0.6.39      magrittr_2.0.4     timechange_0.4.0  
  [9] evaluate_1.0.5     grid_4.5.2         RColorBrewer_1.1-3 fastmap_1.2.0     
-[13] rprojroot_2.1.1    jsonlite_2.0.0     processx_3.8.6     whisker_0.4.1     
-[17] rematch2_2.1.2     ps_1.9.1           promises_1.5.0     httr_1.4.8        
-[21] crosstalk_1.2.2    scales_1.4.0       jquerylib_0.1.4    cli_3.6.5         
-[25] rlang_1.1.7        withr_3.0.2        cachem_1.1.0       yaml_2.3.12       
-[29] otel_0.2.0         tools_4.5.2        tzdb_0.5.0         httpuv_1.6.16     
-[33] vctrs_0.7.1        R6_2.6.1           lifecycle_1.0.5    git2r_0.36.2      
-[37] htmlwidgets_1.6.4  fs_1.6.7           pkgconfig_2.0.3    callr_3.7.6       
-[41] pillar_1.11.1      bslib_0.10.0       later_1.4.8        gtable_0.3.6      
-[45] glue_1.8.0         Rcpp_1.1.1         xfun_0.56          tidyselect_1.2.1  
-[49] rstudioapi_0.18.0  knitr_1.51         farver_2.1.2       htmltools_0.5.9   
-[53] labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2     getPass_0.2-4     
-[57] S7_0.2.1          </code></pre>
+[13] rprojroot_2.1.1    workflowr_1.7.2    jsonlite_2.0.0     whisker_0.4.1     
+[17] rematch2_2.1.2     promises_1.5.0     crosstalk_1.2.2    scales_1.4.0      
+[21] jquerylib_0.1.4    cli_3.6.5          rlang_1.1.7        withr_3.0.2       
+[25] cachem_1.1.0       yaml_2.3.12        otel_0.2.0         tools_4.5.2       
+[29] tzdb_0.5.0         httpuv_1.6.16      vctrs_0.7.1        R6_2.6.1          
+[33] lifecycle_1.0.5    git2r_0.36.2       htmlwidgets_1.6.4  fs_1.6.7          
+[37] pkgconfig_2.0.3    pillar_1.11.1      bslib_0.10.0       later_1.4.8       
+[41] gtable_0.3.6       glue_1.8.0         Rcpp_1.1.1         xfun_0.56         
+[45] tidyselect_1.2.1   rstudioapi_0.18.0  knitr_1.51         farver_2.1.2      
+[49] htmltools_0.5.9    labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2    
+[53] S7_0.2.1          </code></pre>
 </div>
 </div>
 </div>
