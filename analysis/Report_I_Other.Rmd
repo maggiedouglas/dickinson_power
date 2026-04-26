@@ -183,4 +183,5 @@ Leary, N. (2025). *Dickinson College Greenhouse Gas Inventory 2008-2023.* Center
 
 ## Partner contributions
 
+
 Ben Connors performed data wrangling and created the tables, working with the annual and academic datasets. He also wrote the electricity use summary. Kyrie Sanchez worked performed data wrangling on the daily data and created the two figures. She also wrote the background. Both partners contributed to the recommendations and revisions. No AI tools were used for any part of this report.
