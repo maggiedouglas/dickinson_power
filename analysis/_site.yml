@@ -3,14 +3,13 @@ output_dir: ../docs
 navbar:
   title: "dickinson_power"
   left:
-  - text: About
+  - text: Introduction
     href: about.html
-  - text: Data prep
+  - text: Methods
     href: data_wrangling_final.html
   - text: "Electricity summary"
+    href: campus_summary.html
     menu:
-      - text: "All buildings"
-        href: campus_summary.html
       - text: "Res. Halls < 2K sqft"
         href: Report_I_Small_Residence_Halls.html
       - text: "Res. Halls 2-10K sqft"
