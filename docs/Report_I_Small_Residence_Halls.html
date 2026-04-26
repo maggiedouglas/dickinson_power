@@ -431,7 +431,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -442,8 +442,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -456,9 +456,9 @@ aria-hidden="true"></span> </a>
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -481,21 +481,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -586,15 +583,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree96b1e0998bad2f0654b01fa5a8bdbf8f0085175atargetblank96b1e09a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeccedb67757e57eaf7ab2c1dd41058b9a62b11bd7targetblankccedb67a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/96b1e0998bad2f0654b01fa5a8bdbf8f0085175a" target="_blank">96b1e09</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7" target="_blank">ccedb67</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree96b1e0998bad2f0654b01fa5a8bdbf8f0085175atargetblank96b1e09a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreeccedb67757e57eaf7ab2c1dd41058b9a62b11bd7targetblankccedb67a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -604,7 +601,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/96b1e0998bad2f0654b01fa5a8bdbf8f0085175a" target="_blank">96b1e09</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7" target="_blank">ccedb67</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -676,9 +673,6 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
-Untracked files:
-    Untracked:  analysis/Report_I_Small_Residence_Halls.Rmd
-
 </code></pre>
 <p>
 Note that any generated files, e.g. HTML, png, CSS, etc., are not
@@ -723,6 +717,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7/analysis/Report_I_Small_Residence_Halls.Rmd" target="_blank">ccedb67</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-26
+</td>
+<td>
+updated small res hall revisions
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7/docs/Report_I_Small_Residence_Halls.html" target="_blank">ccedb67</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-26
+</td>
+<td>
+updated small res hall revisions
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -954,6 +982,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7/docs/figure/Report_I_Small_Residence_Halls.Rmd/monthly_use-1.png" target="_blank">ccedb67</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-26
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/7140affc7c50f23879e7a03e256d5aec41f29970/docs/figure/Report_I_Small_Residence_Halls.Rmd/monthly_use-1.png" target="_blank">7140aff</a>
 </td>
 <td>
@@ -1011,6 +1050,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ccedb67757e57eaf7ab2c1dd41058b9a62b11bd7/docs/figure/Report_I_Small_Residence_Halls.Rmd/kwh_sqft-1.png" target="_blank">ccedb67</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-26
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/7140affc7c50f23879e7a03e256d5aec41f29970/docs/figure/Report_I_Small_Residence_Halls.Rmd/kwh_sqft-1.png" target="_blank">7140aff</a>
