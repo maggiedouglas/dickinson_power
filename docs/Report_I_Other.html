@@ -11,7 +11,7 @@
 
 <meta name="author" content="Ben Connors &amp; Kyrie Sanchez" />
 
-<meta name="date" content="2026-04-13" />
+<meta name="date" content="2026-03-18" />
 
 <title>Other Buildings</title>
 
@@ -345,10 +345,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">About</a>
+  <a href="about.html">Introduction</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Data prep</a>
+  <a href="data_wrangling_final.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -357,9 +357,6 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="campus_summary.html">All buildings</a>
-    </li>
     <li>
       <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
@@ -426,7 +423,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Other Buildings</h1>
 <h4 class="author">Ben Connors &amp; Kyrie Sanchez</h4>
-<h4 class="date">04/13/26</h4>
+<h4 class="date">2026-03-18</h4>
 
 </div>
 
@@ -434,7 +431,7 @@ div.tocify {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-ok text-success"
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -445,8 +442,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
-</a>
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -455,13 +452,13 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-13
+<strong>Last updated:</strong> 2026-04-26
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 0
+aria-hidden="true"></span> 1
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -484,18 +481,21 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
-</a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguptodate"
+<div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>Great! Since the R Markdown file has been committed to the Git
-repository, you know the exact version of the code that produced these
-results.</p>
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
 </div>
 </div>
 </div>
@@ -586,15 +586,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree808f58482a110ef1d83d1051735cdfee14420fbftargetblank808f584a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/808f58482a110ef1d83d1051735cdfee14420fbf" target="_blank">808f584</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree808f58482a110ef1d83d1051735cdfee14420fbftargetblank808f584a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -604,7 +604,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/808f58482a110ef1d83d1051735cdfee14420fbf" target="_blank">808f584</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -630,6 +630,7 @@ Ignored files:
     Ignored:    data/building_list_FY25_updated.xlsx
     Ignored:    data/graph_data_life_exp.csv
     Ignored:    data/housing_counts.csv
+    Ignored:    data/~$building_list_FY25_updated.xlsx
     Ignored:    keys/.DS_Store
     Ignored:    output/annual_kwh.csv
     Ignored:    output/building_check.csv
@@ -675,9 +676,11 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
+Untracked files:
+    Untracked:  analysis/Report_I_Other.Rmd
+
 Unstaged changes:
-    Modified:   analysis/main_meter_mod_vis.Rmd
-    Modified:   analysis/main_meter_regression.Rmd
+    Modified:   analysis/_site.yml
 
 </code></pre>
 <p>
@@ -722,6 +725,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d34161b8d717b41f39a7b35fa9bbbfff7334d6d6/analysis/Report_I_Other.Rmd" target="_blank">d34161b</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+<td>
+update academic section of Part 1
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/Report_I_Other.html" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -833,172 +870,123 @@ change navigation bar and add student report sections
 </div>
 <div id="background" class="section level2">
 <h2>Background</h2>
-<p>The “other” category is the accumulation of buildings that do not
-align with any one group. Some of the buildings may host residents but
-are not exclusively residential – such as Kade and King House. Some
-buildings represent multiple structures that are on the same meter, for
-example: Biddle Press Box, Restrooms, Durden ATC (Biddle). 5 N. Orange
-St. is shared by the facilities group, the half of the building
-represented by this category is used by ProjectSHARE and the Central
-Pennsylvania Youth Ballet (CPYB). As a result of the diversity within
-the category, it is hard to identify a main function.</p>
-<p>There are 17 buildings in total, which makes up roughly 8% of the
-total buildings on campus. The total square feet across every building
-category is 1,946,878 square feet; buildings listed as other have a
-combined total of 250,130 square feet (Table 1).</p>
-<p>The buildings in this category are incredibly variable. There is not
-one consistent factor across all buildings besides being owned by
-Dickinson. The largest building is the Kline, which contributes to 20%
-of the other type buildings total square feet, whereas the smallest, 155
-W. High St., Ground Floor, contributes less than 1%. There is also a
-lack of consistency with variables that have been identified as strong
-influences on electricity use, such as: population, age, and HVAC
-systems.</p>
-<p>A majority of the other buildings have complete individual data sets.
-Kline, which has been disaggregated from the main meter, only has 35% of
-daily data and was therefore removed from the analysis due to
-insufficient information. We only have temperature data for Boiling
-Springs Cottage and Boiling Springs Farm. 25 Pomfret and 50 Wilson
-Street are missing square footage data. There are no buildings on the
-Weis meter.</p>
+<p>The ‘other’ category is the accumulation of buildings that do not
+align with any one group. There are 17 buildings in total, which make up
+roughly 13% of buildings on campus. The total square feet across every
+building category is 1,946,878 square feet; buildings listed as other
+have a combined total of 250,130 square feet which is also 13% of
+building space.</p>
+<p>The buildings in the other category are incredibly variable. The
+largest building is the Kline, which contributes 20% of the category’s
+square footage, whereas the smallest, 155 W. High St., Ground Floor,
+contributes less than 1%. There is also a lack of consistency of the age
+of the buildings, when they were last renovated, and what
+heating/cooling system they use.</p>
+<p>Some of the buildings may host residents but are not exclusively
+residential – such as Kade House and King House. Some buildings
+represent multiple structures whose electricity consumption is tracked
+by a single electric meter. For example: Biddle Press Box, Restrooms,
+and Durden ATC (Biddle) are on one meter. 5 N. Orange St., which is one
+building with two meters, is split with the student group focusing on
+administrative buildings. The half of the building represented by this
+category is used by ProjectSHARE and the Central Pennsylvania Youth
+Ballet (CPYB). As a result of the diversity within the category, it is
+hard to identify a main function or building use that contributes to
+electricity use.</p>
+<p>A majority (13/17) of the other buildings have complete individual
+data sets for electricity use in fiscal year 2025. Buildings that have
+significant missing data have been removed from our analysis. Kline,
+which has been disaggregated from the main meter, only has 35% of daily
+data. No electricity data is available for Boiling Springs Cottage and
+Boiling Springs Farm. 25 Pomfret Street and 50 Wilson Street are missing
+square footage data.</p>
 </div>
 <div id="electricity-use-summary" class="section level2">
 <h2>Electricity use summary</h2>
-<p>It is difficult to determine what a typical building is in this
-category due to the variation in square footage and usage of the
-buildings. However, the median kWh per year is 15,064, with a median kWh
-per square foot of 4.1.</p>
-<p>The median cost value for a building in this category is $1226 per
-year, while the mean is $3399. The mean is significantly higher than the
-median because the two highest individually metered users in our
-category, Biddle press box, Restrooms, and Durden ATC, and 5 N. Orange
-St. CPYB/Project Share, use significantly more electricity than the rest
-of the buildings in the category.</p>
-<p>The median GHG emissions in the other category is 5 metric tons of
-CO2 equivalent, with a mean of 12.62 metric tons of CO2 equivalent.
-While the median values better represent the majority of the buildings
-in the category, the mean value is still important, as it shows how much
-influence the biggest electricity consumers have on this category.</p>
-<p>The conversion factors to find estimates for cost and GHG emissions
-were derived from Dickinson College’s Greenhouse Gas Inventory (Leary,
-2025).</p>
-<p>Biddle Press box, Restrooms and Durden ATC and 5 N. Orange
-St. CPYB/Project Share are the two biggest overall electricity users
-throughout the 2025 fiscal year (Table 1). Biddle used 298,475 kWh, and
-5 N. Orange St. Used 277,590 kWh. These values were much higher than the
-third highest electricity consumer, which was King House, using 64,445
-kWh throughout the year. However, King House was the largest electricity
-user when normalized by square footage, with a value of 23.5 kWh/sqft.
-Biddle was the second highest user when normalized, at 12.0 kWh/sqft. 5
-N. Orange St. Was only the sixth highest electricity user when
-normalized, with 6.5 kWh/sqft. 155 W High St Ground Floor, and 368 W.
-North were the two smallest electricity users over the fiscal year,
-using 1068, and 3151 kWh respectively. Wentzel was the lowest normalized
-electricity user, using only 0.9 kWh/sqft. There is no square footage
-data for 25 Pomfret St or 50 Wilson St, so these two buildings were
-unable to be included in the normalization analysis.</p>
+<p>There is a lot of variation in square footage and usage patterns in
+the other building category, and thus, there was a large spread in
+electricity use for this category (Table 1). The median value across the
+entire fiscal year was 19,990 kWh (interquartile range 9,118 – 44,548
+kWh). The median electricity intensity in this category was 6.5 kWh/sqft
+(interquartile range 4.5 – 9.6 kWh/sqft).</p>
+<p>The median electricity cost for a building in the other category was
+$1,226 per year (interquartile range $432 – $2,961 per year). However,
+the mean electricity cost for a building in this category was $3,399,
+which is significantly higher than the median. This is because the two
+highest individually metered users in the category, Biddle and
+ProjectSHARE, used significantly more electricity compared to the rest
+of the other buildings.</p>
+<p>The median greenhouse gas emissions in the other category was 5
+metric tons of CO2 equivalent (interquartile range 2 – 11 MTCO2e), with
+a mean of about 13 MTCO2e . While the median values better represent
+most of the buildings in the category, the mean value is still important
+for demonstrating how much influence the biggest electricity consumers
+have on this category.</p>
+<p>Biddle and Project SHARE were the two biggest overall electricity
+users during the 2025 fiscal year, using 298,475 and 277,590 kWh
+respectively (Table 1). These values were much higher than King House,
+the third highest electricity consumer, which used 64,445 kWh throughout
+the year. However, King House was the most electricity intensive user,
+as when the data were normalized by square footage, the building used
+23.5 kWh/sqft. Biddle was the second most electricity intensive
+building, and ProjectSHARE was the sixth most intensive, with values of
+12.0 and 6.5 kWh/sqft respectively. 155 W High St Ground Floor and 368
+W. North were the two smallest total electricity users over the fiscal
+year, using 1068 and 3151 kWh respectively. Wentzel was the building
+with the lowest electricity intensity, using only 0.9 kWh/sqft. There is
+no square footage data for 25 Pomfret St or 50 Wilson St, so these two
+buildings were not included in the normalization analysis.</p>
 <pre class="r"><code>datatable(annual_other, caption = &quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during fiscal year 2025 &quot;,
           rownames = FALSE,
           colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;cost ($)&quot;, &quot;CO2e (MT)&quot;),
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
-          options = list(pagelength = 10, audowidth = TRUE, dom = &#39;p&#39;))</code></pre>
+          options = list(pageLength = 13, autoWidth = TRUE, dom = &#39;t&#39;))</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during fiscal year 2025 <\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["Biddle Press Box, Restrooms, Durden ATC","5 N. Orange St. - CPYBSHARE","King House","25 Pomfret St (15, 16)","49 W. High (1, 2, 3)","Wentzel","119 W. High St. (1, 2, 3)","344 W. North St.","Kade House","50 Wilson Street","362 W. North S.","368 W. North","155 W. High St., Ground Floor"],[100,100,100,95,100,100,100,100,100,95,100,100,100],[24895,42500,2745,null,3000,25000,2240,1586,1800,null,1111,992,500],[298475,277590,64445,42473,30832,22830,19990,12407,10487,8693,6482,3151,1068],[298475,277590,64445,44548,30832,22830,19990,12407,10487,9118,6482,3151,1068],[12,6.5,23.5,null,10.3,0.9,8.9,7.8,5.8,null,5.8,3.2,2.1],[24291,22592,5245,3626,2509,1858,1627,1010,854,742,527,256,87],[90,84,19,13,9,7,6,4,3,3,2,1,0]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pagelength":10,"audowidth":true,"dom":"p","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"building","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_per_sqft","targets":6},{"name":"cost_dol","targets":7},{"name":"CO2e_MT","targets":8}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>summary(annual_other)</code></pre>
-<pre><code>    meter             building           days_perc           sqft      
- Length:13          Length:13          Min.   : 95.00   Min.   :  500  
- Class :character   Class :character   1st Qu.:100.00   1st Qu.: 1348  
- Mode  :character   Mode  :character   Median :100.00   Median : 2240  
-                                       Mean   : 99.23   Mean   : 9670  
-                                       3rd Qu.:100.00   3rd Qu.:13948  
-                                       Max.   :100.00   Max.   :42500  
-                                                        NA&#39;s   :2      
-      kwh            kwh_corr       kwh_per_sqft       cost_dol    
- Min.   :  1068   Min.   :  1068   Min.   : 0.900   Min.   :   87  
- 1st Qu.:  8693   1st Qu.:  9118   1st Qu.: 4.500   1st Qu.:  742  
- Median : 19990   Median : 19990   Median : 6.500   Median : 1627  
- Mean   : 61456   Mean   : 61648   Mean   : 7.891   Mean   : 5017  
- 3rd Qu.: 42473   3rd Qu.: 44548   3rd Qu.: 9.600   3rd Qu.: 3626  
- Max.   :298475   Max.   :298475   Max.   :23.500   Max.   :24291  
-                                   NA&#39;s   :2                       
-    CO2e_MT     
- Min.   : 0.00  
- 1st Qu.: 3.00  
- Median : 6.00  
- Mean   :18.54  
- 3rd Qu.:13.00  
- Max.   :90.00  
-                </code></pre>
-<p>During the academic year, the same 2 buildings of Biddle press box,
-Restrooms, and Durden ATC are still by far the highest users (Table 2).
-However, during the academic year, 5 N. Orange St. Is the highest total
-electricity user, using 192,318 kWh, with Biddle right behind at 190,898
-kWh. King House is still the third highest, at 46,665 kWh during the
-academic year. King House and Biddle are also still the two highest
-users when normalized, with values of 17.0 and 7.7 kWh/sqft
-respectively. 5 N. Orange St. Is the fifth highest electricity user when
-normalized, with a value of 4.5 kWh/sqft. During the academic year, 155
-W High St Ground Floor and 368 W North are still the two lowest total
-electricity users, using 782 and 2206 kWh respectively. Wentzel is also
-still the lowest electricity user when normalized, using 0.7
-kWh/sqft.</p>
+<script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during fiscal year 2025 <\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["Biddle Press Box, Restrooms, Durden ATC","5 N. Orange St. - CPYBSHARE","King House","25 Pomfret St (15, 16)","49 W. High (1, 2, 3)","Wentzel","119 W. High St. (1, 2, 3)","344 W. North St.","Kade House","50 Wilson Street","362 W. North S.","368 W. North","155 W. High St., Ground Floor"],[100,100,100,95,100,100,100,100,100,95,100,100,100],[24895,42500,2745,null,3000,25000,2240,1586,1800,null,1111,992,500],[298475,277590,64445,42473,30832,22830,19990,12407,10487,8693,6482,3151,1068],[298475,277590,64445,44548,30832,22830,19990,12407,10487,9118,6482,3151,1068],[12,6.5,23.5,null,10.3,0.9,8.9,7.8,5.8,null,5.8,3.2,2.1],[24291,22592,5245,3626,2509,1858,1627,1010,854,742,527,256,87],[89.8,83.5,19.4,13.4,9.300000000000001,6.9,6,3.7,3.2,2.7,1.9,0.9,0.3]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":13,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"building","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_per_sqft","targets":6},{"name":"cost_dol","targets":7},{"name":"CO2e_MT","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,13,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>During the academic year, Biddle and ProjectSHARE were still by far
+the highest electricity users in the other category (Table 2). However,
+ProjectSHARE was the leading user, using 192,318 kWh, while Biddle used
+190,898 kWh. King House was still the third highest, using 46,665 kWh.
+King House and Biddle were still the most electricity intensive
+buildings during the academic year, using 17.0 and 7.7 kWh/sqft
+respectively. ProjectSHARE was the fifth most electricity intensive
+building, using 4.5 kWh/sqft. During the academic year, 155 W High St
+Ground Floor and 368 W North were still the two lowest total electricity
+users, using 782 and 2206 kWh respectively. Wentzel was still the least
+electricity intensive building, using 0.7 kWh/sqft.</p>
 <pre class="r"><code>datatable(academic_other, caption = &quot;Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during academic year 2024/2025&quot;,
           rownames = FALSE,
           colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;cost ($)&quot;, &quot;CO2e (MT)&quot;),
           filter = &quot;none&quot;,
           class = &quot;compact&quot;,
-          options = list(pagelength = 10, audowidth = TRUE, dom = &#39;p&#39;))</code></pre>
+          options = list(pageLength = 13, autoWidth = TRUE, dom = &#39;t&#39;))</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during academic year 2024/2025<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["5 N. Orange St. - CPYBSHARE","Biddle Press Box, Restrooms, Durden ATC","King House","25 Pomfret St (15, 16)","49 W. High (1, 2, 3)","Wentzel","119 W. High St. (1, 2, 3)","344 W. North St.","50 Wilson Street","Kade House","362 W. North S.","368 W. North","155 W. High St., Ground Floor"],[100,100,100,100,100,100,100,100,100,100,100,100,100],[42500,24895,2745,null,3000,25000,2240,1586,null,1800,1111,992,500],[192318,190898,46665,36378,21369,16622,15064,6581,5885,5302,2780,2206,782],[192318,190898,46665,36378,21369,16622,15064,6581,5885,5302,2780,2206,782],[4.5,7.7,17,null,7.1,0.7,6.7,4.1,null,2.9,2.5,2.2,1.6],[15652,15536,3798,2961,1739,1353,1226,536,479,432,226,180,64],[58,57,14,11,6,5,5,2,2,2,1,1,0]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pagelength":10,"audowidth":true,"dom":"p","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"building","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_per_sqft","targets":6},{"name":"cost_dol","targets":7},{"name":"CO2e_MT","targets":8}],"order":[],"autoWidth":false,"orderClasses":false}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>summary(academic_other)</code></pre>
-<pre><code>    meter             building           days_perc        sqft      
- Length:13          Length:13          Min.   :100   Min.   :  500  
- Class :character   Class :character   1st Qu.:100   1st Qu.: 1348  
- Mode  :character   Mode  :character   Median :100   Median : 2240  
-                                       Mean   :100   Mean   : 9670  
-                                       3rd Qu.:100   3rd Qu.:13948  
-                                       Max.   :100   Max.   :42500  
-                                                     NA&#39;s   :2      
-      kwh            kwh_corr       kwh_per_sqft       cost_dol    
- Min.   :   782   Min.   :   782   Min.   : 0.700   Min.   :   64  
- 1st Qu.:  5302   1st Qu.:  5302   1st Qu.: 2.350   1st Qu.:  432  
- Median : 15064   Median : 15064   Median : 4.100   Median : 1226  
- Mean   : 41758   Mean   : 41758   Mean   : 5.182   Mean   : 3399  
- 3rd Qu.: 36378   3rd Qu.: 36378   3rd Qu.: 6.900   3rd Qu.: 2961  
- Max.   :192318   Max.   :192318   Max.   :17.000   Max.   :15652  
-                                   NA&#39;s   :2                       
-    CO2e_MT     
- Min.   : 0.00  
- 1st Qu.: 2.00  
- Median : 5.00  
- Mean   :12.62  
- 3rd Qu.:11.00  
- Max.   :58.00  
-                </code></pre>
-<p>There is overall a lot of variability in the seasonal patterns among
-buildings (Figure 1). Some buildings such as Biddle Press Box,
-Restrooms, and Durden ATC, and 362 W. North St display patterns of peak
-electricity use in the summer. Other buildings like King House, and 25
-Pomfret St display the opposite pattern, and have peak electricity use
-in the winter, with the lowest use in the summer months. Wentzel also
-has a unique pattern, peaking in the fall during the months of
-September-November. All these buildings also display very different
-values for electricity usage due to the variance in the building
+<script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of other buildings during academic year 2024/2025<\/caption>","data":[["Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual","Individual"],["5 N. Orange St. - CPYBSHARE","Biddle Press Box, Restrooms, Durden ATC","King House","25 Pomfret St (15, 16)","49 W. High (1, 2, 3)","Wentzel","119 W. High St. (1, 2, 3)","344 W. North St.","50 Wilson Street","Kade House","362 W. North S.","368 W. North","155 W. High St., Ground Floor"],[100,100,100,100,100,100,100,100,100,100,100,100,100],[42500,24895,2745,null,3000,25000,2240,1586,null,1800,1111,992,500],[192318,190898,46665,36378,21369,16622,15064,6581,5885,5302,2780,2206,782],[192318,190898,46665,36378,21369,16622,15064,6581,5885,5302,2780,2206,782],[4.5,7.7,17,null,7.1,0.7,6.7,4.1,null,2.9,2.5,2.2,1.6],[15652,15536,3798,2961,1739,1353,1226,536,479,432,226,180,64],[57.9,57.4,14,10.9,6.4,5,4.5,2,1.8,1.6,0.8,0.7,0.2]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":13,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"building","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_per_sqft","targets":6},{"name":"cost_dol","targets":7},{"name":"CO2e_MT","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[10,13,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<p>There was a lot of variation in seasonal patterns among the other
+category buildings (Figure 1). Buildings such as Biddle and 362 W. North
+St displayed patterns of peak electricity use in the summer. Other
+buildings like King House and 25 Pomfret St displayed the opposite
+pattern, with electricity use peaking in the winter, and being the
+lowest in the summer months. Wentzel also had a unique pattern, peaking
+in the fall during the months of September-November. All of these
+buildings also displayed very different values for electricity usage due
+to the variation in square footage and usage within the building
 category.</p>
 <pre class="r"><code>ggplot(other.daily, aes(x=month, y=kwh/10^3, fill=NAME))+
   geom_col(stat = &quot;identity&quot;, position = &quot;stack&quot;)+
   facet_wrap(. ~ NAME) +
   scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;)+
-  labs(title=&quot;Figure 1. Monthly patterns in electricity use by building for other buildings in FY25&quot;,
-  subtitle = &quot;Only includes buildings with individual meters&quot;,
+  labs(title=&quot;Figure 1. Monthly patterns in electricity use in &#39;Other&#39; buildings&quot;,
+  subtitle = &quot;Fiscal Year 2025&quot;,
   x=&quot;&quot;,
   y=&quot;Electricity use (1000 kWh)&quot;,
   fill=&quot;Building&quot;)+
   theme_bw()+
+  theme(strip.text = element_text(size = 8)) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))+
   theme(legend.position = &quot;none&quot;)</code></pre>
-<p><img src="figure/Report_I_Other.Rmd/figure_one-1.png" alt="" width="1056" style="display: block; margin: auto;" /></p>
+<p><img src="figure/Report_I_Other.Rmd/figure_one-1.png" alt="" width="912" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-figure_one-1">
 Past versions of figure_one-1.png
@@ -1036,23 +1024,22 @@ maggiedouglas
 </table>
 </div>
 </div>
-<p>Between buildings in this category there is a lot of variance in
-electricity intensity, but the buildings displaying high or low energy
-intensity is generally consistent, with Summer Break displaying some
-exceptions (Figure 2). In all times of year, King House has by far the
-highest median and IQR compared to the rest of the buildings in this
-category. These values are also much higher than the median and
-Interquartile range (IQR) values for similar buildings at other colleges
-and universities (EIA 2022). Biddle Press Box, Restrooms, and Durden
-ATC, is generally consistent throughout the year, with a slight peak in
-electricity intensity during Summer Break, but the value is comparable
-to similar buildings at other colleges and universities. Most of the
-buildings in this category are also typically below the comparison
-values, but in the summer, there are 5 buildings that are very similar
-or higher: King House, Biddle, 344 W North St, Kade House, and 362 W
-North St. It can also be seen that 49 W High St and 119 W High St see
-noticeable peaks in electricity intensity during the spring semester,
-and winter break.</p>
+<p>There was also a lot of variation in electricity intensity in the
+other category buildings, but the buildings displaying high or low
+electricity intensity were generally consistent throughout the year
+(Figure 2). Throughout the entire fiscal year, King House was
+consistently the most electricity intensive building, with a
+significantly higher median and interquartile range (IQR) compared to
+the rest of the buildings in this category. These values were also much
+higher than the median and IQR for similar buildings at other colleges
+and universities (EIA 2022). Biddle was consistent throughout the year,
+despite a slight peak in electricity intensity during summer break. This
+value is comparable to similar buildings at other colleges and
+universities. Most of the other buildings were below the comparison
+values, but in the summer, there were five buildings that were similar
+or higher: King House, Biddle, 344 W North St, 362 W North St, and Kade
+House. 49 W High St and 119 W High St saw noticeable peaks in
+electricity intensity during the spring semester and winter break.</p>
 <pre class="r"><code>other.box&lt;-other.daily%&gt;%
   filter(!is.na(sqft))
 ggplot(other.box,aes(x=reorder(NAME,kwh.total/sqft,FUN=median),y=kwh.sqft.year,fill=NAME))+
@@ -1111,51 +1098,47 @@ maggiedouglas
 <pre class="r"><code># median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
 # https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf</code></pre>
 </div>
-<div id="discussion" class="section level2">
-<h2>Discussion</h2>
-<p>Across all building categories it would be helpful to know how they
-are being heated and cooled, and when facilities automates heating and
-cooling changes. Additional information regarding occupation and how
-many people are in a building at a time would improve our understanding.
-Since there is such a lack of consistency, to improve our understanding
-for this building category, knowing what the heating and cooling systems
-are and how facilities expect them to use electricity would help us
-identify anomalies.</p>
-<p>Buildings in this category must be looked at individually due to the
-lack of connection. 5 N. Orange St. is using electricity in a
-predictable way given the buildings layout and purpose despite being one
-of the largest electricity consumers. However, Biddle Press Box,
-Restrooms, Durden ATC has unusually high use at all times where we would
-expect to see a decrease in use seasonally, suggesting that there is
-room for improvement. Other individual buildings have not been observed
-as heavily as 5 N. Orange St. And Biddle Press Box, Restrooms, Durden
-ATC.</p>
-<p>Our analysis cannot be through comparison, which is why it is so
-important that we receive feedback from facilities and improve our
-understanding of HVAC systems.</p>
-<p>Based off the total electricity consumption for this category, Biddle
-Press Box, Restrooms, and Durden ATC is definitely the most intriguing
-building to explore further. What makes this building so interesting is
-its peak in total use during the summer months. There is likely not as
-much use for these buildings during the summer, so this could
-potentially be an easy way to cut down a large amount of electricity. 5
-N. Orange St might also be interesting to look into because of the large
-amount of electricity it consumes, but since the electricity intensity
-is not one of the highest values, this building may be operating
-reasonably efficiently already. It is unlikely that we could find a good
-model for this building category given the variance in seasonal
-patterns, electricity intensity, and total electricity usage.</p>
-<p>Another pattern that is very interesting in the data is the
-consistently very high electricity intensity at King House. This is
-substantially higher than the other buildings in the category, and even
-surpasses the comparison value from other colleges and universities.
-This could be another building to look more into, to see how it could be
-more efficient with electricity usage. Wentzel’s electricity use peaking
-in the fall is also an interesting pattern, and it could be valuable to
-look more into this building to find out why this is, and if the
-electricity use could be lowered during the peak months. However, since
-the total usage of this building is not very high, it will likely not be
-a priority of further analysis.</p>
+<div id="recommendations" class="section level2">
+<h2>Recommendations</h2>
+<p>Based on the total electricity consumption for this category, Biddle
+is the most intriguing building to explore further. What makes this
+building complex so interesting is its peak in total use during the
+summer months. There is likely not as much use for this building complex
+during the summer, so this could potentially be an easy way to cut down
+on a large amount of electricity. Project SHARE might also be
+interesting to investigate because of the large amount of electricity it
+consumes, but since the electricity intensity is not very high, and is
+lower compared to similar buildings at other colleges and universities,
+this building may be operating reasonably efficiently already. It is
+unlikely that we could find a single model for this building category
+given the variance in seasonal patterns, electricity intensity, and
+total electricity usage.</p>
+<p>Another pattern that is interesting in the data is the consistently
+very high electricity intensity at King House. This is substantially
+higher than the other buildings in the category and even surpasses the
+comparison value from other colleges and universities. This building
+could likely have much more efficient electricity usage. Wentzel’s
+electricity use peaking in the fall is also an interesting pattern, and
+it could be valuable to look more into this building to find out why
+this is, and if the electricity use could be lowered during the peak
+months. However, since the total usage of this building is not very
+high, it will likely not be a priority of further analysis.</p>
+<p>Since there is such pronounced variability within this building
+category, to improve our understanding of electricity usage patterns, it
+would be helpful to know what the heating and cooling systems are for
+each building. This would help establish building-specific expectations
+and identify anomalies.</p>
+<p>Due to a lack of similarities within this category, we cannot
+effectively model electricity use for the other buildings as a
+conglomerate. Instead, it is more valuable to investigate individual
+buildings of interest and report on how those single buildings can be
+improved. Project SHARE is using electricity in a predictable way given
+the building’s layout and purpose despite being one of the largest
+electricity consumers. However, Biddle has unusually high use at all
+times where we would expect to see a decrease in electricity consumption
+in the summer, suggesting that there is room for improvement. Other
+individual buildings have not been observed as heavily as Project SHARE
+and Biddle.</p>
 </div>
 <div id="sources" class="section level2">
 <h2>Sources</h2>
@@ -1176,6 +1159,9 @@ electricity use summary and the last 2 of the 4 questions under
 recommendations. Kyrie wrote the answers for the background and the
 first two questions of recommendations. No AI tools were used for any
 part of this report.</p>
+<p>For revisions, Kyrie revised the background and what is now the
+second half of the recommendations, while Ben revised the electricity
+use summary and what is now the first half of recommendations.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1206,24 +1192,22 @@ other attached packages:
  [1] paletteer_1.7.0 DT_0.34.0       lubridate_1.9.5 forcats_1.0.1  
  [5] stringr_1.6.0   dplyr_1.2.0     purrr_1.2.1     readr_2.2.0    
  [9] tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.2   tidyverse_2.0.0
-[13] workflowr_1.7.2
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.10        generics_0.1.4     prismatic_1.1.2    stringi_1.8.7     
  [5] hms_1.1.4          digest_0.6.39      magrittr_2.0.4     timechange_0.4.0  
  [9] evaluate_1.0.5     grid_4.5.2         RColorBrewer_1.1-3 fastmap_1.2.0     
-[13] rprojroot_2.1.1    jsonlite_2.0.0     processx_3.8.6     whisker_0.4.1     
-[17] rematch2_2.1.2     ps_1.9.1           promises_1.5.0     httr_1.4.8        
-[21] crosstalk_1.2.2    scales_1.4.0       jquerylib_0.1.4    cli_3.6.5         
-[25] rlang_1.1.7        withr_3.0.2        cachem_1.1.0       yaml_2.3.12       
-[29] otel_0.2.0         tools_4.5.2        tzdb_0.5.0         httpuv_1.6.16     
-[33] vctrs_0.7.1        R6_2.6.1           lifecycle_1.0.5    git2r_0.36.2      
-[37] htmlwidgets_1.6.4  fs_1.6.7           pkgconfig_2.0.3    callr_3.7.6       
-[41] pillar_1.11.1      bslib_0.10.0       later_1.4.8        gtable_0.3.6      
-[45] glue_1.8.0         Rcpp_1.1.1         xfun_0.56          tidyselect_1.2.1  
-[49] rstudioapi_0.18.0  knitr_1.51         farver_2.1.2       htmltools_0.5.9   
-[53] labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2     getPass_0.2-4     
-[57] S7_0.2.1          </code></pre>
+[13] rprojroot_2.1.1    workflowr_1.7.2    jsonlite_2.0.0     whisker_0.4.1     
+[17] rematch2_2.1.2     promises_1.5.0     crosstalk_1.2.2    scales_1.4.0      
+[21] jquerylib_0.1.4    cli_3.6.5          rlang_1.1.7        withr_3.0.2       
+[25] cachem_1.1.0       yaml_2.3.12        otel_0.2.0         tools_4.5.2       
+[29] tzdb_0.5.0         httpuv_1.6.16      vctrs_0.7.1        R6_2.6.1          
+[33] lifecycle_1.0.5    git2r_0.36.2       htmlwidgets_1.6.4  fs_1.6.7          
+[37] pkgconfig_2.0.3    pillar_1.11.1      bslib_0.10.0       later_1.4.8       
+[41] gtable_0.3.6       glue_1.8.0         Rcpp_1.1.1         xfun_0.56         
+[45] tidyselect_1.2.1   rstudioapi_0.18.0  knitr_1.51         farver_2.1.2      
+[49] htmltools_0.5.9    labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2    
+[53] S7_0.2.1          </code></pre>
 </div>
 </div>
 </div>
