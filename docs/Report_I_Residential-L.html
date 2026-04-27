@@ -11,7 +11,7 @@
 
 <meta name="author" content="Claire Raesly and Liv Kacar" />
 
-<meta name="date" content="2026-04-25" />
+<meta name="date" content="2026-04-27" />
 
 <title>Large Residential Buildings</title>
 
@@ -345,10 +345,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">About</a>
+  <a href="about.html">Introduction</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Data prep</a>
+  <a href="data_wrangling_final.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -357,9 +357,6 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="campus_summary.html">All buildings</a>
-    </li>
     <li>
       <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
@@ -426,7 +423,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Large Residential Buildings</h1>
 <h4 class="author">Claire Raesly and Liv Kacar</h4>
-<h4 class="date">04/25/26</h4>
+<h4 class="date">04/27/26</h4>
 
 </div>
 
@@ -455,7 +452,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-25
+<strong>Last updated:</strong> 2026-04-27
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -589,15 +586,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreec7acfc602c46a988176b2b3110cb39208bd83a93targetblankc7acfc6a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6224ed800c7bf0be156b52c24eae33afa4af2ed8targetblank6224ed8a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/c7acfc602c46a988176b2b3110cb39208bd83a93" target="_blank">c7acfc6</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/6224ed800c7bf0be156b52c24eae33afa4af2ed8" target="_blank">6224ed8</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreec7acfc602c46a988176b2b3110cb39208bd83a93targetblankc7acfc6a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6224ed800c7bf0be156b52c24eae33afa4af2ed8targetblank6224ed8a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -607,7 +604,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/c7acfc602c46a988176b2b3110cb39208bd83a93" target="_blank">c7acfc6</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/6224ed800c7bf0be156b52c24eae33afa4af2ed8" target="_blank">6224ed8</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -647,6 +644,7 @@ Ignored files:
     Ignored:    output/kwh_academic_2026-03-30.csv
     Ignored:    output/kwh_academic_2026-04-07.csv
     Ignored:    output/kwh_academic_2026-04-13.csv
+    Ignored:    output/kwh_academic_2026-04-26.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_annual_2026-03-04.csv
     Ignored:    output/kwh_annual_2026-03-12.csv
@@ -659,6 +657,7 @@ Ignored files:
     Ignored:    output/kwh_annual_2026-03-30.csv
     Ignored:    output/kwh_annual_2026-04-07.csv
     Ignored:    output/kwh_annual_2026-04-13.csv
+    Ignored:    output/kwh_annual_2026-04-26.csv
     Ignored:    output/kwh_annual_20260225.csv
     Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
@@ -673,14 +672,18 @@ Ignored files:
     Ignored:    output/kwh_daily_2026-03-30.csv
     Ignored:    output/kwh_daily_2026-04-07.csv
     Ignored:    output/kwh_daily_2026-04-13.csv
+    Ignored:    output/kwh_daily_2026-04-26.csv
     Ignored:    output/kwh_daily_20260225.csv
     Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
+Untracked files:
+    Untracked:  .Rhistory (MacBook-Air.local's conflicted copy 2026-04-26)
+
 Unstaged changes:
-    Modified:   analysis/Report_I_Academic.Rmd
     Modified:   analysis/Report_I_Residential-L.Rmd
+    Modified:   analysis/data_wrangling_final.Rmd
 
 </code></pre>
 <p>
@@ -726,6 +729,40 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f8b588003005cdd833ac5b6f258ffce09689a4eb/analysis/Report_I_Residential-L.Rmd" target="_blank">f8b5880</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+<td>
+minor updates
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/f8b588003005cdd833ac5b6f258ffce09689a4eb/docs/Report_I_Residential-L.html" target="_blank">f8b5880</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+<td>
+minor updates
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1040,14 +1077,11 @@ kitchens to apartments with private amenities. Overall, this report will
 show differences in electricity usage and intensity in these buildings
 during fiscal year 2025 and academic year 2024-2025.</p>
 </div>
-<div id="data-preparation" class="section level2">
-<h2>Data preparation</h2>
-</div>
 <div id="electricity-use-summary" class="section level2">
 <h2>Electricity use summary</h2>
 <p>Table 1 shows the electricity use during fiscal year 2025 for large
-residential buildings. Annual electricity usage ranges from 36,395 kWh
-to 269,770 kWh which may be due to variability in building size, style,
+residential buildings. Annual electricity usage ranged from 39,395 kWh
+to 293,054 kWh which may be due to variability in building size, style,
 and HVAC systems. The median electricity use was approximately
 <strong>135,000 kWh per year</strong>, demonstrating a ‘typical’
 building in this category. This equates to about <strong>40 metric
@@ -1135,6 +1169,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f8b588003005cdd833ac5b6f258ffce09689a4eb/docs/figure/Report_I_Residential-L.Rmd/fig1-1.png" target="_blank">f8b5880</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/c805a4adf073cc9fe74af5a06521be99bcedde43/docs/figure/Report_I_Residential-L.Rmd/fig1-1.png" target="_blank">c805a4a</a>
@@ -1251,6 +1296,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f8b588003005cdd833ac5b6f258ffce09689a4eb/docs/figure/Report_I_Residential-L.Rmd/fig2-1.png" target="_blank">f8b5880</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/c7acfc602c46a988176b2b3110cb39208bd83a93/docs/figure/Report_I_Residential-L.Rmd/fig2-1.png" target="_blank">c7acfc6</a>

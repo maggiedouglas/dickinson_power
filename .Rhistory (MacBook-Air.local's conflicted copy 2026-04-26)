@@ -1,0 +1,512 @@
+# Create a data frame with new values (must match model's predictor names)
+period_data <- data.frame(ave_temp = 58, # set temp to the median in the dataset
+day = "Mon", # set day as Monday
+period = c("Fall Semester","Winter Break", # include all levels
+"Spring Semester","Summer Break"))
+# Generate estimated means + confidence interval
+conf_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
+vcov = vcovHAC(mod_seg), # address violations of assumptions
+newdata = period_data, # feed in the new data
+interval = "confidence", level = 0.95)) %>% # set interval
+mutate(period = c("Fall Semester","Winter Break",  # add period back into the data frame
+"Spring Semester","Summer Break"))
+# Generate estimated means + prediction interval
+pred_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
+vcov = vcovHAC(mod_seg), # address violations of assumptions
+newdata = period_data, # feed in the new data
+interval = "prediction", level = 0.95)) %>% # set interval
+mutate(period = c("Fall Semester","Winter Break",  # add period back into the data frame
+"Spring Semester","Summer Break"))
+# Graph with confidence intervals
+ggplot(conf_period) +
+geom_bar(aes(x=period, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
+geom_errorbar( aes(x=period, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", alpha=0.9, size=1) +
+theme_bw() +
+labs(x = "", y = "Electricity use (kWh per day)",
+title = "Figure 1. Main meter electricity use by time of year",
+subtitle = "Mean +/- 95% confidence interval",
+caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+# Graph with prediction intervals
+ggplot(pred_period) +
+geom_bar(aes(x=period, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
+geom_errorbar( aes(x=period, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", alpha=0.9, size=1) +
+theme_bw() +
+labs(x = "", y = "Electricity use (kWh per day)",
+title = "Figure 1. Main meter electricity use by time of year",
+subtitle = "Mean +/- 95% prediction interval",
+caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+?predict
+str(conf_period)
+conf_period
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(segmented) # for segmented regression
+library(tseries) # for time series, including autocorrelation
+library(moderndive)
+daily <- read.csv("./output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
+library(tidyverse)
+library(segmented) # for segmented regression
+library(tseries) # for time series, including autocorrelation
+library(moderndive)
+daily <- read.csv("../output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
+daily_main <- daily %>%
+filter(NAME == "Main Meter")
+str(daily_main)
+# where is the break point?
+ggplot(daily_main, aes(x = ave_temp, y = kwh)) +
+geom_point() +
+theme_bw() +
+geom_vline(xintercept = 60, col = "blue", linetype = "dashed")
+# let's look at only cooling temps
+ggplot(filter(daily_main, ave_temp > 60),
+aes(x = ave_temp, y = kwh)) +
+geom_point() +
+theme_bw()
+NAME <- c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC")
+HVAC <- c("Gas_heat_Electric_cool","Central_plant_FCU","Central_plant_FCU","Central_plant_FCU",
+"Gas_heat_Electric_cool", "Gas_heat_Electric_cool", "Mixed_heat_Electric_cool")
+hvac_key <- as.data.frame(cbind(NAME, HVAC))
+daily_focal <- daily %>%
+filter(NAME %in% c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC")) %>%
+left_join(hvac_key, by = "NAME")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(segmented) # for segmented regression
+library(tseries) # for time series, including autocorrelation
+library(moderndive)
+daily <- read.csv("../output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
+daily_main <- daily %>%
+filter(NAME == "Main Meter")
+str(daily_main)
+View(daily)
+NAME <- c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")
+HVAC <- c("Gas_heat_Electric_cool","Central_plant_FCU","Central_plant_FCU","Central_plant_FCU",
+"Gas_heat_Electric_cool", "Gas_heat_Electric_cool", "Mixed_heat_Electric_cool",
+"Mixed_heat_Electric_cool")
+hvac_key <- as.data.frame(cbind(NAME, HVAC))
+daily_focal <- daily %>%
+filter(NAME %in% c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")) %>%
+left_join(hvac_key, by = "NAME")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+NAME <- c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")
+HVAC <- c("Gas_heat_Electric_cool","Central_plant_FCU","Central_plant_FCU","Central_plant_FCU",
+"Gas_heat_Electric_cool", "Gas_heat_Electric_cool", "Mixed_systems",
+"Mixed_heat_Electric_cool")
+hvac_key <- as.data.frame(cbind(NAME, HVAC))
+daily_focal <- daily %>%
+filter(NAME %in% c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")) %>%
+left_join(hvac_key, by = "NAME")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(segmented) # for segmented regression
+library(tseries) # for time series, including autocorrelation
+library(moderndive)
+daily <- read.csv("../output/kwh_daily_2026-03-23.csv", strip.white = TRUE)
+daily_main <- daily %>%
+filter(NAME == "Main Meter")
+str(daily_main)
+NAME <- c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")
+HVAC <- c("Gas_heat_Electric_cool","Central_plant_FCU","Central_plant_FCU","Central_plant_FCU",
+"Gas_heat_Electric_cool", "Gas_heat_Electric_cool", "Mixed_systems",
+"Mixed_heat_Electric_cool")
+hvac_key <- as.data.frame(cbind(NAME, HVAC))
+daily_focal <- daily %>%
+filter(NAME %in% c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")) %>%
+left_join(hvac_key, by = "NAME")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = wday)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = day)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+View(daily_focal)
+NAME <- c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")
+HVAC <- c("Gas_heat_Electric_cool","Central_plant_FCU","Central_plant_FCU","Central_plant_FCU",
+"Gas_heat_Electric_cool", "Gas_heat_Electric_cool", "Mixed_systems",
+"Mixed_heat_Electric_cool")
+hvac_key <- as.data.frame(cbind(NAME, HVAC))
+daily_focal <- daily %>%
+filter(NAME %in% c("Treehouse","Drayer Hall","50 Mooreland Ave.","Althouse","519 W. Louther St.",
+"Allison Hall","Biddle Press Box, Restrooms, Durden ATC","Main Meter")) %>%
+left_join(hvac_key, by = "NAME")  %>%
+mutate(date = ymd(date), # convert date to date object
+month = month(date, label = TRUE), # extract month
+day = wday(date, label = TRUE)) # extract day of week
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = period)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+ggplot(daily_focal, aes(x = ave_temp, y = kwh, color = day)) +
+geom_point() +
+theme_bw() +
+# theme(legend.position = "none") +
+facet_wrap(HVAC ~ NAME, scales = "free_y") +
+labs(x = "Temperature (deg F)", y = "Electricity use (kWh)")
+library(tidyverse)
+library(DT)
+library(paletteer)
+kwh_academic_year <- read.csv("./output/kwh_academic_2026-03-17.csv")
+library(tidyverse)
+library(DT)
+library(paletteer)
+kwh_academic_year <- read.csv("../output/kwh_academic_2026-03-17.csv")
+kwh_annual <- read.csv("../output/kwh_annual_2026-03-17.csv")
+kwh_daily <- read.csv("../output/kwh_daily_2026-03-17.csv")
+str(kwh_annual)
+str(kwh_daily)
+str(kwh_academic_year)
+annual_academic <- kwh_annual %>%
+filter(type == "Academic") %>%
+mutate(MTCO2e = round(kwh_corr*0.30082405, digits = 0),
+Cost = round(kwh_corr*0.08138507,digits= 0),
+kwh_sqft = round(kwh_corr/sqft, digits= 1),
+days_perc = round(days_perc, digits = 0),
+kwh = round(kwh, digits = 0),
+kwh_corr = round(kwh_corr, digits = 0)
+)%>%
+arrange(-kwh) %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kwh_sqft, Cost, MTCO2e)
+str(annual_academic)
+View(annual_academic)
+annual_academic <- kwh_annual %>%
+filter(type == "Academic") %>%
+mutate(MTCO2e = round(kwh_corr*0.00030082405, digits = 0),
+Cost = round(kwh_corr*0.08138507,digits= 0),
+kwh_sqft = round(kwh_corr/sqft, digits= 1),
+days_perc = round(days_perc, digits = 0),
+kwh = round(kwh, digits = 0),
+kwh_corr = round(kwh_corr, digits = 0)
+)%>%
+arrange(-kwh) %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kwh_sqft, Cost, MTCO2e)
+str(annual_academic)
+ayear_academic <- kwh_academic_year %>%
+filter(type == "Academic") %>%
+mutate(MTCO2e = round((kwh_corr*0.00030082405), digits = 0),
+Cost = round(kwh_corr*0.08138507,digits= 0),
+kwh_sqft = round(kwh_corr/sqft, digits= 1),
+days_perc = round(days_perc, digits = 0),
+kwh = round(kwh, digits = 0),
+kwh_corr = round(kwh_corr, digits = 0))%>%
+arrange(-kwh) %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kwh_sqft, Cost, MTCO2e)
+str(ayear_academic)
+academic_kwh_daily <- kwh_daily %>%
+filter(type == "Academic") %>%
+mutate(date = ymd(date),
+month = month(date, label = TRUE),
+day = wday(date, label = TRUE)) %>%
+mutate(kwh_sqft = kwh/sqft*365) %>%
+arrange(-kwh)
+str(academic_kwh_daily)
+datatable(annual_academic,
+filter = 'none',
+colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh", "kWh (corrected)","kWh per sqft", "Cost ($)", "CO2e (MT)"),
+rownames = FALSE,
+class = "compact",
+options = list(pagelength = 10, autoWidth = TRUE, dom = 't'),
+caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of academic buildings during fiscal year 2025")
+annual_academic <- kwh_annual %>%
+filter(type == "Academic") %>%
+mutate(MTCO2e = round(kwh_corr*0.00030082405, digits = 1),
+Cost = round(kwh_corr*0.08138507,digits= 0),
+kwh_sqft = round(kwh_corr/sqft, digits= 1),
+days_perc = round(days_perc, digits = 0),
+kwh = round(kwh, digits = 0),
+kwh_corr = round(kwh_corr, digits = 0)
+)%>%
+arrange(-kwh) %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kwh_sqft, Cost, MTCO2e)
+str(annual_academic)
+ayear_academic <- kwh_academic_year %>%
+filter(type == "Academic") %>%
+mutate(MTCO2e = round((kwh_corr*0.00030082405), digits = 1),
+Cost = round(kwh_corr*0.08138507,digits= 0),
+kwh_sqft = round(kwh_corr/sqft, digits= 1),
+days_perc = round(days_perc, digits = 0),
+kwh = round(kwh, digits = 0),
+kwh_corr = round(kwh_corr, digits = 0))%>%
+arrange(-kwh) %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kwh_sqft, Cost, MTCO2e)
+str(ayear_academic)
+datatable(annual_academic,
+filter = 'none',
+colnames = c("Meter", "Building", "Days of data (%)", "Square footage", "kWh", "kWh (corrected)","kWh per sqft", "Cost ($)", "CO2e (MT)"),
+rownames = FALSE,
+class = "compact",
+options = list(pagelength = 10, autoWidth = TRUE, dom = 't'),
+caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of academic buildings during fiscal year 2025")
+# Conversion Factors
+dol_per_kWh <- 0.081385
+MTCO2_per_kWh <- 0.00030082405
+#Load Libraries
+library(tidyverse)
+library(DT)
+library(paletteer)
+#Load Annual Data
+annual_kwh.df<-read.csv('../output/kwh_annual_2026-03-17.csv', strip.white=TRUE)
+academic_updated <- read.csv("../output/kwh_academic_2026-03-17.csv")
+# Check Data
+str(annual_kwh.df)
+# Subset
+med_res_annual_kwh<-annual_kwh.df %>%
+filter(type=="Residential - M")
+#Transform
+transform_med<-med_res_annual_kwh%>%
+mutate(
+cost=round(kwh_corr*dol_per_kWh, digits=0),
+GHG_emis=round(kwh_corr*MTCO2_per_kWh, digits=0),
+kWh_per_sqft=round(kwh_corr/sqft, digits=1),
+kwh=round(kwh, digits=0),
+kwh_corr=round(kwh_corr, digits=0))
+#Arranging and Removing Building Type
+annual_med<-transform_med %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kWh_per_sqft, cost, GHG_emis) %>%
+arrange(desc(kwh_corr))
+annual_med_table1 <- annual_med[,c(1,2,3,4,5,6,7,8,9)]
+#Checking Again
+str(annual_med)
+residential_m_academic <- academic_updated %>%
+filter(type == "Residential - M") %>%
+mutate(kwh = round(kwh),
+kwh_corr = round(kwh_corr),
+kwh_sqft = round(kwh_corr/sqft, digits = 1),
+kwh_occ = round(kwh_corr/occupants),
+cost = round(kwh_corr*dol_per_kWh),
+kwh_ghg = round(kwh_corr*MTCO2_per_kWh/1000),
+) %>%
+arrange(desc(kwh_corr)) %>%
+select(-type)
+residential_m_academic_table2 <- residential_m_academic[,c(1,2,3,6,7,4,5,8,9,10,11)]
+#Load Daily Data
+med_res_daily_kwh <- read.csv("../output/kwh_daily_2026-03-17.csv")
+#Check data
+str(med_res_daily_kwh)
+#Subset Data
+med_res_daily_kwh <- med_res_daily_kwh %>%
+filter(type == "Residential - M") %>%
+#Wrangle Data
+mutate(date = ymd(date),
+month = month(date, label= TRUE),
+day = wday(date, label = TRUE)) %>%
+#Transform Data
+mutate(kwh_sqft_year = kwh/sqft*365) %>%
+arrange(desc(kwh))
+#Check Again
+str(med_res_daily_kwh)
+summary(annual_med_table1)
+summary(residential_m_academic_table2)
+# Conversion Factors
+dol_per_kWh <- 0.081385
+MTCO2_per_kWh <- 0.00030082405
+#Load Libraries
+library(tidyverse)
+library(DT)
+library(paletteer)
+#Load Annual Data
+annual_kwh.df<-read.csv('../output/kwh_annual_2026-03-17.csv', strip.white=TRUE)
+academic_updated <- read.csv("../output/kwh_academic_2026-03-17.csv")
+# Check Data
+str(annual_kwh.df)
+# Subset
+med_res_annual_kwh<-annual_kwh.df %>%
+filter(type=="Residential - M")
+#Transform
+transform_med<-med_res_annual_kwh%>%
+mutate(
+cost=round(kwh_corr*dol_per_kWh, digits=0),
+GHG_emis=round(kwh_corr*MTCO2_per_kWh, digits=1),
+kWh_per_sqft=round(kwh_corr/sqft, digits=1),
+kwh=round(kwh, digits=0),
+kwh_corr=round(kwh_corr, digits=0))
+#Arranging and Removing Building Type
+annual_med<-transform_med %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kWh_per_sqft, cost, GHG_emis) %>%
+arrange(desc(kwh_corr))
+annual_med_table1 <- annual_med[,c(1,2,3,4,5,6,7,8,9)]
+#Checking Again
+str(annual_med)
+residential_m_academic <- academic_updated %>%
+filter(type == "Residential - M") %>%
+mutate(kwh = round(kwh),
+kwh_corr = round(kwh_corr),
+kwh_sqft = round(kwh_corr/sqft, digits = 1),
+kwh_occ = round(kwh_corr/occupants),
+cost = round(kwh_corr*dol_per_kWh),
+kwh_ghg = round(kwh_corr*MTCO2_per_kWh/1000, digits=1),
+) %>%
+arrange(desc(kwh_corr)) %>%
+select(-type)
+residential_m_academic_table2 <- residential_m_academic[,c(1,2,3,6,7,4,5,8,9,10,11)]
+#Load Daily Data
+med_res_daily_kwh <- read.csv("../output/kwh_daily_2026-03-17.csv")
+#Check data
+str(med_res_daily_kwh)
+#Subset Data
+med_res_daily_kwh <- med_res_daily_kwh %>%
+filter(type == "Residential - M") %>%
+#Wrangle Data
+mutate(date = ymd(date),
+month = month(date, label= TRUE),
+day = wday(date, label = TRUE)) %>%
+#Transform Data
+mutate(kwh_sqft_year = kwh/sqft*365) %>%
+arrange(desc(kwh))
+#Check Again
+str(med_res_daily_kwh)
+# Table 1
+datatable(annual_med_table1,
+rownames = FALSE,
+colnames = c("Meter status","Buildings", "Days of data (%)", "Square\nfootage", "kWh", "kWh (corrected)", "kWh per\nsqft", "Cost ($)",
+"CO2e\n(MT)"),
+filter = "none",
+class = "compact",
+options = list(pageLength = 14, autoWidth = TRUE, dom = 't'),
+caption = "Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings")
+# Table 2
+datatable(residential_m_academic_table2,
+rownames = FALSE,
+colnames = c("Meter","Building","Days of data (%)", "Square footage", "Occupants (AY)","kWh","kWh (corrected)", "kWh per sqft", "kWh per person", "Cost($)", "CO2e (MT)"),
+filter = "none",
+class = "compact",
+options = list(pageLength = 14, autoWidth = TRUE, dom = 't'),
+caption = "Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings during the academic year 2024/2025")
+residential_m_academic <- academic_updated %>%
+filter(type == "Residential - M") %>%
+mutate(kwh = round(kwh),
+kwh_corr = round(kwh_corr),
+kwh_sqft = round(kwh_corr/sqft, digits = 1),
+kwh_occ = round(kwh_corr/occupants),
+cost = round(kwh_corr*dol_per_kWh),
+kwh_ghg = round(kwh_corr*MTCO2_per_kWh/1000, digits=1),
+) %>%
+arrange(desc(kwh_corr)) %>%
+select(-type)
+# Conversion Factors
+dol_per_kWh <- 0.081385
+MTCO2_per_kWh <- 0.00030082405
+#Load Libraries
+library(tidyverse)
+library(DT)
+library(paletteer)
+#Load Annual Data
+annual_kwh.df<-read.csv('../output/kwh_annual_2026-03-17.csv', strip.white=TRUE)
+academic_updated <- read.csv("../output/kwh_academic_2026-03-17.csv")
+# Check Data
+str(annual_kwh.df)
+# Subset
+med_res_annual_kwh<-annual_kwh.df %>%
+filter(type=="Residential - M")
+#Transform
+transform_med<-med_res_annual_kwh%>%
+mutate(
+cost=round(kwh_corr*dol_per_kWh, digits=0),
+GHG_emis=round(kwh_corr*MTCO2_per_kWh, digits=1),
+kWh_per_sqft=round(kwh_corr/sqft, digits=1),
+kwh=round(kwh, digits=0),
+kwh_corr=round(kwh_corr, digits=0))
+#Arranging and Removing Building Type
+annual_med<-transform_med %>%
+select(meter, NAME, days_perc, sqft, kwh, kwh_corr, kWh_per_sqft, cost, GHG_emis) %>%
+arrange(desc(kwh_corr))
+annual_med_table1 <- annual_med[,c(1,2,3,4,5,6,7,8,9)]
+#Checking Again
+str(annual_med)
+residential_m_academic <- academic_updated %>%
+filter(type == "Residential - M") %>%
+mutate(kwh = round(kwh),
+kwh_corr = round(kwh_corr),
+kwh_sqft = round(kwh_corr/sqft, digits = 1),
+kwh_occ = round(kwh_corr/occupants),
+cost = round(kwh_corr*dol_per_kWh),
+kwh_ghg = round(kwh_corr*MTCO2_per_kWh, digits=1),
+) %>%
+arrange(desc(kwh_corr)) %>%
+select(-type)
+residential_m_academic_table2 <- residential_m_academic[,c(1,2,3,6,7,4,5,8,9,10,11)]
+#Load Daily Data
+med_res_daily_kwh <- read.csv("../output/kwh_daily_2026-03-17.csv")
+#Check data
+str(med_res_daily_kwh)
+#Subset Data
+med_res_daily_kwh <- med_res_daily_kwh %>%
+filter(type == "Residential - M") %>%
+#Wrangle Data
+mutate(date = ymd(date),
+month = month(date, label= TRUE),
+day = wday(date, label = TRUE)) %>%
+#Transform Data
+mutate(kwh_sqft_year = kwh/sqft*365) %>%
+arrange(desc(kwh))
+#Check Again
+str(med_res_daily_kwh)
+# Table 2
+datatable(residential_m_academic_table2,
+rownames = FALSE,
+colnames = c("Meter","Building","Days of data (%)", "Square footage", "Occupants (AY)","kWh","kWh (corrected)", "kWh per sqft", "kWh per person", "Cost($)", "CO2e (MT)"),
+filter = "none",
+class = "compact",
+options = list(pageLength = 14, autoWidth = TRUE, dom = 't'),
+caption = "Table 2. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of medium residential buildings during the academic year 2024/2025")
+0.00030082405*1000
+0.00030082405*1200
+1000*0.081385
+1200*0.081385

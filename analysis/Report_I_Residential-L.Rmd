@@ -13,8 +13,6 @@ This report examines electricity use in the category of large residence halls ac
 Large residence halls range in size from 10,724 square feet to 48,720 square feet with a total building space of 417,027 square feet. Together, this building category makes up **22%** of total campus building space. Spaces range from the traditional dormitory style rooms with shared common spaces such as bathrooms, study areas, and kitchens to apartments with private amenities. Overall, this report will show differences in electricity usage and intensity in these buildings during fiscal year 2025 and academic year 2024-2025.
 
 
-## Data preparation
-
 ```{r load, include = FALSE}
 
 library(tidyverse)
@@ -102,7 +100,7 @@ summary(daily_data)
 
 ## Electricity use summary
 
-Table 1 shows the electricity use during fiscal year 2025 for large residential buildings. Annual electricity usage ranges from 36,395 kWh to 269,770 kWh which may be due to variability in building size, style, and HVAC systems. The median electricity use was approximately **135,000 kWh per year**, demonstrating a ‘typical’ building in this category. This equates to about **40 metric tons** of carbon emissions and about **$10,000 per year**. Kisner-Woodward is the 8^th^ largest building and had the most total electricity use while Spradley-Young is the smallest building and had the least. 27 W. High Street is the 8^th^ smallest building and had the most electricity use per square foot while Matthews House is only the 7^th^ smallest and had the least. 
+Table 1 shows the electricity use during fiscal year 2025 for large residential buildings. Annual electricity usage ranged from 39,395 kWh to 293,054 kWh which may be due to variability in building size, style, and HVAC systems. The median electricity use was approximately **135,000 kWh per year**, demonstrating a ‘typical’ building in this category. This equates to about **40 metric tons** of carbon emissions and about **$10,000 per year**. Kisner-Woodward is the 8^th^ largest building and had the most total electricity use while Spradley-Young is the smallest building and had the least. 27 W. High Street is the 8^th^ smallest building and had the most electricity use per square foot while Matthews House is only the 7^th^ smallest and had the least. 
 
 ```{r table1}
 
