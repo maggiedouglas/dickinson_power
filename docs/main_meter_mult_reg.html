@@ -11,7 +11,7 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-04-13" />
+<meta name="date" content="2026-05-05" />
 
 <title>Main Meter multiple regression</title>
 
@@ -336,10 +336,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">About</a>
+  <a href="about.html">Introduction</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Data prep</a>
+  <a href="data_wrangling_final.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -348,9 +348,6 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="campus_summary.html">All buildings</a>
-    </li>
     <li>
       <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
@@ -393,6 +390,12 @@ div.tocify {
     <li>
       <a href="main_meter_mod_vis.html">Main meter - visualization</a>
     </li>
+    <li>
+      <a href="main_meter_mult_reg.html">Main meter - Report Part II</a>
+    </li>
+    <li>
+      <a href="main_meter_mod_vis.html">Main meter - Report Part II (clean)</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -417,7 +420,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Main Meter multiple regression</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">04/13/26</h4>
+<h4 class="date">05/05/26</h4>
 
 </div>
 
@@ -446,7 +449,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-13
+<strong>Last updated:</strong> 2026-05-05
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -577,15 +580,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8b469b681b6d2c87a054d6d73b45bfdc26c6698etargetblank8b469b6a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/8b469b681b6d2c87a054d6d73b45bfdc26c6698e" target="_blank">8b469b6</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree6121615b1e7753c0ac42bc34116e0c71c0f2d542targetblank6121615a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8b469b681b6d2c87a054d6d73b45bfdc26c6698etargetblank8b469b6a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -595,7 +598,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/6121615b1e7753c0ac42bc34116e0c71c0f2d542" target="_blank">6121615</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/8b469b681b6d2c87a054d6d73b45bfdc26c6698e" target="_blank">8b469b6</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -635,6 +638,7 @@ Ignored files:
     Ignored:    output/kwh_academic_2026-03-30.csv
     Ignored:    output/kwh_academic_2026-04-07.csv
     Ignored:    output/kwh_academic_2026-04-13.csv
+    Ignored:    output/kwh_academic_2026-04-26.csv
     Ignored:    output/kwh_annual.csv
     Ignored:    output/kwh_annual_2026-03-04.csv
     Ignored:    output/kwh_annual_2026-03-12.csv
@@ -647,6 +651,7 @@ Ignored files:
     Ignored:    output/kwh_annual_2026-03-30.csv
     Ignored:    output/kwh_annual_2026-04-07.csv
     Ignored:    output/kwh_annual_2026-04-13.csv
+    Ignored:    output/kwh_annual_2026-04-26.csv
     Ignored:    output/kwh_annual_20260225.csv
     Ignored:    output/kwh_annual_20260226.csv
     Ignored:    output/kwh_daily.csv
@@ -661,14 +666,20 @@ Ignored files:
     Ignored:    output/kwh_daily_2026-03-30.csv
     Ignored:    output/kwh_daily_2026-04-07.csv
     Ignored:    output/kwh_daily_2026-04-13.csv
+    Ignored:    output/kwh_daily_2026-04-26.csv
     Ignored:    output/kwh_daily_20260225.csv
     Ignored:    output/kwh_daily_20260226.csv
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
+Untracked files:
+    Untracked:  analysis/main_meter_clean.Rmd
+    Untracked:  analysis/main_meter_final.Rmd
+
 Unstaged changes:
+    Modified:   analysis/campus_summary.Rmd
+    Modified:   analysis/data_wrangling_final.Rmd
     Modified:   analysis/main_meter_mod_vis.Rmd
-    Modified:   analysis/main_meter_regression.Rmd
 
 </code></pre>
 <p>
@@ -713,6 +724,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/main_meter_mult_reg.html" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -945,6 +973,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/figure/main_meter_mult_reg.Rmd/model_opts-1.png" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f416a342fd3291ba24001c0fc8912a1f54d29686/docs/figure/main_meter_mult_reg.Rmd/model_opts-1.png" target="_blank">f416a34</a>
 </td>
 <td>
@@ -1002,6 +1041,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/figure/main_meter_mult_reg.Rmd/model_opts-2.png" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f416a342fd3291ba24001c0fc8912a1f54d29686/docs/figure/main_meter_mult_reg.Rmd/model_opts-2.png" target="_blank">f416a34</a>
 </td>
 <td>
@@ -1054,6 +1104,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/figure/main_meter_mult_reg.Rmd/model_opts-3.png" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f416a342fd3291ba24001c0fc8912a1f54d29686/docs/figure/main_meter_mult_reg.Rmd/model_opts-3.png" target="_blank">f416a34</a>
@@ -1109,6 +1170,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/figure/main_meter_mult_reg.Rmd/model_opts-4.png" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f416a342fd3291ba24001c0fc8912a1f54d29686/docs/figure/main_meter_mult_reg.Rmd/model_opts-4.png" target="_blank">f416a34</a>
@@ -1852,6 +1924,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/figure/main_meter_mult_reg.Rmd/est-1.png" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f416a342fd3291ba24001c0fc8912a1f54d29686/docs/figure/main_meter_mult_reg.Rmd/est-1.png" target="_blank">f416a34</a>
 </td>
 <td>
@@ -1952,6 +2035,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/3978d3a0483dff7e29c05b86da469d12bb33d94c/docs/figure/main_meter_mult_reg.Rmd/robust-1.png" target="_blank">3978d3a</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-13
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f416a342fd3291ba24001c0fc8912a1f54d29686/docs/figure/main_meter_mult_reg.Rmd/robust-1.png" target="_blank">f416a34</a>
 </td>
 <td>
@@ -2027,20 +2121,20 @@ loaded via a namespace (and not attached):
 [40] splines_4.5.2          timechange_0.4.0       tidyselect_1.2.1      
 [43] rstudioapi_0.18.0      abind_1.4-8            yaml_2.3.12           
 [46] codetools_0.2-20       curl_7.0.0             processx_3.8.6        
-[49] lattice_0.22-7         plyr_1.8.9             quantmod_0.4.28       
+[49] plyr_1.8.9             lattice_0.22-7         quantmod_0.4.28       
 [52] withr_3.0.2            bayestestR_0.17.0      S7_0.2.1              
-[55] evaluate_1.0.5         marginaleffects_0.32.0 survival_3.8-3        
-[58] xts_0.14.2             pillar_1.11.1          whisker_0.4.1         
-[61] checkmate_2.3.4        insight_1.4.6          generics_0.1.4        
-[64] TTR_0.24.4             rprojroot_2.1.1        hms_1.1.4             
-[67] scales_1.4.0           xtable_1.8-8           glue_1.8.0            
-[70] emmeans_2.0.2          tools_4.5.2            data.table_1.18.2.1   
-[73] fs_1.6.7               mvtnorm_1.3-6          grid_4.5.2            
-[76] datawizard_1.3.0       patchwork_1.3.2        performance_0.16.0    
-[79] Formula_1.2-5          cli_3.6.5              gtable_0.3.6          
-[82] sass_0.4.10            digest_0.6.39          TH.data_1.1-5         
-[85] farver_2.1.2           htmltools_0.5.9        lifecycle_1.0.5       
-[88] httr_1.4.8            </code></pre>
+[55] coda_0.19-4.1          evaluate_1.0.5         marginaleffects_0.32.0
+[58] survival_3.8-3         xts_0.14.2             pillar_1.11.1         
+[61] whisker_0.4.1          checkmate_2.3.4        insight_1.4.6         
+[64] generics_0.1.4         TTR_0.24.4             rprojroot_2.1.1       
+[67] hms_1.1.4              scales_1.4.0           xtable_1.8-8          
+[70] glue_1.8.0             emmeans_2.0.2          tools_4.5.2           
+[73] data.table_1.18.2.1    fs_1.6.7               mvtnorm_1.3-6         
+[76] grid_4.5.2             datawizard_1.3.0       patchwork_1.3.2       
+[79] performance_0.16.0     Formula_1.2-5          cli_3.6.5             
+[82] gtable_0.3.6           sass_0.4.10            digest_0.6.39         
+[85] TH.data_1.1-5          farver_2.1.2           htmltools_0.5.9       
+[88] lifecycle_1.0.5        httr_1.4.8            </code></pre>
 </div>
 </div>
 </div>
