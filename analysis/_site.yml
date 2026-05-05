@@ -34,6 +34,10 @@ navbar:
         href: main_meter_mult_reg.html
       - text: "Main meter - visualization"
         href: main_meter_mod_vis.html
+      - text: "Main meter - Report Part II"
+        href: main_meter_mult_reg.html
+      - text: "Main meter - Report Part II (clean)"
+        href: main_meter_mod_vis.html
 
 output:
   workflowr::wflow_html:
