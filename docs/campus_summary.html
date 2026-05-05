@@ -11,7 +11,7 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-04-23" />
+<meta name="date" content="2026-04-28" />
 
 <title>Campus building summary</title>
 
@@ -345,10 +345,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">About</a>
+  <a href="about.html">Introduction</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Data prep</a>
+  <a href="data_wrangling_final.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -357,9 +357,6 @@ div.tocify {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="campus_summary.html">All buildings</a>
-    </li>
     <li>
       <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
@@ -426,7 +423,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Campus building summary</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">04/23/26</h4>
+<h4 class="date">04/28/26</h4>
 
 </div>
 
@@ -612,6 +609,17 @@ Date
 <tbody>
 <tr>
 <td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d34161b8d717b41f39a7b35fa9bbbfff7334d6d6/docs/figure/campus_summary.Rmd/graph meter-1.png" target="_blank">d34161b</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+</tr>
+<tr>
+<td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/93a99606206d0266b23a6501bfce1bd8f4a609b9/docs/figure/campus_summary.Rmd/graph meter-1.png" target="_blank">93a9960</a>
 </td>
 <td>
@@ -656,6 +664,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/d34161b8d717b41f39a7b35fa9bbbfff7334d6d6/docs/figure/campus_summary.Rmd/graph meter-2.png" target="_blank">d34161b</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-04-25
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/93a99606206d0266b23a6501bfce1bd8f4a609b9/docs/figure/campus_summary.Rmd/graph meter-2.png" target="_blank">93a9960</a>
@@ -1044,7 +1063,15 @@ falling below the values for typical U.S. College and University
 buildings, for both the aggregate meters and the buildings on individual
 meters (Figure 7).</p>
 <p>It is also worth noting that values for the</p>
-<pre class="r"><code>intensity &lt;- joined_full %&gt;%
+<pre class="r"><code>total &lt;- joined_full %&gt;%
+  filter(meter != &quot;Submeter&quot;) %&gt;%
+  summarize(kwh = sum(kwh, na.rm = TRUE),
+            kwh_corr = sum(kwh_corr, na.rm = TRUE),
+            sqft = sum(sqft, na.rm = TRUE),
+            occupants = sum(occupants, na.rm = TRUE)) %&gt;%
+  mutate(kwh_sqft = kwh_corr/sqft)
+
+intensity &lt;- joined_full %&gt;%
   filter(!(type %in% c(&quot;Residential - U&quot;,&quot;Solar&quot;, &quot;Non-building&quot;))) %&gt;%
   mutate(kwh_sqft = kwh_corr/sqft,
          meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;),
@@ -1070,7 +1097,7 @@ ggplot(intensity,
   geom_label(aes(label = outlier), na.rm = TRUE, nudge_x = -0.25, nudge_y = 0.5, 
              color = &quot;black&quot;, fill = &quot;white&quot;, size = 2, alpha = 0, label.size = NA) +
     scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
-  ylim(0, 25) +
+  ylim(0, 28) +
   coord_flip() +
   theme_bw() +
   theme(legend.position = &quot;none&quot;) +

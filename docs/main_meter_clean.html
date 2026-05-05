@@ -11,9 +11,9 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-04-07" />
+<meta name="date" content="2026-05-05" />
 
-<title>Final model visualization</title>
+<title>Main Meter</title>
 
 <script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -390,6 +390,12 @@ div.tocify {
     <li>
       <a href="main_meter_mod_vis.html">Main meter - visualization</a>
     </li>
+    <li>
+      <a href="main_meter_mult_reg.html">Main meter - Report II</a>
+    </li>
+    <li>
+      <a href="main_meter_mod_vis.html">Main meter - Report II (clean)</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -412,9 +418,9 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Final model visualization</h1>
+<h1 class="title toc-ignore">Main Meter</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">2026-04-07</h4>
+<h4 class="date">05/05/26</h4>
 
 </div>
 
@@ -443,7 +449,7 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-04-28
+<strong>Last updated:</strong> 2026-05-05
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -481,10 +487,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -669,7 +675,12 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
+Untracked files:
+    Untracked:  analysis/main_meter_clean.Rmd
+    Untracked:  analysis/main_meter_final.Rmd
+
 Unstaged changes:
+    Modified:   analysis/_site.yml
     Modified:   analysis/campus_summary.Rmd
     Modified:   analysis/data_wrangling_final.Rmd
     Modified:   analysis/main_meter_mod_vis.Rmd
@@ -688,263 +699,72 @@ have uncommitted changes.
 </div>
 <div id="versions" class="tab-pane fade">
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/main_meter_mod_vis.Rmd</code>)
-and HTML (<code>docs/main_meter_mod_vis.html</code>) files. If you’ve
-configured a remote Git repository (see <code>?wflow_git_remote</code>),
-click on the hyperlinks in the table below to view the files as they
-were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/11d7744746613e479acdefcffdd29f9b94b5c996/analysis/main_meter_mod_vis.Rmd" target="_blank">11d7744</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-22
-</td>
-<td>
-fixed example graph
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/11d7744746613e479acdefcffdd29f9b94b5c996/docs/main_meter_mod_vis.html" target="_blank">11d7744</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-22
-</td>
-<td>
-fixed example graph
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/425b82c700cbfa1f45204c6702c8506ee44991d7/analysis/main_meter_mod_vis.Rmd" target="_blank">425b82c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-22
-</td>
-<td>
-minor changes to vis
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/425b82c700cbfa1f45204c6702c8506ee44991d7/docs/main_meter_mod_vis.html" target="_blank">425b82c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-22
-</td>
-<td>
-minor changes to vis
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/b34eba269be31c0bd75058776f2150ab26a773ab/analysis/main_meter_mod_vis.Rmd" target="_blank">b34eba2</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-15
-</td>
-<td>
-update vis results
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/b34eba269be31c0bd75058776f2150ab26a773ab/docs/main_meter_mod_vis.html" target="_blank">b34eba2</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-15
-</td>
-<td>
-update vis results
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/analysis/main_meter_mod_vis.Rmd" target="_blank">e2cfff1</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-13
-</td>
-<td>
-added model visualization
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/docs/main_meter_mod_vis.html" target="_blank">e2cfff1</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-13
-</td>
-<td>
-added model visualization
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/e4349ceacd6220d5c9f8bda7113f95a961f96b7a/analysis/main_meter_mod_vis.Rmd" target="_blank">e4349ce</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-07
-</td>
-<td>
-updated main meter analyses
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<div id="prepare-data" class="section level2">
-<h2>Prepare data</h2>
-<pre class="r"><code>library(tidyverse)
-library(segmented) # for segmented regression 
-library(lmtest) # has functions for robust standard errors
-library(sandwich) # has functions for robust standard errors
-
-library(parameters) # print results table
-library(gt) # format results table
-
-library(visreg) # visualize regression results
-library(dotwhisker) # create plots of effects from regression</code></pre>
-<pre class="r"><code>daily &lt;- read.csv(&quot;./output/kwh_daily_2026-03-30.csv&quot;)
-
-daily_date &lt;- daily %&gt;%
-  mutate(date = ymd(date), # convert date to date object
-         month = month(date, label = TRUE), # extract month
-         day = wday(date, label = TRUE)) # extract day of week
-
-# filter to the main meter
-daily_main &lt;- filter(daily_date, NAME == &quot;Main Meter&quot;) 
-
-# create factor for period and put in order
-daily_main$period &lt;- factor(daily_main$period,
-                            levels = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,
-                                       &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
-
-# create factor for day, put in order, and store as a regular factor
-daily_main$day &lt;- factor(daily_main$day,
-                         levels = c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;),
-                         ordered = FALSE)
-
-str(daily_main)</code></pre>
-<pre><code>&#39;data.frame&#39;:   365 obs. of  12 variables:
- $ type     : chr  &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; ...
- $ meter    : chr  &quot;Main Meter - Total&quot; &quot;Main Meter - Total&quot; &quot;Main Meter - Total&quot; &quot;Main Meter - Total&quot; ...
- $ NAME     : chr  &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; &quot;Main Meter&quot; ...
- $ days_perc: num  100 100 100 100 100 100 100 100 100 100 ...
- $ sqft     : int  1119435 1119435 1119435 1119435 1119435 1119435 1119435 1119435 1119435 1119435 ...
- $ occupants: num  NA NA NA NA NA NA NA NA NA NA ...
- $ period   : Factor w/ 4 levels &quot;Fall Semester&quot;,..: 4 4 4 4 4 4 4 4 4 4 ...
- $ date     : Date, format: &quot;2024-07-01&quot; &quot;2024-07-02&quot; ...
- $ kwh      : num  33919 35412 38561 42526 45794 ...
- $ ave_temp : int  69 73 78 81 84 86 84 84 86 87 ...
- $ month    : Ord.factor w/ 12 levels &quot;Jan&quot;&lt;&quot;Feb&quot;&lt;&quot;Mar&quot;&lt;..: 7 7 7 7 7 7 7 7 7 7 ...
- $ day      : Factor w/ 7 levels &quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,..: 1 2 3 4 5 6 7 1 2 3 ...</code></pre>
+<p><strong>Note for students:</strong> This page is meant to show you an
+example of a completed section for Report Part II, with code and
+intermediate output hidden. This is to give you a sense of what the
+section will look like in the final report.</p>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>The “main meter” records electricity use in around 40 buildings in
+the core of campus. These buildings have a range of uses including
+academic, administrative, and residential functions. Importantly, the
+main meter also includes the Central Energy Plant in Kaufman Hall.
+Together, the buildings on the main meter account for 59% of square
+footage on campus and 68% of electricity use at an estimated cost of
+$1.2 million and 3504 MT CO2-e in fiscal year 2025 (FY25; see <a
+href="https://maggiedouglas.github.io/dickinson_power/campus_summary.html">Electricity
+summary: All buildings</a>). In FY25 the buildings on the main meter
+used 10.4 kWh per square foot, very similar to values typical of U.S.
+College/University buildings (median 10.3 kWh/sqft/yr; EIA 2022).</p>
+<p>Going into this analysis, I believed that electricity use on the main
+meter would be strongly related to temperature and building occupancy.
+Because electricity is involved in heating and cooling, I expected
+electricity use to decrease with temperature in the heating range and
+increase with temperature in the cooling range. The campus relies more
+heavily on electricity for cooling than heating (personal communication
+with Mike Kiner, spring 2026), so I believed the relationship would be
+stronger in the cooling range. I also expected that electricity use
+would be lower during breaks than during the academic year, when
+buildings are more heavily used. Finally, given that the main meter
+includes a diversity of buildings with different use patterns, I did not
+expect a strong relationship between electricity use and day of the
+week.</p>
 </div>
-<div id="fit-the-models" class="section level2">
-<h2>Fit the models</h2>
-<pre class="r"><code># Original linear model
-mod_full &lt;- lm(kwh ~ day + period + ave_temp, data = daily_main)
-
-# Segmented regression
-mod_seg &lt;- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
-
-# Quadratic model
-mod_quad &lt;- lm(kwh ~ day + period + ave_temp + I(ave_temp^2), data = daily_main)</code></pre>
-</div>
-<div id="visualize-results" class="section level2">
-<h2>Visualize results</h2>
-<div id="time-of-year" class="section level3">
-<h3>Time of year</h3>
-<ul>
-<li>This may throw a warning; it is okay to ignore.</li>
-</ul>
-<pre class="r"><code># Find mean temperature
-median(daily_main$ave_temp)</code></pre>
-<pre><code>[1] 58</code></pre>
+<div id="results" class="section level2">
+<h2>Results</h2>
+<p>In a segmented regression model, daily electricity use on the main
+meter was significantly related to day (F<sub>6,352</sub> = 34.6, P &lt;
+0.001), period (F<sub>3,352</sub> = 55.2, P &lt; 0.001), temperature
+below 58 <sup>o</sup>F (F<sub>1,352</sub> = 14.4, P &lt; 0.001), and
+temperature above 58 <sup>o</sup>F (F<sub>1,352</sub> = 353.5, P &lt;
+0.001). The model explained 87% of the variation in daily electricity
+use on the main meter in FY25 (R<sup>2</sup> = 0.87).</p>
+<p>There was a significant non-linear relationship between electricity
+use and temperature, with a break point at 58 <sup>o</sup>F (Figure 1).
+During the heating season (temperatures below 58 <sup>o</sup>F),
+electricity use declined by 103 kWh (+/- 15 kWh) per <sup>o</sup>F.
+During the cooling season (temperatures above 58 <sup>o</sup>F),
+electricity use increased by 761 kWh (+/- 24 kWh) per <sup>o</sup>F.</p>
+<pre class="r"><code># plot original data with fit
+plot(mod_seg, vcov = vcovHAC(mod_seg), 
+     col = &#39;black&#39;, res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor(&quot;steelblue&quot;, alpha.f = 0.7), # set color of data + transparency
+     xlab = &quot;Temperature (degrees F)&quot;, ylab = &quot;Electricity use (kWh per day)&quot;) # label axes
+title(&quot;Figure 1. Main meter electricity use by temperature&quot;, # how to set the title in base R plotting function
+      adj = 0, cex.main = 1.2, font.main = 1) </code></pre>
+<p><img src="figure/main_meter_clean.Rmd/plot-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
+<p>Electricity use during spring did not differ significantly from use
+during fall (Figure 2; P = 0.70). Compared to fall and spring,
+electricity use during winter break was reduced by 28%. Interestingly,
+after accounting for temperature, electricity use over summer break was
+reduced by 13%.</p>
 <pre class="r"><code># Create a data frame with new values (must match model&#39;s predictor names)
 period_data &lt;- data.frame(ave_temp = 58, # set temp to the median in the dataset
                        day = &quot;Mon&quot;, # set day as Monday 
@@ -963,6 +783,17 @@ conf_period$period &lt;- factor(conf_period$period,
                                 levels = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,  # add period back into data frame
                                   &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
 
+# Calculate changes from fall to other periods
+fall &lt;- filter(conf_period, period == &quot;Fall Semester&quot;)
+summer &lt;- filter(conf_period, period == &quot;Summer Break&quot;)
+winter &lt;- filter(conf_period, period == &quot;Winter Break&quot;)
+
+# fall vs. summer
+#(fall$fit - summer$fit)/fall$fit*100
+# fall vs. winter
+#(fall$fit - winter$fit)/fall$fit*100
+
+
 # Graph with confidence intervals
 ggplot(conf_period) +
     geom_bar(aes(x=period, y=fit), stat=&quot;identity&quot;, fill=&quot;skyblue&quot;, alpha=0.8) +
@@ -970,72 +801,14 @@ ggplot(conf_period) +
                    width=0.4, colour=&quot;darkgray&quot;, alpha=0.9, size=1) + # adjust format
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
-       title = &quot;Figure 1. Main meter electricity use by time of year&quot;,
+       title = &quot;Figure 2. Main meter electricity use by time of year&quot;,
        subtitle = &quot;Mean +/- 95% confidence interval&quot;,
        caption = &quot;Estimated for a Monday with an outdoor temperature of 58 degrees F&quot;)</code></pre>
-<p><img src="figure/main_meter_mod_vis.Rmd/pred_period-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-pred_period-1">
-Past versions of pred_period-1.png
-</button>
-</p>
-<div id="fig-pred_period-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/11d7744746613e479acdefcffdd29f9b94b5c996/docs/figure/main_meter_mod_vis.Rmd/pred_period-1.png" target="_blank">11d7744</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/b34eba269be31c0bd75058776f2150ab26a773ab/docs/figure/main_meter_mod_vis.Rmd/pred_period-1.png" target="_blank">b34eba2</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-15
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/docs/figure/main_meter_mod_vis.Rmd/pred_period-1.png" target="_blank">e2cfff1</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="day-of-the-week" class="section level3">
-<h3>Day of the week</h3>
+<p><img src="figure/main_meter_clean.Rmd/pred_period-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
+<p>Unexpectedly, the model revealed differences in electricity use over
+the week. After accounting for other factors, electricity use was fairly
+similar on weekdays Monday to Thursday but 3.4% lower on Fridays and
+12-13% lower on Saturdays and Sundays (Figure 3).</p>
 <pre class="r"><code># Create a data frame with new values (must match model&#39;s predictor names)
 day_data &lt;- data.frame(ave_temp = 58, 
                        day = c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;),
@@ -1048,233 +821,95 @@ conf_day &lt;- as.data.frame(predict(mod_seg,  vcov = vcovHAC(mod_seg),
   mutate(day = factor(c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;),
                       levels = c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;)))
 
+# Calculate changes from Monday to other days
+mon &lt;- filter(conf_day, day == &quot;Mon&quot;)
+fri &lt;- filter(conf_day, day == &quot;Fri&quot;)
+sat &lt;- filter(conf_day, day == &quot;Sat&quot;)
+sun &lt;- filter(conf_day, day == &quot;Sun&quot;)
+
+# Mon vs Fri
+#(mon$fit - fri$fit)/mon$fit*100
+# Mon vs Sat
+#(mon$fit - sat$fit)/mon$fit*100
+# Mon vs Sun
+#(mon$fit - sun$fit)/mon$fit*100
+
 # Graph
 ggplot(conf_day) +
     geom_bar(aes(x=day, y=fit), stat=&quot;identity&quot;, fill=&quot;skyblue&quot;, alpha=0.8) +
     geom_errorbar( aes(x=day, ymin=lwr, ymax=upr), width=0.4, colour=&quot;darkgray&quot;, alpha=0.9, size=1) +
   theme_bw() +
   labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
-       title = &quot;Figure 2. Main meter electricity use by day of the week&quot;,
+       title = &quot;Figure 3. Main meter electricity use by day of the week&quot;,
        subtitle = &quot;Mean +/- 95% confidence interval&quot;,
        caption = &quot;Estimated for a day in fall with an outdoor temperature of 58 degrees F&quot;)</code></pre>
-<p><img src="figure/main_meter_mod_vis.Rmd/pred_day-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-pred_day-1">
-Past versions of pred_day-1.png
-</button>
-</p>
-<div id="fig-pred_day-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/11d7744746613e479acdefcffdd29f9b94b5c996/docs/figure/main_meter_mod_vis.Rmd/pred_day-1.png" target="_blank">11d7744</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/425b82c700cbfa1f45204c6702c8506ee44991d7/docs/figure/main_meter_mod_vis.Rmd/pred_day-1.png" target="_blank">425b82c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-22
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/docs/figure/main_meter_mod_vis.Rmd/pred_day-1.png" target="_blank">e2cfff1</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-13
-</td>
-</tr>
-</tbody>
-</table>
+<p><img src="figure/main_meter_clean.Rmd/pred_day-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
 </div>
+<div id="recommendations" class="section level2">
+<h2>Recommendations</h2>
+<p>The statistical model for electricity use on the main meter including
+temperature, time of year, and day of the week explained nearly 90% of
+daily variation in electricity use in FY25. This gives the model strong
+potential to support financial planning as the cost of electricity rises
+and the climate changes. For example, Cumberland County is likely to
+become 2-11 <sup>o</sup>F warmer by late century (Leary, 2025). The
+model suggests that a 3 <sup>o</sup>F increase in summer temperature
+will translate into an additional 2283 kWh per day and $183 per day at
+current rates. I recommend testing the predictive power of the model by
+using it to predict electricity use on the main meter in FY26 and then
+comparing predictions to realized electricity usage.</p>
+<p>As expected, temperature was an important variable correlated with
+electricity usage on the main meter, and the relationship was stronger
+during temperatures in the cooling range. The break point at 58
+<sup>o</sup>F was a little bit lower than the standard of 65
+<sup>o</sup>F (EIA, n.d.). The Central Energy Plant starts cooling at an
+external temperature of 62 <sup>o</sup>F (personal communication, Mike
+Kiner, April 2026), which may help to explain this discrepancy.
+Furthermore, many modern buildings have a balance point below 65
+<sup>o</sup>F due to insulation combined with internal heat generated by
+occupants, electronic devices, and solar capture (Heizer &amp; Thomas
+2022; Utzinger &amp; Wasley 2012).</p>
+<p>After controlling for temperature, this analysis found substantial
+reductions (12-28%) in electricity use on the main meter associated with
+academic breaks and weekends. This finding suggests that existing
+building automation systems and scheduled electricity reductions were
+successful in reducing the use of electricity during low-occupancy
+periods in FY25. I recommend continuing building management in this vein
+and considering whether there may be further opportunities to schedule
+reductions, particularly in summer. This analysis could be repeated in
+future years to assess the efficacy of such interventions.</p>
 </div>
+<div id="sources" class="section level2">
+<h2>Sources</h2>
+<p>Energy Information Administration (EIA). (2022). 2018 Commercial
+Buildings Energy Consumption Survey (CBECS). <a
+href="https://www.eia.gov/consumption/commercial/"
+class="uri">https://www.eia.gov/consumption/commercial/</a></p>
+<p>Energy Information Administration (EIA). (n.d.). 2018 Units and
+calculators explained: Degree days. <a
+href="https://www.eia.gov/energyexplained/units-and-calculators/degree-days.php"
+class="uri">https://www.eia.gov/energyexplained/units-and-calculators/degree-days.php</a></p>
+<p>Heizer, M., &amp; Thomas, K. (n.d.). Heating Degree Days Relevancy:
+Why a 55-Degree Balance Point is Better than 65 for Building Energy
+Analysis in Heating Dominant Climates. ASHRAE Transactions, 128(2),
+300–308. Retrieved <a
+href="https://research.ebsco.com/c/rd5flh/search/details/qdyc7pcbcz?request-context=plink&amp;db=a9h"
+class="uri">https://research.ebsco.com/c/rd5flh/search/details/qdyc7pcbcz?request-context=plink&amp;db=a9h</a></p>
+<p>Leary, N. (2025). Climate Risks and Resilience in Cumberland County:
+Synthesis Report. Center for Sustainability Education, Dickinson
+College. <a
+href="https://www.dickinson.edu/info/20052/sustainability/4371/climate_resilience/2"
+class="uri">https://www.dickinson.edu/info/20052/sustainability/4371/climate_resilience/2</a></p>
+<p>Utzinger, M. &amp; Wasley, J. (2012). “Vital Signs Curriculum
+Materials Project” UC Berkeley. College of Environmental Design.
+Archived from the original (PDF) on 12 June 2012. <a
+href="https://web.archive.org/web/20120612033218/http://arch.ced.berkeley.edu/vitalsigns/res/downloads/rp/balance_point/balance_point_big.pdf">https://web.archive.org/web/20120612033218/http://arch.ced.berkeley.edu/vitalsigns/res/downloads/rp/balance_point/balance_point_big.pdf</a></p>
 </div>
-<div id="temperature" class="section level3">
-<h3>Temperature</h3>
-<div id="segmented-model" class="section level4">
-<h4>Segmented model</h4>
-<p>The segmented model does not interact well with standard plotting
-functions, so we need to use a slightly different approach to its
-visualization. The code below uses R’s base plotting function to
-visualize the fitted model.</p>
-<pre class="r"><code># plot original data with fit
-plot(mod_seg, vcov = vcovHAC(mod_seg), 
-     col = &#39;black&#39;, res = TRUE, conf.level = .95, shade = T, 
-     res.col = adjustcolor(&quot;steelblue&quot;, alpha.f = 0.7), # set color of data + transparency
-     xlab = &quot;Temperature (degrees F)&quot;, ylab = &quot;Electricity use (kWh per day)&quot;) # label axes
-title(&quot;Figure 3. Main meter electricity use by temperature&quot;, # how to set the title in base R plotting function
-      adj = 0, cex.main = 1.2, font.main = 1) </code></pre>
-<p><img src="figure/main_meter_mod_vis.Rmd/plot-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-plot-1">
-Past versions of plot-1.png
-</button>
-</p>
-<div id="fig-plot-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/docs/figure/main_meter_mod_vis.Rmd/plot-1.png" target="_blank">e2cfff1</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-<div id="quadratic-or-linear-model" class="section level4">
-<h4>Quadratic or linear model</h4>
-<p>For a linear model with or without a quadratic term, we can use a
-helpful function called <code>visreg</code> to visualize the results.
-Helpfully, by setting <code>gg = TRUE</code> the graph will be generated
-using ggplot, and then we can use all our usual functions to adjust its
-formatting.</p>
-<pre class="r"><code>visreg(mod_quad, xvar = &quot;ave_temp&quot;, # feed in model, specify temp as the variable
-      cond=list(day = &quot;Mon&quot;, period = &quot;Fall Semester&quot;), # set levels of other variables
-       gg = TRUE) + # specify to use ggplot
-  theme_bw() +
-  labs(x = &quot;Temperature (degrees F)&quot;, y = &quot;Electricity use (kWh per day)&quot;,
-       title = &quot;Figure 3. Main meter daily electricity use by temperature&quot;)</code></pre>
-<p><img src="figure/main_meter_mod_vis.Rmd/visreg-1.png" alt="" width="576" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-visreg-1">
-Past versions of visreg-1.png
-</button>
-</p>
-<div id="fig-visreg-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/docs/figure/main_meter_mod_vis.Rmd/visreg-1.png" target="_blank">e2cfff1</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-</div>
-</div>
-<div id="comparing-model-estimates" class="section level3">
-<h3>Comparing model estimates</h3>
-<p>Sometimes it’s helpful to compare the estimates derived from
-different models to contextualize and interpret our results. Doing so
-helps us assess the sensitivity of our results to the modeling choices.
-The <code>dwplot</code> function allows us to easily compare the
-coefficients from a list of fitted models.</p>
-<pre class="r"><code>dwplot(list(`Standard LM` = mod_full, # code on the left is the name of the model; right is the model object
-            Segmented = mod_seg, 
-            Quadratic = mod_quad)) + 
-  theme_bw() +
-  labs(x = &quot;Diff. in daily kWh (compared to Monday in Fall)&quot;)</code></pre>
-<p><img src="figure/main_meter_mod_vis.Rmd/est-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-est-1">
-Past versions of est-1.png
-</button>
-</p>
-<div id="fig-est-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/e2cfff1397dc2578a3a5b1d4bba46bb4e3f407ed/docs/figure/main_meter_mod_vis.Rmd/est-1.png" target="_blank">e2cfff1</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-13
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+<div id="partner-contributions" class="section level2">
+<h2>Partner contributions</h2>
+<p>This section was developed entirely by Prof. Maggie Douglas, as an
+example for the students in the class. Prof. Douglas did not use
+generative AI in developing the code or text in this section.</p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1302,39 +937,41 @@ attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
 other attached packages:
- [1] dotwhisker_0.8.4  visreg_2.8.0      gt_1.3.0          parameters_0.28.3
- [5] sandwich_3.1-1    lmtest_0.9-40     zoo_1.8-15        segmented_2.2-1  
- [9] nlme_3.1-168      MASS_7.3-65       lubridate_1.9.5   forcats_1.0.1    
-[13] stringr_1.6.0     dplyr_1.2.0       purrr_1.2.1       readr_2.2.0      
-[17] tidyr_1.3.2       tibble_3.3.1      ggplot2_4.0.2     tidyverse_2.0.0  
+ [1] modelsummary_2.6.0 dotwhisker_0.8.4   sandwich_3.1-1     lmtest_0.9-40     
+ [5] zoo_1.8-15         car_3.1-5          carData_3.0-6      tseries_0.10-60   
+ [9] segmented_2.2-1    nlme_3.1-168       MASS_7.3-65        lubridate_1.9.5   
+[13] forcats_1.0.1      stringr_1.6.0      dplyr_1.2.0        purrr_1.2.1       
+[17] readr_2.2.0        tidyr_1.3.2        tibble_3.3.1       ggplot2_4.0.2     
+[21] tidyverse_2.0.0   
 
 loaded via a namespace (and not attached):
  [1] tidyselect_1.2.1       farver_2.1.2           S7_0.2.1              
  [4] fastmap_1.2.0          TH.data_1.1-5          bayestestR_0.17.0     
- [7] promises_1.5.0         digest_0.6.39          estimability_1.5.1    
-[10] timechange_0.4.0       lifecycle_1.0.5        survival_3.8-3        
+ [7] promises_1.5.0         digest_0.6.39          timechange_0.4.0      
+[10] estimability_1.5.1     lifecycle_1.0.5        survival_3.8-3        
 [13] magrittr_2.0.4         compiler_4.5.2         rlang_1.1.7           
 [16] sass_0.4.10            tools_4.5.2            yaml_2.3.12           
 [19] data.table_1.18.2.1    knitr_1.51             labeling_0.4.3        
-[22] ggstance_0.3.7         plyr_1.8.9             xml2_1.5.2            
-[25] RColorBrewer_1.1-3     multcomp_1.4-30        workflowr_1.7.2       
-[28] withr_3.0.2            grid_4.5.2             datawizard_1.3.0      
-[31] git2r_0.36.2           xtable_1.8-8           emmeans_2.0.2         
-[34] scales_1.4.0           insight_1.4.6          cli_3.6.5             
-[37] mvtnorm_1.3-6          rmarkdown_2.30         generics_0.1.4        
-[40] otel_0.2.0             rstudioapi_0.18.0      performance_0.16.0    
-[43] tzdb_0.5.0             cachem_1.1.0           splines_4.5.2         
-[46] marginaleffects_0.32.0 vctrs_0.7.1            Matrix_1.7-4          
-[49] jsonlite_2.0.0         hms_1.1.4              patchwork_1.3.2       
-[52] jquerylib_0.1.4        glue_1.8.0             codetools_0.2-20      
-[55] stringi_1.8.7          gtable_0.3.6           later_1.4.8           
-[58] pillar_1.11.1          htmltools_0.5.9        R6_2.6.1              
-[61] rprojroot_2.1.1        evaluate_1.0.5         lattice_0.22-7        
-[64] backports_1.5.0        httpuv_1.6.16          bslib_0.10.0          
-[67] Rcpp_1.1.1             gridExtra_2.3          coda_0.19-4.1         
-[70] whisker_0.4.1          xfun_0.56              fs_1.6.7              
-[73] pkgconfig_2.0.3       </code></pre>
-</div>
+[22] curl_7.0.0             ggstance_0.3.7         TTR_0.24.4            
+[25] RColorBrewer_1.1-3     multcomp_1.4-30        abind_1.4-8           
+[28] workflowr_1.7.2        withr_3.0.2            grid_4.5.2            
+[31] datawizard_1.3.0       git2r_0.36.2           xts_0.14.2            
+[34] xtable_1.8-8           emmeans_2.0.2          scales_1.4.0          
+[37] insight_1.4.6          cli_3.6.5              mvtnorm_1.3-6         
+[40] rmarkdown_2.30         generics_0.1.4         otel_0.2.0            
+[43] rstudioapi_0.18.0      performance_0.16.0     tzdb_0.5.0            
+[46] parameters_0.28.3      cachem_1.1.0           splines_4.5.2         
+[49] marginaleffects_0.32.0 vctrs_0.7.1            Matrix_1.7-4          
+[52] jsonlite_2.0.0         hms_1.1.4              patchwork_1.3.2       
+[55] Formula_1.2-5          jquerylib_0.1.4        quantmod_0.4.28       
+[58] glue_1.8.0             codetools_0.2-20       stringi_1.8.7         
+[61] gtable_0.3.6           later_1.4.8            tables_0.9.33         
+[64] quadprog_1.5-8         pillar_1.11.1          htmltools_0.5.9       
+[67] R6_2.6.1               rprojroot_2.1.1        evaluate_1.0.5        
+[70] lattice_0.22-7         backports_1.5.0        httpuv_1.6.16         
+[73] bslib_0.10.0           Rcpp_1.1.1             coda_0.19-4.1         
+[76] gridExtra_2.3          xfun_0.56              fs_1.6.7              
+[79] pkgconfig_2.0.3       </code></pre>
 </div>
 </div>
 </div>

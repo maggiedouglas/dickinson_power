@@ -1,0 +1,228 @@
+---
+title: "Main Meter"
+author: "Maggie Douglas"
+date: "`r format(Sys.time(), '%m/%d/%y')`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Note for students:** This page is meant to show you an example of a completed section for Report Part II, with the relevant code and output for all sections. This includes how I calculated the percent change associated with comparisons across periods and days. Click the 'show' button to see the code.
+
+## Background
+
+The "main meter" records electricity use in around 40 buildings in the core of campus. These buildings have a range of uses including academic, administrative, and residential functions. Importantly, the main meter also includes the Central Energy Plant in Kaufman Hall. Together, the buildings on the main meter account for 59% of square footage on campus and 68% of electricity use at an estimated cost of $1.2 million and 3504 MT CO2-e in fiscal year 2025 (FY25; see [Electricity summary: All buildings](https://maggiedouglas.github.io/dickinson_power/campus_summary.html)). In FY25 the buildings on the main meter used 10.4 kWh per square foot, very similar to values typical of U.S. College/University buildings (median 10.3 kWh/sqft/yr; EIA 2022). 
+
+Going into this analysis, I believed that electricity use on the main meter would be strongly related to temperature and building occupancy. Because electricity is involved in heating and cooling, I expected electricity use to decrease with temperature in the heating range and increase with temperature in the cooling range. The campus relies more heavily on electricity for cooling than heating (personal communication with Mike Kiner, spring 2026), so I believed the relationship would be stronger in the cooling range. I also expected that electricity use would be lower during breaks than during the academic year, when buildings are more heavily used. Finally, given that the main meter includes a diversity of buildings with different use patterns, I did not expect a strong relationship between electricity use and day of the week.
+
+## Data preparation
+
+```{r load, message = FALSE}
+library(tidyverse)
+library(segmented) # for segmented regression 
+library(tseries) # for time series, including autocorrelation
+library(car) # contains vif() function to check Variance Inflation Factor
+library(lmtest) # has functions for robust standard errors
+library(sandwich) # has functions for robust standard errors
+
+# You don't need these, but I'm using them to create some supplemental figures + summaries
+library(dotwhisker) # create plots of effects from regression
+library(modelsummary) # tools to compare models more easily
+```
+
+```{r wrangle}
+daily <- read.csv("./output/kwh_daily_2026-03-30.csv")
+
+daily_date <- daily %>%
+  mutate(date = ymd(date), # convert date to date object
+         month = month(date, label = TRUE), # extract month
+         day = wday(date, label = TRUE)) # extract day of week
+
+# filter to the main meter
+daily_main <- filter(daily_date, NAME == "Main Meter") 
+
+# create factor for period and put in order
+daily_main$period <- factor(daily_main$period,
+                            levels = c("Fall Semester","Winter Break",
+                                       "Spring Semester","Summer Break"))
+
+# create factor for day, put in order, and store as a regular factor
+daily_main$day <- factor(daily_main$day,
+                         levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                         ordered = FALSE)
+
+str(daily_main)
+```
+
+## Fit the model
+
+```{r mod}
+# Original linear model
+mod_full <- lm(kwh ~ day + period + ave_temp, data = daily_main)
+
+# Segmented regression
+mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
+```
+
+## Check the fit
+
+- Residuals appear reasonably close to normally distributed (normality assumption met)
+- Variance appears pretty similar across days of the week and times of year (equal variance met)
+- The residuals vs. fits graph looks like a cloud; no concerning patterns (linearity met)
+- The ACF plot shows that observations close in time are correlated out to lag 4 (independence violated)
+- GVIF values suggest that we do not have a problem with multicollinearity (assumption met)
+
+```{r check_seg, fig.height = 4, fig.width = 8}
+par(mfrow = c(1, 2)) # This code put two plots in the same window
+hist(mod_seg$residuals) # Histogram of residuals
+plot(mod_seg$residuals ~ mod_seg$fitted.values) # Residuals vs. fits
+boxplot(mod_seg$residuals ~ daily_main$day) # Equality of variance across factors
+boxplot(mod_seg$residuals ~ daily_main$period) # Equality of variance across factors
+acf(mod_seg$residuals) # Assess dependence between successive observations
+vif(mod_seg) # Check the variance inflation factor
+```
+
+## Results
+
+In a segmented regression model, daily electricity use on the main meter was significantly related to day (F~6,352~ = 34.6, P < 0.001), period (F~3,352~ = 55.2, P < 0.001), temperature below 58 ^o^F (F~1,352~ = 14.4, P < 0.001), and temperature above 58 ^o^F (F~1,352~ = 353.5, P < 0.001). The model explained 87% of the variation in daily electricity use on the main meter in FY25 (R^2^ = 0.87). 
+
+```{r results segmented, message = FALSE}
+# ANOVA table adjusted for unequal variance/nonindependence
+Anova(mod_seg, type = "II", vcov = vcovHAC(mod_seg))
+
+# Adjusted R squared (this doesn't require correction)
+summary(mod_seg)$adj.r.sq
+
+# Tests of coefficients adjusted for unequal variance/nonindependence
+coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+
+# For segmented regression, we need an extra step to extract 
+# the break point + intercepts/slopes 
+# for the relationships on either side of the break point in temperature
+# Again we'll adjust for unequal variance/nonindependence
+summary(mod_seg)$psi # extract break point
+intercept(mod_seg, vcov = vcovHAC(mod_seg)) # intercept for each equation
+slope(mod_seg, vcov = vcovHAC(mod_seg)) # slopes for each equation
+```
+
+There was a significant non-linear relationship between electricity use and temperature, with a break point at 58 ^o^F (Figure 1). During the heating season (temperatures below 58 ^o^F), electricity use declined by 103 kWh (+/- 15 kWh) per ^o^F. During the cooling season (temperatures above 58 ^o^F), electricity use increased by 761 kWh (+/- 24 kWh) per ^o^F. 
+
+```{r plot, fig.height = 4.5, fig.width = 5.5}
+# plot original data with fit
+plot(mod_seg, vcov = vcovHAC(mod_seg), 
+     col = 'black', res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor("steelblue", alpha.f = 0.7), # set color of data + transparency
+     xlab = "Temperature (degrees F)", ylab = "Electricity use (kWh per day)") # label axes
+title("Figure 1. Main meter electricity use by temperature", # how to set the title in base R plotting function
+      adj = 0, cex.main = 1.2, font.main = 1) 
+```
+
+Electricity use during spring did not differ significantly from use during fall (Figure 2; P = 0.70). Compared to fall and spring, electricity use during winter break was reduced by 28%. Interestingly, after accounting for temperature, electricity use over summer break was reduced by 13%. 
+
+```{r pred_period, warning = FALSE, fig.height = 3.5, fig.width = 5}
+# Create a data frame with new values (must match model's predictor names)
+period_data <- data.frame(ave_temp = 58, # set temp to the median in the dataset
+                       day = "Mon", # set day as Monday 
+                       period = c("Fall Semester","Winter Break", # include all levels 
+                                  "Spring Semester","Summer Break"))
+
+# Generate estimated means + confidence interval
+conf_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
+                                     vcov = vcovHAC(mod_seg), # address violations 
+                                       newdata = period_data, # feed in the new data 
+                                       interval = "confidence", level = 0.95)) %>% # interval
+  mutate(period = c("Fall Semester","Winter Break",  # add period back into data frame
+                                  "Spring Semester","Summer Break"))
+
+conf_period$period <- factor(conf_period$period,
+                                levels = c("Fall Semester","Winter Break",  # add period back into data frame
+                                  "Spring Semester","Summer Break"))
+
+# Calculate changes from fall to other periods
+fall <- filter(conf_period, period == "Fall Semester")
+summer <- filter(conf_period, period == "Summer Break")
+winter <- filter(conf_period, period == "Winter Break")
+
+# fall vs. summer
+(fall$fit - summer$fit)/fall$fit*100
+# fall vs. winter
+(fall$fit - winter$fit)/fall$fit*100
+
+
+# Graph with confidence intervals
+ggplot(conf_period) +
+    geom_bar(aes(x=period, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
+    geom_errorbar( aes(x=period, ymin=lwr, ymax=upr), # feed in X + confidence interval
+                   width=0.4, colour="darkgray", alpha=0.9, size=1) + # adjust format
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = "Figure 2. Main meter electricity use by time of year",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+```
+
+Unexpectedly, the model revealed differences in electricity use over the week. After accounting for other factors, electricity use was fairly similar on weekdays Monday to Thursday but 3.4% lower on Fridays and 12-13% lower on Saturdays and Sundays (Figure 3). 
+
+```{r pred_day, fig.height = 3.5, fig.width = 5.5, warning = FALSE}
+# Create a data frame with new values (must match model's predictor names)
+day_data <- data.frame(ave_temp = 58, 
+                       day = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                       period = "Fall Semester")
+
+# Generate estimated means + confidence interval
+conf_day <- as.data.frame(predict(mod_seg,  vcov = vcovHAC(mod_seg), 
+                                       newdata = day_data, 
+                                       interval = "confidence", level = 0.95)) %>%
+  mutate(day = factor(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                      levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
+
+# Calculate changes from Monday to other days
+mon <- filter(conf_day, day == "Mon")
+fri <- filter(conf_day, day == "Fri")
+sat <- filter(conf_day, day == "Sat")
+sun <- filter(conf_day, day == "Sun")
+
+# Mon vs Fri
+(mon$fit - fri$fit)/mon$fit*100
+# Mon vs Sat
+(mon$fit - sat$fit)/mon$fit*100
+# Mon vs Sun
+(mon$fit - sun$fit)/mon$fit*100
+
+# Graph
+ggplot(conf_day) +
+    geom_bar(aes(x=day, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
+    geom_errorbar( aes(x=day, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", alpha=0.9, size=1) +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = "Figure 3. Main meter electricity use by day of the week",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
+```
+
+## Recommendations
+
+The statistical model for electricity use on the main meter including temperature, time of year, and day of the week explained nearly 90% of daily variation in electricity use in FY25. This gives the model strong potential to support financial planning as the cost of electricity rises and the climate changes. For example, Cumberland County is likely to become 2-11 ^o^F warmer by late century (Leary, 2025). The model suggests that a 3 ^o^F increase in summer temperature will translate into an additional 2283 kWh per day and $183 per day at current rates. I recommend testing the predictive power of the model by using it to predict electricity use on the main meter in FY26 and then comparing predictions to realized electricity usage. 
+
+As expected, temperature was an important variable correlated with electricity usage on the main meter, and the relationship was stronger during temperatures in the cooling range. The break point at 58 ^o^F was a little bit lower than the standard of 65 ^o^F (EIA, n.d.). The Central Energy Plant starts cooling at an external temperature of 62 ^o^F (personal communication, Mike Kiner, April 2026), which may help to explain this discrepancy. Furthermore, many modern buildings have a balance point below 65 ^o^F due to insulation combined with internal heat generated by occupants, electronic devices, and solar capture (Heizer & Thomas 2022; Utzinger & Wasley 2012).
+
+After controlling for temperature, this analysis found substantial reductions (12-28%) in electricity use on the main meter associated with academic breaks and weekends. This finding suggests that existing building automation systems and scheduled electricity reductions were successful in reducing the use of electricity during low-occupancy periods in FY25. I recommend continuing building management in this vein and considering whether there may be further opportunities to schedule reductions, particularly in summer. This analysis could be repeated in future years to assess the efficacy of such interventions.  
+
+## Sources
+
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+
+Energy Information Administration (EIA). (n.d.). 2018 Units and calculators explained: Degree days. https://www.eia.gov/energyexplained/units-and-calculators/degree-days.php 
+
+Heizer, M., & Thomas, K. (n.d.). Heating Degree Days Relevancy: Why a 55-Degree Balance Point is Better than 65 for Building Energy Analysis in Heating Dominant Climates. ASHRAE Transactions, 128(2), 300–308. Retrieved https://research.ebsco.com/c/rd5flh/search/details/qdyc7pcbcz?request-context=plink&db=a9h
+
+Leary, N. (2025). Climate Risks and Resilience in Cumberland County: Synthesis Report. Center for Sustainability Education, Dickinson College. https://www.dickinson.edu/info/20052/sustainability/4371/climate_resilience/2
+
+Utzinger, M. & Wasley, J. (2012). "Vital Signs Curriculum Materials Project" UC Berkeley. College of Environmental Design. Archived from the original (PDF) on 12 June 2012. [https://web.archive.org/web/20120612033218/http://arch.ced.berkeley.edu/vitalsigns/res/downloads/rp/balance_point/balance_point_big.pdf](https://web.archive.org/web/20120612033218/http://arch.ced.berkeley.edu/vitalsigns/res/downloads/rp/balance_point/balance_point_big.pdf) 
+
+
+## Partner contributions
+
+This section was developed entirely by Prof. Maggie Douglas, as an example for the students in the class. Prof. Douglas did not use generative AI in developing the code or text in this section. 

@@ -77,7 +77,7 @@ print_html(model_parameters(results, summary = TRUE), digits = 0)
 
 - This may throw a warning; it is okay to ignore.
 
-```{r pred_period, warning = FALSE, fig.height = 4.5, fig.width = 5.5}
+```{r pred_period, warning = FALSE, fig.height = 3.5, fig.width = 5}
 # Find mean temperature
 median(daily_main$ave_temp)
 
@@ -99,14 +99,6 @@ conf_period$period <- factor(conf_period$period,
                                 levels = c("Fall Semester","Winter Break",  # add period back into data frame
                                   "Spring Semester","Summer Break"))
 
-# Generate estimated means + prediction interval
-pred_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
-                                     vcov = vcovHAC(mod_seg), # address violations 
-                                       newdata = period_data, # feed in the new data 
-                                       interval = "prediction", level = 0.95)) %>% # interval
-  mutate(period = c("Fall Semester","Winter Break",  # add period back into the data frame
-                                  "Spring Semester","Summer Break"))
-
 # Graph with confidence intervals
 ggplot(conf_period) +
     geom_bar(aes(x=period, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
@@ -117,21 +109,11 @@ ggplot(conf_period) +
        title = "Figure 1. Main meter electricity use by time of year",
        subtitle = "Mean +/- 95% confidence interval",
        caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
-
-# Graph with prediction intervals
-ggplot(pred_period) +
-    geom_bar(aes(x=period, y=fit), stat="identity", fill="skyblue", alpha=0.8) +
-    geom_errorbar( aes(x=period, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", alpha=0.9, size=1) +
-  theme_bw() +
-  labs(x = "", y = "Electricity use (kWh per day)", 
-       title = "Figure 1. Main meter electricity use by time of year",
-       subtitle = "Mean +/- 95% prediction interval",
-       caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
 ```
 
 ### Day of the week
 
-```{r pred_day, fig.height = 4.5, fig.width = 6, warning = FALSE}
+```{r pred_day, fig.height = 3.5, fig.width = 5.5, warning = FALSE}
 # Create a data frame with new values (must match model's predictor names)
 day_data <- data.frame(ave_temp = 58, 
                        day = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
@@ -161,7 +143,7 @@ ggplot(conf_day) +
 
 The segmented model does not interact well with standard plotting functions, so we need to use a slightly different approach to its visualization. The code below uses R's base plotting function to visualize the fitted model.
 
-```{r plot, fig.height = 5, fig.width = 6}
+```{r plot, fig.height = 4.5, fig.width = 5.5}
 # plot original data with fit
 plot(mod_seg, vcov = vcovHAC(mod_seg), 
      col = 'black', res = TRUE, conf.level = .95, shade = T, 

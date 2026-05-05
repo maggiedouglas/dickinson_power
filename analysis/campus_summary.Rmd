@@ -281,7 +281,13 @@ Values for the academic year only showed a more pronounced trend of falling belo
 It is also worth noting that values for the 
 
 ```{r intensity, warning = F, fig.height = 5.5, fig.width = 6.75}
-
+total <- joined_full %>%
+  filter(meter != "Submeter") %>%
+  summarize(kwh = sum(kwh, na.rm = TRUE),
+            kwh_corr = sum(kwh_corr, na.rm = TRUE),
+            sqft = sum(sqft, na.rm = TRUE),
+            occupants = sum(occupants, na.rm = TRUE)) %>%
+  mutate(kwh_sqft = kwh_corr/sqft)
 
 intensity <- joined_full %>%
   filter(!(type %in% c("Residential - U","Solar", "Non-building"))) %>%
@@ -309,7 +315,7 @@ ggplot(intensity,
   geom_label(aes(label = outlier), na.rm = TRUE, nudge_x = -0.25, nudge_y = 0.5, 
              color = "black", fill = "white", size = 2, alpha = 0, label.size = NA) +
     scale_fill_paletteer_d("ggthemes::Tableau_20") +
-  ylim(0, 25) +
+  ylim(0, 28) +
   coord_flip() +
   theme_bw() +
   theme(legend.position = "none") +
