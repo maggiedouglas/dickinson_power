@@ -1,0 +1,157 @@
+---
+title: "Other Buildings"
+author: "Ben Connors & Kyrie Sanchez"
+date: "2026-05-01"
+output: html_document
+---
+
+## Background
+
+Our stakeholders suggested we look at electricity use across Biddle Press Box, Restrooms, and Durden ATC (Biddle). Biddle used 190,898 kWh in the 2025 fiscal year, using 35% of electricity in our building category. Biddle accounts for 23% of square feet within the “other” category. Biddle’s estimated cost for electricity use was $15,536, and the buildings produced 57.4 metric tons of CO~2~ equivalent. This is a mixed-use athletic complex open to students and staff during the fall and spring semester, with less use over winter and summer break. Durden's cooling systems are electric DX cooling and VAV units, and the building has gas heat and electric reheating (Mike Kiner, personal communication). The press box uses mini split electric heat pumps (Mike Kiner, personal communication). Across the fiscal year, Biddle used 12.0 kWh/sqft. In fall and summer, Biddle’s electricity use is above the EIA electricity intensity median for U.S. college and university buildings but is in line with the median during winter and spring (EIA, 2022).
+
+We expect temperature and occupancy will have the most influence on electricity use. The relationship between temperature and kWh should create a V-shaped relationship, but the small amount of gas used to heat Durden will weaken the association at lower temperatures. For cooling, during colder seasons, fall and winter, the electricity usage should be lower, and higher in summer and spring. Fewer students using Durden in the summer should decrease the amount of electricity used in summer. We expect that electricity use on weekends will be significantly lower than on weekdays.
+
+```{r load, include = FALSE}
+library(tidyverse)
+library(tseries)
+library(car)
+library(segmented)
+library(lmtest)
+library(sandwich)
+daily_data <- read.csv("./output/kwh_daily_2026-03-23.csv")
+```
+
+```{r subset, include = FALSE}
+daily_biddle <- daily_data %>%
+  filter(NAME == "Biddle Press Box, Restrooms, Durden ATC")%>%
+  mutate(date = ymd(date),
+         Day = wday(date, label = TRUE))
+str(daily_biddle)
+```
+
+```{r factor, include = FALSE}
+daily_biddle$Day <- factor(daily_biddle$Day,
+                           levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"), ordered = FALSE)
+
+daily_biddle$period <- factor(daily_biddle$period,
+                              levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"))
+
+str(daily_biddle)
+```
+
+```{r fit, include = FALSE}
+mod_full<-lm(kwh~Day+period+ave_temp,data=daily_biddle)
+mod_seg<-segmented(mod_full,seg.Z=~ave_temp,psi=50)
+```
+
+```{r hist, include = FALSE}
+hist(mod_seg$residuals)
+```
+
+```{r variance, include = FALSE}
+plot(mod_seg$residuals ~ mod_seg$fitted.values)
+```
+
+```{r boxplot, include = FALSE}
+boxplot(mod_seg$residuals ~ daily_biddle$Day)
+boxplot(mod_seg$residuals ~ daily_biddle$period)
+```
+
+```{r independence, include = FALSE}
+acf(mod_seg$residuals)
+```
+
+```{r multico, include = FALSE}
+vif(mod_seg)
+```
+
+## Results
+
+The outcomes of the model show significant effects of day (F~6,352~ = 72.9, P < 0.001), period (F~3,352~ = 12.0, P < 0.001), temperature below 46 deg F (F~1,352~ = 116.8, P < 0.001), and temperature above 46 deg F (F~1,352~ = 238.3, P < 0.001). The model was able to explain 83% of the variation in Biddle’s daily electricity use (R^2^ = 0.83).
+
+```{r summary, include = FALSE}
+summary(mod_seg)$adj.r.sq
+```
+
+```{r Anova, include = FALSE}
+Anova(mod_seg, type = "II", vcov = vcovHAC(mod_seg))
+```
+
+```{r coef, include = FALSE}
+coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+```
+
+```{r slope, include = FALSE}
+summary(mod_seg)$psi
+slope(mod_seg, vcov = vcovHAC(mod_seg))
+```
+
+The estimates from the fitted model suggest that after accounting for other factors, electricity use was 10% lower in the spring compared to the fall and 14% lower in the winter than fall. After accounting for temperature, electricity use was 18% lower in the summer than fall (Figure 1). 
+
+```{r period_graph, fig.height = 3.5, fig.width = 5}
+period_biddle <- data.frame(ave_temp = 58, Day = "Mon",
+                            period = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"))
+
+confidence_period <- data.frame (predict(mod_seg,
+                                            vcov = vcovHAC(model_seg),
+                                            newdata = period_biddle,
+                                            interval = "confidence", level = 0.95)) %>%
+  mutate(period = factor(c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"),
+                         levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break")))
+
+#str(confidence_period)
+
+ggplot(confidence_period, aes(x = period, y = fit)) + geom_col(fill = "darkorchid4", alpha = 0.8) + geom_errorbar(aes(x = period, ymin = lwr, ymax = upr), width = 0.3, color = "black", linewidth = 1) + theme_bw() + labs(x = "", y = "Electricity use (kWh per day)", title = "Figure 1. Biddle electricity use by time of year", subtitle = "Mean +/- 95% confidence interval", caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+```
+
+Electricity use was similar on all weekdays, but was about 30% lower on the weekends compared to Mondays (Figure 2).
+
+```{r day_graph, fig.height = 3.5, fig.width = 5.5}
+day_biddle <- data.frame(ave_temp = 58, period = "Fall Semester", 
+                         Day = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
+
+confidence_day <- data.frame (predict(mod_seg,
+                                            vcov = vcovHAC(model_seg),
+                                            newdata = day_biddle,
+                                            interval = "confidence", level = 0.95)) %>%
+  mutate(Day = factor(c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+                      levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")))
+
+#str(confidence_day)
+
+ggplot(confidence_day, aes(x = Day, y = fit)) + geom_col(fill = "darkorchid4", alpha = 0.8) + geom_errorbar(aes(x = Day, ymin = lwr, ymax = upr), width = 0.3, color = "black", linewidth = 1) + theme_bw() + labs(x = "", y = "Electricity use (kWh per day)", title = "Figure 2. Biddle electricity use by day of the week", subtitle = "Mean +/- 95% confidence interval", caption = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
+```
+
+The model showed a significant relationship between electricity and temperature both above and below 46 °F (Figure 3). When temperatures were below 46 °F, electricity use decreased by 7 kWh (+/- 1 kWh) per °F. When temperatures were above 46 °F, electricity use increased by 14 kWh (+/- 1 kWh) per °F. 
+
+```{r Temp_graph, fig.height = 4.5, fig.width = 5.5}
+plot(mod_seg, vcov = vcovHAC(mod_seg),
+     col = 'black', res = TRUE, conf.level = .95, shade = T,
+     res.col = adjustcolor("darkorchid4"),
+     xlab = "Temperature (degrees F)", ylab = "Electricity use (kWh per day)")
+title("Figure 3. Biddle electricity use by temperature", adj = 0, cex.main = 1.2, font.main = 1)
+```
+
+## Recommendations
+
+We were correct in assuming temperature would have a significant relationship with electricity, above and below the break point associated with the switch from heating to cooling. It is interesting that this break point was 46^o^F, well below the typical set point around 65^o^F. This could be related to the athletic activity in the building and/or passive solar through the windows generating significant heat. There was also construction that occurred in the building in winter of 2025 (personal communication, Celine Cunningham, 2026); how this influenced the overall electricity use pattern and relationship to temperature is unclear.
+
+Time of year was also a significant factor in Biddle’s electricity use. Electricity use in summer decreased after accounting for temperature, meaning that there are additional factors influencing summer electricity. Considering that collegiate sports do not operate over summer break, a lack of occupancy and use could be the cause. Not only would that align with our initial expectations, but if use were a driving factor, then that would explain the weekday and weekend pattern. Saturday and Sunday showed a decrease in electricity use that can reasonably be attributed to training and game schedules; facilities are more likely to be used Monday-Friday. 
+
+Going forward, we think that it would be helpful to put the Biddle Press Box and Durden on separate meters. The current meter is unique from other individual meters as it is an aggregate of buildings, which causes the electricity use to be high. This also makes it difficult to pinpoint whether there is potentially excess use in Biddle or Durden. These buildings also have different HVAC systems, which is the most prominent factor affecting electricity usage (Quevedo et al., 2024). Submetering these buildings would allow for a greater understanding of where to focus future efforts. We also believe that it would be valuable to reanalyze these buildings in a more typical year, where electricity use is not potentially affected by construction, to see how strongly these patterns hold. However, since our model explained 83% of the variation in electricity use for the measured fiscal year, the use for these buildings cannot be written off as solely being caused by construction.
+
+## Sources
+
+Energy Information Administration (EIA). (n.d.). CBECS Terminology. U.S. Energy Information Administration - EIA - Independent Statistics and Analysis. Retrieved May 6, 2026, from https://www.eia.gov/consumption/commercial/terminology.php
+
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+
+Quevedo, T. C., Geraldi, M. S., Melo, A. P., & Lamberts, R. (2024). Benchmarking energy consumption in universities: A review. *Journal of Building Engineering*, *82*, 108185. https://doi.org/10.1016/j.jobe.2023.108185
+
+## Partner contributions
+
+Code was compiled from past problem sets as written by both partners. Ben and Kyrie both wrote code to prepare the data. Kyrie wrote code for checking the model’s fit and statistical results. Ben wrote code for the figures. 
+
+For the writing portion, Ben wrote the Results and also the last paragraph of the Recommendations. Kyrie wrote the Background, and also the first two paragraphs of the Recommendations. Both partners reviewed and revised the draft text. 
+
+No AI tools were used for any part of this report. 
