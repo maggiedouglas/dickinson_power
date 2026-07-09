@@ -1,0 +1,148 @@
+---
+title: "Community Buildings"
+author: "Dinela Dedic & Emma Keane"
+date: "2026-05-03"
+output: html_document
+---
+  
+## Background   
+
+Allison Hall is a former church that was built in 1958 and acquired by Dickinson College for community meeting space in 2013 with no major renovations since its construction (pers. comm, Mike Kiner, spring 2026). It is one of the larger Community Buildings with an area of 33,310 sq. ft and contains two large, open meeting rooms that are heated using two gas boilers and a combination of electrically-powered window units and a centralized unit for cooling (pers. comm, Mike Kiner, spring 2026). The building is used by a capella groups, residence life, and multicultural groups on campus, but it is unclear when and to what degree the building is being utilized (pers. comm, Lindsey Lyons, and ENST 325 students, 2026).    
+  
+In FY25 Allison Hall used the most electricity of the Community Buildings (77,578 kWh) with a spike in kWh use during summer months. Despite this, Allison Hall only used 2.3 kWh per square foot which is below the electricity intensity values of a typical college/university building in the United States (10.3 kWh/sqft/yr median, EIA 2022). Coming into this analysis we believed that outdoor temperature and period would have the most significant impacts on electricity use in Allison Hall as cooling the buildings with window units is much more electricity intensive than heating the building (pers. comm, Mike Kiner, spring 2026). Furthermore, the additional use of dehumidifiers alongside cooling units may also contribute to the spike in electricity use during the summer months (Amber & Alsam, 2016; pers. comm, Lindsey Lyons). 
+
+```{r load, include = FALSE}
+library(tidyverse)
+library(tseries)
+library(car)
+library(segmented)
+library(lmtest)
+library(sandwich)
+daily_data<-read.csv("./output/kwh_daily_2026-03-23.csv")
+```
+
+```{r subset, include = FALSE}
+allison_daily<-daily_data%>%
+  filter(NAME=="Allison Hall")
+```
+
+```{r adjust_var, include = FALSE}
+allison_data<-allison_daily%>%
+  mutate(date=ymd(date), 
+       year=lubridate::year(date),
+       month=lubridate::month(date, label=TRUE),
+       wday=lubridate::wday(date, label=TRUE))
+
+allison_data$period<- factor(allison_data$period, levels = c("Fall Semester","Winter Break","Spring Semester","Summer Break"))
+
+allison_data$wday<- factor(allison_data$wday, levels=c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"), ordered=FALSE)
+
+str(allison_data)
+```
+
+```{r model_fit, include = FALSE}
+allison_model <- lm(kwh ~ ave_temp+period+wday, data = allison_data)
+allison_seg <- segmented(allison_model, seg.Z = ~ ave_temp, psi = 63)
+```
+  
+```{r histogram_residuals, include = FALSE}
+hist(allison_seg$residuals)
+```
+  
+```{r variance_linearity, include = FALSE}
+plot(allison_seg$residuals~allison_seg$fitted.values)
+```
+
+```{r boxplot_residuals, include = FALSE}
+par(mfrow=c(1,2))
+boxplot(allison_seg$residuals~allison_data$period)
+boxplot(allison_seg$residuals~allison_data$wday)
+```
+
+```{r independence, include = FALSE}
+acf(allison_seg$residuals)
+```
+
+```{r multicolinearity, include = FALSE}
+vif(allison_seg)
+```
+
+## Results  
+
+In the segmented regression model, Allison Hall’s daily electricity use was shown to be significantly related to period (F~3,352~ = 6.5, P < 0.001), temperature above 63℉ (F~1,352~ = 96, P < 0.001), and temperature below 63℉ (F~1,352~ = 23, P < 0.001). It also showed no significant relationship with day of the week (F~6,352~ = P > 0.05). Overall, the model accounted for 83% of variation observed in Allison’s daily electricity use in FY25 (R^2^ = 0.83). 
+
+```{r summary_Rsqu, include = FALSE}
+summary(allison_seg)$adj.r.sq #Pull R-Squared Value
+```
+
+```{r anova, include = FALSE}
+Anova(allison_seg, type="II", vcov=vcovHAC(allison_seg))
+```
+
+```{r coeftest, include = FALSE}
+coeftest(allison_seg, vcov=vcovHAC(allison_seg))
+```
+
+```{r breakpoint_slopes, include = FALSE}
+summary(allison_seg)$psi #Pull Break-point
+slope(allison_seg, vcov = vcovHAC(allison_seg)) #Pull Slopes Before + After Break-point
+```
+
+```{r data_frames, include = FALSE}
+period_data<-data.frame(ave_temp=58, wday="Mon", period= c("Fall Semester","Winter Break","Spring Semester","Summer Break"))
+
+conf_period<-as.data.frame(predict(allison_seg, vcov=vcovHAC(allison_seg), newdata=period_data, interval="confidence", level=.95))%>%
+  mutate(period=c("Fall Semester","Winter Break","Spring Semester","Summer Break"))
+
+conf_period$period <- factor(conf_period$period,
+                                levels = c("Fall Semester","Winter Break",
+                                  "Spring Semester","Summer Break"))
+
+
+fall <- filter(conf_period, period == "Fall Semester")
+summer <- filter(conf_period, period == "Summer Break")
+winter <- filter(conf_period, period == "Winter Break")
+spring <- filter (conf_period, period == "Spring Semester")
+```
+
+```{r magnitude_calc, include = FALSE}
+(summer$fit - fall$fit)/fall$fit*100
+(winter$fit - fall$fit)/fall$fit*100
+(spring$fit - fall$fit)/fall$fit*100
+```
+   
+Relative to electricity use during the fall semester, there was a significant difference between electricity use during the spring semester and summer break (Figure 1). Interestingly, even after accounting for temperature, electricity use was 25% higher during spring semester and 57% higher over summer break compared to electricity use over the fall semester.
+
+```{r period_bargraph,fig.height=3.5, fig.width=5.5}
+ggplot(conf_period)+
+  geom_bar(aes(x=period, y=fit), stat="identity", fill="darkolivegreen2", alpha=0.8)+
+  geom_errorbar(aes(x=period, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", linewidth=1)+
+  theme_bw()+
+  labs(x="", y="Electricity Use (kWh per day)", title="Figure 1. Allison Hall Electricity Use by Time of Year", subtitle="Mean +/- 95% confidence interval", caption="Estimated for a Monday with an outdoor temperature of 58°F")
+```
+
+Electricity use and outdoor temperature had a significant non-linear relationship, with a distinct break point falling around 63℉ (Figure 2). At temperatures below 63℉, electricity use declined by 2 kWh for every 1℉ increase in temperature. Conversely, at temperatures above 63℉, electricity use increased by 16 kWh per 1℉ increase. 
+
+```{r temperature_graph,fig.height=4.5,fig.width=5.5}
+plot(allison_seg, vcov=vcovHAC(allison_seg),res=TRUE,col = adjustcolor("darkolivegreen2"), conf.level = .95, xlab="Temperature (°F)", ylab="Electricity Use (kWh per day)")
+  title("Figure 2. Allison Hall Electricity Use by Temperature", adj = 0, cex.main = 1.2, font.main = 1)
+```
+  
+## Recommendations
+
+The statistical model for electricity use in Allison Hall including temperature, time of year, and day of the week explained 83% of the variation in daily electricity use in FY25. As expected, temperature was a key variable relating to electricity usage. The break point of 63℉ falls just below the EIA’s standard of 65℉ (EIA, 2022), and aligns with the external temperature at which most of Dickinson’s buildings are set to begin cooling (pers. comm., Mike Kiner, April 2026).
+
+After controlling for temperature, our analysis revealed that there were still significant increases (25-57%) in electricity use in Allison Hall during both spring semester and summer break compared to electricity use in the fall semester. This particular finding suggests that there is something other than outdoor temperature driving an increase in electricity during certain seasons. From personal communications with Mike Kiner, we believe high humidity may be the primary driver behind this seemingly seasonal pattern. Due to age and lack of renovation, humidity control and mold prevention are two major concerns for the long-term maintenance of Allison Hall. Each year once temperatures begin to rise, dehumidifiers are installed to help combat moisture and prevent mold (pers. comm, Mike Kiner, April 2026). Due to the fact that relative outdoor humidity is known to have a moderate relationship and effect on electricity usage (Amber & Aslam, 2016), coupled with the fact that there was a significant pattern produced by the use of these dehumidifiers as seen in our model, we recommend evaluating whether or not it is worth centralizing dehumidification in Allison Hall.  
+  
+## Sources   
+
+Amber, K. P., & Aslam, M. W. (2016). Energy-related environmental and economic performance analysis of two different types of electrically heated student residence halls. International Journal of Sustainable Energy, 37(3), 278-293. https://doi.org/10.1080/14786451.2016.1174703 
+   
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+  
+## Partner Contributions 
+
+Dinela Dedic revised code from prior problem sets to check the fit of the model and create electricity use figures. They also wrote the Background section of the report. Emma Keane wrote the Results for the figures summarizing key findings and completed the Recommendations section of the report. Both partners reviewed and revised one anothers' work. 
+
+No AI was used in writing code, notes, or recommendations.
+  
