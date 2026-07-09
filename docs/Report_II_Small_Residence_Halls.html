@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Luke Heller and Valerie Larsen" />
+
+<meta name="date" content="2026-05-07" />
+
+<title>Small Residential Buildings</title>
+
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
+<script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<style>h1 {font-size: 34px;}
+       h1.title {font-size: 38px;}
+       h2 {font-size: 30px;}
+       h3 {font-size: 24px;}
+       h4 {font-size: 18px;}
+       h5 {font-size: 16px;}
+       h6 {font-size: 12px;}
+       code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
+       pre:not([class]) { background-color: white }</style>
+<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<script src="site_libs/navigation-1.1/codefolding.js"></script>
+<link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
+<script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+
+<link rel="icon" href="https://github.com/workflowr/workflowr-assets/raw/main/img/reproducible.png">
+<!-- Add a small amount of space between sections. -->
+<style type="text/css">
+div.section {
+  padding-top: 12px;
+}
+</style>
+
+
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+<style type="text/css">code{white-space: pre;}</style>
+<script type="text/javascript">
+if (window.hljs) {
+  hljs.configure({languages: []});
+  hljs.initHighlightingOnLoad();
+  if (document.readyState && document.readyState === "complete") {
+    window.setTimeout(function() { hljs.initHighlighting(); }, 0);
+  }
+}
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="style.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
+}
+pre code {
+  padding: 0;
+}
+</style>
+
+
+<style type="text/css">
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #adb5bd;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script type="text/javascript">
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
+
+  // Navbar adjustments
+  var navHeight = $(".navbar").first().height() + 15;
+  var style = document.createElement('style');
+  var pt = "padding-top: " + navHeight + "px; ";
+  var mt = "margin-top: -" + navHeight + "px; ";
+  var css = "";
+  // offset scroll position for anchor links (for fixed navbar)
+  for (var i = 1; i <= 6; i++) {
+    css += ".section h" + i + "{ " + pt + mt + "}\n";
+  }
+  style.innerHTML = "body {" + pt + "padding-bottom: 40px; }\n" + css;
+  document.head.appendChild(style);
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "\e258";
+  font-family: 'Glyphicons Halflings';
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+<style type="text/css">
+.code-folding-btn { margin-bottom: 4px; }
+</style>
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">dickinson_power</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="about.html">Introduction</a>
+</li>
+<li>
+  <a href="data_wrangling_final.html">Methods</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity summary
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Medium.html">Res. Halls 2-10K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Residential-L.html">Res. Halls &gt; 10K sqft</a>
+    </li>
+    <li>
+      <a href="Report_I_Academic.html">Academic</a>
+    </li>
+    <li>
+      <a href="Report_I_Admin.html">Administrative</a>
+    </li>
+    <li>
+      <a href="Report_I_Community.html">Community</a>
+    </li>
+    <li>
+      <a href="Report_I_Other.html">Other</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    Electricity use models
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="main_meter_regression.html">Main meter - reg</a>
+    </li>
+    <li>
+      <a href="main_meter_anova.html">Main meter - ANOVA</a>
+    </li>
+    <li>
+      <a href="main_meter_mult_reg.html">Main meter - Full model</a>
+    </li>
+    <li>
+      <a href="main_meter_mod_vis.html">Main meter - visualization</a>
+    </li>
+    <li>
+      <a href="main_meter_mult_reg.html">Main meter - Report Part II</a>
+    </li>
+    <li>
+      <a href="main_meter_mod_vis.html">Main meter - Report Part II (clean)</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div id="header">
+
+<div class="btn-group pull-right float-right">
+<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
+<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
+<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
+<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
+</ul>
+</div>
+
+
+
+<h1 class="title toc-ignore">Small Residential Buildings</h1>
+<h4 class="author">Luke Heller and Valerie Larsen</h4>
+<h4 class="date">2026-05-07</h4>
+
+</div>
+
+
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
+<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
+workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span>
+</button>
+</p>
+<div id="workflowr-report" class="collapse">
+<ul class="nav nav-tabs">
+<li class="active">
+<a data-toggle="tab" href="#summary">Summary</a>
+</li>
+<li>
+<a data-toggle="tab" href="#checks"> Checks <span
+class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> </a>
+</li>
+<li>
+<a data-toggle="tab" href="#versions">Past versions</a>
+</li>
+</ul>
+<div class="tab-content">
+<div id="summary" class="tab-pane fade in active">
+<p>
+<strong>Last updated:</strong> 2026-07-09
+</p>
+<p>
+<strong>Checks:</strong> <span
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> 1
+</p>
+<p>
+<strong>Knit directory:</strong> <code>dickinson_power/</code> <span
+class="glyphicon glyphicon-question-sign" aria-hidden="true"
+title="This is the local directory in which the code in this file was executed.">
+</span>
+</p>
+<p>
+This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
+analysis was created with <a
+  href="https://github.com/workflowr/workflowr">workflowr</a> (version
+1.7.2). The <em>Checks</em> tab describes the reproducibility checks
+that were applied when the results were created. The <em>Past
+versions</em> tab lists the development history.
+</p>
+<hr>
+</div>
+<div id="checks" class="tab-pane fade">
+<div id="workflowr-checks" class="panel-group">
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
+<span class="glyphicon glyphicon-exclamation-sign text-danger"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
+changes </a>
+</p>
+</div>
+<div id="strongRMarkdownfilestronguncommittedchanges"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
+<code>wflow_publish</code> to commit the R Markdown file and build the
+HTML.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
+</p>
+</div>
+<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! The global environment was empty. Objects defined in the
+global environment can affect the analysis in your R Markdown file in
+unknown ways. For reproduciblity it’s best to always run the code in an
+empty environment.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260107code">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Seed:</strong>
+<code>set.seed(20260107)</code> </a>
+</p>
+</div>
+<div id="strongSeedstrongcodesetseed20260107code"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>The command <code>set.seed(20260107)</code> was run prior to running
+the code in the R Markdown file. Setting a seed ensures that any results
+that rely on randomness, e.g. subsampling or permutations, are
+reproducible.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Session information:</strong>
+recorded </a>
+</p>
+</div>
+<div id="strongSessioninformationstrongrecorded"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Recording the operating system, R version, and package
+versions is critical for reproducibility.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Cache:</strong> none </a>
+</p>
+</div>
+<div id="strongCachestrongnone" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Nice! There were no cached chunks for this analysis, so you can be
+confident that you successfully produced the results during this
+run.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
+</p>
+</div>
+<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
+<div class="panel-body">
+<p>Great job! Using relative paths to the files within your workflowr
+project makes it easier to run your code on other machines.</p>
+</div>
+</div>
+</div>
+<div class="panel panel-default">
+<div class="panel-heading">
+<p class="panel-title">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree705344ffad49d33919a7499f0744d96da69c0714targetblank705344fa">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>Repository version:</strong>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/705344ffad49d33919a7499f0744d96da69c0714" target="_blank">705344f</a>
+</a>
+</p>
+</div>
+<div
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree705344ffad49d33919a7499f0744d96da69c0714targetblank705344fa"
+class="panel-collapse collapse">
+<div class="panel-body">
+<p>
+Great! You are using Git for version control. Tracking code development
+and connecting the code version to the results is critical for
+reproducibility.
+</p>
+<p>
+The results in this page were generated with repository version
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/705344ffad49d33919a7499f0744d96da69c0714" target="_blank">705344f</a>.
+See the <em>Past versions</em> tab to see a history of the changes made
+to the R Markdown and HTML files.
+</p>
+<p>
+Note that you need to be careful to ensure that all relevant files for
+the analysis have been committed to Git prior to generating the results
+(you can use <code>wflow_publish</code> or
+<code>wflow_git_commit</code>). workflowr only checks the R Markdown
+file, but you know if there are other scripts or data files that it
+depends on. Below is the status of the Git repository when the results
+were generated:
+</p>
+<pre><code>
+Ignored files:
+    Ignored:    .DS_Store
+    Ignored:    .Rhistory
+    Ignored:    .Rproj.user/
+    Ignored:    analysis/.DS_Store
+    Ignored:    analysis/.Rhistory
+    Ignored:    analysis_to-fix/.DS_Store
+    Ignored:    data/.DS_Store
+    Ignored:    data/FY25 Main Meter Data.xlsx
+    Ignored:    data/building_list_FY25_updated.xlsx
+    Ignored:    data/graph_data_life_exp.csv
+    Ignored:    data/housing_counts.csv
+    Ignored:    keys/.DS_Store
+    Ignored:    output/annual_kwh.csv
+    Ignored:    output/building_check.csv
+    Ignored:    output/building_check.xlsx
+    Ignored:    output/daily_kwh.csv
+    Ignored:    output/kwh_academic_2026-03-16.csv
+    Ignored:    output/kwh_academic_2026-03-17.csv
+    Ignored:    output/kwh_academic_2026-03-18.csv
+    Ignored:    output/kwh_academic_2026-03-22.csv
+    Ignored:    output/kwh_academic_2026-03-23.csv
+    Ignored:    output/kwh_academic_2026-03-25.csv
+    Ignored:    output/kwh_academic_2026-03-30.csv
+    Ignored:    output/kwh_academic_2026-04-07.csv
+    Ignored:    output/kwh_academic_2026-04-13.csv
+    Ignored:    output/kwh_academic_2026-04-26.csv
+    Ignored:    output/kwh_annual.csv
+    Ignored:    output/kwh_annual_2026-03-04.csv
+    Ignored:    output/kwh_annual_2026-03-12.csv
+    Ignored:    output/kwh_annual_2026-03-16.csv
+    Ignored:    output/kwh_annual_2026-03-17.csv
+    Ignored:    output/kwh_annual_2026-03-18.csv
+    Ignored:    output/kwh_annual_2026-03-22.csv
+    Ignored:    output/kwh_annual_2026-03-23.csv
+    Ignored:    output/kwh_annual_2026-03-25.csv
+    Ignored:    output/kwh_annual_2026-03-30.csv
+    Ignored:    output/kwh_annual_2026-04-07.csv
+    Ignored:    output/kwh_annual_2026-04-13.csv
+    Ignored:    output/kwh_annual_2026-04-26.csv
+    Ignored:    output/kwh_annual_20260225.csv
+    Ignored:    output/kwh_annual_20260226.csv
+    Ignored:    output/kwh_daily.csv
+    Ignored:    output/kwh_daily_2026-03-04.csv
+    Ignored:    output/kwh_daily_2026-03-12.csv
+    Ignored:    output/kwh_daily_2026-03-16.csv
+    Ignored:    output/kwh_daily_2026-03-17.csv
+    Ignored:    output/kwh_daily_2026-03-18.csv
+    Ignored:    output/kwh_daily_2026-03-22.csv
+    Ignored:    output/kwh_daily_2026-03-23.csv
+    Ignored:    output/kwh_daily_2026-03-25.csv
+    Ignored:    output/kwh_daily_2026-03-30.csv
+    Ignored:    output/kwh_daily_2026-04-07.csv
+    Ignored:    output/kwh_daily_2026-04-13.csv
+    Ignored:    output/kwh_daily_2026-04-26.csv
+    Ignored:    output/kwh_daily_20260225.csv
+    Ignored:    output/kwh_daily_20260226.csv
+    Ignored:    output/kwh_main_annual.csv
+    Ignored:    output/kwh_main_daily.csv
+
+Untracked files:
+    Untracked:  analysis/Report_II_Academic.Rmd
+    Untracked:  analysis/Report_II_Administrative-2.Rmd
+    Untracked:  analysis/Report_II_Community.Rmd
+    Untracked:  analysis/Report_II_Med-Residential-Building.Rmd
+    Untracked:  analysis/Report_II_Residential-L.Rmd
+    Untracked:  analysis/Report_II_Small_Residence_Halls.Rmd
+
+</code></pre>
+<p>
+Note that any generated files, e.g. HTML, png, CSS, etc., are not
+included in this status report because it is ok for generated content to
+have uncommitted changes.
+</p>
+</div>
+</div>
+</div>
+</div>
+<hr>
+</div>
+<div id="versions" class="tab-pane fade">
+<p>
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
+</p>
+<hr>
+</div>
+</div>
+</div>
+<div id="background" class="section level2">
+<h2>Background</h2>
+<p>519 West Louther Street is a townhome that was constructed in 1910,
+acquired by Dickinson in 2000, and renovated in 2017. Its size is 1,330
+square feet, making it the 6th smallest building among small residential
+buildings. This building uses gas for heating and electricity to power
+Direct Expansion (DX) cooling (personal communication with Mike Kiner,
+March 2026). DX cooling is a system mounted outside of a building
+containing refrigerants that cool air and fans that distribute it into
+the building (EIA, n.d.). Four students lived in the building during the
+2024-2025 academic year and one student lived in the building over
+summer break in 2025 (personal communication with Leo Burchel, April
+2026).</p>
+<p>During the 2025 fiscal year, this building used 8,294 kWh of
+electricity - or 2,074 kWh per person - making it the 6th largest user
+of electricity among small residential buildings. This building’s
+electricity intensity was 6.2 kWh/sqft. This was the 2nd-highest
+electricity intensity reading in the category, but it is still well
+below the values typical of all dormitories, fraternities, and
+sororities in the United States (median 13.6 kWh/sqft/yr; EIA 2022).</p>
+<p>We expected that electricity use in 519 West Louther Street would be
+strongly related to outdoor temperature and time of year (period).
+Specifically, we expected to see a strong, positive linear relationship
+between outdoor temperature and electricity use during cooling and no
+relationship between outdoor temperature and electricity during heating
+since cooling relies on electricity but heating does not. Additionally,
+time of year (period) captures the change in occupancy between semesters
+and break periods, and we expected that this building uses less
+electricity during breaks when fewer students are on campus. Finally, we
+did not expect to see a strong relationship between electricity use and
+day of the week since residential halls are used consistently throughout
+the week.</p>
+</div>
+<div id="results" class="section level2">
+<h2>Results</h2>
+<p>In a segmented regression model, daily electricity use in 519 West
+Louther Street was significantly related to day (F<sub>6,352</sub> =
+2.5, P = 0.02), period (F<sub>3,352</sub> = 88.3, P &lt; 0.001),
+temperature below 65 °F (F<sub>1,352</sub> = 4.9, P = 0.03), and
+temperature above 65 °F (F<sub>1,352</sub> = 14.9, P &lt; 0.001). The
+model explained 64% of the variation in daily electricity use in this
+building in FY25 (R<sup>2</sup> = 0.64).</p>
+<p>There was a significant non-linear relationship between electricity
+use and temperature, with a break point at 65 °F (Figure 1). During the
+heating season (temperatures below 65 °F), electricity use increased by
+0.07 kWh (+/- 0.02) per °F. During the cooling season (temperatures
+above 65 °F), electricity use increased by 1.2 kWh (+/- 0.1) per °F.</p>
+<pre class="r"><code>plot(mod_seg, vcov = vcovHAC(mod_seg), 
+     col = &#39;black&#39;, res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor(&quot;darkorange1&quot;, alpha.f = 0.7),
+     xlab = &quot;Temperature (degrees F)&quot;, ylab = &quot;Electricity use (kWh per day)&quot;) 
+title(&quot;Figure 1. 519 W. Louther electricity use by temperature&quot;, 
+      adj = 0, cex.main = 1, font.main = 1)</code></pre>
+<p><img src="figure/Report_II_Small_Residence_Halls.Rmd/scatter-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
+<pre class="r"><code># Create a data frame with new values (must match model&#39;s predictor names)
+period_data &lt;- data.frame(ave_temp = 58, # set temp to the median in the dataset
+                       day = &quot;Mon&quot;, # set day as Monday 
+                       period = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;, # include all levels 
+                                  &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
+
+# Generate estimated means + confidence interval
+conf_period &lt;- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
+                                     vcov = vcovHAC(mod_seg), # address violations 
+                                       newdata = period_data, # feed in the new data 
+                                       interval = &quot;confidence&quot;, level = 0.95)) %&gt;% # interval
+  mutate(period = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,  # add period back into data frame
+                                  &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
+
+conf_period$period &lt;- factor(conf_period$period,
+                                levels = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,  # add period back into data frame
+                                  &quot;Spring Semester&quot;,&quot;Summer Break&quot;))
+
+# Generate estimated means + prediction interval
+pred_period &lt;- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
+                                     vcov = vcovHAC(mod_seg), # address violations 
+                                       newdata = period_data, # feed in the new data 
+                                       interval = &quot;prediction&quot;, level = 0.95)) %&gt;% # interval
+  mutate(period = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,  # add period back into the data frame
+                                  &quot;Spring Semester&quot;,&quot;Summer Break&quot;))</code></pre>
+<p>Electricity use during spring did not differ significantly from use
+during fall (Figure 2; P = 0.63). Compared to fall and spring,
+electricity use during winter break was 27% lower and electricity use
+during summer break was 28% lower, after accounting for temperature.</p>
+<pre class="r"><code># Graph with confidence intervals
+ggplot(conf_period) +
+    geom_bar(aes(x=period, y=fit), stat=&quot;identity&quot;, fill=&quot;darkorange1&quot;, alpha=0.8) +
+    geom_errorbar(aes(x=period, ymin=lwr, ymax=upr), # feed in X + confidence interval
+                   width=0.4, colour=&quot;black&quot;, alpha=0.9, linewidth=1) + # adjust format
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
+       title = &quot;Figure 2. 519 W. Louther electricity use by time of year&quot;,
+       subtitle = &quot;Mean +/- 95% confidence interval&quot;,
+       caption = &quot;Estimated for a Monday with an outdoor temperature of 58 degrees F&quot;)</code></pre>
+<p><img src="figure/Report_II_Small_Residence_Halls.Rmd/bar1-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
+<p>Electricity use was relatively consistent across different days of
+the week (Figure 3). The exception is on Fridays, where electricity use
+was 5% lower than it was on Mondays (P = 0.01).</p>
+<pre class="r"><code>ggplot(conf_day) +
+    geom_bar(aes(x=day, y=fit), stat=&quot;identity&quot;, fill=&quot;darkorange1&quot;, alpha=0.8) +
+    geom_errorbar(aes(x=day, ymin=lwr, ymax=upr), width=0.4, colour=&quot;black&quot;, alpha=0.9, linewidth=1) +
+  theme_bw() +
+  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
+       title = &quot;Figure 3. 519 W. Louther electricity use by day of the week&quot;,
+       subtitle = &quot;Mean +/- 95% confidence interval&quot;,
+       caption = &quot;Estimated for a day in fall with an outdoor temperature of 58 degrees F&quot;)</code></pre>
+<p><img src="figure/Report_II_Small_Residence_Halls.Rmd/bar2-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
+</div>
+<div id="recommendations" class="section level2">
+<h2>Recommendations</h2>
+<p>As expected, outdoor temperature and time of year were significant
+predictors of electricity use in 519 West Louther Street during the 2025
+fiscal year. Specifically, the relationship between outdoor temperature
+and time of year was stronger during cooling, which makes sense given
+that we know this building uses electricity for cooling but not for
+heating. It is notable that the model predicted a positive, significant
+relationship between outdoor temperature and electricity use during
+heating; however, the magnitude of the effect of an increase in outdoor
+temperature on electricity use was much smaller during heating than it
+was during cooling. This suggests that outdoor temperature does not
+explain as much variation in electricity use during heating days as
+other factors such as occupancy do.</p>
+<p>Additionally, electricity use was similar across different days of
+the week, but we were surprised to see a significant decrease in
+electricity use on Fridays compared to Mondays. We believe that knowing
+more about the characteristics of the students who were living in this
+building during the 2024-2025 academic year could help explain the
+reasons for this significant difference; perhaps they had a reason to
+use the building less on Fridays. Therefore, we hypothesize that the
+reason for the difference in electricity use between Monday and Friday
+can be explained better by the characteristics of the students who were
+living there - as opposed to the characteristics of the building itself
+- and that this difference would not be as notable in other years for
+which this building might have electricity use data.</p>
+<p>The reduction in electricity use during winter break and summer break
+when compared with the academic year suggests that existing systems for
+optimizing electricity use during periods of low use are doing well;
+however, there is still room for improvement. During academic breaks, if
+no students are staying in this building, we recommend setting
+thermostats to an electricity-efficient level or turning them off (Chung
+and Rhee, 2014). Additionally, ensuring that electricity-consuming
+appliances are turned off and unplugged will decrease unneeded
+electricity use (Kwong et al., 2014). Finally, given that only one
+student lived in this building during summer 2025, electricity could be
+saved by consolidating summer students into fewer buildings so that
+empty buildings could be set at even more efficient set-points.</p>
+</div>
+<div id="sources" class="section level2">
+<h2>Sources</h2>
+<p>Energy Information Administration (EIA). (n.d.). <em>Glossary</em>.
+U.S. Department of Energy. Retrieved March 28, 2026, from <a
+href="https://www.eia.gov/tools/glossary/index.php?id=p"
+class="uri">https://www.eia.gov/tools/glossary/index.php?id=p</a></p>
+<p>Energy Information Administration (EIA). (2022). 2018 Commercial
+Buildings Energy Consumption Survey (CBECS). <a
+href="https://www.eia.gov/consumption/commercial/"
+class="uri">https://www.eia.gov/consumption/commercial/</a></p>
+<p>Chung, M. H. &amp; Rhee, E. K. (2014). Potential opportunities for
+energy conservation in existing buildings on university campus: A field
+survey in Korea. <em>Energy and Buildings</em>, 78, 176–182. <a
+href="https://doi.org/10.1016/j.enbuild.2014.04.018"
+class="uri">https://doi.org/10.1016/j.enbuild.2014.04.018</a></p>
+<p>Kwong, Q. J., Goh, S. H., Adam, N. M., &amp; Raghavan, V. R. (2014).
+A study on energy efficiency improvement opportunities for plug loads in
+buildings in the equatorial region. <em>Energy Procedia</em>, 56,
+621–633. <a href="https://doi.org/10.1016/j.egypro.2014.07.201"
+class="uri">https://doi.org/10.1016/j.egypro.2014.07.201</a></p>
+</div>
+<div id="partner-contributions" class="section level2">
+<h2>Partner contributions</h2>
+<p>Both partners collaborated on the code in R, contributed equally to
+each of the different sections of the report, and proofread and edited
+the final text. Neither partner used generative AI in developing the
+code or text in this section.</p>
+<br>
+<p>
+<button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
+<span class="glyphicon glyphicon-wrench" aria-hidden="true"></span>
+Session information
+</button>
+</p>
+<div id="workflowr-sessioninfo" class="collapse">
+<pre class="r"><code>sessionInfo()</code></pre>
+<pre><code>R version 4.6.0 (2026-04-24)
+Platform: x86_64-apple-darwin20
+Running under: macOS Ventura 13.7.8
+
+Matrix products: default
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+
+locale:
+[1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
+
+time zone: America/New_York
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+ [1] sandwich_3.1-1  lmtest_0.9-40   zoo_1.8-15      segmented_2.2-1
+ [5] nlme_3.1-169    MASS_7.3-65     car_3.1-5       carData_3.0-6  
+ [9] tseries_0.10-61 lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0  
+[13] dplyr_1.2.1     purrr_1.2.2     readr_2.2.0     tidyr_1.3.2    
+[17] tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0
+
+loaded via a namespace (and not attached):
+ [1] gtable_0.3.6       xfun_0.59          bslib_0.11.0       lattice_0.22-9    
+ [5] tzdb_0.5.0         quadprog_1.5-8     vctrs_0.7.3        tools_4.6.0       
+ [9] generics_0.1.4     curl_7.1.0         xts_0.14.2         pkgconfig_2.0.3   
+[13] RColorBrewer_1.1-3 S7_0.2.2           lifecycle_1.0.5    compiler_4.6.0    
+[17] farver_2.1.2       git2r_0.36.2       httpuv_1.6.17      htmltools_0.5.9   
+[21] sass_0.4.10        yaml_2.3.12        Formula_1.2-5      later_1.4.8       
+[25] pillar_1.11.1      jquerylib_0.1.4    cachem_1.1.0       abind_1.4-8       
+[29] tidyselect_1.2.1   digest_0.6.39      stringi_1.8.7      labeling_0.4.3    
+[33] splines_4.6.0      rprojroot_2.1.1    fastmap_1.2.0      grid_4.6.0        
+[37] cli_3.6.6          magrittr_2.0.5     withr_3.0.3        scales_1.4.0      
+[41] promises_1.5.0     timechange_0.4.0   TTR_0.24.4         rmarkdown_2.31    
+[45] quantmod_0.4.29    otel_0.2.0         workflowr_1.7.2    hms_1.1.4         
+[49] evaluate_1.0.5     knitr_1.51         rlang_1.2.0        Rcpp_1.1.1-1.1    
+[53] glue_1.8.1         rstudioapi_0.19.0  jsonlite_2.0.0     R6_2.6.1          
+[57] fs_2.1.0          </code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+<!-- Adjust MathJax settings so that all math formulae are shown using
+TeX fonts only; see
+https://docs.mathjax.org/en/latest/web/configuration.html. This will make
+the presentation more consistent at the cost of the webpage sometimes
+taking slightly longer to load. Note that this only works because the
+footer is added to webpages before the MathJax javascript. -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    "HTML-CSS": { availableFonts: ["TeX"] }
+  });
+</script>
+
+
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.odd').parent('tbody').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open');
+  });
+});
+</script>
+
+<!-- code folding -->
+<script>
+$(document).ready(function () {
+  window.initializeCodeFolding("hide" === "show");
+});
+</script>
+
+<script>
+$(document).ready(function ()  {
+
+    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
+    $('.unlisted.unnumbered').addClass('toc-ignore')
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

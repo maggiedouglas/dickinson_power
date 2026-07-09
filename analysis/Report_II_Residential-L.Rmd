@@ -1,0 +1,232 @@
+---
+title: "Large Residential Buildings"
+author: "Liv Kacar and Claire Raesly"
+date: "2026-05-02"
+output: html_document
+---
+## Background 
+
+Drayer Hall is a traditional large residential building that houses students and camps year-round. The building’s HVAC system is run by the Central Energy Plant located in Kaufman Hall, which produces hot or chilled water that is transported via underground pipes and dispersed to buildings across campus (personal communication, Mike Kiner). Once the water arrives at Drayer Hall, fan coil units (FCUs) are used to blow air over the pipes into the room. To increase efficiency in individual rooms, window switches disable the FCUs when the window is opened (Kubba, 2017). Heating relies primarily on natural gas, while cooling is more reliant on electricity (personal communication, Mike Kiner). In FY25, Drayer Hall used an estimated $21,933 of electricity, emitting 81 MT CO2-e. Overall, Drayer hall used 5.5 kWh per square foot, far less than the typical U.S. dormitory, fraternity or sorority (median 13.6 kWh/sqft/yr; EIA 2022).
+
+We believed electricity use in Drayer Hall would be related to the time of year but not as much to temperature because the HVAC system does not rely as heavily or directly on electricity for heating and cooling compared to other buildings. Since the campus relies more on electricity for cooling than heating, we thought there would be higher electricity use in the cooling season. Also, we expected lower electricity use during breaks when there are fewer building occupants. Finally, we did not expect a strong relationship between electricity use and day of the week because dormitories should have similar use patterns every day. 
+
+```{r load, include = FALSE}
+
+library(tidyverse)
+library(tseries)
+library(car)
+library(segmented)
+library(lmtest)
+library(sandwich)
+
+daily <- read.csv("./output/kwh_daily_2026-03-23.csv")
+
+```
+
+```{r subset, include = FALSE}
+
+drayer_daily <- daily %>%
+  filter(NAME == "Drayer Hall") %>%
+  mutate(date = ymd(date),
+         wday = wday(date, label = TRUE))
+
+```
+
+```{r create, include = FALSE, warning = FALSE}
+
+drayer_daily$wday <- factor(drayer_daily$wday, 
+                           levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"), ordered = FALSE)
+
+drayer_daily$period <- factor(drayer_daily$period,
+                              levels = c("Fall Semester", 
+                                         "Winter Break",
+                                         "Spring Semester",
+                                         "Summer Break"))
+
+summary(drayer_daily)
+
+str(drayer_daily)
+
+ggplot(drayer_daily, aes(x = ave_temp, y = kwh)) +
+  geom_point() +
+  geom_smooth(data = filter(drayer_daily, ave_temp < 60), # model for heating 
+              method = 'lm', formula = 'y ~ x') +
+  geom_smooth(data = filter(drayer_daily, ave_temp >= 60), # model for cooling
+              method = 'lm', formula = 'y ~ x') +
+  labs(title = "Segmented regression")
+
+```
+
+```{r linear, include = FALSE}
+
+mod_lin <- lm(kwh~wday+period+ave_temp, data = drayer_daily)
+
+```
+
+```{r segment, include = FALSE}
+
+mod_seg <- segmented(mod_lin, seg.Z= ~ ave_temp, psi = 57.57 )
+
+```
+
+```{r hist, include = FALSE}
+
+hist(mod_seg$residuals, main = "Histogram of Residuals")
+
+```
+
+```{r cloud, include = FALSE}
+
+plot(mod_seg$residuals ~ mod_seg$fitted.values,  main ="Residuals vs. Fits Plot ")
+
+```
+
+```{r box, include = FALSE}
+
+boxplot(mod_seg$residuals ~ drayer_daily$wday)
+
+boxplot(mod_seg$residuals ~ drayer_daily$period)
+
+```
+
+```{r acf, include = FALSE}
+
+acf(mod_seg$residuals, main ="Plot of Independence")
+
+```
+
+```{r vif, include = FALSE}
+
+vif(mod_seg)
+
+```
+
+## Results 
+
+```{r adjust, include = FALSE}
+
+summary(mod_seg)$adj.r.sq
+
+```
+
+```{r anova, include = FALSE}
+
+Anova(mod_seg, type = "II", vcov = vcovHAC(mod_seg))
+
+```
+
+```{r coeftest, include = FALSE}
+
+coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+
+```
+
+```{r, include = FALSE}
+
+summary(mod_seg)$psi
+
+slope(mod_seg, vcov = vcovHAC(mod_seg))
+
+```
+
+The segmented regression model found that daily electricity use in Drayer Hall was significantly related to day (F~6,352~ = 2.70, P = 0.01), time of year (F~3,352~ = 86.7, P < 0.001), and temperature above 57.5^o^F (F~1,352~ = 51.5, P < 0.001). It was not significant below 57.5^o^F (F~1,352~, P = 1). The model explained 56.8% of the variation in daily electricity use in Drayer Hall in FY25 (R^2^ = 0.568).
+
+Electricity use during spring was *not significantly different* from use during fall (Figure 1; P = 0.50). Compared to fall and spring semesters, electricity use during winter and summer break was *reduced by 32%* (Figure 1).
+
+```{r period, fig.height = 3.5, fig.width = 5, warning = FALSE}
+
+period_drayer <- data.frame(ave_temp = 58,
+                            wday = "Mon",
+                            period = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"))
+
+period_CI <- as.data.frame(predict(mod_seg, 
+                                   vcov = vcovHAC(mod_seg), 
+                                   newdata = period_drayer,
+                                   interval = "confidence", 
+                                   level = 0.95))%>%
+  mutate(period = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"))
+
+period_CI$period_factor <- factor(period_CI$period, 
+                                  levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"))
+
+
+ggplot(period_CI)+
+  geom_bar(aes(x=period_factor, y=fit), stat="identity", fill="cadetblue", alpha=0.8)+
+  geom_errorbar(aes(x=period_factor, ymin=lwr, ymax=upr),
+                width=0.4,
+                color = "black", 
+                alpha=0.9,
+                size=1)+
+  theme_bw()+
+  labs(x="",
+       y="Electricity Use (kWh/day)",
+       title="Figure 1. Drayer Hall Electricity Use by Time of Year",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Values estimated for a Monday with an outdoor temperature of 58 degrees F")
+ 
+period_CI$period_factor <- factor(period_CI$period, 
+                                  levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break")) 
+
+```
+
+Surprisingly, the model showed differences in electricity use over the week. After accounting for other factors, electricity use was similar on weekdays other than Wednesdays and Thursdays (which were 2.3% lower). Additionally, electricity use was 1.7% lower on Saturdays (Figure 2). 
+
+```{r wday, fig.height = 3.5, fig.width = 5.5, warning = FALSE}
+
+drayer_day <- data.frame(ave_temp = 58, 
+                       wday = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                       period = "Fall Semester")
+
+day_CI <-as.data.frame(predict(mod_seg,  
+                               vcov = vcovHAC(mod_seg),
+                               newdata = drayer_day, 
+                               interval = "confidence", level = 0.95)) %>%
+  mutate(wday = factor(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                      levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
+
+
+ggplot(day_CI)+
+  geom_bar(aes(x=wday, y=fit), stat="identity", fill="cadetblue", alpha=0.8) +
+  geom_errorbar( aes(x=wday, ymin=lwr, ymax=upr), width=0.4, colour="black", alpha=0.9, size=1) +
+  theme_bw() +
+  labs(x = "", y = "Electricity Use (kWh/day)", 
+       title = "Figure 2. Drayer Hall Electricity Use by Day of the Week",
+       subtitle = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
+
+
+```
+
+There was a significant non-linear relationship between electricity use and temperature, with a break point at 57.5^o^F (Figure 3). During the cooling season (temperatures above 57.5^o^F), electricity use increased by 11.2 kWh (+/- 0.86 kWh) per ^o^F. 
+
+```{r temp, fig.height = 4.5, fig.width = 5.5, warning = FALSE}
+
+plot(mod_seg, vcov = vcovHAC(mod_seg),
+     col = "black", res = TRUE, conf.level = 0.95, shade = T,
+     res.col = adjustcolor("cadetblue", alpha.f = 0.7),
+     xlab = "Temperature (degrees F)", ylab = "Electricity use (kWh per day)")
+title("Figure 3. Drayer Hall electricity use by temperature", 
+      adj = 0, cex.main = 1.2, font.main = 1)
+
+```
+
+## Recommendations 
+
+The segmented regression model for electricity use in Drayer Hall including temperature, time of year, and day of the week explained **over half** of the daily variation in electricity use in FY25. We expect that the rest of the variation could be due to aspects of building occupancy not captured by day of the week or time of year, for which we did not have complete data. 
+
+As expected, time of year was an important factor related to electricity usage in Drayer Hall. This relationship was the strongest during the lower occupancy periods of winter and summer break. These results make sense considering that occupancy rates have been found to be positively correlated with electricity consumption in (Kim & Srebric, 2017). Additionally, electricity use was higher during the cooling season which makes sense as the campus uses more electricity during this time (personal communication with Mike Kiner, spring 2026). 
+
+Following this report, we recommend conducting an additional analysis of electricity use in Drayer prior to its 2023 renovation. This will enable a direct comparison of pre- and post-renovation energy consumption to evaluate the renovation’s effectiveness. Such renovations are increasingly important as temperatures are projected to increase by **2-11 ^o^F** by late century and extreme heat events exceeding 90 ^o^F projected to increase from **7-90 days** (Leary, 2025). If the renovation proves successful in reducing electricity use, it could serve as a model for other building upgrades. 
+
+## Sources 
+
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+
+Leary, N. (2025). Climate Risks and Resilience in Cumberland County: Synthesis Report. Center for Sustainability Education, Dickinson College. https://www.dickinson.edu/info/20052/sustainability/4371/climate_resilience/2
+
+Kim, Y.-S., & Srebric, J. (2017). Impact of occupancy rates on the building electricity consumption in commercial buildings. Energy and Buildings, 138(Energy Management for Institutional Buildings), 591–600. https://doi.org/https://doi.org/10.1016/j.enbuild.2016.12.056
+
+Kubba, S. (2017). Handbook of Green Building Design and Construction : LEED, BREEAM, and Green Globes (Second edition)(pp.474-482). Butterworth-Heinemann. 
+
+## Partner Contributions 
+
+Liv Kacar wrote the Background and most of the Recommendations. Claire Raesly wrote the Results and contributed to the Recommendations. Both partners contributed to the R code to fit and assess the model. AI tools were not used in this report.
