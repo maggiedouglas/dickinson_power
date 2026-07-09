@@ -1,0 +1,197 @@
+---
+title: "Small Residential Buildings"
+author: "Luke Heller and Valerie Larsen"
+date: "2026-05-07"
+output: html_document
+---
+
+## Background
+
+519 West Louther Street is a townhome that was constructed in 1910, acquired by Dickinson in 2000, and renovated in 2017. Its size is 1,330 square feet, making it the 6th smallest building among small residential buildings. This building uses gas for heating and electricity to power Direct Expansion (DX) cooling (personal communication with Mike Kiner, March 2026). DX cooling is a system mounted outside of a building containing refrigerants that cool air and fans that distribute it into the building (EIA, n.d.). Four students lived in the building during the 2024-2025 academic year and one student lived in the building over summer break in 2025 (personal communication with Leo Burchel, April 2026).
+
+During the 2025 fiscal year, this building used 8,294 kWh of electricity - or 2,074 kWh per person - making it the 6th largest user of electricity among small residential buildings. This building's electricity intensity was 6.2 kWh/sqft. This was the 2nd-highest electricity intensity reading in the category, but it is still well below the values typical of all dormitories, fraternities, and sororities in the United States (median 13.6 kWh/sqft/yr; EIA 2022).
+
+We expected that electricity use in 519 West Louther Street would be strongly related to outdoor temperature and time of year (period). Specifically, we expected to see a strong, positive linear relationship between outdoor temperature and electricity use during cooling and no relationship between outdoor temperature and electricity during heating since cooling relies on electricity but heating does not. Additionally, time of year (period) captures the change in occupancy between semesters and break periods, and we expected that this building uses less electricity during breaks when fewer students are on campus. Finally, we did not expect to see a strong relationship between electricity use and day of the week since residential halls are used consistently throughout the week.
+
+```{r library, include = FALSE}
+library(tidyverse)
+library(tseries)
+library(car)
+library(segmented)
+library(lmtest)
+library(sandwich)
+```
+```{r data, include = FALSE}
+daily_kwh <- read.csv("./output/kwh_daily_2026-03-23.csv")
+
+daily_date <- daily_kwh %>%
+  mutate(date = ymd(date), # convert date to date object
+         month = month(date, label = TRUE), # extract month
+         day = wday(date, label = TRUE)) # extract day of week
+
+# filter to focal building
+w_louther <- filter(daily_date, NAME == "519 W. Louther St.") 
+
+# create factor for period and put in order
+w_louther$period <- factor(w_louther$period,
+                            levels = c("Fall Semester","Winter Break",
+                                       "Spring Semester","Summer Break"))
+
+# create factor for day, put in order, and store as a regular factor
+w_louther$day <- factor(w_louther$day,
+                         levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                         ordered = FALSE)
+
+str(w_louther)
+```
+
+```{r model, include = FALSE}
+# Original linear model
+mod_full <- lm(kwh ~ day + period + ave_temp, data = w_louther)
+
+# Segmented regression
+mod_seg <- segmented(mod_full, seg.Z = ~ ave_temp, psi = 60)
+```
+
+```{r check, include = FALSE}
+par(mfrow = c(1, 2)) # This code puts two plots in the same window
+hist(mod_seg$residual) # Histogram of residuals
+plot(mod_seg$residuals ~ mod_seg$fitted.values) # Residuals vs. fits
+boxplot(mod_seg$residual ~ w_louther$day) # Equality of variance across factors
+boxplot(mod_seg$residual ~ w_louther$period) # Equality of variance across factors
+acf(mod_seg$residual) # Assess dependence between successive observations
+vif(mod_seg) # Check the variance inflation factor
+```
+
+## Results
+
+In a segmented regression model, daily electricity use in 519 West Louther Street was significantly related to day (F~6,352~ = 2.5, P = 0.02), period (F~3,352~ = 88.3, P < 0.001), temperature below 65 °F (F~1,352~ = 4.9, P = 0.03), and temperature above 65 °F (F~1,352~ = 14.9, P < 0.001). The model explained 64% of the variation in daily electricity use in this building in FY25 (R^2^ = 0.64).
+
+```{r squared, include = FALSE}
+summary(mod_seg)$adj.r.sq
+```
+```{r Anova, include = FALSE}
+Anova(mod_seg, type = "II", vcov = vcovHAC(mod_seg))
+```
+```{r coeftest, include = FALSE}
+coeftest(mod_seg, vcov = vcovHAC(mod_seg))
+```
+```{r break, include = FALSE}
+summary(mod_seg)$psi
+intercept(mod_seg, vcov = vcovHAC(mod_seg))
+slope(mod_seg, vcov = vcovHAC(mod_seg))
+```
+
+There was a significant non-linear relationship between electricity use and temperature, with a break point at 65 °F (Figure 1). During the heating season (temperatures below 65 °F), electricity use increased by 0.07 kWh (+/- 0.02) per °F. During the cooling season (temperatures above 65 °F), electricity use increased by 1.2 kWh (+/- 0.1) per °F.
+
+```{r scatter, fig.height=4.5, fig.width=5.5}
+plot(mod_seg, vcov = vcovHAC(mod_seg), 
+     col = 'black', res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor("darkorange1", alpha.f = 0.7),
+     xlab = "Temperature (degrees F)", ylab = "Electricity use (kWh per day)") 
+title("Figure 1. 519 W. Louther electricity use by temperature", 
+      adj = 0, cex.main = 1, font.main = 1)
+
+```
+```{r confidence_predictor_period}
+# Create a data frame with new values (must match model's predictor names)
+period_data <- data.frame(ave_temp = 58, # set temp to the median in the dataset
+                       day = "Mon", # set day as Monday 
+                       period = c("Fall Semester","Winter Break", # include all levels 
+                                  "Spring Semester","Summer Break"))
+
+# Generate estimated means + confidence interval
+conf_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
+                                     vcov = vcovHAC(mod_seg), # address violations 
+                                       newdata = period_data, # feed in the new data 
+                                       interval = "confidence", level = 0.95)) %>% # interval
+  mutate(period = c("Fall Semester","Winter Break",  # add period back into data frame
+                                  "Spring Semester","Summer Break"))
+
+conf_period$period <- factor(conf_period$period,
+                                levels = c("Fall Semester","Winter Break",  # add period back into data frame
+                                  "Spring Semester","Summer Break"))
+
+# Generate estimated means + prediction interval
+pred_period <- as.data.frame(predict(mod_seg,  # store as a data frame, generate predictions
+                                     vcov = vcovHAC(mod_seg), # address violations 
+                                       newdata = period_data, # feed in the new data 
+                                       interval = "prediction", level = 0.95)) %>% # interval
+  mutate(period = c("Fall Semester","Winter Break",  # add period back into the data frame
+                                  "Spring Semester","Summer Break"))
+```
+```{r period_compare, include = FALSE}
+fall <- filter(conf_period, period == "Fall Semester")
+summer <- filter(conf_period, period == "Summer Break")
+winter <- filter(conf_period, period == "Winter Break")
+(fall$fit - summer$fit)/fall$fit*100
+(fall$fit - winter$fit)/fall$fit*100
+```
+
+Electricity use during spring did not differ significantly from use during fall (Figure 2; P = 0.63). Compared to fall and spring, electricity use during winter break was 27% lower and electricity use during summer break was 28% lower, after accounting for temperature.
+
+```{r bar1, fig.height=3.5, fig.width=5}
+# Graph with confidence intervals
+ggplot(conf_period) +
+    geom_bar(aes(x=period, y=fit), stat="identity", fill="darkorange1", alpha=0.8) +
+    geom_errorbar(aes(x=period, ymin=lwr, ymax=upr), # feed in X + confidence interval
+                   width=0.4, colour="black", alpha=0.9, linewidth=1) + # adjust format
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = "Figure 2. 519 W. Louther electricity use by time of year",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+```
+```{r confidence_day, include = FALSE}
+# Create a data frame with new values (must match model's predictor names)
+day_data <- data.frame(ave_temp = 58, 
+                       day = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                       period = "Fall Semester")
+
+# Generate estimated means + confidence interval
+conf_day <- as.data.frame(predict(mod_seg,  vcov = vcovHAC(mod_seg), 
+                                       newdata = day_data, 
+                                       interval = "confidence", level = 0.95)) %>%
+  mutate(day = factor(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                      levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
+```
+```{r day_compare, include = FALSE}
+mon <- filter(conf_day, day == "Mon")
+fri <- filter(conf_day, day == "Fri")
+(mon$fit - fri$fit)/mon$fit*100
+```
+
+Electricity use was relatively consistent across different days of the week (Figure 3). The exception is on Fridays, where electricity use was 5% lower than it was on Mondays (P = 0.01).
+
+```{r bar2, fig.height=3.5, fig.width=5.5}
+ggplot(conf_day) +
+    geom_bar(aes(x=day, y=fit), stat="identity", fill="darkorange1", alpha=0.8) +
+    geom_errorbar(aes(x=day, ymin=lwr, ymax=upr), width=0.4, colour="black", alpha=0.9, linewidth=1) +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = "Figure 3. 519 W. Louther electricity use by day of the week",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for a day in fall with an outdoor temperature of 58 degrees F")
+```
+
+## Recommendations
+
+As expected, outdoor temperature and time of year were significant predictors of electricity use in 519 West Louther Street during the 2025 fiscal year. Specifically, the relationship between outdoor temperature and time of year was stronger during cooling, which makes sense given that we know this building uses electricity for cooling but not for heating. It is notable that the model predicted a positive, significant relationship between outdoor temperature and electricity use during heating; however, the magnitude of the effect of an increase in outdoor temperature on electricity use was much smaller during heating than it was during cooling. This suggests that outdoor temperature does not explain as much variation in electricity use during heating days as other factors such as occupancy do.
+
+Additionally, electricity use was similar across different days of the week, but we were surprised to see a significant decrease in electricity use on Fridays compared to Mondays. We believe that knowing more about the characteristics of the students who were living in this building during the 2024-2025 academic year could help explain the reasons for this significant difference; perhaps they had a reason to use the building less on Fridays. Therefore, we hypothesize that the reason for the difference in electricity use between Monday and Friday can be explained better by the characteristics of the students who were living there - as opposed to the characteristics of the building itself - and that this difference would not be as notable in other years for which this building might have electricity use data.
+
+The reduction in electricity use during winter break and summer break when compared with the academic year suggests that existing systems for optimizing electricity use during periods of low use are doing well; however, there is still room for improvement. During academic breaks, if no students are staying in this building, we recommend setting thermostats to an electricity-efficient level or turning them off (Chung and Rhee, 2014). Additionally, ensuring that electricity-consuming appliances are turned off and unplugged will decrease unneeded electricity use (Kwong et al., 2014). Finally, given that only one student lived in this building during summer 2025, electricity could be saved by consolidating summer students into fewer buildings so that empty buildings could be set at even more efficient set-points. 
+
+## Sources
+
+Energy Information Administration (EIA). (n.d.). *Glossary*. U.S. Department of Energy. Retrieved March 28, 2026, from https://www.eia.gov/tools/glossary/index.php?id=p
+
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+
+Chung, M. H. & Rhee, E. K. (2014). Potential opportunities for energy conservation in existing buildings on university campus: A field survey in Korea. *Energy and Buildings*, 78, 176–182. https://doi.org/10.1016/j.enbuild.2014.04.018
+
+Kwong, Q. J., Goh, S. H., Adam, N. M., & Raghavan, V. R. (2014). A study on energy efficiency improvement opportunities for plug loads in buildings in the equatorial region. *Energy Procedia*, 56, 621–633. https://doi.org/10.1016/j.egypro.2014.07.201
+
+## Partner contributions
+
+Both partners collaborated on the code in R, contributed equally to each of the different sections of the report, and proofread and edited the final text. Neither partner used generative AI in developing the code or text in this section.
