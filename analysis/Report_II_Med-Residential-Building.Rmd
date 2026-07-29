@@ -1,0 +1,178 @@
+---
+title: "Medium Residential Buildings"
+author: Liam Glackin and Charlotte Durietz Bourdain
+output: html_document
+---
+
+## Background   
+
+The focal building studied within medium residential buildings at Dickinson College is Treehouse. This is a sustainability focused residence that houses 1-14 students throughout the year and is 6,000 square feet in total. The building is heated using a pellet stove and natural gas heating, and cooled with an electric direct expansion system (personal communication, Mike Kiner). It also has a water heater that transitioned to electric during FY25 (personal communication, Mike Kiner). This building was acquired and renovated in 2006 and is LEED Gold certified. Treehouse used around 21,800 kWh of energy in the 2025 fiscal year (FY25), much lower than the national median for US dormitory, fraternity, and sorority housing found in a 2018 survey of 268,000 kWh (EIA, 2022). Compared to the area normalized median electricity use reported by the EIA of 13.6 kWh/sqft, the normalized electricity of Treehouse was substantially lower at 3.6 kWh/sqft. The annual electricity use per occupant of the building was 1675 kWh/person. Given that Treehouse has an electricity-intensive cooling system and low-electric heating system, we expected use to increase during warmer months and decrease during cooler months. Additionally, use was expected to decrease when occupancy was lower during winter and summer break, and increase during the academic year. 
+
+```{r library, warning = FALSE, message = FALSE, include = FALSE}
+library(tidyverse)
+library(tseries)
+library(car)
+library(segmented)
+library(lmtest)
+library(sandwich)
+```
+
+```{r load, include = FALSE}
+kwh_annual <- read.csv("./output/kwh_daily_2026-03-23.csv")
+```
+
+```{r subset, include = FALSE}
+kwh_tree <- kwh_annual %>%
+  filter(NAME == "Treehouse")
+```
+
+```{r adjusting variables, include = FALSE}
+kwh_tree <- kwh_tree %>%
+  mutate(date = ymd(date),
+         month = month(date, label = TRUE),
+         day = wday(date, label = TRUE))
+kwh_tree$day <- factor(kwh_tree$day, levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"), ordered = FALSE)
+kwh_tree$period <- factor(kwh_tree$period, levels = c("Fall Semester","Winter Break","Spring Semester","Summer Break"), ordered = FALSE)
+```
+
+```{r check, include = FALSE}
+str(kwh_tree)
+```
+
+```{r linear regression, include = FALSE}
+mod_tree <- lm(data = kwh_tree, kwh ~ ave_temp + period + day)
+```
+
+```{r segmented regression, include = FALSE}
+mod_seg <- segmented(mod_tree, seg.Z = ~ ave_temp, psi = 65)
+```
+
+```{r normality, fig.width=8, include = FALSE}
+hist(mod_seg$residuals)
+```
+
+```{r equal variance and linearity, fig.height=9, include = FALSE}
+par(mfrow=c(2,2))
+plot(mod_seg$residuals ~ mod_seg$fitted.values)
+boxplot(mod_seg$residuals ~ kwh_tree$day)
+boxplot(mod_seg$residuals ~ kwh_tree$period)
+```
+
+```{r independence, include = FALSE}
+acf(mod_seg$residuals)
+```
+
+```{r multicollinearity, include = FALSE}
+vif(mod_seg)
+```
+
+## Results   
+
+When the data was fitted to a segmented regression model, explained approximately 63% of the variation in daily electricity use in Treehouse in FY25 (R^2^ = 0.63). In this model, daily electricity use was not significantly related to day (F~6,352~ = 0.7, P= 0.66). However, period (F~3,352~ = 8.4, P < 0.001), temperature below 65 °F (F~1,352~ = 37.3, P < 0.001), and temperature above 65 °F (F~1,352~ = 84.4, P < 0.001) were significantly related to electricity use. 
+
+```{r r_squared, include = FALSE}
+summary(mod_seg)$adj.r.sq
+```
+
+```{r anova, include = FALSE}
+Anova(mod_seg, type = "II", vcov = vcovHAC(mod_seg))
+```
+
+```{r coefficient test, include = FALSE}
+coeftest(mod_seg, vcov =vcovHAC(mod_seg))
+```
+
+```{r summary, include = FALSE}
+summary(mod_seg)$psi
+slope(mod_seg, vcov = vcovHAC(mod_seg))
+```
+
+A comparison of electricity use in different periods of FY25 showed that fall semester did not differ significantly from summer break (Figure 1, P =  0.29). Compared to summer break, winter break showed ~49% higher daily electricity use when accounting for temperature and day of week. Spring semester showed a ~42% increase in daily electricity use compared to the fall semester when accounting for these same factors. This was surprising as these periods have similar occupancy levels.
+
+```{r period graph, fig.height=3.5, fig.width=5}
+period_data <- data.frame(ave_temp = 58,
+                          day = "Mon",
+                          period = c("Fall Semester", "Winter Break","Spring Semester", "Summer Break"))
+conf_period <- as.data.frame(predict(mod_seg, 
+                              vcov = vcovHAC(mod_seg),
+                              newdata = period_data,
+                              interval = "confidence", level = 0.95)) %>%
+  mutate(period = c("Fall Semester","Winter Break","Spring Semester","Summer Break"))
+conf_period$period <- factor(conf_period$period, levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"), ordered = TRUE)
+
+ggplot(conf_period) +
+    geom_bar(aes(x=period, y=fit), stat="identity", fill="springgreen4", alpha=0.8) +
+    geom_errorbar( aes(x=period, ymin=lwr, ymax=upr),
+                   width=0.4, colour="darkgray", linewidth=1) + 
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = " Figure 1. Treehouse electricity use by time of year",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+
+```
+
+```{r changes, include = FALSE}
+fall <- filter(conf_period, period == "Fall Semester")
+winter <- filter(conf_period, period == "Winter Break")
+spring <- filter(conf_period, period == "Spring Semester")
+summer <- filter(conf_period, period == "Summer Break")
+
+
+(summer$fit - winter$fit)/summer$fit*100
+
+(fall$fit - spring$fit)/fall$fit*100
+```
+
+As expected, the model did not show a significant difference in electricity use on different days of the week (Figure 2).   
+  
+```{r day, fig.height = 3.5, fig.width = 5.5}
+day_data <- data.frame(ave_temp = 58,
+                          period = "Fall Semester",
+                          day = c("Mon","Tue", "Wed","Thu","Fri","Sat","Sun"))
+conf_day <- as.data.frame(predict(mod_seg, vcov = vcovHAC(mod_seg), 
+                                       newdata = day_data, 
+                                       interval = "confidence", level = 0.95))%>%
+  mutate(day = factor(c("Mon","Tue","Wed","Thu","Fri","Sat","Sun"),
+                      levels = c("Mon","Tue","Wed","Thu","Fri","Sat","Sun")))
+
+ggplot(conf_day) +
+    geom_bar(aes(x=day, y=fit), stat="identity", fill="springgreen4", alpha=0.7) +
+    geom_errorbar( aes(x=day, ymin=lwr, ymax=upr), width=0.4, colour="darkgray", alpha=0.7, linewidth=1) +
+  theme_bw() +
+  labs(x = "", y = "Electricity use (kWh per day)", 
+       title = "Figure 2. Treehouse Electricity Use by Day of the Week",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for day in the fall with an outdoor temperature of 58 degrees F.")
+```
+
+The relationship between electricity use and temperature was strong but showed a break point at 65°F (Figure 3). This is why a segmented linear regression was significant to capturing both the heating season (below 65 °F) pattern and the cooling season (above 65 °F) pattern. In this heating season, a negative relationship captured the electricity use decrease by -0.9 kWh (+/- 0.15 kWh) per °F. In the cooling season, a positive relationship captured the electricity use increase by 4.5 kWh (+/- 0.5 kWh) per °F. 
+
+```{r temp graph, fig.height = 4.5, fig.width = 5.5} 
+plot(mod_seg, vcov = vcovHAC(mod_seg), 
+     col = 'black', res = TRUE, conf.level = .95, shade = T, 
+     res.col = adjustcolor("springgreen4", alpha.f = 0.7), # set color of data + transparency
+     xlab = "Temperature (degrees F)", ylab = "Electricity use (kWh per day)") # label axes
+title("Figure 3. Treehouse electricity use by temperature", # how to set the title in base R plotting function
+      adj = 0, cex.main = 1.2, font.main = 1) 
+```
+  
+## Recommendations  
+
+Applying a segmented regression model on the electricity use for Treehouse, explained ~63% of the variation in daily electricity use over FY25. This model is moderately strong and a useful tool to gain insight on electricity use factors within the building. Because of specific changes in FY25, this model cannot be used reliably as a predictor for electricity use in any other year. 
+
+As expected, there was a significant correlation between temperature and electricity use throughout FY25, as well as between period and electricity use. The lack of significant correlation between days of the week and electricity use also matched the expectations. The significant negative correlation between electricity use and temperature in the heating season was unexpected, as gas heating and pellet stoves are both less electricity intensive than direct expansion cooling. However, additional information provided by Dickinson Facilities clarified that sometime during winter or early spring of FY25, the water heater switched to electric, which may explain why electricity use would increase so much with colder temperatures (M. Kiner, personal communication, April 2026). This also explains the unexpected increase in electricity use in the spring semester and winter break even after temperature was accounted for. 
+
+Treehouse is a building that centers students living sustainably, but, when compared to other Dickinson College medium residential buildings, it did not stand out as a low electricity user. As a result, there may be value in taking action to minimize electricity use. Active implementation strategies including hands-on and peer-engaged education have shown a much greater impact on lowering electricity use than more passive forms of intervention (Wisecup et al., 2017). For Treehouse, having workshops showing the correct use of features such as the thermal curtains and pellet stove could lead to a decrease in electricity use with minimal additional cost. The use of the pellet stove could be especially important for this building, as it is an electricity-efficient form of heating, using roughly 100 kWh of electricity a month for operation and ventilation/circulation, a number much lower than even daily electricity on some heating season days (DOE n.d.). 
+
+## Sources   
+
+DOE (n.d.). *Wood and Pellet Heating*. Energy.gov. Retrieved May 6, 2026, from https://www.energy.gov/energysaver/wood-and-pellet-heating 
+
+EIA. (2016). *Energy Information Administration (EIA)- Commercial Buildings Energy Consumption Survey (CBECS)*. Eia.gov. https://www.eia.gov/consumption/commercial/
+
+Wisecup, A.K., Grady, D., Roth, R.A., & Stephens, J. (2017). A comparative study of the efficacy of intervention strategies on student electricity use in campus residence halls. *International Journal of Sustainability in Higher Education*, 18(4), 503–519. https://doi.org/10.1108/ijshe-08-2015-0136  
+
+## Partner contributions   
+
+The background for this section, recommendations, and assessment of the fit of the model were co-written by both Liam Glackin and Charlotte Durietz Bourdain. The data preparation was done by Liam as well as the graphs to test the assumptions. The results section was co-written and co-coded by both Liam and Charlotte. The sources were added and integrated into our results by Charlotte. No AI tools were used for coding or writing this report. 
