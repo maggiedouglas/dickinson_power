@@ -1,7 +1,7 @@
 ---
 title: "Small Residential Buildings"
-author: "Luke Heller and Valerie Larsen"
-date: "2026-05-07"
+subtitle: "519 West Louther Street"
+author: "Luke Heller & Valerie Larsen"
 output: html_document
 ---
 

@@ -1,6 +1,7 @@
 ---
 title: "Medium Residential Buildings"
-author: Liam Glackin and Charlotte Durietz Bourdain
+subtitle: "Treehouse"
+author: "Liam Glackin & Charlotte Durietz Bourdain"
 output: html_document
 ---
 

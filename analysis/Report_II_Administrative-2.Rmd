@@ -1,0 +1,260 @@
+---
+title: "Administrative Buildings"
+subtitle: "50 Mooreland Avenue"
+author: "Eva Hanlin & Amiya Marbles"
+output: html_document
+---
+
+## Background
+
+50 Mooreland Avenue at 27,100 square feet, contains the departments of College Advancement and Donor Relations, Donor Engagement, Alumni Engagement, and Paz Center Employees' offices. It was acquired in 1989 and hasn't had any recorded renovations since (based on building information from Facilities Management). Employees work in the building year-round. The building operates on Building Automation Systems (BAS), which automates heating, ventilation, and air conditioning (HVAC) to reduce energy waste by scheduling heating and cooling at different times of the day for each floor based on provided occupancy schedules. The Central Plant sends out heated and chilled water, with hot and cold water distributed via fancoil units in offices (personal communication, Mike Kiner). Employees have control of the fancoil units in their offices, able to turn them on or off when they wish.
+
+Total electricity use for the Fiscal Year 2025 (FY25) was 95,137 kWh and 3.5 kWh/sqft. This made 50 Mooreland Avenue the second highest total electricity user per year and the third highest electricity use per square footage in the administrative category. The Energy Information Administration (EIA) reported U.S. office buildings median electricity use to be 10.1 kWh/sqft/year, making 50 Mooreland Avenue's electricity use intensity one third of that of the national median.  
+
+We predict day of the week will affect electricity use - when employees aren't in the building on weekends, electricity use will be lower. We expect electricity use to be consistent year round given the year round occupancy and use of the building. From our preliminary findings, we expect temperature to have little to no effect on electricity use.
+
+```{r load, include = FALSE}
+library(tidyverse)
+library(tseries)
+library(car)
+library(segmented)
+library(lmtest)
+library(sandwich)
+library(lubridate)
+library(dplyr)
+daily_kwh <- read.csv("./output/kwh_daily_2026-03-23.csv")
+```
+
+```{r subset, include = FALSE}
+daily_Mooreland <- filter(daily_kwh, NAME == "50 Mooreland Ave.") %>%
+  mutate(date = ymd(date)) %>%
+  mutate(month = month(date, label = TRUE)) %>%
+  mutate(day = wday(date, label = TRUE))
+```
+
+```{r levels}
+Mooreland_Ave <- daily_Mooreland %>%
+  mutate(day = factor(day, 
+                      levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"), ordered = FALSE),
+         period = factor(period,
+                         levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"), ordered = FALSE))
+```
+
+```{r check, include = FALSE}
+glimpse(Mooreland_Ave)
+levels(Mooreland_Ave$day_of_week)
+levels(Mooreland_Ave$period)
+```
+
+```{r base model, include = FALSE}
+Mooreland.mod_full <- lm(kwh ~ day + period + ave_temp, data = Mooreland_Ave)
+```
+
+```{r segmented regression, include = FALSE}
+seg_mod <- lm(kwh ~ ave_temp + day + period, data = Mooreland_Ave)
+segmented_model <- segmented(obj = seg_mod, 
+  seg.Z = ~ ave_temp, 
+  psi = 65)
+summary(segmented_model)
+```
+
+```{r normality of residuals, include = FALSE}
+hist(seg_mod$residuals,
+     main = "Histogram of Residuals", 
+     xlab = "Residuals")
+```
+
+```{r equal variance and linearity, include = FALSE}
+plot(segmented_model$residuals ~ segmented_model$fitted.values, 
+     main = "Residuals vs. Fitted Values", 
+     xlab = "Fitted Values", 
+     ylab = "Residuals")
+abline(h = 0, col = "red", lty = 2)
+plot(Mooreland.mod_full, which = 1)
+```
+
+```{r boxplot residuals day of week, include = FALSE}
+boxplot(seg_mod$residuals ~ daily_Mooreland$day,
+        main = "Residuals by Day of Week", 
+        xlab = "Day of Week", 
+        ylab = "Residuals")
+```
+
+```{r boxplot residuals time of year, include = FALSE}
+boxplot(seg_mod$residuals ~ daily_Mooreland$period,
+        main = "Residuals by Period", 
+        xlab = "Time of Year", 
+        ylab = "Residuals")
+```
+
+```{r independence, include = FALSE}
+acf(segmented_model$residuals, 
+    main = "Temporal Autocorrelation of Residuals")
+```
+
+```{r multicollinearity, include = FALSE}
+vif(segmented_model)
+```
+
+## Results
+
+The segmented model showed significant relationships between electricity use at 50 Mooreland Avenue and day of the week (F~6,352~= 31.9, P < 0.001), period of the year (F~3,352~= 23.4, P < 0.001), temperature below 56 degrees F (F~1,352~= 13.2, P < 0.005), and temperature above 56 degrees F (F~1,352~= 12.7, P < 0.005). The model is able to explain 64% of variation in electricity use by academic period, day of the week, and average outdoor temperature (R^2^= 0.64).
+
+```{r adjusted r squared, include = FALSE}
+summary(segmented_model)$adj.r.squared
+```
+
+```{r Anova, include = FALSE}
+Anova(segmented_model, type = c(type = "II"),
+      vcov. = vcovHAC(segmented_model))
+```
+
+```{r coeftest, include = FALSE}
+coeftest(segmented_model, 
+         vcov = vcovHAC(segmented_model))
+```
+
+```{r psi, include = FALSE}
+summary(segmented_model)$psi
+```
+
+```{r summary var.diff, include = FALSE}
+summary(segmented_model, var.diff = TRUE)
+```
+
+```{r confint, include = FALSE}
+confint(segmented_model, include = FALSE)
+```
+
+```{r intercept, include = FALSE}
+intercept(segmented_model, include = FALSE)
+```
+
+```{r slope, include = FALSE}
+slope(segmented_model, include = FALSE)
+```
+
+The lowest electricity use over the academic year occured during Winter Break with 20% less electricity use than the Fall Semester (Figure 1). The Spring and Fall Semesters had significantly different electricity patterns, which is different from what we've seen in other building categories. The Spring Semester used 13% more electricity than the Fall Semester.
+
+```{r prep 1, include = FALSE}
+academicperiod_model <- lm(kwh ~ period, data = Mooreland_Ave)
+segmented_model <- segmented(obj = seg_mod, 
+  seg.Z = ~ ave_temp, 
+  psi = 65)
+summary(segmented_model)
+```
+
+```{r prep 2, include = FALSE}
+period_data <- data.frame(ave_temp = 58,
+                             day = "Mon",
+                         period = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break"), ordered = FALSE)
+```
+
+```{r prep 3, include = FALSE}
+conf_period <- as.data.frame(predict(seg_mod,
+                             vcov = vcovHAC(seg_mod),
+                             newdata = period_data,
+                             interval = "confidence", level = 0.95))
+```
+
+```{r prep 4, include = FALSE}
+conf_period <- cbind(conf_period, period_data)
+```
+
+```{r prep 5, include = FALSE}
+conf_period <- conf_period %>%
+  mutate(day = factor(day, levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")),
+         period = factor(period, levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break")))
+```
+
+```{r period graph, fig.height = c(3.5), fig.width = c(5)}
+ggplot(conf_period) +
+  geom_bar(aes(x = period, y = fit), stat = "identity", fill = "firebrick", alpha = 0.8) +
+  geom_errorbar(aes(x = period, ymin = lwr, ymax = upr),
+           width = 0.4, colour = "grey", alpha = 0.5, size = 1) +
+  theme_bw() + 
+  labs(x = "", y = "Electricity Use (kWh per day)",
+       title = "Figure 1. 50 Mooreland electricity use by time of year",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for a Monday with an outdoor temperature of 58 degrees F")
+```
+
+Weekend electricity use was lower than weekday electricity use, matching our expectations. Compared to a Monday in the Fall at 58 degrees Fahrenheit, weekends used 30-31% less electricity (Figure 2). We also saw a steady decline over the course of the work week from Monday to Friday, with Thursdays and Fridays using 13% and 15% less electricity than Monday, respectively.     
+
+```{r prep 11, include = FALSE}
+daily_data <- data.frame(ave_temp = 58,
+                             period = "Fall Semester",
+                         day = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"))
+```
+
+```{r prep 22, include = FALSE}
+conf_daily <- as.data.frame(predict(segmented_model,
+                             vcov = vcovHAC(segmented_model),
+                             newdata = daily_data,
+                             interval = "confidence", level = 0.95))
+```
+
+```{r prep 33, include = FALSE}
+conf_daily <- cbind(conf_daily, daily_data)
+```
+
+```{r prep 44, include = FALSE}
+conf_daily <- conf_daily %>%
+  mutate(day = factor(day, levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun")),
+         period = factor(period, levels = c("Fall Semester", "Winter Break", "Spring Semester", "Summer Break")))
+```
+
+```{r day of the week plot, fig.height = c(3.5), fig.width = c(5.5)}
+ggplot(conf_daily) +
+  geom_bar(aes(x = day, y = fit), stat = "identity", fill = "gold", alpha = 0.8)+
+  geom_errorbar(aes(x = day, ymin = lwr, ymax = upr),
+           width = 0.4, colour = "grey", alpha = 0.5, size = 1) +
+  theme_bw() + 
+  labs(x = "", y = "Electricity Use (kWh per day)",
+       title = "Figure 2. 50 Mooreland electricity use by day of the week",
+       subtitle = "Mean +/- 95% confidence interval",
+       caption = "Estimated for days during the Fall Semester\nwith an outdoor temperature of 58 degrees F")
+```
+
+```{r check conf_daily, include = FALSE}
+summary(conf_daily)
+```
+
+```{r residualsss, include = FALSE}
+df.residual(segmented_model)
+```
+
+50 Mooreland Avenue had a unique temperature pattern with a steeper slope in heating temperatures than cooling temperatures. The temperature break for our model was at 56 degrees F (Figure 3). For temperatures below 56 degrees Fahrenheit, electricity use decreased by 2 kWh (+/- 0.2 kWh) for each degree F. For temperatures above 56 degrees Fahrenheit, electricity use increased by 1 kWh (+/- 0.3 kWh) for each degree Fahrenheit.
+
+```{r temperature, fig.height = c(4.5), fig.width = c(5.5)}
+plot(segmented_model, col = "black", res = TRUE, 
+     conf.level = 0.95, shade = TRUE,
+     res.col = adjustcolor("orchid4", alpha.f = 0.8),
+     xlab = "Temperature (degree F)", ylab = "Electricity use (kWh)", subtitle = "Temperature breakpoint at 56 degrees F")
+title("Figure 3. 50 Mooreland electricity use by\ntemperature", adj = 0)
+```
+```{r segmented summary, include = FALSE}
+summary.segmented(segmented_model)
+```
+
+## Recommendations
+
+50 Mooreland Avenue's day of the week results matched our expectations, showing reduced electricity use on the weekends and a staircase reduction in use from Monday to Friday. The staircase pattern could be caused by hybrid schedules if they schedule more in-person work days during the beginning of the work week than the end. Employee use of fancoil units could further reduce usage on weekends when offices are absent. 
+
+While we did not expect a strong seasonal pattern given the year-round use of this building, we did find greater electricity use in spring compared to fall semester. Speaking with employees in the building, the workload in 50 Moorelane Avenue differs between the semesters. The fall semester tends to be a lull while the spring semester holds events and promotions for Alumni Weekend, Day of Giving, and Admissions. 
+
+The unique temperature pattern observed in this building could be due to individual climate control devices like fans, humidifiers, and/or dehumidifiers to control what is reportedly a very hot building indoors year-round. The other 36% of electricity use variation could be due to the associated technology in the building such as photography equipment, computer monitors, and the aforementioned climate control devices. We recommend contextualizing electricity use in the building more by surveying in-person work days and checking for 24-hour running technology, such as a television monitor running after work hours that a student observed. 
+ 
+Overall, the occupancy-based reductions observed in this building suggest that the BAS system is working as intended. This is consistent with Nikdel, et al. 2018, who found that occupancy-based HVAC systems reduced electricity use between 22-50% in small office buildings across the US and yielded a reduction in costs of 17-45%. 50 Mooreland Avenue's BAS system is scheduled based on an occupancy schedule provided, but it's important to understand this schedule. If it was provided pre-COVID-19, the schedule for each floor may not be accurate to who is in what office when. Additionally, if the assumption for floor-by-floor scheduling is that all employees are present on a floor, Dickinson may want to analyze how true this assumption is. If we find employees are typically very spread out throughout the building, there may be opportunity for further savings by rearranging office spaces so those in the office on the same days are condensed to one floor and the other floors can run at a low but energy-efficient HVAC mode. Another option is to transition to sensor-based systems (Nikdel et al. 2018).
+
+## Sources
+
+Leary, N. (2025). *Dickinson College Greenhouse Gas Inventory*. Dickinson College.
+
+Nikdel, L., Janoyan, K., Bird, S.D., and Powers, S.E. (2018). *Multiple perspectives of the value of occupancy-based HVAC control systems*. Building and Environment, 15-25. https://doi.org/10.1016/j.buildenv.2017.11.039. 
+
+U.S. Energy Information Administration. (2022). *2018 Commercial Buildings Energy Consumption Survey (CBECS)*. U.S. Department of Energy. https://www.eia.gov/consumption/commercial/.
+
+## Partner Contributions
+
+Amiya Marbles created the segmented regression model and helped to develop the interpretation. Eva Hanlin prepared the data, created the period, day of the week, and temperature figures and wrote the Background, Results, Recommendations, and Sources. No AI was used for the writing or to create the period, day of the week, or temperature graphs. Amiya Marbles used AI to create the segmented regression model.

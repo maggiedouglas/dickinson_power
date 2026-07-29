@@ -1,13 +1,13 @@
 ---
 title: "Academic Buildings"
-author: "Sophia Evans and Chloe Ross"
-date: "2026-05-05"
+subtitle: "Althouse Hall"
+author: "Sophia Evans & Chloe Ross"
 output: html_document
 ---
 
 ## Background
 
-Althouse is a 29,133 square‑foot academic building renovated in 2009 and certified LEED Gold. Its HVAC system utilizes hot and chilled water supplied by the Central Energy Plant, which operates on natural gas for heat and electricity for cooling, and is distributed through fan coil units in offices and air handlers in classrooms (pers. comm. Mike Kiner). Althouse also acts as a hub to other academic buildings. Classrooms are managed by a Building Automation System (BAS), an electric, centralized network designed to monitor and control heating, ventilation, and air conditioning using sensors, controllers, and software (Mid‑Atlantic Controls Corp, 2023). In fiscal year 2025, Althouse consumed 131,308 kWh of electricity, emitted 39.5 metric tons of CO~2~‑equivalent, and incurred a cost of \$10,686. Its electricity intensity of 4.5 kWh per square foot exceeded the campus median for academic buildings (3.7 kWh/sqft) but remained below the national median for U.S. college and university buildings (EIA 2022).
+Althouse Hall is a 29,133 square‑foot academic building renovated in 2009 and certified LEED Gold. Its HVAC system utilizes hot and chilled water supplied by the Central Energy Plant, which operates on natural gas for heat and electricity for cooling, and is distributed through fan coil units in offices and air handlers in classrooms (pers. comm. Mike Kiner). Althouse also acts as a hub to other academic buildings. Classrooms are managed by a Building Automation System (BAS), an electric, centralized network designed to monitor and control heating, ventilation, and air conditioning using sensors, controllers, and software (Mid‑Atlantic Controls Corp, 2023). In fiscal year 2025, Althouse consumed 131,308 kWh of electricity, emitted 39.5 metric tons of CO~2~‑equivalent, and incurred a cost of \$10,686. Its electricity intensity of 4.5 kWh per square foot exceeded the campus median for academic buildings (3.7 kWh/sqft) but remained below the national median for U.S. college and university buildings (EIA 2022).
 
 We expect time of year and day of week to be the most influential variables in the final model and that temperature will have a smaller effect. Electricity use in Althouse was likely higher on weekdays, when classes and offices were active, than on weekends. Electricity use likely peaked during the fall and spring semesters, when campus activity is high, and dropped during winter and summer breaks, when most students and faculty were away except for summer programs. The weak relationship to temperature is expected because the majority of heating/cooling occurs off-site.
 

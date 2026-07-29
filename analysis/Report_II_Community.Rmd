@@ -1,7 +1,7 @@
 ---
 title: "Community Buildings"
+subtitle: "Allison Hall"
 author: "Dinela Dedic & Emma Keane"
-date: "2026-05-03"
 output: html_document
 ---
   
