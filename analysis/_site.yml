@@ -3,10 +3,10 @@ output_dir: ../docs
 navbar:
   title: "dickinson_power"
   left:
-  - text: Introduction
-    href: about.html
+  - text: Executive Summary
+    href: conclusions.html
   - text: Methods
-    href: data_wrangling_final.html
+    href: methods.html
   - text: "Electricity summary"
     href: campus_summary.html
     menu:
@@ -24,20 +24,24 @@ navbar:
         href: Report_I_Community.html
       - text: "Other"
         href: Report_I_Other.html
-  - text: "Electricity use models"
+  - text: "Building case studies"
     menu:
-      - text: "Main meter - reg"
-        href: main_meter_regression.html
-      - text: "Main meter - ANOVA"
-        href: main_meter_anova.html
-      - text: "Main meter - Full model"
-        href: main_meter_mult_reg.html
-      - text: "Main meter - visualization"
-        href: main_meter_mod_vis.html
-      - text: "Main meter - Report Part II"
-        href: main_meter_mult_reg.html
-      - text: "Main meter - Report Part II (clean)"
-        href: main_meter_mod_vis.html
+      - text: "Main Meter"
+        href: main_meter_clean.html
+      - text: "519 W. Louther St"
+        href: Report_II_Small_Residence_Halls.html
+      - text: "Treehouse"
+        href: Report_II_Med-Residential-Building.html
+      - text: "Drayer Hall"
+        href: Report_II_Residential-L.html
+      - text: "Althouse Hall"
+        href: Report_II_Academic.html
+      - text: "50 Mooreland Ave."
+        href: Report_II_Administrative-2.html
+      - text: "Allison Hall"
+        href: Report_II_Community.html
+      - text: "Biddle Press Box/Durden ATC"
+        href: Report_II_Other.html
 
 output:
   workflowr::wflow_html:
