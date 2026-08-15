@@ -1,0 +1,82 @@
+---
+title: ""
+output: html_document
+---
+
+```{css, echo=FALSE}
+.caption {
+  text-align: left !important;
+}
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r load, message = F}
+library(tidyverse) # load tidyverse
+library(ggthemes)
+library(GGally)
+```
+
+## Dickinson's electrical grid
+
+Buildings on Dickinson’s campus vary in how they are metered for electricity usage. Some buildings (and even individual apartments within buildings) have their own electricity meters, while others share a combined meter (Figure 1). All buildings in green, orange, and blue share a combined meter (the "Main Meter"). Some buildings on the Main Meter additionally have a “submeter” to track their individual electricity usage. Buildings outlined in red share a separate combined meter (“Weis Meter”). Buildings in gray with a black outline have their own individual electricity meters. The upshot of this arrangement is that electricity data at the building level is only available for a subset of campus buildings. We present a mix of aggregate and individual findings.
+
+```{r grid, fig.align = 'center', out.width = "90%", fig.cap = "**Figure 1.** Dickinson's electrical grid (diagram courtesy of Mike Kiner)", fig.topcaption=TRUE}
+knitr::include_graphics("assets/electrical-grid.png", error = FALSE)
+```
+
+## Datasets + Preparation
+
+The electricity data analyzed here were derived from a combination of daily electricity use reported by the electricity provider (PP&L) and daily electricity use recorded on submeters. The data for FY25 were initially organized and cleaned by the Center for Sustainability Education. Electricity data were fairly complete for the two aggregate meters and for buildings with individual meters (90-100% of days with data). Data for submetered buildings were more variable, with some buildings having >90% of days with usable data and other buildings having little to no usable data (see Electricity Summary for details).
+
+We then joined electricity use information with information on building characteristics shared with us by Facilities Management. This allowed us to match electricity usage with important contextual information including building size and history of renovation. Electricity data for individual buildings was most available for residential buildings and ‘Other’ buildings (Figure 2), a category including assorted athletics buildings, faculty/staff residences, and auxillary buildings. Aggregate meters were prevalent for Academic, Administrative, and Community buildings (Figure 2). 
+
+```{r data_source, fig.align = 'center', warning = F, fig.height = 5, fig.height = 4}
+# summarize slightly differently for graphing
+buildings_graph <- read.csv("./keys/fy25_building_list_updated.csv", strip.white = T) %>%
+    mutate(meter = ifelse(weis_meter == 1, "Weis Meter", 
+                        ifelse(main_meter == 1 & main_disagg == 0, "Main Meter", 
+                               ifelse(main_disagg == 1, "Submeter", "Individual")))) %>%
+  filter(!is.na(meter) & !type_new %in% c("Residential - U","Non-building","Solar"))
+
+buildings_graph$meter <- factor(buildings_graph$meter,
+                              levels = c("Weis Meter", "Main Meter",
+                                        "Submeter", "Individual"))
+
+pal <- c("lightgrey","darkgrey","#CAB2D6","#6A3D9A")
+
+ggplot(buildings_graph, 
+       aes(x = reorder(type_new, sqft, FUN = "sum"), fill = meter)) +
+  geom_bar(position = "stack") +
+  scale_fill_manual(values = pal) +
+  theme_bw() +
+  labs(x = "", y = "Number of buildings", fill = "Meter status",
+       title = "Figure 2. Buildings by type and meter status") +
+    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))
+```
+
+## Methods of Analysis
+
+### Electricity Summary
+
+To describe campus electricity usage and its associated fiscal and environmental costs, first we summarized FY25 electricity usage by building (or meter for aggregate meters). We then calculated additional indicators including estimated financial cost, associated greenhouse gas emissions in metric tons of CO~2~-equivalents, and electricity use normalized by square footage. Electricity usage normalized by student occupancy was also calculated for residential buildings. We estimated financial cost based on per kWh supply and delivery charges in June 2025 for the main meter ($0.08/kWh), a value that will underestimate cost for smaller buildings due to variable electricity costs. We estimated greenhouse gas emissions using standard conversion factors based on a regional fuel blend for electricity (0.30 CO~2~e/kWh, Leary 2025). 
+
+Results of these analyses are presented in an overall summary as well summaries for each building type. They are presented in interactive tables to allow the user to sort and rank buildings by different indicators. Throughout, we also benchmarked Dickinson's electricity usage against other U.S. colleges and universities using the U.S. Energy Information Administration's 2018 Commercial Buildings Energy Consumption Survey (EIA 2022). Finally, we investigated seasonal patterns in electricity usage and electricity intensity using exploratory graphs. 
+
+### Building Case Studies
+
+To gain a deeper understanding of factors associated with electricity usage, we conducted case studies on one building of each type, chosen in consultation with CSE. We used a statistical modeling approach called multiple regression to simultaneously investigate several variables that are expected to influence electricity usage:
+
+  + Outdoor temperature
+  + Period in the year (fall/spring semester, winter break, summer break) 
+  + Day of the week (Monday through Sunday)
+  
+The relationship between electricity usage and outdoor temperature was fit using a segmented (i.e. V-shaped) model since electricity usage tends to go up with both colder and hotter temperatures (for heating and cooling, respectively). The model allows us to estimate the unique effect of each of these variables while accounting for the others. The analysts for each building interpreted their results in light of information related to HVAC systems and occupancy patterns. 
+
+## Sources
+
+Energy Information Administration (EIA). (2022). 2018 Commercial Buildings Energy Consumption Survey (CBECS). https://www.eia.gov/consumption/commercial/
+
+Leary, N. (2025). Dickinson College Greenhouse Gas Inventory 2008-2023. Center for Sustainability Education.

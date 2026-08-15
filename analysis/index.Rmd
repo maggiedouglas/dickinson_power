@@ -1,11 +1,75 @@
 ---
-title: "Home"
-site: workflowr::wflow_site
 output:
   workflowr::wflow_html:
     toc: false
 editor_options:
   chunk_output_type: console
+site: workflowr::wflow_site
 ---
 
-Welcome to my research website.
+```{r libraries, include = F}
+library(here)
+```
+
+# Dickinson Power
+
+This project explores electricity use at Dickinson College to support environmental and fiscal sustainability on campus. The students in ENST 325: Environmental Data Analysis in Practice generated this report in spring 2026 with the support and collaboration of the Center for Sustainability Education (CSE) and Facilities Management. 
+
+### Background
+
+Dickinson College prides itself on its commitment to sustainability and has been carbon neutral since 2020 (Carbon Neutrality FAQ, n.d.). Electricity usage has historically accounted for about a third of carbon emissions at the College and played a key role in the college becoming climate neutral (Leary 2025). A 3-megawatt solar photovoltaic array, transition to LED lighting, and purchase of Renewable Energy Credits (RECs) were major contributors to Dickinson reducing its carbon footprint by 50% from 2008 to 2023 (Leary 2025). The College maintains carbon neutrality by purchasing offsets for the remaining carbon emissions. Further electricity savings would allow the College to reduce costs and continue advancing its climate commitments. Such investments are likely to be especially fruitful as the cost of electricity continues to rise (EIA 2026). 
+
+```{r footprint, fig.align = 'center', out.width = "30%", include = F}
+knitr::include_graphics("assets/carbon_footprint.png", error = FALSE)
+```
+
+```{r costs, fig.align = 'center', out.width = "50%", include = F}
+knitr::include_graphics("assets/electric-costs.png", error = FALSE)
+```
+
+### Goals of this report
+
+The overarching goal of this project is to better understand campus electricity use and identify opportunities for further reduction. 
+
+Focusing on Fiscal Year 2025, this project seeks to:
+
+  + Quantify the costs and carbon emissions associated with electricity use in Dickinson College buildings
+  + Identify major electricity consumers
+  + Benchmark Dickinson's electricity use against other U.S. colleges and universities
+  + Discover patterns in electricity use related to:
+      + Building type
+      + Time of the year
+      + Day of the week
+      + Average daily temperature
+  + Identify actionable strategies to reduce electricity use
+
+A secondary goal of this project is to provide experiential learning opportunities for Dickinson students. This work was conducted as part of an upper-level data analysis class, in which students learned to analyze environmental data in the R Statistical Language. 
+
+### Please use the navigation bar at the top of the page to explore our findings!
+
+### Authors 
+
+#### Department of Environmental Studies & Science:
+
+Professor: Maggie Douglas, PhD <br />
+Teaching Assistant: Eleanor Wolcott <br />
+Student data analysts: Benjamin Connors, Dinela Dedic, Charlotte Durietz Bourdain, Sophia Evans, Liam Glackin, Eva Hanlin, Luke Heller, Liv Kacar, Emma Keane, Valerie Larsen, Amiya Marbles, Claire Raesly, Chloe Ross, Kyrie Sanchez
+
+#### Center for Sustainability Education:
+
+Lindsey Lyons (Executive Director) <br />
+Nam Nguyen (Data Analysis Intern)
+
+### Acknowledgements
+
+We wish to extend a special thanks to Mike Kiner, Director of Trades, for sharing his time and expertise for the duration of this project. We also thank all attendees at our final presentation in April 2026, who offered valuable insights that informed our interpretation. That said, any and all mistakes are our own. 
+
+![](assets/ENST_butterfly.png){width=40%} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ![](assets/Dickinson_CSE_web.png){width=40%}
+
+### Sources
+
+*Carbon Neutrality FAQ*. (n.d.). Dickinson College. Retrieved August, 2026 from https://www.dickinson.edu/homepage/1340/carbon_neutrality_faq
+
+Energy Information Administration (EIA). (2026). Electricity Data Browser. https://www.eia.gov/electricity/data/browser/
+
+Leary, N. (2025). Dickinson College Greenhouse Gas Inventory 2008-2023. Center for Sustainability Education.

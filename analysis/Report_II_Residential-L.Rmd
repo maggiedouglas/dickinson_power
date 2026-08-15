@@ -1,9 +1,13 @@
 ---
-title: "Large Residential Buildings"
-subtitle: "Drayer Hall"
+title: "Drayer Hall"
 author: "Liv Kacar & Claire Raesly"
 output: html_document
 ---
+
+```{r grid, fig.align = 'center', out.width = "75%", fig.cap = "Photo from Dickinson College"}
+knitr::include_graphics("assets/drayer.jpg", error = FALSE)
+```
+
 ## Background 
 
 Drayer Hall is a traditional large residential building that houses students and camps year-round. The building’s HVAC system is run by the Central Energy Plant located in Kaufman Hall, which produces hot or chilled water that is transported via underground pipes and dispersed to buildings across campus (personal communication, Mike Kiner). Once the water arrives at Drayer Hall, fan coil units (FCUs) are used to blow air over the pipes into the room. To increase efficiency in individual rooms, window switches disable the FCUs when the window is opened (Kubba, 2017). Heating relies primarily on natural gas, while cooling is more reliant on electricity (personal communication, Mike Kiner). In FY25, Drayer Hall used an estimated $21,933 of electricity, emitting 81 MT CO2-e. Overall, Drayer hall used 5.5 kWh per square foot, far less than the typical U.S. dormitory, fraternity or sorority (median 13.6 kWh/sqft/yr; EIA 2022).

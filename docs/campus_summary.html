@@ -11,11 +11,10 @@
 
 <meta name="author" content="Maggie Douglas" />
 
-<meta name="date" content="2026-04-28" />
 
 <title>Campus building summary</title>
 
-<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -345,10 +344,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">Introduction</a>
+  <a href="conclusions.html">Executive Summary</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Methods</a>
+  <a href="methods.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -382,7 +381,7 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Electricity use models
+    Building case studies
      
     <span class="caret"></span>
   </a>
@@ -398,6 +397,12 @@ div.tocify {
     </li>
     <li>
       <a href="main_meter_mod_vis.html">Main meter - visualization</a>
+    </li>
+    <li>
+      <a href="main_meter_mult_reg.html">Main meter - Report Part II</a>
+    </li>
+    <li>
+      <a href="main_meter_mod_vis.html">Main meter - Report Part II (clean)</a>
     </li>
   </ul>
 </li>
@@ -423,277 +428,20 @@ div.tocify {
 
 <h1 class="title toc-ignore">Campus building summary</h1>
 <h4 class="author">Maggie Douglas</h4>
-<h4 class="date">04/28/26</h4>
 
 </div>
 
 
-<div id="load-data" class="section level2">
-<h2>Load data</h2>
-<pre class="r"><code>library(tidyverse)
-library(DT) # library to create tables
-library(scales) # library to format dollars
-library(RColorBrewer)
-library(paletteer)
-
-is_outlier &lt;- function(x) {
-  return(x &lt; quantile(x, 0.25, na.rm = T) - 1.5 * IQR(x, na.rm = T) | x &gt; quantile(x, 0.75, na.rm = T) + 1.5 * IQR(x, na.rm = T))
-}</code></pre>
-<pre class="r"><code>daily_full &lt;- read.csv(&quot;./output/kwh_daily_2026-03-17.csv&quot;) %&gt;%
-  mutate(date = as_date(date)) # convert back to date
-
-joined_full &lt;- read.csv(&quot;./output/kwh_annual_2026-03-17.csv&quot;) 
-
-joined_acad &lt;- read.csv(&quot;./output/kwh_academic_2026-03-17.csv&quot;) 
-
-total &lt;- joined_full %&gt;%
-  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Solar&quot;) %&gt;%
-  summarize(kwh = sum(kwh, na.rm = T),
-            kwh_corr = sum(kwh_corr, na.rm = T),
-            sqft = sum(sqft, na.rm = T)) %&gt;%
-  mutate(kwh_sqft = kwh_corr/sqft,
-         meter = &quot;Total&quot;)
-
-total_acad &lt;- joined_acad %&gt;%
-  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Solar&quot;) %&gt;%
-  summarize(kwh = sum(kwh, na.rm = T),
-            kwh_corr = sum(kwh_corr, na.rm = T),
-            sqft = sum(sqft, na.rm = T)) %&gt;%
-  mutate(kwh_sqft = kwh_corr/sqft,
-         meter = &quot;Total&quot;)
-
-buildings &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, strip.white = T) %&gt;%
-  mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;,
-                               ifelse(main_meter == 0 &amp; weis_meter == 0, &quot;Individually Metered&quot;, &quot;Main Meter&quot;)),
-         NAME = str_remove_all(NAME, &quot;/&quot;),
-         NAME = str_replace_all(NAME, &quot;  &quot;,&quot; &quot;),
-         NAME = str_replace_all(NAME, &quot;   &quot;,&quot; &quot;))
-
-# store conversion factors
-dollars_kwh &lt;- 0.08138507
-co2_kg_kwh &lt;- 0.30082405</code></pre>
-<pre class="r"><code># summarize # buildings by meter status
-bldg_sum &lt;- buildings %&gt;%
-  filter(NAME != &quot;Main Meter&quot;) %&gt;%
-  group_by(meter) %&gt;%
-  summarize(number = n())
-
-bldg_tot &lt;- bldg_sum %&gt;%
-  summarize(number = sum(number)) %&gt;%
-  mutate(meter = &quot;Total&quot;)
-
-bldg_comb &lt;- rbind(bldg_sum, bldg_tot)
-
-# summarize slightly differently for graphing
-buildings_graph &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, strip.white = T) %&gt;%
-    mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
-                        ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, 
-                               ifelse(main_disagg == 1, &quot;Submeter&quot;, &quot;Individual&quot;)))) %&gt;%
-  filter(!is.na(meter) &amp; !type_new %in% c(&quot;Residential - U&quot;,&quot;Non-building&quot;,&quot;Solar&quot;))
-
-buildings_graph$meter &lt;- factor(buildings_graph$meter,
-                              levels = c(&quot;Weis Meter&quot;, &quot;Main Meter&quot;,
-                                        &quot;Submeter&quot;, &quot;Individual&quot;))
-
-# generate summary for Main, Weis, and Individual meters
-joined_agg &lt;- joined_full %&gt;%
-  ungroup() %&gt;%
-  filter(meter != &quot;Submeter&quot; &amp; type != &quot;Res Hall - U&quot; &amp; type != &quot;Solar&quot;) %&gt;%
-  group_by(meter) %&gt;%
-  summarize(kwh = sum(kwh, na.rm = T),
-            kwh_corr = sum(kwh_corr, na.rm = T),
-            sqft = sum(sqft, na.rm = T)) %&gt;%
-  mutate(kwh_sqft = kwh_corr/sqft) %&gt;%
-  rbind(total) %&gt;%
-  mutate(dollars = kwh_corr*dollars_kwh,
-          ghg_MTCO2 = (kwh_corr*co2_kg_kwh)/1000) %&gt;%
-  select(-kwh) %&gt;%
-  arrange(kwh_corr)
-
-joined_agg$meter &lt;- factor(joined_agg$meter,
-                           levels = c(&quot;Main Meter - Total&quot;,
-                                      &quot;Weis Meter - Total&quot;,
-                                      &quot;Individual&quot;, &quot;Total&quot;),
-                           labels = c(&quot;Main Meter&quot;, &quot;Weis Meter&quot;,
-                                      &quot;Individually Metered&quot;,&quot;Total&quot;))
-
-joined_tot &lt;- joined_agg %&gt;%
-  left_join(bldg_comb, by = &quot;meter&quot;)</code></pre>
-<pre class="r"><code># generate summary by building category for individually metered buildings
-joined_cat &lt;- joined_full %&gt;%
-  filter(meter %in% c(&quot;Individual&quot;,&quot;Submeter&quot;)) %&gt;%
-    mutate(kwh_sqft = kwh_corr/sqft, # calculate kwh per sqft
-         kwh_person = kwh_corr/occupants,
-         dollars = kwh_corr*dollars_kwh,
-         ghg_kgCO2 = kwh_corr*co2_kg_kwh) %&gt;% 
-  group_by(type) %&gt;%
-  summarize(n = n(),
-            kwh = sum(kwh_corr),
-            dollars = sum(dollars),
-            ghg_kgCO2 = sum(ghg_kgCO2),
-            sqft = median(sqft, na.rm = T),
-            med_kwh_sqft = median(kwh_sqft, na.rm = T),
-            kwh_sqft_25 = quantile(kwh_sqft, .25, na.rm = T),
-            kwh_sqft_75 = quantile(kwh_sqft, .75, na.rm = T)) %&gt;%
-  arrange(-kwh)</code></pre>
-</div>
 <div id="background" class="section level2">
 <h2>Background</h2>
 <p>This analysis examines electricity use on Dickinson’s campus as a
-whole in fiscal year 2025, to provide context for the category-specific
-analyses that follow. Buildings on Dickinson’s campus vary in how they
-are metered for electricity usage. Some buildings (and even individual
-apartments within buildings) have their own electricity meters, while
-others share a combined meter. There are two combined (or aggregate)
-meters - the “main meter” (associated with buildings in the central part
-of campus) and “Weis meter” (associated with buildings in a block around
-Weis Arts Complex). Some buildings on the main meter additionally have a
-“submeter” to track their individual electricity usage.</p>
-<p>The electricity data analyzed here were derived from a combination of
-daily electricity use reported by the college electricity provider
-(PP&amp;L) and daily electricity use recorded on submeters, both
-provided by the Center for Sustainability Education. Electricity data
-were fairly complete for the two aggregate meters and for buildings with
-individual meters (90-100% of days with data). Data for submetered
-buildings was more variable, with some buildings having &gt;90% of days
-with usable data and other buildings having little to no usable data
-(see specific building categories for details).</p>
-<p>Electricity use information was joined with information on building
-characteristics shared by Facilities. Electricity data for individual
-buildings is most available for residential buildings and ‘Other’
-buildings (Figure 1 and 2), a category including assorted athletics
-buildings, faculty/staff residences, and auxillary buildings. Aggregate
-meters are prevalent for Academic, Administrative, and Community
-buildings (Figure 1 and 2). Once the data were joined, we summarized
-electricity use by building and calculated electricity use indicators
-including estimated financial cost, associated greenhouse gas emissions
-in metric tons of CO2-equivalents, and electricity use normalized by
-square footage and student occupancy (for residence halls only).
-Financial cost is a rough estimate based on per kWh supply and delivery
-charges in June 2025 for the main meter, a value that will underestimate
-cost for smaller buildings due to variable electricity costs. Greenhouse
-gas emissions are estimated using standard conversion factors based on a
-regional fuel blend for electricity (Leary 2025).</p>
-<pre class="r"><code>pal &lt;- c(&quot;lightgrey&quot;,&quot;darkgrey&quot;,&quot;#CAB2D6&quot;,&quot;#6A3D9A&quot;)
-
-ggplot(buildings_graph, 
-       aes(x = reorder(type_new, sqft, FUN = &quot;sum&quot;), fill = meter)) +
-  geom_bar(position = &quot;stack&quot;) +
-  scale_fill_manual(values = pal) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Number of buildings&quot;, fill = &quot;Meter status&quot;,
-       title = &quot;Figure 1. Buildings by type and meter status&quot;) +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))</code></pre>
-<p><img src="figure/campus_summary.Rmd/graph%20meter-1.png" alt="" width="576" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-graph-meter-1">
-Past versions of "graph meter-1.png"
-</button>
-</p>
-<div id="fig-no-spaces-graph-meter-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/d34161b8d717b41f39a7b35fa9bbbfff7334d6d6/docs/figure/campus_summary.Rmd/graph meter-1.png" target="_blank">d34161b</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-25
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/93a99606206d0266b23a6501bfce1bd8f4a609b9/docs/figure/campus_summary.Rmd/graph meter-1.png" target="_blank">93a9960</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
-<pre class="r"><code>ggplot(buildings_graph,
-       aes(x = reorder(type_new, sqft, FUN = &quot;sum&quot;), y = sqft/1000, fill = meter)) +
-  geom_col(position = &quot;stack&quot;) +
-  scale_fill_manual(values = pal) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Square Footage (1000)&quot;, fill = &quot;Meter status&quot;,
-       title = &quot;Figure 2. Building square footage by type and meter status&quot;) +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))</code></pre>
-<p><img src="figure/campus_summary.Rmd/graph%20meter-2.png" alt="" width="576" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-graph-meter-2">
-Past versions of "graph meter-2.png"
-</button>
-</p>
-<div id="fig-no-spaces-graph-meter-2" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/d34161b8d717b41f39a7b35fa9bbbfff7334d6d6/docs/figure/campus_summary.Rmd/graph meter-2.png" target="_blank">d34161b</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-04-25
-</td>
-</tr>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/93a99606206d0266b23a6501bfce1bd8f4a609b9/docs/figure/campus_summary.Rmd/graph meter-2.png" target="_blank">93a9960</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-03-20
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-</div>
+whole in fiscal year 2025, to provide context for the more specific
+analyses that follow. Please explore the category-specific summaries for
+more detailed results and recommendations.</p>
 </div>
 <div id="electricity-use-summary" class="section level2">
 <h2>Electricity use summary</h2>
-<p>The analysis includes 134 distinct buildings, accounting for almost 2
+<p>The analysis included 134 distinct buildings, accounting for almost 2
 million square feet of building space (Table 1, Figure 1). The majority
 (59%) of square footage was accounted for by buildings connected to the
 main meter (Table 1). We identified 44 distinct buildings on the main
@@ -701,7 +449,7 @@ meter, a value that differs slightly from internal campus estimate of 37
 buildings due to differences in how buildings are delineated in the two
 datasets (e.g. Rector Science Center and Tome are listed together in the
 electricity data but separately in the building data). Our final dataset
-also includes 81 individually metered buildings that together account
+also included 81 individually metered buildings that together accounted
 for 36% of campus square footage.</p>
 <p>We estimate that Dickinson used roughly 17 million kWh of electricity
 in fiscal year 2025, corresponding to a cost of roughly $1.4 million and
@@ -1062,7 +810,6 @@ Colleges and Universities (EIA 2022).</p>
 falling below the values for typical U.S. College and University
 buildings, for both the aggregate meters and the buildings on individual
 meters (Figure 7).</p>
-<p>It is also worth noting that values for the</p>
 <pre class="r"><code>total &lt;- joined_full %&gt;%
   filter(meter != &quot;Submeter&quot;) %&gt;%
   summarize(kwh = sum(kwh, na.rm = TRUE),
@@ -1127,6 +874,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/ed8bc40a6965e6bc9964e3329d3154fc2ec1a22f/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">ed8bc40</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-05-05
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/93a99606206d0266b23a6501bfce1bd8f4a609b9/docs/figure/campus_summary.Rmd/intensity-1.png" target="_blank">93a9960</a>
@@ -1300,10 +1058,6 @@ maggiedouglas
 </div>
 </div>
 </div>
-<div id="recommendations" class="section level2">
-<h2>Recommendations</h2>
-<p>TBD!</p>
-</div>
 <div id="sources" class="section level2">
 <h2>Sources</h2>
 <p>Energy Information Administration (EIA). (2022). <em>2018 Commercial
@@ -1321,13 +1075,13 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.5.2 (2025-10-31)
+<pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1340,24 +1094,24 @@ attached base packages:
 
 other attached packages:
  [1] paletteer_1.7.0    RColorBrewer_1.1-3 scales_1.4.0       DT_0.34.0         
- [5] lubridate_1.9.5    forcats_1.0.1      stringr_1.6.0      dplyr_1.2.0       
- [9] purrr_1.2.1        readr_2.2.0        tidyr_1.3.2        tibble_3.3.1      
-[13] ggplot2_4.0.2      tidyverse_2.0.0   
+ [5] lubridate_1.9.5    forcats_1.0.1      stringr_1.6.0      dplyr_1.2.1       
+ [9] purrr_1.2.2        readr_2.2.0        tidyr_1.3.2        tibble_3.3.1      
+[13] ggplot2_4.0.3      tidyverse_2.0.0   
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.10       generics_0.1.4    prismatic_1.1.2   stringi_1.8.7    
- [5] hms_1.1.4         digest_0.6.39     magrittr_2.0.4    timechange_0.4.0 
- [9] evaluate_1.0.5    grid_4.5.2        fastmap_1.2.0     rprojroot_2.1.1  
+ [5] hms_1.1.4         digest_0.6.39     magrittr_2.0.5    timechange_0.4.0 
+ [9] evaluate_1.0.5    grid_4.6.0        fastmap_1.2.0     rprojroot_2.1.1  
 [13] workflowr_1.7.2   jsonlite_2.0.0    whisker_0.4.1     rematch2_2.1.2   
-[17] promises_1.5.0    crosstalk_1.2.2   jquerylib_0.1.4   cli_3.6.5        
-[21] rlang_1.1.7       withr_3.0.2       cachem_1.1.0      yaml_2.3.12      
-[25] otel_0.2.0        tools_4.5.2       tzdb_0.5.0        httpuv_1.6.16    
-[29] vctrs_0.7.1       R6_2.6.1          lifecycle_1.0.5   git2r_0.36.2     
-[33] htmlwidgets_1.6.4 fs_1.6.7          pkgconfig_2.0.3   pillar_1.11.1    
-[37] bslib_0.10.0      later_1.4.8       gtable_0.3.6      glue_1.8.0       
-[41] Rcpp_1.1.1        xfun_0.56         tidyselect_1.2.1  rstudioapi_0.18.0
+[17] promises_1.5.0    crosstalk_1.2.2   jquerylib_0.1.4   cli_3.6.6        
+[21] rlang_1.2.0       withr_3.0.3       cachem_1.1.0      yaml_2.3.12      
+[25] otel_0.2.0        tools_4.6.0       tzdb_0.5.0        httpuv_1.6.17    
+[29] vctrs_0.7.3       R6_2.6.1          lifecycle_1.0.5   git2r_0.36.2     
+[33] htmlwidgets_1.6.4 fs_2.1.0          pkgconfig_2.0.3   pillar_1.11.1    
+[37] bslib_0.11.0      later_1.4.8       gtable_0.3.6      glue_1.8.1       
+[41] Rcpp_1.1.1-1.1    xfun_0.59         tidyselect_1.2.1  rstudioapi_0.19.0
 [45] knitr_1.51        farver_2.1.2      htmltools_0.5.9   labeling_0.4.3   
-[49] rmarkdown_2.30    compiler_4.5.2    S7_0.2.1         </code></pre>
+[49] rmarkdown_2.31    compiler_4.6.0    S7_0.2.2         </code></pre>
 </div>
 </div>
 

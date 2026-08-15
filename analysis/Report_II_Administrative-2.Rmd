@@ -1,9 +1,12 @@
 ---
-title: "Administrative Buildings"
-subtitle: "50 Mooreland Avenue"
+title: "50 Mooreland Avenue"
 author: "Eva Hanlin & Amiya Marbles"
 output: html_document
 ---
+
+```{r grid, fig.align = 'center', out.width = "75%", fig.cap = "Photo from Dickinson College"}
+knitr::include_graphics("assets/50mooreland.jpg", error = FALSE)
+```
 
 ## Background
 

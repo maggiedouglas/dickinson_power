@@ -1,9 +1,12 @@
 ---
-title: "Small Residential Buildings"
-subtitle: "519 West Louther Street"
+title: "519 West Louther Street"
 author: "Luke Heller & Valerie Larsen"
 output: html_document
 ---
+
+```{r grid, fig.align = 'center', out.width = "70%", fig.cap = "Photo by Valerie Larsen"}
+knitr::include_graphics("assets/519wlouther.jpg", error = FALSE)
+```
 
 ## Background
 

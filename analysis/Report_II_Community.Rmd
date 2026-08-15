@@ -1,10 +1,13 @@
 ---
-title: "Community Buildings"
-subtitle: "Allison Hall"
+title: "Allison Hall"
 author: "Dinela Dedic & Emma Keane"
 output: html_document
 ---
-  
+
+```{r grid, fig.align = 'center', out.width = "75%", fig.cap = "Photo from Dickinson College"}
+knitr::include_graphics("assets/allison.jpg", error = FALSE)
+```
+
 ## Background   
 
 Allison Hall is a former church that was built in 1958 and acquired by Dickinson College for community meeting space in 2013 with no major renovations since its construction (pers. comm, Mike Kiner, spring 2026). It is one of the larger Community Buildings with an area of 33,310 sq. ft and contains two large, open meeting rooms that are heated using two gas boilers and a combination of electrically-powered window units and a centralized unit for cooling (pers. comm, Mike Kiner, spring 2026). The building is used by a capella groups, residence life, and multicultural groups on campus, but it is unclear when and to what degree the building is being utilized (pers. comm, Lindsey Lyons, and ENST 325 students, 2026).    

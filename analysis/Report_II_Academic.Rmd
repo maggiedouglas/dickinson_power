@@ -1,9 +1,12 @@
 ---
-title: "Academic Buildings"
-subtitle: "Althouse Hall"
+title: "Althouse Hall"
 author: "Sophia Evans & Chloe Ross"
 output: html_document
 ---
+
+```{r grid, fig.align = 'center', out.width = "75%", fig.cap = "Photo from Dickinson College"}
+knitr::include_graphics("assets/althouse.jpg", error = FALSE)
+```
 
 ## Background
 

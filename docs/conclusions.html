@@ -9,10 +9,9 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Liam Glackin &amp; Charlotte Durietz Bourdain" />
 
 
-<title>Treehouse</title>
+<title>Executive Summary</title>
 
 <script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
@@ -30,9 +29,6 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
@@ -238,69 +234,6 @@ $(document).ready(function () {
 
 
 
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
-
-
 
 </head>
 
@@ -308,16 +241,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -378,28 +301,22 @@ div.tocify {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="main_meter_clean.html">Main Meter</a>
+      <a href="main_meter_regression.html">Main meter - reg</a>
     </li>
     <li>
-      <a href="Report_II_Small_Residence_Halls.html">519 W. Louther St</a>
+      <a href="main_meter_anova.html">Main meter - ANOVA</a>
     </li>
     <li>
-      <a href="Report_II_Med-Residential-Building.html">Treehouse</a>
+      <a href="main_meter_mult_reg.html">Main meter - Full model</a>
     </li>
     <li>
-      <a href="Report_II_Residential-L.html">Drayer Hall</a>
+      <a href="main_meter_mod_vis.html">Main meter - visualization</a>
     </li>
     <li>
-      <a href="Report_II_Academic.html">Althouse Hall</a>
+      <a href="main_meter_mult_reg.html">Main meter - Report Part II</a>
     </li>
     <li>
-      <a href="Report_II_Administrative-2.html">50 Mooreland Ave.</a>
-    </li>
-    <li>
-      <a href="Report_II_Community.html">Allison Hall</a>
-    </li>
-    <li>
-      <a href="Report_II_Other.html">Biddle Press Box/Durden ATC</a>
+      <a href="main_meter_mod_vis.html">Main meter - Report Part II (clean)</a>
     </li>
   </ul>
 </li>
@@ -423,8 +340,7 @@ div.tocify {
 
 
 
-<h1 class="title toc-ignore">Treehouse</h1>
-<h4 class="author">Liam Glackin &amp; Charlotte Durietz Bourdain</h4>
+<h1 class="title toc-ignore">Executive Summary</h1>
 
 </div>
 
@@ -491,10 +407,10 @@ changes </a>
 <div id="strongRMarkdownfilestronguncommittedchanges"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
+<p>The R Markdown is untracked by Git. To know which version of the R
+Markdown file created these results, you’ll want to first commit it to
+the Git repo. If you’re still working on the analysis, you can ignore
+this warning. When you’re finished, you can run
 <code>wflow_publish</code> to commit the R Markdown file and build the
 HTML.</p>
 </div>
@@ -686,10 +602,6 @@ Untracked files:
     Untracked:  analysis/methods.Rmd
 
 Unstaged changes:
-    Modified:   analysis/Report_II_Academic.Rmd
-    Modified:   analysis/Report_II_Administrative-2.Rmd
-    Modified:   analysis/Report_II_Community.Rmd
-    Modified:   analysis/Report_II_Med-Residential-Building.Rmd
     Modified:   analysis/_site.yml
     Modified:   analysis/about.Rmd
     Modified:   analysis/campus_summary.Rmd
@@ -710,391 +622,149 @@ have uncommitted changes.
 </div>
 <div id="versions" class="tab-pane fade">
 <p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown
-(<code>analysis/Report_II_Med-Residential-Building.Rmd</code>) and HTML
-(<code>docs/Report_II_Med-Residential-Building.html</code>) files. If
-you’ve configured a remote Git repository (see
-<code>?wflow_git_remote</code>), click on the hyperlinks in the table
-below to view the files as they were in that past version.
+There are no past versions. Publish this analysis with
+<code>wflow_publish()</code> to start tracking its development.
 </p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/c58899cd4850a9b52fbeac659ac88ffa7099d392/analysis/Report_II_Med-Residential-Building.Rmd" target="_blank">c58899c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-07-29
-</td>
-<td>
-revised Administrative report II and adjusted header formatting for all
-report II sections
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/c58899cd4850a9b52fbeac659ac88ffa7099d392/docs/Report_II_Med-Residential-Building.html" target="_blank">c58899c</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-07-29
-</td>
-<td>
-revised Administrative report II and adjusted header formatting for all
-report II sections
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/0299a754c6caac208b34368fd5b6a17a87ca4e6a/analysis/Report_II_Med-Residential-Building.Rmd" target="_blank">0299a75</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-07-29
-</td>
-<td>
-Revised medium res halls part II
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/0299a754c6caac208b34368fd5b6a17a87ca4e6a/docs/Report_II_Med-Residential-Building.html" target="_blank">0299a75</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-07-29
-</td>
-<td>
-Revised medium res halls part II
-</td>
-</tr>
-</tbody>
-</table>
-</div>
 <hr>
 </div>
 </div>
 </div>
-<pre class="r"><code>knitr::include_graphics(&quot;assets/treehouse.jpg&quot;, error = FALSE)</code></pre>
-<div class="figure" style="text-align: center">
-<img src="assets/treehouse.jpg" alt="Photo from Dickinson College" width="75%" />
-<p class="caption">
-Photo from Dickinson College
-</p>
+<p>Here we share a high-level summary and set of recommendations arising
+from our analyses taken as a whole. These take-home messages were
+generated collaboratively by the class.</p>
+<div id="fiscal-year-2025-electricity-usage-cost-and-carbon-footprint"
+class="section level3">
+<h3>Fiscal Year 2025 electricity usage, cost, and carbon footprint</h3>
+<p>In FY25 Dickinson managed ~1.9 million square feet of building space.
+This was associated with:</p>
+<ul>
+<li>17.2 million kWh of electricity usage</li>
+<li>A cost of more than $1.4 million</li>
+<li>Emissions equivalent to ~5185 MT CO<sub>2</sub></li>
+</ul>
+<p>The college also realized significant savings from the solar
+array:</p>
+<ul>
+<li>Created 4.3 kWh of electricity</li>
+<li>Saved $347,863</li>
+<li>Prevented emissions equivalent to ~1,286 MT CO<sub>2</sub></li>
+</ul>
+<p>Electricity use in many campus buildings showed a strong seasonal
+pattern, consistent with the role of electricity in heating, cooling,
+and ventilation (HVAC). Across Dickinson as a whole, cooling is a larger
+driver of electricity usage than heating, because heating in most
+buildings relies on natural gas. This helps to explain why campus
+electricity use peaked in summer, even though that is a time of low
+student occupancy.</p>
 </div>
-<div id="background" class="section level2">
-<h2>Background</h2>
-<p>The focal building studied within medium residential buildings at
-Dickinson College is Treehouse. This is a sustainability focused
-residence that houses 1-14 students throughout the year and is 6,000
-square feet in total. The building is heated using a pellet stove and
-natural gas heating, and cooled with an electric direct expansion system
-(personal communication, Mike Kiner). It also has a water heater that
-transitioned to electric during FY25 (personal communication, Mike
-Kiner). This building was acquired and renovated in 2006 and is LEED
-Gold certified. Treehouse used around 21,800 kWh of energy in the 2025
-fiscal year (FY25), much lower than the national median for US
-dormitory, fraternity, and sorority housing found in a 2018 survey of
-268,000 kWh (EIA, 2022). Compared to the area normalized median
-electricity use reported by the EIA of 13.6 kWh/sqft, the normalized
-electricity of Treehouse was substantially lower at 3.6 kWh/sqft. The
-annual electricity use per occupant of the building was 1675 kWh/person.
-Given that Treehouse has an electricity-intensive cooling system and
-low-electric heating system, we expected use to increase during warmer
-months and decrease during cooler months. Additionally, use was expected
-to decrease when occupancy was lower during winter and summer break, and
-increase during the academic year.</p>
+<div id="assessment-of-dickinsons-electricity-performance-fy25"
+class="section level3">
+<h3>Assessment of Dickinson’s electricity performance (FY25)</h3>
+<p>Benchmarking against other U.S. College and University buildings as
+reported by the EIA (2022) shows that:</p>
+<ul>
+<li>Buildings on the Main Meter and Weis Meter accounted for 74% of
+campus electricity usage. On average they used 10.4 and 11.4 kWh/sqft of
+building space, extremely close to the median for similar U.S. buildings
+(10.3 kWh/sqft, typical range: 7.4-14.3 kWh/sqft).</li>
+<li>Most individually metered buildings at Dickinson were significantly
+below the typical range of values for similar U.S. buildings. Their low
+values are likely due in part to electricity usage associated with
+cooling that occurs off-site at the Central Energy Plant (which is not
+measured in their individual meters).</li>
+<li>Overall, average electricity usage across campus in FY25 was 9.1
+kWh/sqft, slightly below the median value for similar U.S. buildings.
+This suggests that Dickinson is doing well overall, but still has
+potential to reduce usage further.</li>
+</ul>
 </div>
-<div id="results" class="section level2">
-<h2>Results</h2>
-<p>When the data was fitted to a segmented regression model, explained
-approximately 63% of the variation in daily electricity use in Treehouse
-in FY25 (R<sup>2</sup> = 0.63). In this model, daily electricity use was
-not significantly related to day (F<sub>6,352</sub> = 0.7, P= 0.66).
-However, period (F<sub>3,352</sub> = 8.4, P &lt; 0.001), temperature
-below 65 °F (F<sub>1,352</sub> = 37.3, P &lt; 0.001), and temperature
-above 65 °F (F<sub>1,352</sub> = 84.4, P &lt; 0.001) were significantly
-related to electricity use.</p>
-<p>A comparison of electricity use in different periods of FY25 showed
-that fall semester did not differ significantly from summer break
-(Figure 1, P = 0.29). Compared to summer break, winter break showed ~49%
-higher daily electricity use when accounting for temperature and day of
-week. Spring semester showed a ~42% increase in daily electricity use
-compared to the fall semester when accounting for these same factors.
-This was surprising as these periods have similar occupancy levels.</p>
-<pre class="r"><code>period_data &lt;- data.frame(ave_temp = 58,
-                          day = &quot;Mon&quot;,
-                          period = c(&quot;Fall Semester&quot;, &quot;Winter Break&quot;,&quot;Spring Semester&quot;, &quot;Summer Break&quot;))
-conf_period &lt;- as.data.frame(predict(mod_seg, 
-                              vcov = vcovHAC(mod_seg),
-                              newdata = period_data,
-                              interval = &quot;confidence&quot;, level = 0.95)) %&gt;%
-  mutate(period = c(&quot;Fall Semester&quot;,&quot;Winter Break&quot;,&quot;Spring Semester&quot;,&quot;Summer Break&quot;))
-conf_period$period &lt;- factor(conf_period$period, levels = c(&quot;Fall Semester&quot;, &quot;Winter Break&quot;, &quot;Spring Semester&quot;, &quot;Summer Break&quot;), ordered = TRUE)
-
-ggplot(conf_period) +
-    geom_bar(aes(x=period, y=fit), stat=&quot;identity&quot;, fill=&quot;springgreen4&quot;, alpha=0.8) +
-    geom_errorbar( aes(x=period, ymin=lwr, ymax=upr),
-                   width=0.4, colour=&quot;darkgray&quot;, linewidth=1) + 
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
-       title = &quot; Figure 1. Treehouse electricity use by time of year&quot;,
-       subtitle = &quot;Mean +/- 95% confidence interval&quot;,
-       caption = &quot;Estimated for a Monday with an outdoor temperature of 58 degrees F&quot;)</code></pre>
-<p><img src="figure/Report_II_Med-Residential-Building.Rmd/period%20graph-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-period-graph-1">
-Past versions of "period graph-1.png"
-</button>
-</p>
-<div id="fig-no-spaces-period-graph-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/0299a754c6caac208b34368fd5b6a17a87ca4e6a/docs/figure/Report_II_Med-Residential-Building.Rmd/period graph-1.png" target="_blank">0299a75</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-07-29
-</td>
-</tr>
-</tbody>
-</table>
+<div id="strategies-for-electricity-use-reduction"
+class="section level3">
+<h3>Strategies for electricity use reduction</h3>
+<div id="consolidate-summer-housing-into-fewer-more-efficient-buildings"
+class="section level4">
+<h4>(1) Consolidate summer housing into fewer, more efficient
+buildings</h4>
+<p>Due to cooling demand, summer is a time of high electricity usage but
+low residential occupancy. Moving students into fewer, more
+energy-efficient buildings would allow the remaining buildings to be
+maintained at a higher temperature and reduce electricity usage. This
+would also help the college meet its agreements with our energy
+supplier. Buildings can be ranked by their electricity efficiency using
+the interactive tables here: Small Residence Halls, Medium Residence
+Halls, Large Residence Halls. This strategy is especially important
+because Cumberland County is likely to become 2-11<sup>o</sup>F warmer
+by late century under climate change (Leary 2025). Projecting from our
+FY25 results, a 5<sup>o</sup>F increase in summer temperatures would
+require an additional 3800 kWh per day ($300/day at current rates) for
+the Main Meter alone.</p>
 </div>
+<div
+id="invest-in-centralized-climate-control-building-automation-systems"
+class="section level4">
+<h4>(3) Invest in centralized climate control + building automation
+systems</h4>
+<p>Because the Central Energy Plant helps to heat and cool the majority
+of building space on campus, improvements there will have widespread
+effects.</p>
+<ul>
+<li>Greenhouse Gas Inventory recommendations</li>
+<li>Inefficiency of window units and other ad hoc systems</li>
+</ul>
+<p>Several of our building case studies suggested the value of existing
+building automation systems (BAS) to reduce electricity usage (for
+example, see XXX). These systems automate the regulation of heating,
+cooling, air flow, and lighting in response to occupancy and other
+factors. The College could consider expanding the use of such systems to
+reap the benefits in additional spaces.</p>
 </div>
-<p>As expected, the model did not show a significant difference in
-electricity use on different days of the week (Figure 2).</p>
-<pre class="r"><code>day_data &lt;- data.frame(ave_temp = 58,
-                          period = &quot;Fall Semester&quot;,
-                          day = c(&quot;Mon&quot;,&quot;Tue&quot;, &quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;))
-conf_day &lt;- as.data.frame(predict(mod_seg, vcov = vcovHAC(mod_seg), 
-                                       newdata = day_data, 
-                                       interval = &quot;confidence&quot;, level = 0.95))%&gt;%
-  mutate(day = factor(c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;),
-                      levels = c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;)))
-
-ggplot(conf_day) +
-    geom_bar(aes(x=day, y=fit), stat=&quot;identity&quot;, fill=&quot;springgreen4&quot;, alpha=0.7) +
-    geom_errorbar( aes(x=day, ymin=lwr, ymax=upr), width=0.4, colour=&quot;darkgray&quot;, alpha=0.7, linewidth=1) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
-       title = &quot;Figure 2. Treehouse Electricity Use by Day of the Week&quot;,
-       subtitle = &quot;Mean +/- 95% confidence interval&quot;,
-       caption = &quot;Estimated for day in the fall with an outdoor temperature of 58 degrees F.&quot;)</code></pre>
-<p><img src="figure/Report_II_Med-Residential-Building.Rmd/day-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-day-1">
-Past versions of day-1.png
-</button>
-</p>
-<div id="fig-day-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/0299a754c6caac208b34368fd5b6a17a87ca4e6a/docs/figure/Report_II_Med-Residential-Building.Rmd/day-1.png" target="_blank">0299a75</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-07-29
-</td>
-</tr>
-</tbody>
-</table>
+<div
+id="prioritize-and-assess-energy-efficiency-in-new-builds-and-renovations"
+class="section level4">
+<h4>(4) Prioritize and assess energy efficiency in new builds and
+renovations</h4>
+<p>New buildings and renovations provide an opportunity to advance (or
+set back) energy savings. We recommend the College bring in appropriate
+staff from Facilities Management to consult on such projects early in
+the design process.</p>
+<p>Furthermore, we recommend using electricity data to assess the effect
+of renovations on building performance. For example, our analysis could
+be expanded to include electricity use in Drayer Hall prior to its 2023
+renovation, enabling a direct comparison of pre- and post-renovation
+energy consumption (see <a href="Report_II_Residential-L.html">Drayer
+Hall case study</a>). The relatively new <a
+href="Report_II_Other.html">Durden Athletic Complex</a> could also
+provide an interesting pre- and post- comparison since FY25 coincided
+with a period of construction in that complex.</p>
+</div>
+<div id="improve-insulation-green-infrastructure"
+class="section level4">
+<h4>(5) Improve insulation + green infrastructure</h4>
+<p>See Althouse Hall results</p>
+<p>Cite paper from</p>
+</div>
+<div id="engage-students-and-staff-in-electricity-savings"
+class="section level4">
+<h4>(2) Engage students and staff in electricity savings</h4>
+<p>An electricity orientation could help students learn about
+electricity-intensive activities (e.g. laundry, using the elevator), and
+encourage them to reduce unnecessary consumption in support of
+Dickinson’s sustainability goals. It could also provide site-specific
+information in residences with special heating and cooling systems
+(e.g. <a
+href="Report_II_Med-Residential-Building.Rmd">Treehouse</a>).</p>
 </div>
 </div>
-<p>The relationship between electricity use and temperature was strong
-but showed a break point at 65°F (Figure 3). This is why a segmented
-linear regression was significant to capturing both the heating season
-(below 65 °F) pattern and the cooling season (above 65 °F) pattern. In
-this heating season, a negative relationship captured the electricity
-use decrease by -0.9 kWh (+/- 0.15 kWh) per °F. In the cooling season, a
-positive relationship captured the electricity use increase by 4.5 kWh
-(+/- 0.5 kWh) per °F.</p>
-<pre class="r"><code>plot(mod_seg, vcov = vcovHAC(mod_seg), 
-     col = &#39;black&#39;, res = TRUE, conf.level = .95, shade = T, 
-     res.col = adjustcolor(&quot;springgreen4&quot;, alpha.f = 0.7), # set color of data + transparency
-     xlab = &quot;Temperature (degrees F)&quot;, ylab = &quot;Electricity use (kWh per day)&quot;) # label axes
-title(&quot;Figure 3. Treehouse electricity use by temperature&quot;, # how to set the title in base R plotting function
-      adj = 0, cex.main = 1.2, font.main = 1) </code></pre>
-<p><img src="figure/Report_II_Med-Residential-Building.Rmd/temp%20graph-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
-<p>
-<button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-temp-graph-1">
-Past versions of "temp graph-1.png"
-</button>
-</p>
-<div id="fig-no-spaces-temp-graph-1" class="collapse">
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/0299a754c6caac208b34368fd5b6a17a87ca4e6a/docs/figure/Report_II_Med-Residential-Building.Rmd/temp graph-1.png" target="_blank">0299a75</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-07-29
-</td>
-</tr>
-</tbody>
-</table>
+<div id="priorities-for-future-data-collection" class="section level3">
+<h3>Priorities for future data collection</h3>
 </div>
-</div>
-</div>
-<div id="recommendations" class="section level2">
-<h2>Recommendations</h2>
-<p>Applying a segmented regression model on the electricity use for
-Treehouse, explained ~63% of the variation in daily electricity use over
-FY25. This model is moderately strong and a useful tool to gain insight
-on electricity use factors within the building. Because of specific
-changes in FY25, this model cannot be used reliably as a predictor for
-electricity use in any other year.</p>
-<p>As expected, there was a significant correlation between temperature
-and electricity use throughout FY25, as well as between period and
-electricity use. The lack of significant correlation between days of the
-week and electricity use also matched the expectations. The significant
-negative correlation between electricity use and temperature in the
-heating season was unexpected, as gas heating and pellet stoves are both
-less electricity intensive than direct expansion cooling. However,
-additional information provided by Dickinson Facilities clarified that
-sometime during winter or early spring of FY25, the water heater
-switched to electric, which may explain why electricity use would
-increase so much with colder temperatures (M. Kiner, personal
-communication, April 2026). This also explains the unexpected increase
-in electricity use in the spring semester and winter break even after
-temperature was accounted for.</p>
-<p>Treehouse is a building that centers students living sustainably,
-but, when compared to other Dickinson College medium residential
-buildings, it did not stand out as a low electricity user. As a result,
-there may be value in taking action to minimize electricity use. Active
-implementation strategies including hands-on and peer-engaged education
-have shown a much greater impact on lowering electricity use than more
-passive forms of intervention (Wisecup et al., 2017). For Treehouse,
-having workshops showing the correct use of features such as the thermal
-curtains and pellet stove could lead to a decrease in electricity use
-with minimal additional cost. The use of the pellet stove could be
-especially important for this building, as it is an
-electricity-efficient form of heating, using roughly 100 kWh of
-electricity a month for operation and ventilation/circulation, a number
-much lower than even daily electricity on some heating season days (DOE
-n.d.).</p>
-</div>
-<div id="sources" class="section level2">
-<h2>Sources</h2>
-<p>DOE (n.d.). <em>Wood and Pellet Heating</em>. Energy.gov. Retrieved
-May 6, 2026, from <a
-href="https://www.energy.gov/energysaver/wood-and-pellet-heating"
-class="uri">https://www.energy.gov/energysaver/wood-and-pellet-heating</a></p>
-<p>EIA. (2016). <em>Energy Information Administration (EIA)- Commercial
-Buildings Energy Consumption Survey (CBECS)</em>. Eia.gov. <a
-href="https://www.eia.gov/consumption/commercial/"
-class="uri">https://www.eia.gov/consumption/commercial/</a></p>
-<p>Wisecup, A.K., Grady, D., Roth, R.A., &amp; Stephens, J. (2017). A
-comparative study of the efficacy of intervention strategies on student
-electricity use in campus residence halls. <em>International Journal of
-Sustainability in Higher Education</em>, 18(4), 503–519. <a
-href="https://doi.org/10.1108/ijshe-08-2015-0136"
-class="uri">https://doi.org/10.1108/ijshe-08-2015-0136</a></p>
-</div>
-<div id="partner-contributions" class="section level2">
-<h2>Partner contributions</h2>
-<p>The background for this section, recommendations, and assessment of
-the fit of the model were co-written by both Liam Glackin and Charlotte
-Durietz Bourdain. The data preparation was done by Liam as well as the
-graphs to test the assumptions. The results section was co-written and
-co-coded by both Liam and Charlotte. The sources were added and
-integrated into our results by Charlotte. No AI tools were used for
-coding or writing this report.</p>
+<div id="sources" class="section level3">
+<h3>Sources</h3>
+<p>Leary, N. (2025). Climate Risks and Resilience in Cumberland County:
+Synthesis Report. Center for Sustainability Education. Dickinson
+College. Available: <a
+href="https://www.dickinson.edu/download/downloads/id/16410/climate_risks_and_resilience_in_cumberland_county_synthesis_report.pdf"
+class="uri">https://www.dickinson.edu/download/downloads/id/16410/climate_risks_and_resilience_in_cumberland_county_synthesis_report.pdf</a></p>
 <br>
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-sessioninfo" data-toggle="collapse" data-target="#workflowr-sessioninfo" style="display: block;">
@@ -1121,29 +791,17 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
-other attached packages:
- [1] sandwich_3.1-1  lmtest_0.9-40   zoo_1.8-15      segmented_2.2-1
- [5] nlme_3.1-169    MASS_7.3-65     car_3.1-5       carData_3.0-6  
- [9] tseries_0.10-61 lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0  
-[13] dplyr_1.2.1     purrr_1.2.2     readr_2.2.0     tidyr_1.3.2    
-[17] tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0
-
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6       xfun_0.59          bslib_0.11.0       lattice_0.22-9    
- [5] tzdb_0.5.0         quadprog_1.5-8     vctrs_0.7.3        tools_4.6.0       
- [9] generics_0.1.4     curl_7.1.0         xts_0.14.2         pkgconfig_2.0.3   
-[13] RColorBrewer_1.1-3 S7_0.2.2           lifecycle_1.0.5    compiler_4.6.0    
-[17] farver_2.1.2       git2r_0.36.2       httpuv_1.6.17      htmltools_0.5.9   
-[21] sass_0.4.10        yaml_2.3.12        Formula_1.2-5      later_1.4.8       
-[25] pillar_1.11.1      jquerylib_0.1.4    whisker_0.4.1      cachem_1.1.0      
-[29] abind_1.4-8        tidyselect_1.2.1   digest_0.6.39      stringi_1.8.7     
-[33] labeling_0.4.3     splines_4.6.0      rprojroot_2.1.1    fastmap_1.2.0     
-[37] grid_4.6.0         cli_3.6.6          magrittr_2.0.5     withr_3.0.3       
-[41] scales_1.4.0       promises_1.5.0     timechange_0.4.0   TTR_0.24.4        
-[45] rmarkdown_2.31     quantmod_0.4.29    otel_0.2.0         workflowr_1.7.2   
-[49] hms_1.1.4          evaluate_1.0.5     knitr_1.51         rlang_1.2.0       
-[53] Rcpp_1.1.1-1.1     glue_1.8.1         rstudioapi_0.19.0  jsonlite_2.0.0    
-[57] R6_2.6.1           fs_2.1.0          </code></pre>
+ [1] vctrs_0.7.3       cli_3.6.6         knitr_1.51        rlang_1.2.0      
+ [5] xfun_0.59         stringi_1.8.7     otel_0.2.0        promises_1.5.0   
+ [9] jsonlite_2.0.0    glue_1.8.1        workflowr_1.7.2   rprojroot_2.1.1  
+[13] git2r_0.36.2      htmltools_0.5.9   httpuv_1.6.17     sass_0.4.10      
+[17] rmarkdown_2.31    tibble_3.3.1      evaluate_1.0.5    jquerylib_0.1.4  
+[21] fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5   stringr_1.6.0    
+[25] compiler_4.6.0    fs_2.1.0          pkgconfig_2.0.3   Rcpp_1.1.1-1.1   
+[29] rstudioapi_0.19.0 later_1.4.8       digest_0.6.39     R6_2.6.1         
+[33] pillar_1.11.1     magrittr_2.0.5    bslib_0.11.0      tools_4.6.0      
+[37] cachem_1.1.0     </code></pre>
 </div>
 </div>
 </div>
@@ -1168,8 +826,6 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -1207,35 +863,6 @@ $(document).ready(function () {
 });
 </script>
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

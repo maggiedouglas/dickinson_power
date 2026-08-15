@@ -1,9 +1,12 @@
 ---
-title: "Medium Residential Buildings"
-subtitle: "Treehouse"
+title: "Treehouse"
 author: "Liam Glackin & Charlotte Durietz Bourdain"
 output: html_document
 ---
+
+```{r grid, fig.align = 'center', out.width = "75%", fig.cap = "Photo from Dickinson College"}
+knitr::include_graphics("assets/treehouse.jpg", error = FALSE)
+```
 
 ## Background   
 
