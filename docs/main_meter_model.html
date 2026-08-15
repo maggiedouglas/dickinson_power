@@ -15,7 +15,7 @@
 
 <title>Main Meter model</title>
 
-<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -336,10 +336,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">Introduction</a>
+  <a href="conclusions.html">Executive Summary</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Methods</a>
+  <a href="methods.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -373,28 +373,34 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Electricity use models
+    Building case studies
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="main_meter_regression.html">Main meter - reg</a>
+      <a href="main_meter_clean.html">Main Meter</a>
     </li>
     <li>
-      <a href="main_meter_anova.html">Main meter - ANOVA</a>
+      <a href="Report_II_Small_Residence_Halls.html">519 W. Louther St</a>
     </li>
     <li>
-      <a href="main_meter_mult_reg.html">Main meter - Full model</a>
+      <a href="Report_II_Med-Residential-Building.html">Treehouse</a>
     </li>
     <li>
-      <a href="main_meter_mod_vis.html">Main meter - visualization</a>
+      <a href="Report_II_Residential-L.html">Drayer Hall</a>
     </li>
     <li>
-      <a href="main_meter_mult_reg.html">Main meter - Report Part II</a>
+      <a href="Report_II_Academic.html">Althouse Hall</a>
     </li>
     <li>
-      <a href="main_meter_mod_vis.html">Main meter - Report Part II (clean)</a>
+      <a href="Report_II_Administrative-2.html">50 Mooreland Ave.</a>
+    </li>
+    <li>
+      <a href="Report_II_Community.html">Allison Hall</a>
+    </li>
+    <li>
+      <a href="Report_II_Other.html">Biddle Press Box/Durden ATC</a>
     </li>
   </ul>
 </li>
@@ -449,7 +455,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-05-05
+<strong>Last updated:</strong> 2026-08-15
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -580,15 +586,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8b469b681b6d2c87a054d6d73b45bfdc26c6698etargetblank8b469b6a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreea292417ec4f72be71215224a065091420516f710targetblanka292417a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/8b469b681b6d2c87a054d6d73b45bfdc26c6698e" target="_blank">8b469b6</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/a292417ec4f72be71215224a065091420516f710" target="_blank">a292417</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8b469b681b6d2c87a054d6d73b45bfdc26c6698etargetblank8b469b6a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreea292417ec4f72be71215224a065091420516f710targetblanka292417a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -598,7 +604,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/8b469b681b6d2c87a054d6d73b45bfdc26c6698e" target="_blank">8b469b6</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/a292417ec4f72be71215224a065091420516f710" target="_blank">a292417</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -628,6 +634,7 @@ Ignored files:
     Ignored:    output/annual_kwh.csv
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
+    Ignored:    output/buildings_graph.csv
     Ignored:    output/daily_kwh.csv
     Ignored:    output/kwh_academic_2026-03-16.csv
     Ignored:    output/kwh_academic_2026-03-17.csv
@@ -673,13 +680,21 @@ Ignored files:
     Ignored:    output/kwh_main_daily.csv
 
 Untracked files:
-    Untracked:  analysis/main_meter_clean.Rmd
-    Untracked:  analysis/main_meter_final.Rmd
+    Untracked:  analysis/conclusions.Rmd
+    Untracked:  analysis/methods.Rmd
 
 Unstaged changes:
+    Modified:   analysis/Report_II_Academic.Rmd
+    Modified:   analysis/Report_II_Administrative-2.Rmd
+    Modified:   analysis/Report_II_Community.Rmd
+    Modified:   analysis/Report_II_Med-Residential-Building.Rmd
+    Modified:   analysis/Report_II_Other.Rmd
+    Modified:   analysis/Report_II_Residential-L.Rmd
+    Modified:   analysis/Report_II_Small_Residence_Halls.Rmd
+    Modified:   analysis/about.Rmd
     Modified:   analysis/campus_summary.Rmd
     Modified:   analysis/data_wrangling_final.Rmd
-    Modified:   analysis/main_meter_mod_vis.Rmd
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -724,6 +739,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/4ebaf60e609b69d434cf5130181fe0a233d8b917/docs/main_meter_model.html" target="_blank">4ebaf60</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-05-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 html
@@ -878,11 +910,11 @@ of the course, using the Main Meter as an example.</p>
 <h2>Load</h2>
 <pre class="r"><code>library(tidyverse)</code></pre>
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.2.0     ✔ readr     2.2.0
+✔ dplyr     1.2.1     ✔ readr     2.2.0
 ✔ forcats   1.0.1     ✔ stringr   1.6.0
-✔ ggplot2   4.0.2     ✔ tibble    3.3.1
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
 ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
-✔ purrr     1.2.1     
+✔ purrr     1.2.2     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
@@ -907,8 +939,20 @@ The following object is masked from &#39;package:dplyr&#39;:
 <pre><code>Registered S3 method overwritten by &#39;quantmod&#39;:
   method            from
   as.zoo.data.frame zoo </code></pre>
-<pre class="r"><code>library(visreg)
-library(lmtest) # to test for autocorrelation</code></pre>
+<pre class="r"><code>library(visreg)</code></pre>
+<pre><code>visreg 3.0 includes breaking changes. For migration details, see:
+https://pbreheny.github.io/visreg/articles/migrating-to-3-0.html
+
+Attaching package: &#39;visreg&#39;
+
+The following object is masked from &#39;package:nlme&#39;:
+
+    collapse
+
+The following object is masked from &#39;package:dplyr&#39;:
+
+    collapse</code></pre>
+<pre class="r"><code>library(lmtest) # to test for autocorrelation</code></pre>
 <pre><code>Loading required package: zoo
 
 Attaching package: &#39;zoo&#39;
@@ -1898,13 +1942,13 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.5.2 (2025-10-31)
+<pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1917,28 +1961,28 @@ attached base packages:
 
 other attached packages:
  [1] car_3.1-5       carData_3.0-6   lmtest_0.9-40   zoo_1.8-15     
- [5] visreg_2.8.0    tseries_0.10-60 segmented_2.2-1 nlme_3.1-168   
+ [5] visreg_3.0.0    tseries_0.10-61 segmented_2.2-1 nlme_3.1-169   
  [9] MASS_7.3-65     lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0  
-[13] dplyr_1.2.0     purrr_1.2.1     readr_2.2.0     tidyr_1.3.2    
-[17] tibble_3.3.1    ggplot2_4.0.2   tidyverse_2.0.0 workflowr_1.7.2
+[13] dplyr_1.2.1     purrr_1.2.2     readr_2.2.0     tidyr_1.3.2    
+[17] tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0 workflowr_1.7.2
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6       xfun_0.56          bslib_0.10.0       processx_3.8.6    
- [5] lattice_0.22-7     callr_3.7.6        tzdb_0.5.0         quadprog_1.5-8    
- [9] vctrs_0.7.1        tools_4.5.2        ps_1.9.1           generics_0.1.4    
-[13] curl_7.0.0         xts_0.14.2         pkgconfig_2.0.3    RColorBrewer_1.1-3
-[17] S7_0.2.1           lifecycle_1.0.5    compiler_4.5.2     farver_2.1.2      
-[21] git2r_0.36.2       getPass_0.2-4      httpuv_1.6.16      htmltools_0.5.9   
-[25] sass_0.4.10        yaml_2.3.12        Formula_1.2-5      later_1.4.8       
-[29] pillar_1.11.1      jquerylib_0.1.4    whisker_0.4.1      cachem_1.1.0      
-[33] abind_1.4-8        tidyselect_1.2.1   digest_0.6.39      stringi_1.8.7     
-[37] splines_4.5.2      rprojroot_2.1.1    fastmap_1.2.0      grid_4.5.2        
-[41] cli_3.6.5          magrittr_2.0.4     withr_3.0.2        scales_1.4.0      
-[45] promises_1.5.0     timechange_0.4.0   TTR_0.24.4         rmarkdown_2.30    
-[49] httr_1.4.8         quantmod_0.4.28    otel_0.2.0         hms_1.1.4         
-[53] evaluate_1.0.5     knitr_1.51         rlang_1.1.7        Rcpp_1.1.1        
-[57] glue_1.8.0         rstudioapi_0.18.0  jsonlite_2.0.0     R6_2.6.1          
-[61] fs_1.6.7          </code></pre>
+ [1] gtable_0.3.6       xfun_0.59          bslib_0.11.0       processx_3.9.0    
+ [5] lattice_0.22-9     callr_3.7.6        tzdb_0.5.0         quadprog_1.5-8    
+ [9] vctrs_0.7.3        tools_4.6.0        generics_0.1.4     curl_7.1.0        
+[13] xts_0.14.2         pkgconfig_2.0.3    RColorBrewer_1.1-3 S7_0.2.2          
+[17] lifecycle_1.0.5    compiler_4.6.0     farver_2.1.2       git2r_0.36.2      
+[21] getPass_0.2-4      httpuv_1.6.17      htmltools_0.5.9    sass_0.4.10       
+[25] yaml_2.3.12        Formula_1.2-5      later_1.4.8        pillar_1.11.1     
+[29] jquerylib_0.1.4    whisker_0.4.1      cachem_1.1.0       abind_1.4-8       
+[33] tidyselect_1.2.1   digest_0.6.39      stringi_1.8.7      labeling_0.4.3    
+[37] splines_4.6.0      rprojroot_2.1.1    fastmap_1.2.0      grid_4.6.0        
+[41] cli_3.6.6          magrittr_2.0.5     withr_3.0.3        scales_1.4.0      
+[45] promises_1.5.0     timechange_0.4.0   TTR_0.24.4         rmarkdown_2.31    
+[49] httr_1.4.8         quantmod_0.4.29    otel_0.2.0         hms_1.1.4         
+[53] evaluate_1.0.5     knitr_1.51         rlang_1.2.0        Rcpp_1.1.1-1.1    
+[57] glue_1.8.1         rstudioapi_0.19.0  jsonlite_2.0.0     R6_2.6.1          
+[61] fs_2.1.0          </code></pre>
 </div>
 </div>
 </div>

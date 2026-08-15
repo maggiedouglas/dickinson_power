@@ -11,11 +11,11 @@
 
 <meta name="author" content="Ben Connors &amp; Kyrie Sanchez" />
 
-<meta name="date" content="2026-05-05" />
+<meta name="date" content="2026-08-15" />
 
 <title>Other Buildings</title>
 
-<script src="site_libs/header-attrs-2.30/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.31/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
@@ -345,10 +345,10 @@ div.tocify {
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="about.html">Introduction</a>
+  <a href="conclusions.html">Executive Summary</a>
 </li>
 <li>
-  <a href="data_wrangling_final.html">Methods</a>
+  <a href="methods.html">Methods</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -382,28 +382,34 @@ div.tocify {
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    Electricity use models
+    Building case studies
      
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="main_meter_regression.html">Main meter - reg</a>
+      <a href="main_meter_clean.html">Main Meter</a>
     </li>
     <li>
-      <a href="main_meter_anova.html">Main meter - ANOVA</a>
+      <a href="Report_II_Small_Residence_Halls.html">519 W. Louther St</a>
     </li>
     <li>
-      <a href="main_meter_mult_reg.html">Main meter - Full model</a>
+      <a href="Report_II_Med-Residential-Building.html">Treehouse</a>
     </li>
     <li>
-      <a href="main_meter_mod_vis.html">Main meter - visualization</a>
+      <a href="Report_II_Residential-L.html">Drayer Hall</a>
     </li>
     <li>
-      <a href="main_meter_mult_reg.html">Main meter - Report Part II</a>
+      <a href="Report_II_Academic.html">Althouse Hall</a>
     </li>
     <li>
-      <a href="main_meter_mod_vis.html">Main meter - Report Part II (clean)</a>
+      <a href="Report_II_Administrative-2.html">50 Mooreland Ave.</a>
+    </li>
+    <li>
+      <a href="Report_II_Community.html">Allison Hall</a>
+    </li>
+    <li>
+      <a href="Report_II_Other.html">Biddle Press Box/Durden ATC</a>
     </li>
   </ul>
 </li>
@@ -429,7 +435,7 @@ div.tocify {
 
 <h1 class="title toc-ignore">Other Buildings</h1>
 <h4 class="author">Ben Connors &amp; Kyrie Sanchez</h4>
-<h4 class="date">05/05/26</h4>
+<h4 class="date">08/15/26</h4>
 
 </div>
 
@@ -458,7 +464,7 @@ class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-05-05
+<strong>Last updated:</strong> 2026-08-15
 </p>
 <p>
 <strong>Checks:</strong> <span
@@ -589,15 +595,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8b469b681b6d2c87a054d6d73b45bfdc26c6698etargetblank8b469b6a">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreea292417ec4f72be71215224a065091420516f710targetblanka292417a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/8b469b681b6d2c87a054d6d73b45bfdc26c6698e" target="_blank">8b469b6</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/a292417ec4f72be71215224a065091420516f710" target="_blank">a292417</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree8b469b681b6d2c87a054d6d73b45bfdc26c6698etargetblank8b469b6a"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreea292417ec4f72be71215224a065091420516f710targetblanka292417a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -607,7 +613,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/8b469b681b6d2c87a054d6d73b45bfdc26c6698e" target="_blank">8b469b6</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/a292417ec4f72be71215224a065091420516f710" target="_blank">a292417</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -637,6 +643,7 @@ Ignored files:
     Ignored:    output/annual_kwh.csv
     Ignored:    output/building_check.csv
     Ignored:    output/building_check.xlsx
+    Ignored:    output/buildings_graph.csv
     Ignored:    output/daily_kwh.csv
     Ignored:    output/kwh_academic_2026-03-16.csv
     Ignored:    output/kwh_academic_2026-03-17.csv
@@ -682,13 +689,21 @@ Ignored files:
     Ignored:    output/kwh_main_daily.csv
 
 Untracked files:
-    Untracked:  analysis/main_meter_clean.Rmd
-    Untracked:  analysis/main_meter_final.Rmd
+    Untracked:  analysis/conclusions.Rmd
+    Untracked:  analysis/methods.Rmd
 
 Unstaged changes:
+    Modified:   analysis/Report_II_Academic.Rmd
+    Modified:   analysis/Report_II_Administrative-2.Rmd
+    Modified:   analysis/Report_II_Community.Rmd
+    Modified:   analysis/Report_II_Med-Residential-Building.Rmd
+    Modified:   analysis/Report_II_Other.Rmd
+    Modified:   analysis/Report_II_Residential-L.Rmd
+    Modified:   analysis/Report_II_Small_Residence_Halls.Rmd
+    Modified:   analysis/about.Rmd
     Modified:   analysis/campus_summary.Rmd
     Modified:   analysis/data_wrangling_final.Rmd
-    Modified:   analysis/main_meter_mod_vis.Rmd
+    Modified:   analysis/index.Rmd
 
 </code></pre>
 <p>
@@ -733,6 +748,23 @@ Message
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/4ebaf60e609b69d434cf5130181fe0a233d8b917/docs/Report_I_Other.html" target="_blank">4ebaf60</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-05-05
+</td>
+<td>
+Build site.
+</td>
+</tr>
 <tr>
 <td>
 Rmd
@@ -1353,13 +1385,13 @@ Session information
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
 <pre class="r"><code>sessionInfo()</code></pre>
-<pre><code>R version 4.5.2 (2025-10-31)
+<pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
 
 Matrix products: default
-BLAS:   /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRblas.0.dylib 
-LAPACK: /Library/Frameworks/R.framework/Versions/4.5-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
+BLAS:   /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRblas.0.dylib 
+LAPACK: /Library/Frameworks/R.framework/Versions/4.6-x86_64/Resources/lib/libRlapack.dylib;  LAPACK version 3.12.1
 
 locale:
 [1] en_US.UTF-8/en_US.UTF-8/en_US.UTF-8/C/en_US.UTF-8/en_US.UTF-8
@@ -1372,26 +1404,25 @@ attached base packages:
 
 other attached packages:
  [1] paletteer_1.7.0 DT_0.34.0       lubridate_1.9.5 forcats_1.0.1  
- [5] stringr_1.6.0   dplyr_1.2.0     purrr_1.2.1     readr_2.2.0    
- [9] tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.2   tidyverse_2.0.0
+ [5] stringr_1.6.0   dplyr_1.2.1     purrr_1.2.2     readr_2.2.0    
+ [9] tidyr_1.3.2     tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0
 [13] workflowr_1.7.2
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.10        generics_0.1.4     prismatic_1.1.2    stringi_1.8.7     
- [5] hms_1.1.4          digest_0.6.39      magrittr_2.0.4     timechange_0.4.0  
- [9] evaluate_1.0.5     grid_4.5.2         RColorBrewer_1.1-3 fastmap_1.2.0     
-[13] rprojroot_2.1.1    jsonlite_2.0.0     processx_3.8.6     whisker_0.4.1     
-[17] rematch2_2.1.2     ps_1.9.1           promises_1.5.0     httr_1.4.8        
-[21] crosstalk_1.2.2    scales_1.4.0       jquerylib_0.1.4    cli_3.6.5         
-[25] rlang_1.1.7        withr_3.0.2        cachem_1.1.0       yaml_2.3.12       
-[29] otel_0.2.0         tools_4.5.2        tzdb_0.5.0         httpuv_1.6.16     
-[33] vctrs_0.7.1        R6_2.6.1           lifecycle_1.0.5    git2r_0.36.2      
-[37] htmlwidgets_1.6.4  fs_1.6.7           pkgconfig_2.0.3    callr_3.7.6       
-[41] pillar_1.11.1      bslib_0.10.0       later_1.4.8        gtable_0.3.6      
-[45] glue_1.8.0         Rcpp_1.1.1         xfun_0.56          tidyselect_1.2.1  
-[49] rstudioapi_0.18.0  knitr_1.51         farver_2.1.2       htmltools_0.5.9   
-[53] labeling_0.4.3     rmarkdown_2.30     compiler_4.5.2     getPass_0.2-4     
-[57] S7_0.2.1          </code></pre>
+ [5] hms_1.1.4          digest_0.6.39      magrittr_2.0.5     timechange_0.4.0  
+ [9] evaluate_1.0.5     grid_4.6.0         RColorBrewer_1.1-3 fastmap_1.2.0     
+[13] rprojroot_2.1.1    jsonlite_2.0.0     processx_3.9.0     whisker_0.4.1     
+[17] rematch2_2.1.2     promises_1.5.0     httr_1.4.8         crosstalk_1.2.2   
+[21] scales_1.4.0       jquerylib_0.1.4    cli_3.6.6          rlang_1.2.0       
+[25] withr_3.0.3        cachem_1.1.0       yaml_2.3.12        otel_0.2.0        
+[29] tools_4.6.0        tzdb_0.5.0         httpuv_1.6.17      vctrs_0.7.3       
+[33] R6_2.6.1           lifecycle_1.0.5    git2r_0.36.2       htmlwidgets_1.6.4 
+[37] fs_2.1.0           pkgconfig_2.0.3    callr_3.7.6        pillar_1.11.1     
+[41] bslib_0.11.0       later_1.4.8        gtable_0.3.6       glue_1.8.1        
+[45] Rcpp_1.1.1-1.1     xfun_0.59          tidyselect_1.2.1   rstudioapi_0.19.0 
+[49] knitr_1.51         farver_2.1.2       htmltools_0.5.9    labeling_0.4.3    
+[53] rmarkdown_2.31     compiler_4.6.0     getPass_0.2-4      S7_0.2.2          </code></pre>
 </div>
 </div>
 </div>
