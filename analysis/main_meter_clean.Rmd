@@ -5,7 +5,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r grid, fig.align = 'center', out.width = "90%", fig.cap = "Main meter buildings shown in color (diagram courtesy of Mike Kiner)", fig.topcaption=TRUE}

@@ -10,7 +10,7 @@ output: html_document
 ```
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r load, message = F}
@@ -48,7 +48,7 @@ buildings_graph$meter <- factor(buildings_graph$meter,
 pal <- c("lightgrey","darkgrey","#CAB2D6","#6A3D9A")
 
 ggplot(buildings_graph, 
-       aes(x = reorder(type_new, sqft, FUN = "sum"), fill = meter)) +
+       aes(x = type_new, fill = meter)) +
   geom_bar(position = "stack") +
   scale_fill_manual(values = pal) +
   theme_bw() +

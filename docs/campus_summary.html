@@ -34,7 +34,6 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 <link href="site_libs/htmltools-fill-0.5.9/fill.css" rel="stylesheet" />
@@ -241,9 +240,6 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
 
 
@@ -347,7 +343,7 @@ div.tocify {
   <a href="conclusions.html">Executive Summary</a>
 </li>
 <li>
-  <a href="index.html">Introduction</a>
+  <a href="index.html">Goals</a>
 </li>
 <li>
   <a href="methods.html">Methods</a>
@@ -429,14 +425,6 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
-
 
 
 <h1 class="title toc-ignore">Campus Summary</h1>
@@ -470,44 +458,8 @@ over 5000 MT CO2-equivalents (Table 1). Most (68%) of this use was
 associated with buildings on the main meter. Another 6% was associated
 for nine buildings on the Weis meter, and the remaining 26% was
 associated with individually metered buildings.</p>
-<pre class="r"><code>joined_pretty_tot &lt;- joined_tot %&gt;%
-  mutate(kwh = round(kwh_corr, digits = 0),
-         dollars = paste(&quot;$&quot;,round(dollars, digits = 0)),
-         ghg_MTCO2 = round(ghg_MTCO2, digits = 0),
-         sqft = round(sqft, digits = 0),
-         kwh_sqft = round(kwh_sqft, digits = 1)) %&gt;%
-  select(meter, number, sqft, kwh, dollars, ghg_MTCO2, kwh_sqft) %&gt;%
-  arrange(kwh)
-
-joined_pretty_cat &lt;- joined_cat %&gt;%
-  mutate(kwh = round(kwh, digits = 0),
-         dollars = paste(&quot;$&quot;,round(dollars, digits = 0)),
-         ghg_MTCO2 = round(ghg_kgCO2/1000, digits = 0),
-         sqft = round(sqft, digits = 0),
-         med_kwh_sqft = round(med_kwh_sqft, digits = 1),
-         kwh_sqft_25 = round(kwh_sqft_25, digits = 1),
-         kwh_sqft_75 = round(kwh_sqft_75, digits = 1)) %&gt;%
-    select(type, n, sqft, med_kwh_sqft, kwh_sqft_25, kwh_sqft_75) %&gt;% 
-  arrange(desc(med_kwh_sqft)) %&gt;%
-  filter(!is.na(med_kwh_sqft))</code></pre>
-<pre class="r"><code>datatable(joined_pretty_tot,
-          rownames = FALSE,
-          colnames = c(&quot;Meter status&quot;,&quot;Buildings&quot;, &quot;Square\nfootage&quot;, &quot;kWh&quot;, &quot;Est. cost&quot;, 
-                       &quot;CO2e\n(MT)&quot;,  &quot;kWh per\nsqft&quot;),
-          filter = &quot;none&quot;,
-          class = &quot;compact&quot;,
-          options = list(pageLength = 4, autoWidth = TRUE, dom = &#39;t&#39;),
-          caption = &quot;Table 1. Building and electricity summary by meter status in Fiscal Year 2025. Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Building and electricity summary by meter status in Fiscal Year 2025. Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Weis Meter","Individually Metered","Main Meter","Total"],[9,81,44,134],[85725,691658,1119435,1896818],[973320,4547942,11648808,17170070],["$ 79214","$ 370135","$ 948039","$ 1397387"],[293,1368,3504,5165],[11.4,6.6,10.4,9.1]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter status<\/th>\n      <th>Buildings<\/th>\n      <th>Square\nfootage<\/th>\n      <th>kWh<\/th>\n      <th>Est. cost<\/th>\n      <th>CO2e\n(MT)<\/th>\n      <th>kWh per\nsqft<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":4,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,5,6]},{"name":"meter","targets":0},{"name":"number","targets":1},{"name":"sqft","targets":2},{"name":"kwh","targets":3},{"name":"dollars","targets":4},{"name":"ghg_MTCO2","targets":5},{"name":"kwh_sqft","targets":6}],"order":[],"orderClasses":false,"lengthMenu":[4,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
-<pre class="r"><code>datatable(joined_pretty_cat,
-          rownames = FALSE,
-          colnames = c(&quot;Building\ntype&quot;,&quot;Buildings\nwith data&quot;, &quot;Median\nsquare\nfootage&quot;, &quot;Median\nkWh\nper sqft&quot;,
-                       &quot;25th Perc.&quot;, &quot;75th Perc.&quot;),
-          filter = &quot;none&quot;,
-          class = &quot;compact&quot;,
-          options = list(pageLength = 11, autoWidth = TRUE, dom = &#39;t&#39;),
-          caption = &quot;Table 2. Descriptive statistics for annual electricity use by building type for those buildings with individual electricity use data (n = 81 buildings). Annual estimates for each meter were adjusted to account for missing days of electricity data.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Descriptive statistics for annual electricity use by building type for those buildings with individual electricity use data (n = 81 buildings). Annual estimates for each meter were adjusted to account for missing days of electricity data.<\/caption>","data":[["Mixed","Other","Residential - M","Residential - S","Residential - L","Community","Academic","Admin"],[2,14,14,18,19,4,10,6],[84008,2492,4525,1477,18603,7420,7808,14650],[15.6,6.8,5.5,5.2,4.8,4.3,3.7,3.2],[10.7,5.2,2.9,3.9,4.3,3.2,3.6,2.6],[20.6,9.300000000000001,6.5,5.8,7,6.3,4.8,5.3]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Building\ntype<\/th>\n      <th>Buildings\nwith data<\/th>\n      <th>Median\nsquare\nfootage<\/th>\n      <th>Median\nkWh\nper sqft<\/th>\n      <th>25th Perc.<\/th>\n      <th>75th Perc.<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":11,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[1,2,3,4,5]},{"name":"type","targets":0},{"name":"n","targets":1},{"name":"sqft","targets":2},{"name":"med_kwh_sqft","targets":3},{"name":"kwh_sqft_25","targets":4},{"name":"kwh_sqft_75","targets":5}],"order":[],"orderClasses":false,"lengthMenu":[10,11,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
@@ -521,25 +473,6 @@ buildings, large residence halls accounted for the largest share of
 electricity use and peaked in winter (Figure 5). Interestingly,
 electricity production through the solar field peaked in July and was
 lowest in December and January (Figure 3).</p>
-<pre class="r"><code>daily_graph &lt;- daily_full %&gt;%
-  mutate(date = as_date(date),
-         month = month(date, label = TRUE),
-         day = wday(date, label = TRUE),
-         type_brief = recode(type,
-                       &#39;Res Hall - U&#39; = &#39;Residential&#39;,
-                       &#39;Res Hall - S&#39; = &#39;Residential&#39;,
-                       &#39;Res Hall - M&#39; = &#39;Residential&#39;,
-                       &#39;Res Hall - L&#39; = &#39;Residential&#39;)) %&gt;%
-  filter(!is.na(month))
-
-ggplot(filter(daily_graph, meter != &quot;Submeter&quot;),
-       aes(x = month, y = kwh/10^6, fill = reorder(type_brief, kwh, FUN = sum))) +
-  geom_col(position = &quot;stack&quot;) +
-  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
-  #scale_fill_brewer(type = &quot;qual&quot;, palette = &quot;Paired&quot;) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (million kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Figure 3. Monthly patterns in electricity use in FY25&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/stacked%20bar-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-no-spaces-stacked-bar-1">
@@ -633,17 +566,6 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>ggplot(filter(daily_graph, meter %in% c(&quot;Main Meter - Total&quot;, &quot;Weis Meter - Total&quot;)),
-       aes(x = month, y = kwh/10^3, fill = type_brief)) +
-  geom_col(position = &quot;stack&quot;) +
-  facet_wrap(. ~ type_brief) +
-  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
-  theme_bw() +
-  theme(legend.position = &quot;none&quot;) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Figure 4. Monthly patterns in electricity use for aggregate meters in FY2025&quot;,
-       )</code></pre>
 <p><img src="figure/campus_summary.Rmd/faceted_agg-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-faceted_agg-1">
@@ -704,17 +626,6 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>ggplot(filter(daily_graph, meter == &quot;Individual&quot; &amp; type != &quot;Solar&quot;),
-       aes(x = month, y = kwh/10^3, fill = type_brief)) +
-  geom_col(position = &quot;stack&quot;) +
-  facet_wrap(. ~ type_brief) +
-  scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
-  theme_bw() +
-  theme(legend.position = &quot;none&quot;) +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
-  labs(x = &quot;&quot;, y = &quot;Electricity use (1000 kWh)&quot;, fill = &quot;&quot;,
-       title = &quot;Figure 5. Monthly patterns in electricity use by category in FY2025&quot;,
-       subtitle = &quot;Only includes buildings with individual meters. Most electricity use is on the Main Meter.&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/faceted-1.png" alt="" width="768" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-faceted-1">
@@ -823,47 +734,6 @@ Colleges and Universities (EIA 2022).</p>
 falling below the values for typical U.S. College and University
 buildings, for both the aggregate meters and the buildings on individual
 meters (Figure 7).</p>
-<pre class="r"><code>total &lt;- joined_full %&gt;%
-  filter(meter != &quot;Submeter&quot;) %&gt;%
-  summarize(kwh = sum(kwh, na.rm = TRUE),
-            kwh_corr = sum(kwh_corr, na.rm = TRUE),
-            sqft = sum(sqft, na.rm = TRUE),
-            occupants = sum(occupants, na.rm = TRUE)) %&gt;%
-  mutate(kwh_sqft = kwh_corr/sqft)
-
-intensity &lt;- joined_full %&gt;%
-  filter(!(type %in% c(&quot;Residential - U&quot;,&quot;Solar&quot;, &quot;Non-building&quot;))) %&gt;%
-  mutate(kwh_sqft = kwh_corr/sqft,
-         meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;),
-         outlier = case_when(
-           NAME == &quot;King House&quot; ~ &quot;King House&quot;,
-           NAME == &quot;Kisner - Woodward&quot; ~ &quot;K-W&quot;,
-           NAME == &quot;Factory Apts.&quot; ~ &quot;Factory&quot;,
-           NAME == &quot;Rector Science Center&quot; ~ &quot;Rector&quot;,
-           NAME == &quot;Quarry, The &quot; ~ &quot;Quarry&quot;,
-           NAME == &quot;27 W. High St.&quot; ~ &quot;27 W. High&quot;
-         )) 
-
-# median and IQR come from EIA (2022) table, annual kWh per square foot for Colleges/Universities
-# https://www.eia.gov/consumption/commercial/data/2018/ce/pdf/c22.pdf
-
-ggplot(intensity,
-       aes(x = reorder(type, kwh_sqft, FUN = &quot;median&quot;),
-                        y = kwh_sqft, fill = type)) +
-  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
-  geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
-  facet_grid(meter_type ~ ., scales = &quot;free_y&quot;, space = &quot;free_y&quot;) +
-  geom_boxplot() +
-  geom_label(aes(label = outlier), na.rm = TRUE, nudge_x = -0.25, nudge_y = 0.5, 
-             color = &quot;black&quot;, fill = &quot;white&quot;, size = 2, alpha = 0, label.size = NA) +
-    scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
-  ylim(0, 28) +
-  coord_flip() +
-  theme_bw() +
-  theme(legend.position = &quot;none&quot;) +
-  labs(x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;, 
-       title = &quot;Figure 6. Electricity intensity by meter/building category in FY25&quot;,
-       caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/intensity-1.png" alt="" width="648" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity-1">
@@ -979,26 +849,6 @@ maggiedouglas
 </table>
 </div>
 </div>
-<pre class="r"><code>intensity_acad &lt;- joined_acad %&gt;%
-  filter(!(type %in% c(&quot;Residential - U&quot;,&quot;Solar&quot;, &quot;Non-building&quot;))) %&gt;%
-    mutate(kwh_sqft = kwh_corr/sqft,
-         meter_type = ifelse(type %in% c(&quot;Main Meter&quot;,&quot;Weis Meter&quot;), &quot;Aggregate&quot;, &quot;Individual Meter&quot;))
-
-ggplot(intensity_acad,
-       aes(x = reorder(type, kwh_sqft, FUN = &quot;median&quot;),
-                        y = kwh_sqft, fill = type)) +
-  annotate(&quot;rect&quot;, xmin = -Inf, xmax = Inf, ymin = 7.4, ymax = 14.3, color = &quot;lightgray&quot;, alpha = 0.3) +
-  geom_hline(yintercept = 10.3, linetype = &quot;dashed&quot;, color = &quot;white&quot;) +
-  facet_grid(meter_type ~ ., scales = &quot;free_y&quot;, space = &quot;free_y&quot;) +
-    scale_fill_paletteer_d(&quot;ggthemes::Tableau_20&quot;) +
-    ylim(0, 25) +
-  geom_boxplot() +
-  coord_flip() +
-  theme_bw() +
-  theme(legend.position = &quot;none&quot;) +
-  labs(x = &quot;&quot;, y = &quot;Electricity Intensity (kWh/sqft/year)&quot;, 
-       title = &quot;Figure 7. Electricity intensity by meter/building category in AY24/25&quot;, 
-       caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile \nof typical values in U.S. College and University buildings (EIA 2022)&quot;)</code></pre>
 <p><img src="figure/campus_summary.Rmd/intensity_acad-1.png" alt="" width="648" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-intensity_acad-1">
@@ -1087,7 +937,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
@@ -1177,11 +1026,6 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
 <script>
 $(document).ready(function ()  {

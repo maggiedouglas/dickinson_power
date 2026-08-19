@@ -4,12 +4,11 @@ author: "Maggie Douglas"
 workflowr:
   suppress_report: TRUE
 output: 
-  html_document:
-    code_folding: hide
+  html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{r load, message = FALSE, warning = FALSE, include = F}
