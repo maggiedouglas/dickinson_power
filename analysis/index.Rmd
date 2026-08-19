@@ -13,18 +13,16 @@ library(here)
 
 # Dickinson Power
 
+### Spring 2026
+
 This project explores electricity use at Dickinson College to support environmental and fiscal sustainability on campus. The students in ENST 325: Environmental Data Analysis in Practice generated this report in spring 2026 with the support and collaboration of the Center for Sustainability Education (CSE) and Facilities Management. 
 
 ### Background
 
 Dickinson College prides itself on its commitment to sustainability and has been carbon neutral since 2020 (Carbon Neutrality FAQ, n.d.). Electricity usage has historically accounted for about a third of carbon emissions at the College and played a key role in the college becoming climate neutral (Leary 2025). A 3-megawatt solar photovoltaic array, transition to LED lighting, and purchase of Renewable Energy Credits (RECs) were major contributors to Dickinson reducing its carbon footprint by 50% from 2008 to 2023 (Leary 2025). The College maintains carbon neutrality by purchasing offsets for the remaining carbon emissions. Further electricity savings would allow the College to reduce costs and continue advancing its climate commitments. Such investments are likely to be especially fruitful as the cost of electricity continues to rise (EIA 2026). 
 
-```{r footprint, fig.align = 'center', out.width = "30%", include = F}
-knitr::include_graphics("assets/carbon_footprint.png", error = FALSE)
-```
-
-```{r costs, fig.align = 'center', out.width = "50%", include = F}
-knitr::include_graphics("assets/electric-costs.png", error = FALSE)
+```{r costs, fig.align = 'center', out.width = "85%"}
+knitr::include_graphics("assets/carbon_and_costs.png", error = FALSE)
 ```
 
 ### Goals of this report
@@ -62,7 +60,7 @@ Nam Nguyen (Data Analysis Intern)
 
 ### Acknowledgements
 
-We wish to extend a special thanks to Mike Kiner, Director of Trades, for sharing his time and expertise for the duration of this project. We also thank all attendees at our final presentation in April 2026, who offered valuable insights that informed our interpretation. That said, any and all mistakes are our own. 
+We wish to extend a special thanks to Mike Kiner, Director of Trades, for sharing his time and expertise for the duration of this project. We also thank Chris Sharples of SHoP Architects and all attendees at our final presentation in April 2026. They offered valuable insights that informed our interpretation and recommendations. That said, any and all mistakes are our own. 
 
 ![](assets/ENST_butterfly.png){width=40%} &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ![](assets/Dickinson_CSE_web.png){width=40%}
 

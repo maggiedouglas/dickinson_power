@@ -5,11 +5,14 @@ navbar:
   left:
   - text: Executive Summary
     href: conclusions.html
+  - text: Introduction
+    href: index.html
   - text: Methods
     href: methods.html
   - text: "Electricity summary"
-    href: campus_summary.html
     menu:
+      - text: "Campus summary"
+      - href: campus_summary.html
       - text: "Res. Halls < 2K sqft"
         href: Report_I_Small_Residence_Halls.html
       - text: "Res. Halls 2-10K sqft"
