@@ -424,7 +424,6 @@ div.tocify {
 </div>
 
 
-<pre class="r"><code>knitr::include_graphics(&quot;assets/althouse.jpg&quot;, error = FALSE)</code></pre>
 <div class="figure" style="text-align: center">
 <img src="assets/althouse.jpg" alt="Photo from Dickinson College" width="75%" />
 <p class="caption">
@@ -508,31 +507,6 @@ There was no significant difference between spring and fall semester but
 summer and winter showed lower electricity consumption. Summer had 36%
 less electricity use and winter had 47% less electricity use compared to
 the fall semester (Figure 1).</p>
-<pre class="r"><code># New days data frame 
-period_df &lt;- data.frame(ave_temp = 58,
-                      wday = &quot;Mon&quot;,
-                      period = c(&quot;Fall Semester&quot;, &quot;Winter Break&quot;, &quot;Spring Semester&quot;, 
-                                 &quot;Summer Break&quot;))
-
-# Estimated means and confidence interval
-conf_period &lt;- as.data.frame(predict(alt_seg,
-                                  vcov = vcovHAC(alt_seg),
-                                  newdata = period_df, 
-                                  interval = &quot;confidence&quot;, level = 0.95)) %&gt;%
-  mutate(period = factor(c(&quot;Fall Semester&quot;, &quot;Winter Break&quot;, &quot;Spring Semester&quot;, &quot;Summer Break&quot;),
-                      levels = c(&quot;Fall Semester&quot;, &quot;Winter Break&quot;, &quot;Spring Semester&quot;, 
-                                 &quot;Summer Break&quot;)))
-
-# Graph 
-ggplot(conf_period) +
-  geom_col(aes(x = period, y = fit), fill = &quot;plum&quot;, alpha=0.8) +
-  geom_errorbar(aes(x = period, ymin = lwr, ymax = upr), 
-                width=0.4, colour=&quot;darkgray&quot;, size = 1) +
-  theme_bw()+
-  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
-       title = &quot;Figure 1. Althouse electricity use by time of year&quot;,
-       subtitle = &quot;Mean +/- 95% confidence interval&quot;,
-       caption = &quot;Estimated for a Monday with an outdoor temperature of 58 degrees F&quot;)</code></pre>
 <p><img src="figure/Report_II_Academic.Rmd/period_frames-1.png" alt="" width="480" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-period_frames-1">
@@ -577,29 +551,6 @@ Monday through Thursday were not significantly different but Friday,
 Saturday, and Sunday showed lower electricity consumption. Friday had 8%
 less electricity use, Saturday had 43% less electricity use, and Sunday
 had 37% less electricity use compared to a Monday (Figure 2).</p>
-<pre class="r"><code># New  days data frame
-days_df &lt;- data.frame(ave_temp = 58,
-                      wday = c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;),
-                      period = &quot;Fall Semester&quot;)
-
-# Estimated means and confidence interval
-conf_data &lt;- as.data.frame(predict(alt_seg,
-                                  vcov = vcovHAC(alt_seg),
-                                  newdata = days_df, 
-                                  interval = &quot;confidence&quot;, level = 0.95)) %&gt;%
-  mutate(day = factor(c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;),
-                      levels = c(&quot;Mon&quot;,&quot;Tue&quot;,&quot;Wed&quot;,&quot;Thu&quot;,&quot;Fri&quot;,&quot;Sat&quot;,&quot;Sun&quot;)))
-
-# Graph 
-ggplot(conf_data) +
-  geom_col(aes(x = day, y = fit), fill = &quot;plum&quot;, alpha=0.8) +
-  geom_errorbar(aes(x = day, ymin = lwr, ymax = upr), 
-                width=0.4, colour=&quot;darkgray&quot;, size = 1) +
-  theme_bw()+
-  labs(x = &quot;&quot;, y = &quot;Electricity use (kWh per day)&quot;, 
-       title = &quot;Figure 2. Althouse electricity use by day of the week&quot;,
-       subtitle = &quot;Mean +/- 95% confidence interval&quot;,
-       caption = &quot;Estimated for a day in fall with an outdoor temperature of 58 degrees F&quot;)</code></pre>
 <p><img src="figure/Report_II_Academic.Rmd/weedkday_frames-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-weedkday_frames-1">
@@ -642,11 +593,6 @@ maggiedouglas
 consumption and temperature above 73 degrees (F<sub>6,329</sub>=23.2,
 P&lt;0.001). A one degree F increase in temperature is correlated with
 an increase of 5.9 kWh (+/- 2.1 kWh; Figure 3).</p>
-<pre class="r"><code>plot(alt_seg, vcov = vcovHAC(alt_seg), 
-     col = &#39;black&#39;, res = TRUE, conf.level = .95, shade = T, 
-     res.col = adjustcolor(&quot;plum&quot;, alpha.f = 0.7),
-     xlab = &quot;Temperature (degrees F)&quot;, ylab = &quot;Electricity use (kWh per day)&quot;)
-title(&quot;Figure 3. Althouse electricity use by temperature&quot;, adj = 0, cex.main = 1.2, font.main = 1)</code></pre>
 <p><img src="figure/Report_II_Academic.Rmd/temp_plot-1.png" alt="" width="528" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-temp_plot-1">
@@ -760,7 +706,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
@@ -783,25 +728,24 @@ other attached packages:
  [5] nlme_3.1-169    MASS_7.3-65     car_3.1-5       carData_3.0-6  
  [9] tseries_0.10-61 lubridate_1.9.5 forcats_1.0.1   stringr_1.6.0  
 [13] dplyr_1.2.1     purrr_1.2.2     readr_2.2.0     tidyr_1.3.2    
-[17] tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0 workflowr_1.7.2
+[17] tibble_3.3.1    ggplot2_4.0.3   tidyverse_2.0.0
 
 loaded via a namespace (and not attached):
- [1] gtable_0.3.6       xfun_0.59          bslib_0.11.0       processx_3.9.0    
- [5] lattice_0.22-9     callr_3.7.6        tzdb_0.5.0         quadprog_1.5-8    
- [9] vctrs_0.7.3        tools_4.6.0        generics_0.1.4     curl_7.1.0        
-[13] xts_0.14.2         pkgconfig_2.0.3    RColorBrewer_1.1-3 S7_0.2.2          
-[17] lifecycle_1.0.5    compiler_4.6.0     farver_2.1.2       git2r_0.36.2      
-[21] getPass_0.2-4      httpuv_1.6.17      htmltools_0.5.9    sass_0.4.10       
-[25] yaml_2.3.12        Formula_1.2-5      later_1.4.8        pillar_1.11.1     
-[29] jquerylib_0.1.4    whisker_0.4.1      cachem_1.1.0       abind_1.4-8       
-[33] tidyselect_1.2.1   digest_0.6.39      stringi_1.8.7      labeling_0.4.3    
-[37] splines_4.6.0      rprojroot_2.1.1    fastmap_1.2.0      grid_4.6.0        
-[41] cli_3.6.6          magrittr_2.0.5     withr_3.0.3        scales_1.4.0      
-[45] promises_1.5.0     timechange_0.4.0   TTR_0.24.4         rmarkdown_2.31    
-[49] httr_1.4.8         quantmod_0.4.29    otel_0.2.0         hms_1.1.4         
-[53] evaluate_1.0.5     knitr_1.51         rlang_1.2.0        Rcpp_1.1.1-1.1    
-[57] glue_1.8.1         rstudioapi_0.19.0  jsonlite_2.0.0     R6_2.6.1          
-[61] fs_2.1.0          </code></pre>
+ [1] gtable_0.3.6       xfun_0.59          bslib_0.11.0       lattice_0.22-9    
+ [5] tzdb_0.5.0         quadprog_1.5-8     vctrs_0.7.3        tools_4.6.0       
+ [9] generics_0.1.4     curl_7.1.0         xts_0.14.2         pkgconfig_2.0.3   
+[13] RColorBrewer_1.1-3 S7_0.2.2           lifecycle_1.0.5    compiler_4.6.0    
+[17] farver_2.1.2       git2r_0.36.2       httpuv_1.6.17      htmltools_0.5.9   
+[21] sass_0.4.10        yaml_2.3.12        Formula_1.2-5      later_1.4.8       
+[25] pillar_1.11.1      jquerylib_0.1.4    whisker_0.4.1      cachem_1.1.0      
+[29] abind_1.4-8        tidyselect_1.2.1   digest_0.6.39      stringi_1.8.7     
+[33] labeling_0.4.3     splines_4.6.0      rprojroot_2.1.1    fastmap_1.2.0     
+[37] grid_4.6.0         cli_3.6.6          magrittr_2.0.5     withr_3.0.3       
+[41] scales_1.4.0       promises_1.5.0     timechange_0.4.0   TTR_0.24.4        
+[45] rmarkdown_2.31     quantmod_0.4.29    otel_0.2.0         workflowr_1.7.2   
+[49] hms_1.1.4          evaluate_1.0.5     knitr_1.51         rlang_1.2.0       
+[53] Rcpp_1.1.1-1.1     glue_1.8.1         rstudioapi_0.19.0  jsonlite_2.0.0    
+[57] R6_2.6.1           fs_2.1.0          </code></pre>
 </div>
 </div>
 

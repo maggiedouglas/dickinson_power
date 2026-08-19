@@ -11,7 +11,6 @@
 
 <meta name="author" content="Amiya Marbles &amp; Eva Hanlin" />
 
-<meta name="date" content="2026-08-19" />
 
 <title>Adminstrative Buildings</title>
 
@@ -430,7 +429,6 @@ div.tocify {
 
 <h1 class="title toc-ignore">Adminstrative Buildings</h1>
 <h4 class="author">Amiya Marbles &amp; Eva Hanlin</h4>
-<h4 class="date">08/19/26</h4>
 
 </div>
 
@@ -489,13 +487,6 @@ EIA categorizes administrative or professional office buildings at other
 Colleges and Universities as using an average of 227,000 kWh per
 building per year, with a median electricity use per square foot of
 <strong>9.7 kWh/sqft</strong> (Figures 1 and 2).</p>
-<pre class="r"><code>datatable(final2_annual_admin,
-          rownames = FALSE,
-          colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh per year&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;Cost ($)&quot;, &quot;CO2e (MT)&quot;),
-          filter = &quot;none&quot;,
-          class = &quot;compact&quot;,
-          options = list(pageLength = 6, autoWidth = TRUE, dom =&#39;t&#39;), caption =
-&quot;Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-1d485ada9b99fcfe0617" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-1d485ada9b99fcfe0617">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 1. Total electricity use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during fiscal year 2025.<\/caption>","data":[["Individual","Individual","Individual","Submeter","Individual","Individual"],["556 W. Louther St.","41 Conway St.","554 W. Louther St.","Old West","50 Mooreland Ave.","5 N. Orange St. - Facilities"],[100,100,100,92,100,100],[2000,2200,1440,30208,27100,75000],[4986,6277,8520,67247,95137,567745],[4986,6277,8520,73051,95137,567745],[2.5,2.9,5.9,2.2,3.5,7.6],[406,511,693,5945,7743,46206],[1,2,3,22,29,171]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_sqft","targets":6},{"name":"est.cost","targets":7},{"name":"CO2e.MT","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 <p>Table 2 illustrates the largest electricity user for the academic
@@ -509,12 +500,6 @@ electricity per square foot. Dickinson College’s administrative
 buildings’ electricity use still remained low compared to the
 administrative buildings on other college campuses compiled by the EIA,
 both in terms of total electricity use and per square foot.</p>
-<pre class="r"><code>datatable(final2_academic_admin,
-          rownames = FALSE,
-          colnames = c(&quot;Meter&quot;, &quot;Building&quot;, &quot;Days of data (%)&quot;, &quot;Square footage&quot;, &quot;kWh per year&quot;, &quot;kWh (corrected)&quot;, &quot;kWh per sqft&quot;, &quot;Cost ($)&quot;, &quot;CO2e (MT)&quot;),
-          filter = &quot;none&quot;,
-          class = &quot;compact&quot;,
-          options = list(pageLength = 6, autoWidth = TRUE, dom =&#39;t&#39;), caption = &quot;Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.&quot;)</code></pre>
 <div class="datatables html-widget html-fill-item" id="htmlwidget-ca2c07338446d2b4fff1" style="width:100%;height:auto;"></div>
 <script type="application/json" data-for="htmlwidget-ca2c07338446d2b4fff1">{"x":{"filter":"none","vertical":false,"caption":"<caption>Table 2. Total electricy use, estimated financial cost, and estimated greenhouse gas emissions of administrative buildings during academic year 2024/2025.<\/caption>","data":[["Individual","Individual","Individual","Submeter","Individual","Individual"],["556 W. Louther St.","41 Conway St.","554 W. Louther St.","Old West","50 Mooreland Ave.","5 N. Orange St. - Facilities"],[100,100,100,97,100,100],[2000,2200,1440,30208,27100,75000],[2792,3685,5289,51680,65382,371382],[2792,3685,5289,53432,65382,371382],[1.4,1.7,3.7,1.7,2.4,5],[227,300,430,4349,5321,30225],[1,1,2,16,20,112]],"container":"<table class=\"compact\">\n  <thead>\n    <tr>\n      <th>Meter<\/th>\n      <th>Building<\/th>\n      <th>Days of data (%)<\/th>\n      <th>Square footage<\/th>\n      <th>kWh per year<\/th>\n      <th>kWh (corrected)<\/th>\n      <th>kWh per sqft<\/th>\n      <th>Cost ($)<\/th>\n      <th>CO2e (MT)<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":6,"autoWidth":true,"dom":"t","columnDefs":[{"className":"dt-right","targets":[2,3,4,5,6,7,8]},{"name":"meter","targets":0},{"name":"NAME","targets":1},{"name":"days_perc","targets":2},{"name":"sqft","targets":3},{"name":"kwh","targets":4},{"name":"kwh_corr","targets":5},{"name":"kwh_sqft","targets":6},{"name":"est.cost","targets":7},{"name":"CO2e.MT","targets":8}],"order":[],"orderClasses":false,"lengthMenu":[6,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 <p>Figure 1 shows how much electricity the college’s administrative
@@ -524,16 +509,6 @@ electricity use, like 5 North Orange Street does, it will make the other
 buildings appear as though they use little to no electricity. 5 North
 Orange Street (as seen from Tables 1 and 2) consistently has much high
 electricity use than any other building in its category.</p>
-<pre class="r"><code>ggplot(daily_admin) +
-  geom_col(aes(x = month, y = kwh, fill = NAME)) +
-  facet_wrap(~ NAME) +
-  theme_bw() +
-  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1), 
-    legend.position = &quot;none&quot;) +
-  labs(title = &quot;Figure 1. Monthly patterns in electricity use for administrative buildings&quot;,
-       subtitle = &quot;Fiscal Year 2025&quot;,
-    x = NULL,
-    y = &quot;Electricity use (kWh)&quot;)</code></pre>
 <p><img src="figure/Report_I_Admin.Rmd/Figure_1-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>Figure 2 shows how the electricity intensity (kWh/sqft/year) for
 administrative buildings changes throughout the year. The median usage
@@ -542,26 +517,6 @@ dashed black line shows the national median (<em>10.1
 kWh/sqft/year</em>), and the shaded gray band shows the interquartile
 range (<em>6 to 16 kWh/sqft/year</em>) from the EIA 2018 Commercial
 Buildings Energy Consumption Survey.</p>
-<pre class="r"><code>eia_median &lt;- 10.1
-eia_q25 &lt;- 6.1    
-eia_q75 &lt;- 15.7   
-
-ggplot(daily_admin, aes(x = reorder(NAME, kwh_sqft_yr, FUN = median, na.rm = TRUE), 
-    y = kwh_sqft_yr,
-    fill = NAME)) +
-  annotate(&quot;rect&quot;, ymin = eia_q25, ymax = eia_q75, xmin = -Inf, xmax = Inf, 
-           alpha = 0.2, fill = &quot;gray50&quot;) +
-  geom_hline(yintercept = eia_median, linetype = &quot;dashed&quot;, color = &quot;black&quot;, linewidth = 0.8) +
-  geom_boxplot(alpha = 0.9, outlier.alpha = 0.5) +
-  coord_flip() +
-  facet_wrap(~ period) +
-  theme_bw() +
-  theme(legend.position = &quot;none&quot;) +
-  labs(title = &quot;Figure 2. Electricity intensity for administrative buildings&quot;,
-       subtitle = &quot;Fiscal Year 2025&quot;,
-    caption = &quot;White dotted line and gray shaded area show median and 25th to 75th percentile of typical values in U.S. office buildings on college campuses (EIA 2022)&quot;,
-    x = NULL, 
-    y = &quot;Electricity Intensity (kWh/sqft/year)&quot;)</code></pre>
 <p><img src="figure/Report_I_Admin.Rmd/Figure_2-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 </div>
 <div id="recommendations" class="section level2">
@@ -634,7 +589,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
@@ -656,24 +610,23 @@ other attached packages:
  [1] rmarkdown_2.31     paletteer_1.7.0    DT_0.34.0          lubridate_1.9.5   
  [5] forcats_1.0.1      stringr_1.6.0      purrr_1.2.2        tidyr_1.3.2       
  [9] tibble_3.3.1       ggplot2_4.0.3      tidyverse_2.0.0    RColorBrewer_1.1-3
-[13] readr_2.2.0        dplyr_1.2.1        workflowr_1.7.2   
+[13] readr_2.2.0        dplyr_1.2.1       
 
 loaded via a namespace (and not attached):
  [1] sass_0.4.10       generics_0.1.4    stringi_1.8.7     hms_1.1.4        
- [5] digest_0.6.39     magrittr_2.0.5    timechange_0.4.0  evaluate_1.0.5   
- [9] grid_4.6.0        fastmap_1.2.0     rprojroot_2.1.1   jsonlite_2.0.0   
-[13] processx_3.9.0    whisker_0.4.1     rematch2_2.1.2    promises_1.5.0   
-[17] httr_1.4.8        crosstalk_1.2.2   scales_1.4.0      jquerylib_0.1.4  
-[21] cli_3.6.6         crayon_1.5.3      rlang_1.2.0       bit64_4.8.2      
-[25] withr_3.0.3       cachem_1.1.0      yaml_2.3.12       otel_0.2.0       
-[29] parallel_4.6.0    tools_4.6.0       tzdb_0.5.0        httpuv_1.6.17    
-[33] vctrs_0.7.3       R6_2.6.1          lifecycle_1.0.5   git2r_0.36.2     
-[37] bit_4.6.0         htmlwidgets_1.6.4 fs_2.1.0          vroom_1.7.1      
-[41] pkgconfig_2.0.3   callr_3.7.6       pillar_1.11.1     bslib_0.11.0     
-[45] later_1.4.8       gtable_0.3.6      glue_1.8.1        Rcpp_1.1.1-1.1   
-[49] xfun_0.59         tidyselect_1.2.1  rstudioapi_0.19.0 knitr_1.51       
-[53] farver_2.1.2      htmltools_0.5.9   labeling_0.4.3    compiler_4.6.0   
-[57] getPass_0.2-4     S7_0.2.2         </code></pre>
+ [5] digest_0.6.39     magrittr_2.0.5    evaluate_1.0.5    grid_4.6.0       
+ [9] timechange_0.4.0  fastmap_1.2.0     rprojroot_2.1.1   workflowr_1.7.2  
+[13] jsonlite_2.0.0    rematch2_2.1.2    promises_1.5.0    crosstalk_1.2.2  
+[17] scales_1.4.0      jquerylib_0.1.4   cli_3.6.6         crayon_1.5.3     
+[21] rlang_1.2.0       bit64_4.8.2       withr_3.0.3       cachem_1.1.0     
+[25] yaml_2.3.12       otel_0.2.0        parallel_4.6.0    tools_4.6.0      
+[29] tzdb_0.5.0        httpuv_1.6.17     vctrs_0.7.3       R6_2.6.1         
+[33] lifecycle_1.0.5   git2r_0.36.2      bit_4.6.0         htmlwidgets_1.6.4
+[37] fs_2.1.0          vroom_1.7.1       pkgconfig_2.0.3   pillar_1.11.1    
+[41] bslib_0.11.0      later_1.4.8       gtable_0.3.6      glue_1.8.1       
+[45] Rcpp_1.1.1-1.1    xfun_0.59         tidyselect_1.2.1  rstudioapi_0.19.0
+[49] knitr_1.51        farver_2.1.2      htmltools_0.5.9   labeling_0.4.3   
+[53] compiler_4.6.0    S7_0.2.2         </code></pre>
 </div>
 </div>
 

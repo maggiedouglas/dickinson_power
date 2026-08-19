@@ -1,6 +1,9 @@
 ---
 title: ""
-output: html_document
+output:
+  workflowr::wflow_html:
+    toc: false
+    code_folding: 'none'
 ---
 
 ```{css, echo=FALSE}

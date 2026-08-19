@@ -29,11 +29,7 @@
        h6 {font-size: 12px;}
        code {color: inherit; background-color: rgba(0, 0, 0, 0.04);}
        pre:not([class]) { background-color: white }</style>
-<script src="site_libs/jqueryui-1.13.2/jquery-ui.min.js"></script>
-<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
-<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
-<script src="site_libs/navigation-1.1/codefolding.js"></script>
 <link href="site_libs/highlightjs-9.12.0/textmate.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
 
@@ -231,73 +227,7 @@ $(document).ready(function () {
 </style>
 
 <!-- code folding -->
-<style type="text/css">
-.code-folding-btn { margin-bottom: 4px; }
-</style>
 
-
-
-<style type="text/css">
-
-#TOC {
-  margin: 25px 0px 20px 0px;
-}
-@media (max-width: 768px) {
-#TOC {
-  position: relative;
-  width: 100%;
-}
-}
-
-@media print {
-.toc-content {
-  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
-  float: right;
-}
-}
-
-.toc-content {
-  padding-left: 30px;
-  padding-right: 40px;
-}
-
-div.main-container {
-  max-width: 1200px;
-}
-
-div.tocify {
-  width: 20%;
-  max-width: 260px;
-  max-height: 85%;
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-  div.tocify {
-    width: 25%;
-  }
-}
-
-@media (max-width: 767px) {
-  div.tocify {
-    width: 100%;
-    max-width: none;
-  }
-}
-
-.tocify ul, .tocify li {
-  line-height: 20px;
-}
-
-.tocify-subheader .tocify-item {
-  font-size: 0.90em;
-}
-
-.tocify .list-group-item {
-  border-radius: 0px;
-}
-
-
-</style>
 
 
 
@@ -307,16 +237,6 @@ div.tocify {
 
 
 <div class="container-fluid main-container">
-
-
-<!-- setup 3col/9col grid for toc_float and main content  -->
-<div class="row">
-<div class="col-xs-12 col-sm-4 col-md-3">
-<div id="TOC" class="tocify">
-</div>
-</div>
-
-<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -419,384 +339,17 @@ div.tocify {
 
 <div id="header">
 
-<div class="btn-group pull-right float-right">
-<button type="button" class="btn btn-default btn-xs btn-secondary btn-sm dropdown-toggle" data-toggle="dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span>Code</span> <span class="caret"></span></button>
-<ul class="dropdown-menu dropdown-menu-right" style="min-width: 50px;">
-<li><a id="rmd-show-all-code" href="#">Show All Code</a></li>
-<li><a id="rmd-hide-all-code" href="#">Hide All Code</a></li>
-</ul>
-</div>
-
 
 
 
 </div>
 
 
-<p>
-<button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
-<span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span>
-</button>
-</p>
-<div id="workflowr-report" class="collapse">
-<ul class="nav nav-tabs">
-<li class="active">
-<a data-toggle="tab" href="#summary">Summary</a>
-</li>
-<li>
-<a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
-</li>
-<li>
-<a data-toggle="tab" href="#versions">Past versions</a>
-</li>
-</ul>
-<div class="tab-content">
-<div id="summary" class="tab-pane fade in active">
-<p>
-<strong>Last updated:</strong> 2026-08-19
-</p>
-<p>
-<strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
-</p>
-<p>
-<strong>Knit directory:</strong> <code>dickinson_power/</code> <span
-class="glyphicon glyphicon-question-sign" aria-hidden="true"
-title="This is the local directory in which the code in this file was executed.">
-</span>
-</p>
-<p>
-This reproducible <a href="https://rmarkdown.rstudio.com">R Markdown</a>
-analysis was created with <a
-  href="https://github.com/workflowr/workflowr">workflowr</a> (version
-1.7.2). The <em>Checks</em> tab describes the reproducibility checks
-that were applied when the results were created. The <em>Past
-versions</em> tab lists the development history.
-</p>
-<hr>
-</div>
-<div id="checks" class="tab-pane fade">
-<div id="workflowr-checks" class="panel-group">
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
-</p>
-</div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>The R Markdown file has unstaged changes. To know which version of
-the R Markdown file created these results, you’ll want to first commit
-it to the Git repo. If you’re still working on the analysis, you can
-ignore this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongEnvironmentstrongempty">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Environment:</strong> empty </a>
-</p>
-</div>
-<div id="strongEnvironmentstrongempty" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! The global environment was empty. Objects defined in the
-global environment can affect the analysis in your R Markdown file in
-unknown ways. For reproduciblity it’s best to always run the code in an
-empty environment.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSeedstrongcodesetseed20260107code">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Seed:</strong>
-<code>set.seed(20260107)</code> </a>
-</p>
-</div>
-<div id="strongSeedstrongcodesetseed20260107code"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>The command <code>set.seed(20260107)</code> was run prior to running
-the code in the R Markdown file. Setting a seed ensures that any results
-that rely on randomness, e.g. subsampling or permutations, are
-reproducible.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongSessioninformationstrongrecorded">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Session information:</strong>
-recorded </a>
-</p>
-</div>
-<div id="strongSessioninformationstrongrecorded"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! Recording the operating system, R version, and package
-versions is critical for reproducibility.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongCachestrongnone">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Cache:</strong> none </a>
-</p>
-</div>
-<div id="strongCachestrongnone" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Nice! There were no cached chunks for this analysis, so you can be
-confident that you successfully produced the results during this
-run.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongFilepathsstrongrelative">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>File paths:</strong> relative </a>
-</p>
-</div>
-<div id="strongFilepathsstrongrelative" class="panel-collapse collapse">
-<div class="panel-body">
-<p>Great job! Using relative paths to the files within your workflowr
-project makes it easier to run your code on other machines.</p>
-</div>
-</div>
-</div>
-<div class="panel panel-default">
-<div class="panel-heading">
-<p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef8392456333692578fbfced05981527052018fb7targetblankf839245a">
-<span class="glyphicon glyphicon-ok text-success"
-aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/f8392456333692578fbfced05981527052018fb7" target="_blank">f839245</a>
-</a>
-</p>
-</div>
-<div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreef8392456333692578fbfced05981527052018fb7targetblankf839245a"
-class="panel-collapse collapse">
-<div class="panel-body">
-<p>
-Great! You are using Git for version control. Tracking code development
-and connecting the code version to the results is critical for
-reproducibility.
-</p>
-<p>
-The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/f8392456333692578fbfced05981527052018fb7" target="_blank">f839245</a>.
-See the <em>Past versions</em> tab to see a history of the changes made
-to the R Markdown and HTML files.
-</p>
-<p>
-Note that you need to be careful to ensure that all relevant files for
-the analysis have been committed to Git prior to generating the results
-(you can use <code>wflow_publish</code> or
-<code>wflow_git_commit</code>). workflowr only checks the R Markdown
-file, but you know if there are other scripts or data files that it
-depends on. Below is the status of the Git repository when the results
-were generated:
-</p>
-<pre><code>
-Ignored files:
-    Ignored:    .DS_Store
-    Ignored:    .Rhistory
-    Ignored:    .Rproj.user/
-    Ignored:    analysis/.DS_Store
-    Ignored:    analysis/.Rhistory
-    Ignored:    analysis_to-fix/.DS_Store
-    Ignored:    data/.DS_Store
-    Ignored:    data/FY25 Main Meter Data.xlsx
-    Ignored:    data/building_list_FY25_updated.xlsx
-    Ignored:    data/graph_data_life_exp.csv
-    Ignored:    data/housing_counts.csv
-    Ignored:    keys/.DS_Store
-    Ignored:    output/annual_kwh.csv
-    Ignored:    output/building_check.csv
-    Ignored:    output/building_check.xlsx
-    Ignored:    output/buildings_graph.csv
-    Ignored:    output/daily_kwh.csv
-    Ignored:    output/kwh_academic_2026-03-16.csv
-    Ignored:    output/kwh_academic_2026-03-17.csv
-    Ignored:    output/kwh_academic_2026-03-18.csv
-    Ignored:    output/kwh_academic_2026-03-22.csv
-    Ignored:    output/kwh_academic_2026-03-23.csv
-    Ignored:    output/kwh_academic_2026-03-25.csv
-    Ignored:    output/kwh_academic_2026-03-30.csv
-    Ignored:    output/kwh_academic_2026-04-07.csv
-    Ignored:    output/kwh_academic_2026-04-13.csv
-    Ignored:    output/kwh_academic_2026-04-26.csv
-    Ignored:    output/kwh_annual.csv
-    Ignored:    output/kwh_annual_2026-03-04.csv
-    Ignored:    output/kwh_annual_2026-03-12.csv
-    Ignored:    output/kwh_annual_2026-03-16.csv
-    Ignored:    output/kwh_annual_2026-03-17.csv
-    Ignored:    output/kwh_annual_2026-03-18.csv
-    Ignored:    output/kwh_annual_2026-03-22.csv
-    Ignored:    output/kwh_annual_2026-03-23.csv
-    Ignored:    output/kwh_annual_2026-03-25.csv
-    Ignored:    output/kwh_annual_2026-03-30.csv
-    Ignored:    output/kwh_annual_2026-04-07.csv
-    Ignored:    output/kwh_annual_2026-04-13.csv
-    Ignored:    output/kwh_annual_2026-04-26.csv
-    Ignored:    output/kwh_annual_20260225.csv
-    Ignored:    output/kwh_annual_20260226.csv
-    Ignored:    output/kwh_daily.csv
-    Ignored:    output/kwh_daily_2026-03-04.csv
-    Ignored:    output/kwh_daily_2026-03-12.csv
-    Ignored:    output/kwh_daily_2026-03-16.csv
-    Ignored:    output/kwh_daily_2026-03-17.csv
-    Ignored:    output/kwh_daily_2026-03-18.csv
-    Ignored:    output/kwh_daily_2026-03-22.csv
-    Ignored:    output/kwh_daily_2026-03-23.csv
-    Ignored:    output/kwh_daily_2026-03-25.csv
-    Ignored:    output/kwh_daily_2026-03-30.csv
-    Ignored:    output/kwh_daily_2026-04-07.csv
-    Ignored:    output/kwh_daily_2026-04-13.csv
-    Ignored:    output/kwh_daily_2026-04-26.csv
-    Ignored:    output/kwh_daily_20260225.csv
-    Ignored:    output/kwh_daily_20260226.csv
-    Ignored:    output/kwh_main_annual.csv
-    Ignored:    output/kwh_main_daily.csv
-
-Unstaged changes:
-    Modified:   analysis/conclusions.Rmd
-    Modified:   analysis/methods.Rmd
-
-</code></pre>
-<p>
-Note that any generated files, e.g. HTML, png, CSS, etc., are not
-included in this status report because it is ok for generated content to
-have uncommitted changes.
-</p>
-</div>
-</div>
-</div>
-</div>
-<hr>
-</div>
-<div id="versions" class="tab-pane fade">
-<p>
-These are the previous versions of the repository in which changes were
-made to the R Markdown (<code>analysis/methods.Rmd</code>) and HTML
-(<code>docs/methods.html</code>) files. If you’ve configured a remote
-Git repository (see <code>?wflow_git_remote</code>), click on the
-hyperlinks in the table below to view the files as they were in that
-past version.
-</p>
-<div class="table-responsive">
-<table class="table table-condensed table-hover">
-<thead>
-<tr>
-<th>
-File
-</th>
-<th>
-Version
-</th>
-<th>
-Author
-</th>
-<th>
-Date
-</th>
-<th>
-Message
-</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/0522483f8f26bf0932855f033c08e4f6bf5918ef/docs/methods.html" target="_blank">0522483</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-08-19
-</td>
-<td>
-Build site.
-</td>
-</tr>
-<tr>
-<td>
-Rmd
-</td>
-<td>
-<a href="https://github.com/maggiedouglas/dickinson_power/blob/f60de552f952131d2ae70a8a4e8a06c6db748e77/analysis/methods.Rmd" target="_blank">f60de55</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-08-15
-</td>
-<td>
-Lots of formatting…
-</td>
-</tr>
-<tr>
-<td>
-html
-</td>
-<td>
-<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/f60de552f952131d2ae70a8a4e8a06c6db748e77/docs/methods.html" target="_blank">f60de55</a>
-</td>
-<td>
-maggiedouglas
-</td>
-<td>
-2026-08-15
-</td>
-<td>
-Lots of formatting…
-</td>
-</tr>
-</tbody>
-</table>
-</div>
-<hr>
-</div>
-</div>
-</div>
 <style type="text/css">
 .caption {
   text-align: left !important;
 }
 </style>
-<pre class="r"><code>library(tidyverse) # load tidyverse
-library(ggthemes)
-library(GGally)</code></pre>
 <div id="dickinsons-electrical-grid" class="section level2">
 <h2>Dickinson’s electrical grid</h2>
 <p>Buildings on Dickinson’s campus vary in how they are metered for
@@ -811,7 +364,6 @@ own individual electricity meters. The upshot of this arrangement is
 that electricity data at the building level is only available for a
 subset of campus buildings. We present a mix of aggregate and individual
 findings.</p>
-<pre class="r"><code>knitr::include_graphics(&quot;assets/electrical-grid.png&quot;, error = FALSE)</code></pre>
 <div class="figure" style="text-align: center">
 <p class="caption">
 <strong>Figure 1.</strong> Dickinson’s electrical grid (diagram courtesy
@@ -878,27 +430,6 @@ residential buildings and ‘Other’ buildings (Figure 2), a category
 including assorted athletics buildings, faculty/staff residences, and
 auxillary buildings. Aggregate meters were prevalent for Academic,
 Administrative, and Community buildings (Figure 2).</p>
-<pre class="r"><code># summarize slightly differently for graphing
-buildings_graph &lt;- read.csv(&quot;./keys/fy25_building_list_updated.csv&quot;, strip.white = T) %&gt;%
-    mutate(meter = ifelse(weis_meter == 1, &quot;Weis Meter&quot;, 
-                        ifelse(main_meter == 1 &amp; main_disagg == 0, &quot;Main Meter&quot;, 
-                               ifelse(main_disagg == 1, &quot;Submeter&quot;, &quot;Individual&quot;)))) %&gt;%
-  filter(!is.na(meter) &amp; !type_new %in% c(&quot;Residential - U&quot;,&quot;Non-building&quot;,&quot;Solar&quot;))
-
-buildings_graph$meter &lt;- factor(buildings_graph$meter,
-                              levels = c(&quot;Weis Meter&quot;, &quot;Main Meter&quot;,
-                                        &quot;Submeter&quot;, &quot;Individual&quot;))
-
-pal &lt;- c(&quot;lightgrey&quot;,&quot;darkgrey&quot;,&quot;#CAB2D6&quot;,&quot;#6A3D9A&quot;)
-
-ggplot(buildings_graph, 
-       aes(x = type_new, fill = meter)) +
-  geom_bar(position = &quot;stack&quot;) +
-  scale_fill_manual(values = pal) +
-  theme_bw() +
-  labs(x = &quot;&quot;, y = &quot;Number of buildings&quot;, fill = &quot;Meter status&quot;,
-       title = &quot;Figure 2. Buildings by type and meter status&quot;) +
-    theme(axis.text.x = element_text(angle = 45, vjust = 1, hjust = 1))</code></pre>
 <p><img src="figure/methods.Rmd/data_source-1.png" alt="" width="672" style="display: block; margin: auto;" /></p>
 <p>
 <button type="button" class="btn btn-default btn-xs btn-workflowr btn-workflowr-fig" data-toggle="collapse" data-target="#fig-data_source-1">
@@ -922,6 +453,17 @@ Date
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/e2c0776cca7c35eeeedff7f7f540ff8064e60084/docs/figure/methods.Rmd/data_source-1.png" target="_blank">e2c0776</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-08-19
+</td>
+</tr>
 <tr>
 <td>
 <a href="https://github.com/maggiedouglas/dickinson_power/blob/f60de552f952131d2ae70a8a4e8a06c6db748e77/docs/figure/methods.Rmd/data_source-1.png" target="_blank">f60de55</a>
@@ -1003,7 +545,6 @@ Session information
 </button>
 </p>
 <div id="workflowr-sessioninfo" class="collapse">
-<pre class="r"><code>sessionInfo()</code></pre>
 <pre><code>R version 4.6.0 (2026-04-24)
 Platform: x86_64-apple-darwin20
 Running under: macOS Ventura 13.7.8
@@ -1042,11 +583,6 @@ loaded via a namespace (and not attached):
 [49] compiler_4.6.0     S7_0.2.2          </code></pre>
 </div>
 </div>
-</div>
-</div>
-</div>
-</div>
-</div>
 
 
 <!-- Adjust MathJax settings so that all math formulae are shown using
@@ -1064,8 +600,6 @@ footer is added to webpages before the MathJax javascript. -->
 
 
 
-</div>
-</div>
 
 </div>
 
@@ -1097,41 +631,7 @@ $(document).ready(function () {
 </script>
 
 <!-- code folding -->
-<script>
-$(document).ready(function () {
-  window.initializeCodeFolding("hide" === "show");
-});
-</script>
 
-<script>
-$(document).ready(function ()  {
-
-    // temporarily add toc-ignore selector to headers for the consistency with Pandoc
-    $('.unlisted.unnumbered').addClass('toc-ignore')
-
-    // move toc-ignore selectors from section div to header
-    $('div.section.toc-ignore')
-        .removeClass('toc-ignore')
-        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
-
-    // establish options
-    var options = {
-      selectors: "h1,h2,h3",
-      theme: "bootstrap3",
-      context: '.toc-content',
-      hashGenerator: function (text) {
-        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
-      },
-      ignoreSelector: ".toc-ignore",
-      scrollTo: 0
-    };
-    options.showAndHide = true;
-    options.smoothScroll = true;
-
-    // tocify
-    var toc = $("#TOC").tocify(options).data("toc-tocify");
-});
-</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>

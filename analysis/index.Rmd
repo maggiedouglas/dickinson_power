@@ -2,6 +2,7 @@
 output:
   workflowr::wflow_html:
     toc: false
+    code_folding: 'none'
 editor_options:
   chunk_output_type: console
 site: workflowr::wflow_site
@@ -21,7 +22,7 @@ This project explores electricity use at Dickinson College to support environmen
 
 Dickinson College prides itself on its commitment to sustainability and has been carbon neutral since 2020 (Carbon Neutrality FAQ, n.d.). Electricity usage has historically accounted for about a third of carbon emissions at the College and played a key role in the college becoming climate neutral (Leary 2025). A 3-megawatt solar photovoltaic array, transition to LED lighting, and purchase of Renewable Energy Credits (RECs) were major contributors to Dickinson reducing its carbon footprint by 50% from 2008 to 2023 (Leary 2025). The College maintains carbon neutrality by purchasing offsets for the remaining carbon emissions. Further electricity savings would allow the College to reduce costs and continue advancing its climate commitments. Such investments are likely to be especially fruitful as the cost of electricity continues to rise (EIA 2026). 
 
-```{r costs, fig.align = 'center', out.width = "85%"}
+```{r costs, fig.align = 'center', out.width = "85%", echo = FALSE}
 knitr::include_graphics("assets/carbon_and_costs.png", error = FALSE)
 ```
 

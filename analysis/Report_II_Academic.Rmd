@@ -4,6 +4,10 @@ author: "Sophia Evans & Chloe Ross"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
 ```{r grid, fig.align = 'center', out.width = "75%", fig.cap = "Photo from Dickinson College"}
 knitr::include_graphics("assets/althouse.jpg", error = FALSE)
 ```

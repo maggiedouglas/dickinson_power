@@ -1,7 +1,9 @@
 ---
 title: "Main Meter"
 author: "Maggie Douglas"
-output: html_document
+output:
+  workflowr::wflow_html:
+    code_folding: 'none'
 ---
 
 ```{r setup, include=FALSE}

@@ -1,9 +1,12 @@
 ---
 title: "Small Residential Buildings"
 author: "Luke Heller & Valerie Larsen"
-date: "`r format(Sys.time(), '%m/%d/%y')`"
 output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ## Background
 

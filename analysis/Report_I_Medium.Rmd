@@ -1,13 +1,15 @@
 ---
 title: "Medium Residential Buildings"
-author: Liam Glackin and Charlotte Durietz Bourdain
-date: "`r format(Sys.time(), '%m/%d/%y')`"
+author: Liam Glackin & Charlotte Durietz Bourdain
 output:
   html_document:
     toc: true
-    toc_float: true
-    code_folding: show
+    code_folding: none
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ## Background  
 

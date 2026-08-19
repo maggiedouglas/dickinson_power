@@ -1,9 +1,12 @@
 ---
 title: "Other Buildings"
 author: "Ben Connors & Kyrie Sanchez"
-date: "`r format(Sys.time(), '%m/%d/%y')`"
 output: html_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ## Background
 

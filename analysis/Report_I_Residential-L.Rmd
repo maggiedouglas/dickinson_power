@@ -1,12 +1,14 @@
 ---
 title: "Large Residential Buildings"
-author: 'Claire Raesly and Liv Kacar'
-date: "`r format(Sys.time(), '%m/%d/%y')`"
+author: 'Claire Raesly & Liv Kacar'
 output: html_document
 ---
 
-## Background
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
+## Background
 
 This report examines electricity use in the category of large residence halls across the Dickinson College campus. This category encompasses all student residence halls with a total area greater than 10,000 square feet. There are 21 buildings in this category with nine on individual meters, ten on submeters, and two on the main meter without disaggregated data. The analyses in this report will cover the *19 buildings* for which there is individual electricity usage data.
 

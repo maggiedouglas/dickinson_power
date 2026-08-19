@@ -1,8 +1,14 @@
 ---
 title: "519 West Louther Street"
 author: "Luke Heller & Valerie Larsen"
-output: html_document
+output:
+  workflowr::wflow_html:
+    code_folding: 'none'
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ```{r grid, fig.align = 'center', out.width = "70%", fig.cap = "Photo by Valerie Larsen"}
 knitr::include_graphics("assets/519wlouther.jpg", error = FALSE)

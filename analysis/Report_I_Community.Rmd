@@ -4,6 +4,10 @@ author: "Dinela Dedic & Emma Keane"
 output: html_document
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
 ## Background  
   There are 10 buildings within the Community building group that are used for a *wide* variety of functions including private residences, dining services, daycare, social space, and healthcare. The Community category takes up a significant amount of space on Dickinson's campus and includes larger buildings like the Holland Union Building (HUB) in addition to smaller buildings like Landis House that have a difference of about 100,000 square feet. In total, the Community buildings take up 254,226 square feet on the Dickinson campus (13% of the total).    
   
