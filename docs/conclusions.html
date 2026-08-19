@@ -261,6 +261,9 @@ $(document).ready(function () {
   <a href="conclusions.html">Executive Summary</a>
 </li>
 <li>
+  <a href="index.html">Goals</a>
+</li>
+<li>
   <a href="methods.html">Methods</a>
 </li>
 <li class="dropdown">
@@ -270,6 +273,10 @@ $(document).ready(function () {
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li class="dropdown-header">Campus summary</li>
+    <li>
+      <a href="campus_summary.html"></a>
+    </li>
     <li>
       <a href="Report_I_Small_Residence_Halls.html">Res. Halls &lt; 2K sqft</a>
     </li>
@@ -301,22 +308,28 @@ $(document).ready(function () {
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="main_meter_regression.html">Main meter - reg</a>
+      <a href="main_meter_clean.html">Main Meter</a>
     </li>
     <li>
-      <a href="main_meter_anova.html">Main meter - ANOVA</a>
+      <a href="Report_II_Small_Residence_Halls.html">519 W. Louther St</a>
     </li>
     <li>
-      <a href="main_meter_mult_reg.html">Main meter - Full model</a>
+      <a href="Report_II_Med-Residential-Building.html">Treehouse</a>
     </li>
     <li>
-      <a href="main_meter_mod_vis.html">Main meter - visualization</a>
+      <a href="Report_II_Residential-L.html">Drayer Hall</a>
     </li>
     <li>
-      <a href="main_meter_mult_reg.html">Main meter - Report Part II</a>
+      <a href="Report_II_Academic.html">Althouse Hall</a>
     </li>
     <li>
-      <a href="main_meter_mod_vis.html">Main meter - Report Part II (clean)</a>
+      <a href="Report_II_Administrative-2.html">50 Mooreland Ave.</a>
+    </li>
+    <li>
+      <a href="Report_II_Community.html">Allison Hall</a>
+    </li>
+    <li>
+      <a href="Report_II_Other.html">Biddle Press Box/Durden ATC</a>
     </li>
   </ul>
 </li>
@@ -348,7 +361,7 @@ $(document).ready(function () {
 <p>
 <button type="button" class="btn btn-default btn-workflowr btn-workflowr-report" data-toggle="collapse" data-target="#workflowr-report">
 <span class="glyphicon glyphicon-list" aria-hidden="true"></span>
-workflowr <span class="glyphicon glyphicon-exclamation-sign text-danger"
+workflowr <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span>
 </button>
 </p>
@@ -359,8 +372,8 @@ aria-hidden="true"></span>
 </li>
 <li>
 <a data-toggle="tab" href="#checks"> Checks <span
-class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> </a>
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span>
+</a>
 </li>
 <li>
 <a data-toggle="tab" href="#versions">Past versions</a>
@@ -369,13 +382,13 @@ aria-hidden="true"></span> </a>
 <div class="tab-content">
 <div id="summary" class="tab-pane fade in active">
 <p>
-<strong>Last updated:</strong> 2026-08-15
+<strong>Last updated:</strong> 2026-08-19
 </p>
 <p>
 <strong>Checks:</strong> <span
-class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 6
+class="glyphicon glyphicon-ok text-success" aria-hidden="true"></span> 7
 <span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> 1
+aria-hidden="true"></span> 0
 </p>
 <p>
 <strong>Knit directory:</strong> <code>dickinson_power/</code> <span
@@ -398,21 +411,18 @@ versions</em> tab lists the development history.
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguncommittedchanges">
-<span class="glyphicon glyphicon-exclamation-sign text-danger"
-aria-hidden="true"></span> <strong>R Markdown file:</strong> uncommitted
-changes </a>
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRMarkdownfilestronguptodate">
+<span class="glyphicon glyphicon-ok text-success"
+aria-hidden="true"></span> <strong>R Markdown file:</strong> up-to-date
+</a>
 </p>
 </div>
-<div id="strongRMarkdownfilestronguncommittedchanges"
+<div id="strongRMarkdownfilestronguptodate"
 class="panel-collapse collapse">
 <div class="panel-body">
-<p>The R Markdown is untracked by Git. To know which version of the R
-Markdown file created these results, you’ll want to first commit it to
-the Git repo. If you’re still working on the analysis, you can ignore
-this warning. When you’re finished, you can run
-<code>wflow_publish</code> to commit the R Markdown file and build the
-HTML.</p>
+<p>Great! Since the R Markdown file has been committed to the Git
+repository, you know the exact version of the code that produced these
+results.</p>
 </div>
 </div>
 </div>
@@ -503,15 +513,15 @@ project makes it easier to run your code on other machines.</p>
 <div class="panel panel-default">
 <div class="panel-heading">
 <p class="panel-title">
-<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreec58899cd4850a9b52fbeac659ac88ffa7099d392targetblankc58899ca">
+<a data-toggle="collapse" data-parent="#workflowr-checks" href="#strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree70363c3ed859acf3ed1a09e19678e0c58ab7da31targetblank70363c3a">
 <span class="glyphicon glyphicon-ok text-success"
 aria-hidden="true"></span> <strong>Repository version:</strong>
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/c58899cd4850a9b52fbeac659ac88ffa7099d392" target="_blank">c58899c</a>
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/70363c3ed859acf3ed1a09e19678e0c58ab7da31" target="_blank">70363c3</a>
 </a>
 </p>
 </div>
 <div
-id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertreec58899cd4850a9b52fbeac659ac88ffa7099d392targetblankc58899ca"
+id="strongRepositoryversionstrongahrefhttpsgithubcommaggiedouglasdickinsonpowertree70363c3ed859acf3ed1a09e19678e0c58ab7da31targetblank70363c3a"
 class="panel-collapse collapse">
 <div class="panel-body">
 <p>
@@ -521,7 +531,7 @@ reproducibility.
 </p>
 <p>
 The results in this page were generated with repository version
-<a href="https://github.com/maggiedouglas/dickinson_power/tree/c58899cd4850a9b52fbeac659ac88ffa7099d392" target="_blank">c58899c</a>.
+<a href="https://github.com/maggiedouglas/dickinson_power/tree/70363c3ed859acf3ed1a09e19678e0c58ab7da31" target="_blank">70363c3</a>.
 See the <em>Past versions</em> tab to see a history of the changes made
 to the R Markdown and HTML files.
 </p>
@@ -541,7 +551,6 @@ Ignored files:
     Ignored:    .Rproj.user/
     Ignored:    analysis/.DS_Store
     Ignored:    analysis/.Rhistory
-    Ignored:    analysis/figure/
     Ignored:    analysis_to-fix/.DS_Store
     Ignored:    data/.DS_Store
     Ignored:    data/FY25 Main Meter Data.xlsx
@@ -597,16 +606,9 @@ Ignored files:
     Ignored:    output/kwh_main_annual.csv
     Ignored:    output/kwh_main_daily.csv
 
-Untracked files:
-    Untracked:  analysis/conclusions.Rmd
-    Untracked:  analysis/methods.Rmd
-
 Unstaged changes:
-    Modified:   analysis/_site.yml
-    Modified:   analysis/about.Rmd
     Modified:   analysis/campus_summary.Rmd
-    Modified:   analysis/data_wrangling_final.Rmd
-    Modified:   analysis/index.Rmd
+    Modified:   analysis/main_meter_clean.Rmd
 
 </code></pre>
 <p>
@@ -622,9 +624,72 @@ have uncommitted changes.
 </div>
 <div id="versions" class="tab-pane fade">
 <p>
-There are no past versions. Publish this analysis with
-<code>wflow_publish()</code> to start tracking its development.
+These are the previous versions of the repository in which changes were
+made to the R Markdown (<code>analysis/conclusions.Rmd</code>) and HTML
+(<code>docs/conclusions.html</code>) files. If you’ve configured a
+remote Git repository (see <code>?wflow_git_remote</code>), click on the
+hyperlinks in the table below to view the files as they were in that
+past version.
 </p>
+<div class="table-responsive">
+<table class="table table-condensed table-hover">
+<thead>
+<tr>
+<th>
+File
+</th>
+<th>
+Version
+</th>
+<th>
+Author
+</th>
+<th>
+Date
+</th>
+<th>
+Message
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>
+Rmd
+</td>
+<td>
+<a href="https://github.com/maggiedouglas/dickinson_power/blob/f60de552f952131d2ae70a8a4e8a06c6db748e77/analysis/conclusions.Rmd" target="_blank">f60de55</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-08-15
+</td>
+<td>
+Lots of formatting…
+</td>
+</tr>
+<tr>
+<td>
+html
+</td>
+<td>
+<a href="https://rawcdn.githack.com/maggiedouglas/dickinson_power/f60de552f952131d2ae70a8a4e8a06c6db748e77/docs/conclusions.html" target="_blank">f60de55</a>
+</td>
+<td>
+maggiedouglas
+</td>
+<td>
+2026-08-15
+</td>
+<td>
+Lots of formatting…
+</td>
+</tr>
+</tbody>
+</table>
+</div>
 <hr>
 </div>
 </div>
@@ -762,7 +827,7 @@ href="Report_II_Med-Residential-Building.Rmd">Treehouse</a>).</p>
 <h3>Sources</h3>
 <p>Leary, N. (2025). Climate Risks and Resilience in Cumberland County:
 Synthesis Report. Center for Sustainability Education. Dickinson
-College. Available: <a
+College. <a
 href="https://www.dickinson.edu/download/downloads/id/16410/climate_risks_and_resilience_in_cumberland_county_synthesis_report.pdf"
 class="uri">https://www.dickinson.edu/download/downloads/id/16410/climate_risks_and_resilience_in_cumberland_county_synthesis_report.pdf</a></p>
 <br>
@@ -791,17 +856,21 @@ tzcode source: internal
 attached base packages:
 [1] stats     graphics  grDevices utils     datasets  methods   base     
 
+other attached packages:
+[1] workflowr_1.7.2
+
 loaded via a namespace (and not attached):
- [1] vctrs_0.7.3       cli_3.6.6         knitr_1.51        rlang_1.2.0      
- [5] xfun_0.59         stringi_1.8.7     otel_0.2.0        promises_1.5.0   
- [9] jsonlite_2.0.0    glue_1.8.1        workflowr_1.7.2   rprojroot_2.1.1  
-[13] git2r_0.36.2      htmltools_0.5.9   httpuv_1.6.17     sass_0.4.10      
-[17] rmarkdown_2.31    tibble_3.3.1      evaluate_1.0.5    jquerylib_0.1.4  
-[21] fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5   stringr_1.6.0    
-[25] compiler_4.6.0    fs_2.1.0          pkgconfig_2.0.3   Rcpp_1.1.1-1.1   
-[29] rstudioapi_0.19.0 later_1.4.8       digest_0.6.39     R6_2.6.1         
-[33] pillar_1.11.1     magrittr_2.0.5    bslib_0.11.0      tools_4.6.0      
-[37] cachem_1.1.0     </code></pre>
+ [1] vctrs_0.7.3       httr_1.4.8        cli_3.6.6         knitr_1.51       
+ [5] rlang_1.2.0       xfun_0.59         stringi_1.8.7     otel_0.2.0       
+ [9] processx_3.9.0    promises_1.5.0    jsonlite_2.0.0    glue_1.8.1       
+[13] rprojroot_2.1.1   git2r_0.36.2      htmltools_0.5.9   httpuv_1.6.17    
+[17] sass_0.4.10       rmarkdown_2.31    jquerylib_0.1.4   tibble_3.3.1     
+[21] evaluate_1.0.5    fastmap_1.2.0     yaml_2.3.12       lifecycle_1.0.5  
+[25] whisker_0.4.1     stringr_1.6.0     compiler_4.6.0    fs_2.1.0         
+[29] pkgconfig_2.0.3   Rcpp_1.1.1-1.1    rstudioapi_0.19.0 later_1.4.8      
+[33] digest_0.6.39     R6_2.6.1          pillar_1.11.1     callr_3.7.6      
+[37] magrittr_2.0.5    bslib_0.11.0      tools_4.6.0       cachem_1.1.0     
+[41] getPass_0.2-4    </code></pre>
 </div>
 </div>
 </div>
