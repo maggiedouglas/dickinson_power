@@ -1,5 +1,5 @@
 ---
-title: "Campus building summary"
+title: "Campus Summary"
 author: "Maggie Douglas"
 workflowr:
   suppress_report: TRUE

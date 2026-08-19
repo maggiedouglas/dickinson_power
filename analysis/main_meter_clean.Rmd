@@ -1,7 +1,6 @@
 ---
 title: "Main Meter"
 author: "Maggie Douglas"
-date: "`r format(Sys.time(), '%m/%d/%y')`"
 output: html_document
 ---
 
@@ -9,11 +8,13 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-**Note for students:** This page is meant to show you an example of a completed section for Report Part II, with code and intermediate output hidden. This is to give you a sense of what the section will look like in the final report. 
+```{r grid, fig.align = 'center', out.width = "90%", fig.cap = "Main meter buildings shown in color (diagram courtesy of Mike Kiner)", fig.topcaption=TRUE}
+knitr::include_graphics("assets/electrical-grid.png", error = FALSE)
+```
 
 ## Background
 
-The "main meter" records electricity use in around 40 buildings in the core of campus. These buildings have a range of uses including academic, administrative, and residential functions. Importantly, the main meter also includes the Central Energy Plant in Kaufman Hall. Together, the buildings on the main meter account for 59% of square footage on campus and 68% of electricity use at an estimated cost of $1.2 million and 3504 MT CO2-e in fiscal year 2025 (FY25; see [Electricity summary: All buildings](https://maggiedouglas.github.io/dickinson_power/campus_summary.html)). In FY25 the buildings on the main meter used 10.4 kWh per square foot, very similar to values typical of U.S. College/University buildings (median 10.3 kWh/sqft/yr; EIA 2022). 
+The "main meter" records electricity use in around 40 buildings in the core of campus. These buildings have a range of uses including academic, administrative, and residential functions. Importantly, the main meter also includes the Central Energy Plant in Kaufman Hall. Together, the buildings on the main meter account for 59% of square footage on campus and 68% of electricity use at an estimated cost of $1.2 million and 3504 MT CO2-e in fiscal year 2025 (FY25; see [Electricity summary: Campus summary](https://maggiedouglas.github.io/dickinson_power/campus_summary.html)). In FY25 the buildings on the main meter used 10.4 kWh per square foot, very similar to values typical of U.S. College/University buildings (median 10.3 kWh/sqft/yr; EIA 2022). 
 
 Going into this analysis, I believed that electricity use on the main meter would be strongly related to temperature and building occupancy. Because electricity is involved in heating and cooling, I expected electricity use to decrease with temperature in the heating range and increase with temperature in the cooling range. The campus relies more heavily on electricity for cooling than heating (personal communication with Mike Kiner, spring 2026), so I believed the relationship would be stronger in the cooling range. I also expected that electricity use would be lower during breaks than during the academic year, when buildings are more heavily used. Finally, given that the main meter includes a diversity of buildings with different use patterns, I did not expect a strong relationship between electricity use and day of the week.
 
